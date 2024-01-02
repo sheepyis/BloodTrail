@@ -7,6 +7,7 @@ import Blood from "./pages/Blood/Blood";
 import Community from "./pages/Community/Community";
 import Crew from "./pages/Crew/Crew";
 import Live from "./pages/Live/Live";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/community" element={<Community />} />
           <Route path="/crew" element={<Crew />} />
           <Route path="/live" element={<Live />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer/>
       </Router>
