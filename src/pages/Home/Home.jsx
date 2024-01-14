@@ -7,6 +7,8 @@ import Banner2 from "../../assets/images/image 23.jpg";
 import Banner3 from "../../assets/images/image 48.png";
 import ArrowRight from "../../assets/images/arrow=right.png";
 import { useEffect } from "react";
+import Dday from "../../components/Dday/Dday";
+
 const HomeContainer = styled.div`
     width: 100%;
     display: flex;
@@ -70,14 +72,8 @@ const ArrowRightStyled =styled (StyledArrow)`
 const HomeBox = styled.div`
     width: 65%;
     margin: 3.0208vw 0 5.1042vw 0;
-    background-color: ${colors.mainRed};
+    
 `
-
-const BannerImage = styled.img`
-    width: 100%;
-    transition: opacity 0.5s ease-in-out; 
-    opacity: ${props => props.isActive ? 1 : 0}; 
-`;
 
 
 
@@ -118,7 +114,7 @@ const Home = () => {
             </BannerContainer>
             
             <HomeBox>
-                여기에 Home 꾸미기
+                <Dday/>
             </HomeBox>
         </HomeContainer>
     )
