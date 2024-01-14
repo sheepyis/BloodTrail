@@ -7,34 +7,23 @@ import Banner2 from "../../assets/images/image 23.jpg";
 import Banner3 from "../../assets/images/image 48.png";
 import ArrowRight from "../../assets/images/arrow=right.png";
 import { useEffect } from "react";
-
-
 const HomeContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-`;
-
-const BannerWrapper = styled.div`
-    width: 100%;
-    overflow: hidden;
-`;
-
-const Slide = styled.div`
-    flex: 0 0 ${100 / bannerImages.length}%;
-    transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1); 
-`;
+`
 
 const BannerContainer = styled.div`
-    display: flex;
-    width: ${bannerImages.length * 100}%;
-    transform: ${props => `translateX(-${props.slideIndex * (100 / bannerImages.length)}%)`};
-    transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1); 
-`;
+    width: 100%;
+    position: relative;
+`
 
-
-const bannerImages = [Banner, Banner2, Banner3];
+const bannerImages = [
+    Banner, 
+    Banner2,
+    Banner3
+];
 
 const DotsContainer = styled.div`
     position: absolute;
@@ -84,18 +73,23 @@ const HomeBox = styled.div`
     background-color: ${colors.mainRed};
 `
 
+const BannerImage = styled.img`
+    width: 100%;
+    transition: opacity 0.5s ease-in-out; 
+    opacity: ${props => props.isActive ? 1 : 0}; 
+`;
+
+
 
 const Home = () => {
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentImageIndex(prevIndex => (prevIndex + 1) % bannerImages.length);
         }, 5000); 
-
-        return () => clearInterval(timer);
+        return () => clearInterval(timer); 
     }, []);
 
     const handleLeftArrowClick = () => {
@@ -108,26 +102,21 @@ const Home = () => {
 
     return (
         <HomeContainer>
-            <BannerWrapper>
-                <BannerContainer slideIndex={currentImageIndex}>
-                    {bannerImages.map((image, index) => (
-                        <Slide key={index}>
-                            <img src={image} alt={`Banner ${index}`} style={{ width: "100%" }} />
-                        </Slide>
-                    ))}
-                </BannerContainer>
-            </BannerWrapper>
-            <ArrowLeftStyled src={ArrowLeft} alt="Left Arrow" onClick={handleLeftArrowClick}/>
+            <BannerContainer> 
+                <ArrowLeftStyled src={ArrowLeft} alt="Left Arrow" onClick={handleLeftArrowClick}/>
+                <img src={bannerImages[currentImageIndex]} alt="Banner" style={{ width: "100%" }} />
             <ArrowRightStyled src={ArrowRight} alt="Right Arrow" onClick={handleRightArrowClick} />
             <DotsContainer>
-                {bannerImages.map((_, index) => (
-                    <Dot
-                        key={index}
-                        className={currentImageIndex === index ? 'active' : ''}
-                        onClick={() => setCurrentImageIndex(index)}
-                    />
-                ))}
-            </DotsContainer>
+                    {bannerImages.map((_, index) => (
+                        <Dot
+                            key={index}
+                            className={currentImageIndex === index ? 'active' : ''}
+                            onClick={() => setCurrentImageIndex(index)}
+                        />
+                    ))}
+                </DotsContainer>
+            </BannerContainer>
+            
             <HomeBox>
                 여기에 Home 꾸미기
             </HomeBox>
