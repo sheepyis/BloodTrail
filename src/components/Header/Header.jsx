@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import add_comment from "../../assets/images/add_comment.png";
 import notifications from "../../assets/images/notifications.png";
 import person from "../../assets/images/person.png";
+import logo from "../../assets/images/logo.png";
 
 const HeaderContainer = styled.div`
     width: 65%;
@@ -46,6 +47,11 @@ const IconImage = styled.img`
     cursor: pointer;
 `
 
+const LogoImage = styled.img`
+    width: 9.1vw;
+    cursor: pointer;
+`
+
 const Header = () => {
     return (
         <div className="Header" style={{
@@ -54,7 +60,9 @@ const Header = () => {
             justifyContent: "center"
         }}>
             <HeaderContainer>
-                <HeaderP to="/">BLOODTRAIL</HeaderP>
+                <Link to="/">
+                    <LogoImage src={logo} alt="logo"/>
+                </Link>
                 <HeaderP2 to="/blood">지정헌혈</HeaderP2>
                 <HeaderP2 to="/community">커뮤니티</HeaderP2>
                 <HeaderP2 to="/crew">헌혈크루</HeaderP2>
