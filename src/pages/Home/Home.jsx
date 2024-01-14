@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import Dday from "../../components/Dday/Dday";
 import Kakao from "../../api/Kakao";
 
+
 const HomeContainer = styled.div`
     width: 100%;
     display: flex;
