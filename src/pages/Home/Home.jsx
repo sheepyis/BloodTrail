@@ -8,6 +8,7 @@ import Banner3 from "../../assets/images/image 48.png";
 import ArrowRight from "../../assets/images/arrow=right.png";
 import { useEffect } from "react";
 import Dday from "../../components/Dday/Dday";
+import Kakao from "../../api/Kakao";
 
 const HomeContainer = styled.div`
     width: 100%;
@@ -115,6 +116,7 @@ const Home = () => {
             
             <HomeBox>
                 <Dday/>
+                <Kakao />
             </HomeBox>
         </HomeContainer>
     )
