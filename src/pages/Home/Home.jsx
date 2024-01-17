@@ -48,7 +48,6 @@ const Dot = styled.span`
     cursor: pointer;
     background-size: cover;
 
-   
     &.active {
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="5" fill="%23E95458"/></svg>');
     }
@@ -74,8 +73,7 @@ const ArrowRightStyled =styled (StyledArrow)`
 
 const HomeBox = styled.div`
     width: 65%;
-    margin: 3.0208vw 0 5.1042vw 0;
-    
+    margin: 3.0208vw 0 5.1042vw 0;    
 `
 
 const rankingData = [
@@ -115,16 +113,11 @@ const Home = () => {
 
     return (
         <HomeContainer>
-            
-            <img src={Banner} alt="Banner" style={{width: "100%"}}/>
-            <Ranking rankingData={rankingData} />
-            <Board postsData={hotPost.slice(0,4)} />
-            
             <BannerContainer> 
                 <ArrowLeftStyled src={ArrowLeft} alt="Left Arrow" onClick={handleLeftArrowClick}/>
-                <img src={bannerImages[currentImageIndex]} alt="Banner" style={{ width: "100%" }} />
-            <ArrowRightStyled src={ArrowRight} alt="Right Arrow" onClick={handleRightArrowClick} />
-            <DotsContainer>
+                    <img src={bannerImages[currentImageIndex]} alt="Banner" style={{ width: "100%" }} />
+                <ArrowRightStyled src={ArrowRight} alt="Right Arrow" onClick={handleRightArrowClick} />
+                <DotsContainer>
                     {bannerImages.map((_, index) => (
                         <Dot
                             key={index}
@@ -134,6 +127,8 @@ const Home = () => {
                     ))}
                 </DotsContainer>
             </BannerContainer>
+            <Ranking rankingData={rankingData} />
+            <Board postsData={hotPost.slice(0,4)} />
             
             <HomeBox>
                 <Dday/>
