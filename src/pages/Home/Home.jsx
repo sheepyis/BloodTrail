@@ -8,7 +8,7 @@ import Banner3 from "../../assets/images/image 48.png";
 import ArrowRight from "../../assets/images/arrow=right.png";
 import { useEffect } from "react";
 import Dday from "../../components/Dday/Dday";
-import Kakao from "../../api/kakao";
+import Kakao from "../../api/Kakao";
 import Ranking from "../../components/Ranking/Ranking";
 import Board from "../../components/Board/Board";
 
