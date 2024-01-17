@@ -13,6 +13,8 @@ const Kakao = () => {
     const [map, setMap] = useState(null);
     const [places, setPlaces] = useState([]);
     const [infoWindow, setInfoWindow] = useState(null);
+    const [currentLocationCircle, setCurrentLocationCircle] = useState(null);
+    const [searchedLocationCircle, setSearchedLocationCircle] = useState(null);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -29,16 +31,18 @@ const Kakao = () => {
 
             setMap(map);
 
-            const initialMarker = new window.kakao.maps.Marker({
-                position: new kakao.maps.LatLng(latitude, longitude),
-                icon: new window.kakao.maps.MarkerImage(
-                    'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png',
-                    new window.kakao.maps.Size(35, 35),
-                    { offset: new window.kakao.maps.Point(17, 35) }
-                )
+            const currentLocationCircle = new kakao.maps.Circle({
+                center: new kakao.maps.LatLng(latitude, longitude),
+                radius: 10000,
+                strokeWeight: 1,
+                strokeColor: '#FF5733',
+                strokeOpacity: 0.7,
+                fillColor: '#FF5733',
+                fillOpacity: 0.3,
             });
 
-            initialMarker.setMap(map);
+            currentLocationCircle.setMap(map);
+            setCurrentLocationCircle(currentLocationCircle);
         });
     }, []);
 
@@ -51,10 +55,22 @@ const Kakao = () => {
                     const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
                     map.setCenter(coords);
 
-                    const marker = new kakao.maps.Marker({
-                        position: coords,
-                        map: map,
+                    if (searchedLocationCircle) {
+                        searchedLocationCircle.setMap(null);
+                    }
+
+                    const newSearchedLocationCircle = new kakao.maps.Circle({
+                        center: coords,
+                        radius: 10000,
+                        strokeWeight: 1,
+                        strokeColor: '#FF5733',
+                        strokeOpacity: 0.7,
+                        fillColor: '#FF5733',
+                        fillOpacity: 0.3,
                     });
+
+                    newSearchedLocationCircle.setMap(map);
+                    setSearchedLocationCircle(newSearchedLocationCircle);
 
                     const placesService = new kakao.maps.services.Places();
                     placesService.keywordSearch(
@@ -71,8 +87,13 @@ const Kakao = () => {
                     );
                 }
             });
+
+            if (currentLocationCircle) {
+                currentLocationCircle.setMap(null);
+            }
         }
     };
+
 
     const handleMarkerClick = (place) => {
         const content = `<div>${place.place_name}</div>`;
@@ -99,7 +120,7 @@ const Kakao = () => {
                         'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png',
                         new window.kakao.maps.Size(35, 35),
                         { offset: new window.kakao.maps.Point(17, 35) }
-                    )
+                    ),
                 });
                 marker.setMap(map);
 
