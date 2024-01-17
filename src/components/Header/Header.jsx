@@ -2,11 +2,17 @@ import styled from "styled-components";
 import colors from "../../styles/color";
 import { Link, NavLink } from "react-router-dom";
 import add_comment from "../../assets/images/add_comment.png";
-import notifications from "../../assets/images/notifications.png";
+import notification1 from "../../assets/images/notification1.png"
+import notification2 from "../../assets/images/notification2.png"
 import person from "../../assets/images/person.png";
 import logo from "../../assets/images/logo.png";
+import React,{useState} from "react";
+import Comment from "./Comment/Comment";
+import Notifications from "./Notifications/Notifications";
+
 
 const HeaderContainer = styled.div`
+    position: relative;
     width: 65%;
     height: 5.7292vw;
     display: flex;
@@ -21,6 +27,7 @@ const HeaderP = styled(Link)`
 `
 
 const HeaderP2 = styled(NavLink)`
+
     font-weight: 400;
     font-size: 0.9375vw;
 
@@ -45,6 +52,7 @@ const IconContainer = styled.div`
 
 const IconImage = styled.img`
     cursor: pointer;
+
 `
 
 const LogoImage = styled.img`
@@ -52,24 +60,64 @@ const LogoImage = styled.img`
     cursor: pointer;
 `
 
-const Header = () => {
+const Header = ({onHover}) => {
+
+    const [notificationsModal,setNotifications] = useState(false);
+
+    const handleNotificationOpen =()=>{
+        setNotifications(true);
+        
+    }
+    const handleNotificationClose=()=>{
+        setNotifications(false);
+        
+    }
+
     return (
         <div className="Header" style={{
             width: "100%", 
             display: "flex", 
-            justifyContent: "center"
-        }}>
+            justifyContent: "center",
+            
+        }}
+            
+        >
             <HeaderContainer>
                 <Link to="/">
                     <LogoImage src={logo} alt="logo"/>
                 </Link>
-                <HeaderP2 to="/blood">지정헌혈</HeaderP2>
-                <HeaderP2 to="/community">커뮤니티</HeaderP2>
-                <HeaderP2 to="/crew">헌혈크루</HeaderP2>
-                <HeaderP2 to="/live">라이브</HeaderP2>
+                <HeaderP2 
+                    to="/blood"
+                    onMouseEnter={()=>{ onHover('blood')}}>
+                    지정헌혈
+                </HeaderP2>
+                <HeaderP2 
+                    to="/community"
+                    onMouseEnter={()=>{ onHover('community')}}>
+                    커뮤니티
+                </HeaderP2>
+                <HeaderP2 
+                    to="/crew"
+                    onMouseEnter={()=>{ onHover('crew')}}>
+                    헌혈크루
+                </HeaderP2>
+                <HeaderP2 
+                    to="/live"
+                    onMouseEnter={()=>{ onHover('live')}}>
+                    라이브
+                </HeaderP2>
                 <IconContainer>
-                    <IconImage src={add_comment} alt="comment" style={{width: "1.5625vw", height: "1.5625vw"}}/>
-                    <IconImage src={notifications} alt="notifications" style={{width: "1.8229vw", height: "1.8229vw", marginLeft: "0.3vw"}}/>
+
+                    <IconImage src={add_comment} alt="comment" style={{width: "1.5625vw", height: "1.5625vw"}} />
+                    
+                    <IconImage src={notification1} alt="notifications" style={{width: "1.8229vw", height: "1.8229vw", marginLeft: "0.3vw"}} 
+                                onClick={handleNotificationOpen}/>
+                                {notificationsModal &&( 
+                                    <div onClick={handleNotificationClose}>
+                                        <Notifications />
+                                    </div>)} 
+                                    {/* notification 모달 클릭시 사라짐, 클릭시 헤더의 아이콘 위치가 움직이는 상황 발생.. */}
+
                     <IconImage src={person} alt="person" style={{width: "2.0833vw", height: "2.0833vw", marginTop: "-0.5vw"}}/>
                 </IconContainer>
             </HeaderContainer>
