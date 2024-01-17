@@ -9,6 +9,8 @@ import ArrowRight from "../../assets/images/arrow=right.png";
 import { useEffect } from "react";
 import Dday from "../../components/Dday/Dday";
 import Kakao from "../../api/Kakao";
+import Ranking from "../../components/Ranking/Ranking";
+import Board from "../../components/Board/Board";
 
 
 const HomeContainer = styled.div`
@@ -70,14 +72,17 @@ const ArrowRightStyled =styled (StyledArrow)`
    
 `
 
-
 const HomeBox = styled.div`
     width: 65%;
     margin: 3.0208vw 0 5.1042vw 0;
     
 `
 
-
+const rankingData = [
+  { id: 1, rank: 1, name: "홍길동", score: 1000 },
+  // 수정 필요 {} 이어도 작동 가능, 데이터 어떻게 주고받을 것인지?
+  // 2개의 데이터 있으면 랭킹이 두 번 반복된다
+];
 
 const Home = () => {
 
@@ -100,6 +105,11 @@ const Home = () => {
 
     return (
         <HomeContainer>
+            
+            <img src={Banner} alt="Banner" style={{width: "100%"}}/>
+            <Ranking rankingData={rankingData} />
+            <Board postsData={hotPost.slice(0,4)} />
+            
             <BannerContainer> 
                 <ArrowLeftStyled src={ArrowLeft} alt="Left Arrow" onClick={handleLeftArrowClick}/>
                 <img src={bannerImages[currentImageIndex]} alt="Banner" style={{ width: "100%" }} />
