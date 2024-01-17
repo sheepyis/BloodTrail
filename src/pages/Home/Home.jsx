@@ -84,6 +84,16 @@ const rankingData = [
   // 2개의 데이터 있으면 랭킹이 두 번 반복된다
 ];
 
+const hotPost = [
+  { id: 1, title: "게시물 제목", content: "게시물 내용", username: "asdfasd", date:"23.12.00" },
+  { id: 1, title: "게시물 제목11", content: "게시FFASDF FFFFWEVBBAS ASDGGAWE ASDFCCCC  FFFCCCCCCCCCCC CCCCCCCCCCCCCCCCCCCCCCCCCCCCSSSSSSSSSSSSSSCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCFAFGHHC  FF22EFFFFFFFFF 내용물 내용", username: "asdfasd", date:"23.12.00" },
+  { id: 1, title: "게시물 ssssssssssssssssssssssssssssssssssssss제목22", content: "게시물 내용", username: "asdfasd", date:"23.12.00" },
+  { id: 1, title: "게시물 제목3", content: "게시물 내용", username: "asdfasd", date:"23.12.00" },
+  { id: 1, title: "게시물 제목44", content: "게시물 내용", username: "asdfasd", date:"23.12.00" },
+  { id: 1, title: "게시물 제목5", content: "FFFFF", username: "asdfasd", date:"23.12.00" },
+];
+
+
 const Home = () => {
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);

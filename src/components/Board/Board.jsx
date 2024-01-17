@@ -32,6 +32,7 @@ const MoreText = styled.div`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr); // 2개의 열로 설정
+  margin-bottom: 120px;
 `;
 
 const Board = ({ postsData }) => {
