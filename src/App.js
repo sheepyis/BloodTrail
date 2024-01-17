@@ -11,7 +11,6 @@ import Live from "./pages/Live/Live";
 import NotFound from "./pages/NotFound/NotFound";
 
 
-
 function App() {
 
   const [hoveredComponent, setHoveredComponent] = useState(null);
