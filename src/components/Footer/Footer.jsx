@@ -10,28 +10,28 @@ const FooterContainer = styled.div`
 `
 
 const FooterBox = styled.div`
-    width: 65%;
+    width: 70%;
     padding-top: 1%;
     padding-bottom: 1%;
     align-items: center;
-    justify-content: space-between;
-    margin: 0 auto; //중앙정렬
+    justify-content: space-evenly;
+
  
 &.Blood{
     position: relative;
-    left: 4.5%;
+    left: 12.5%;
 }
 &.Community{
     position: relative;
-    left: 15.5%
+    left: 19%
 }
 &.Crew{
     position: relative;
-    left: 26%;
+    left: 25.5%;
 }
 &.Live{
     position: relative;
-    left: 36.7%;
+    left: 32.3%;
 }
 `
 
