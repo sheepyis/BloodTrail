@@ -13,17 +13,22 @@ import Notifications from "./Notifications/Notifications";
 
 const HeaderContainer = styled.div`
     position: relative;
-    width: 65%;
+    width: 100%;
     height: 5.7292vw;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 `
-const HeaderP = styled(Link)`
-    font-weight: 800;
-    font-size: 1.25vw;
-    color: ${colors.logoRed};
-    letter-spacing: -0.02em;
+const HeaderMenu = styled.div`
+    position: relative;
+    padding-left: 8vw;
+    padding-right:40vw;
+    display:flex;
+    width: 70%;
+    height: 5.7292vw;
+    align-items: center;
+    justify-content: space-between;
+    
 `
 
 const HeaderP2 = styled(NavLink)`
@@ -45,13 +50,15 @@ const HeaderP2 = styled(NavLink)`
 `
 
 const IconContainer = styled.div`
+    width: 7%;
     display: flex;
     align-items: center;
-    gap: 0.6771vw;
+    justify-content:space-between;
 `
 
 const IconImage = styled.img`
     cursor: pointer;
+    
 
 `
 
@@ -68,8 +75,10 @@ const Header = ({onHover}) => {
         setNotifications(true);
         
     }
-    const handleNotificationClose=()=>{
+    const handleNotificationClose=(e)=>{
+        // if (e.className ==("modalOutside")) {
         setNotifications(false);
+        // console.log("망러ㅏㅓ런");}
         
     }
 
@@ -84,8 +93,9 @@ const Header = ({onHover}) => {
         >
             <HeaderContainer>
                 <Link to="/">
-                    <LogoImage src={logo} alt="logo"/>
+                    <LogoImage src={logo} alt="logo" />
                 </Link>
+                <HeaderMenu>
                 <HeaderP2 
                     to="/blood"
                     onMouseEnter={()=>{ onHover('blood')}}>
@@ -106,6 +116,7 @@ const Header = ({onHover}) => {
                     onMouseEnter={()=>{ onHover('live')}}>
                     라이브
                 </HeaderP2>
+                </HeaderMenu>
                 <IconContainer>
 
                     <IconImage src={add_comment} alt="comment" style={{width: "1.5625vw", height: "1.5625vw"}} />
@@ -113,14 +124,14 @@ const Header = ({onHover}) => {
                     <IconImage src={notification1} alt="notifications" style={{width: "1.8229vw", height: "1.8229vw", marginLeft: "0.3vw"}} 
                                 onClick={handleNotificationOpen}/>
                                 {notificationsModal &&( 
-                                    <div onClick={handleNotificationClose}>
+                                    <div className ="modalOutside" onClick={handleNotificationClose}>
                                         <Notifications />
                                     </div>)} 
                                     {/* notification 모달 클릭시 사라짐, 클릭시 헤더의 아이콘 위치가 움직이는 상황 발생.. */}
 
                     <IconImage src={person} alt="person" style={{width: "2.0833vw", height: "2.0833vw", marginTop: "-0.5vw"}}/>
                 </IconContainer>
-            </HeaderContainer>
+            </HeaderContainer>N
         </div>
     )
 }
