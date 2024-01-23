@@ -52,7 +52,7 @@ const MarkerDiv = styled.div`
     z-index: 4;
     background-color: ${colors.markerDiv};
     right: 0;
-    margin-right: 17.2vw;
+    margin-right: 17.5vw;
 `
 
 const PlaceImage = styled.img`
