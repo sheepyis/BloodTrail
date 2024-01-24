@@ -4,34 +4,36 @@ import React from "react";
 
 
 const FooterContainer = styled.div`
+    position: absolute;
     background-color: ${colors.footerGray};
-    width: 100%;
-    z-index:0;
+    width: 100vw;
+    z-index:1;
 `
 
 const FooterBox = styled.div`
-    width: 70%;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    height: 16.5625vw;
+    width: 100vw;
+    padding-top: 1.5625vw;
+    padding-left: 18vw; // 360px로 설정시 headerMenu와 안맞아 임의로 줄임
     align-items: center;
     justify-content: space-evenly;
 
  
 &.Blood{
     position: relative;
-    left: 12.5%;
+    left: 0;
 }
 &.Community{
     position: relative;
-    left: 19%
+    left: 5.1667vw;
 }
 &.Crew{
     position: relative;
-    left: 25.5%;
+    left: 10.8vw;
 }
 &.Live{
     position: relative;
-    left: 32.3%;
+    left: 16.4vw;
 }
 `
 
@@ -40,7 +42,7 @@ const FooterP = styled.p`
 
     font-weight: 600;
     font-size: 0.8333vw;
-    padding: 0vw 10vw;
+    // padding: 0vw 10vw;
     margin: 1.5vw;
     flex-direction: column;
 
