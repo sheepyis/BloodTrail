@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../../../styles/color";
-import { Link, NavLink } from "react-router-dom";
 
 const NotificationContainer= styled.div`
-    position: fixed;
-    top: 11%;
-    right: 10%;
-    bottom: 10%;
-    left: 55%;
-    width: 25vw;
-    height: 40vw;
-    border-radius: 5px;
-    border: 1px solid var(--text-40, rgba(12, 11, 44, 0.40));
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 4.1146vw;
+    right: 4.4792vw;
+    left: 70.2083vw;
+    width: 26.5625vw;
+    height: 37.6042vw;
+    border-radius: 0.2604vw;
+    // border: 0.0694vw solid var(--text-40, rgba(12, 11, 44, 0.40));
     background: #FFF;
     z-index:2;
 `
@@ -24,10 +24,10 @@ const NotificationTitle = styled.div`
     font-size: 1.25vw;
     font-style: normal;
     line-height: normal;
-    width: 25vw;
-    height: 4vw;
-    border-bottom: 1px solid var(--text-40, rgba(12, 11, 44, 0.40));
-    padding:4%;
+    width: 26.5625vw;
+    height: 3.5417vw;
+    padding: 0.9896vw 0vw 0vw 0vw;
+    text-align: center;
 `
 
 const NotificationBox = styled.div`
@@ -35,18 +35,19 @@ const NotificationBox = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    width: 25vw;
+    width: 26.5625vw;
+
 `
 
 const NotificationP =styled.div`
-    width: 25vw;
-    height: 3vw;
-    border-bottom: 1px solid var(--text-40, rgba(12, 11, 44, 0.40));
+    width: 26.5625vw;
+    height: 3.1250vw;
     color: var(--text, #0C0B2C);
     font-family: Pretendard;
     font-size: 0.9375vw;
-    padding:4%;
+    padding: 1.0417vw 0vw 1.0417vw 1.2500vw;
 
+   
 &:hover {
     color: ${colors.mainRed};
 }

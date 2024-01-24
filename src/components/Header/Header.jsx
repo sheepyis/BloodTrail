@@ -9,33 +9,37 @@ import logo from "../../assets/images/logo.png";
 import React,{useState} from "react";
 import Comment from "./Comment/Comment";
 import Notifications from "./Notifications/Notifications";
+import Note from "./Note/Note";
 
 
 const HeaderContainer = styled.div`
     position: relative;
     width: 100%;
-    height: 5.7292vw;
+    height: 3.4375vw;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+`
+const MainHeader = styled.div`
+    padding:0.2604vw 0vw 0.2604vw 1.8229vw;
+    align-items: center;
 `
 const HeaderMenu = styled.div`
     position: relative;
-    padding-left: 8vw;
-    padding-right:40vw;
+    padding-left: 7.4479vw;
+    padding-right:52.5625vw;
     display:flex;
-    width: 70%;
-    height: 5.7292vw;
+    height: 3.4375vw;
     align-items: center;
     justify-content: space-between;
-    
 `
 
 const HeaderP2 = styled(NavLink)`
 
+
     font-weight: 400;
     font-size: 0.9375vw;
-
+    padding: 1.1979vw 0.9375vw 0.5208vw  1.1979vw;
+    
     &:hover {
         font-weight: 700;
     }
@@ -50,7 +54,7 @@ const HeaderP2 = styled(NavLink)`
 `
 
 const IconContainer = styled.div`
-    width: 7%;
+    padding-right: 2.5521vw;
     display: flex;
     align-items: center;
     justify-content:space-between;
@@ -67,19 +71,26 @@ const LogoImage = styled.img`
     cursor: pointer;
 `
 
-const Header = ({onHover}) => {
+const Header = ({onHover}) => { 
 
     const [notificationsModal,setNotifications] = useState(false);
+    const [NoteModal,setNote] = useState(false);
 
-    const handleNotificationOpen =()=>{
-        setNotifications(true);
-        
+    const handleNoteOpen =()=>{
+        setNote(true);
     }
-    const handleNotificationClose=(e)=>{
-        // if (e.className ==("modalOutside")) {
-        setNotifications(false);
-        // console.log("망러ㅏㅓ런");}
-        
+
+    const handleNoteClose =()=>{
+        setNote(false);
+    }
+
+
+    const handleNotificationOpen =()=>{ // 알림아이콘 누르면 모달 뜨도록
+        setNotifications(true);
+    }
+
+    const handleNotificationClose =()=>{ // 닫기
+        setNotifications(false); 
     }
 
     return (
@@ -92,46 +103,54 @@ const Header = ({onHover}) => {
             
         >
             <HeaderContainer>
-                <Link to="/">
-                    <LogoImage src={logo} alt="logo" />
-                </Link>
+                <MainHeader>
+                    <Link to="/">
+                        <LogoImage src={logo} alt="logo" />
+                    </Link>
+                </MainHeader>
+                
                 <HeaderMenu>
-                <HeaderP2 
-                    to="/blood"
-                    onMouseEnter={()=>{ onHover('blood')}}>
-                    지정헌혈
-                </HeaderP2>
-                <HeaderP2 
-                    to="/community"
-                    onMouseEnter={()=>{ onHover('community')}}>
-                    커뮤니티
-                </HeaderP2>
-                <HeaderP2 
-                    to="/crew"
-                    onMouseEnter={()=>{ onHover('crew')}}>
-                    헌혈크루
-                </HeaderP2>
-                <HeaderP2 
-                    to="/live"
-                    onMouseEnter={()=>{ onHover('live')}}>
-                    라이브
-                </HeaderP2>
+                    <HeaderP2 
+                        to="/blood"
+                        onMouseEnter={()=>{ onHover('blood')}}>
+                        지정헌혈
+                    </HeaderP2>
+                    <HeaderP2 
+                        to="/community"
+                        onMouseEnter={()=>{ onHover('community')}}>
+                        커뮤니티
+                    </HeaderP2>
+                    <HeaderP2 
+                        to="/crew"
+                        onMouseEnter={()=>{ onHover('crew')}}>
+                        헌혈크루
+                    </HeaderP2>
+                    <HeaderP2 
+                        to="/live"
+                        onMouseEnter={()=>{ onHover('live')}}>
+                        라이브
+                    </HeaderP2>
                 </HeaderMenu>
                 <IconContainer>
 
-                    <IconImage src={add_comment} alt="comment" style={{width: "1.5625vw", height: "1.5625vw"}} />
+                    <IconImage src={add_comment} alt="comment" style={{width: "1.5625vw", height: "1.5625vw"}} 
+                                onClick={handleNoteOpen}/>
+                                {NoteModal &&(  // 클릭시 모달생성
+                                    <div className ="modalOutside" onClick={handleNoteClose}> 
+                                        <Note/>
+                                    </div>)} 
                     
                     <IconImage src={notification1} alt="notifications" style={{width: "1.8229vw", height: "1.8229vw", marginLeft: "0.3vw"}} 
                                 onClick={handleNotificationOpen}/>
-                                {notificationsModal &&( 
-                                    <div className ="modalOutside" onClick={handleNotificationClose}>
+                                {notificationsModal &&(  // 클릭시 모달생성
+                                    <div className ="modalOutside" onClick={handleNotificationClose}> 
                                         <Notifications />
                                     </div>)} 
                                     {/* notification 모달 클릭시 사라짐, 클릭시 헤더의 아이콘 위치가 움직이는 상황 발생.. */}
 
                     <IconImage src={person} alt="person" style={{width: "2.0833vw", height: "2.0833vw", marginTop: "-0.5vw"}}/>
                 </IconContainer>
-            </HeaderContainer>N
+            </HeaderContainer>
         </div>
     )
 }
