@@ -1,5 +1,4 @@
 import React from 'react';
-import RankingData from './RankingItem';
 import styled from 'styled-components';
 
 const Ranktext = styled.div`
@@ -106,7 +105,6 @@ const IndividualPoints = ({ data }) => (
   </PointCategory>
 );
 
-
 // Crew Points Component
 const CrewPoints = ({ data }) => (
   <PointCategory>
@@ -125,32 +123,21 @@ const CrewPoints = ({ data }) => (
 );
 
 const Ranking = ({ rankingData }) => {
-  const personalData = rankingData.filter(item => item.type === 'personal');
-  const crewData = rankingData.filter(item => item.type === 'crew');
+  const personalPointsData = rankingData.filter(item => item.type === 'personal');
+  const crewPointsData = rankingData.filter(item => item.type === 'crew');
   return (
     <div className="ranking-container">
       <Ranktext>헌혈 랭킹</Ranktext>
-      
       <FlexContainer>
         <div>
-        <Ranktext2>개인 헌혈 포인트</Ranktext2>
-        
-        <IndividualPoints data={personalData.slice(0,3)} />
-        {personalData.map(data => (
-          <IndividualPoints key={data.id} rank={data.rank} name={data.name} score={data.score} />
-        ))}
+          <Ranktext2>개인 헌혈 포인트</Ranktext2>
+          <IndividualPoints data={personalPointsData.slice(0,3)} />
         </div>
         <div>
-        <Ranktext2>크루 헌혈 포인트</Ranktext2>
-        {crewData.map(data => (
-          <RankingData key={data.id} rank={data.rank} name={data.name} score={data.score} />
-        ))}
+          <Ranktext2>크루 헌혈 포인트</Ranktext2>
+          <CrewPoints data={crewPointsData.slice(0,3)} />
         </div>
       </FlexContainer>
-
-      {Array.isArray(rankingData) && rankingData.map(data => (
-        <RankingData key={data.id} rank={data.rank} name={data.name} score={data.score} />
-        ))}
     </div>
   );
 };

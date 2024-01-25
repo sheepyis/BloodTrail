@@ -78,9 +78,14 @@ const HomeBox = styled.div`
 `
 
 const rankingData = [
-  { id: 1, rank: 1, name: "홍길동", score: 1000 },
-  // 수정 필요 {} 이어도 작동 가능, 데이터 어떻게 주고받을 것인지?
-  // 2개의 데이터 있으면 랭킹이 두 번 반복된다
+  { type:'personal', id: 1, rank: 1, name: 'User name', score: 100000 },
+  { type:'personal', id: 2, rank: 2, name: 'User name', score: 1000 },
+  { type:'personal', id: 3, rank: 3, name: 'User name', score: 100 },
+  { type:'personal', id: 4, rank: 3, name: 'User name', score: 100 },
+  { type:'crew', id: 11, rank: 1, name: 'Crew name', score: 20000 },
+  { type:'crew', id: 22, rank: 2, name: 'Crew name', score: 2000 },
+  { type:'crew', id: 23, rank: 3, name: 'Crew name', score: 200 },
+  { type:'crew', id: 456, rank: 3, name: 'User name', score: 100 },
 ];
 
 const hotPost = [

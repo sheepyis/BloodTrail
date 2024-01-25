@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 const BoardTop = styled.div`
   display: flex;
   justify-content: space-between; // 양쪽 끝에 요소를 배치
@@ -33,6 +32,7 @@ const GridContainer = styled.div`
   grid-template-columns: repeat(2, 1fr); // 2개의 열로 설정
   margin-bottom: 120px;
 `;
+
 const PostContainer = styled.div`
   width: 572px;
   height: 169px;
@@ -66,7 +66,7 @@ const HotLabelText = styled.span`
   font-size: 12px;
   font-style: bold;
   font-weight: 700;
-`
+`;
 
 const TitleAndLabelContainer = styled.div`
   display: flex; // flexbox 레이아웃 적용
@@ -88,7 +88,7 @@ const Placeholder = styled.div`
 const PostTitle = styled.h3`
   font-size: 18px;
   color: #17191A;
-`
+`;
 
 const PostContent = styled.p`
   font-size: 15px; // 필요에 따라 폰트 크기를 조정하세요.
@@ -109,13 +109,15 @@ const PostMeta = styled.div`
   color: #9E9E9E;
   display: flex;
   justify-content: space-between;
-`
+`;
+
 const PostUser = styled.div`
   text-align: left;
-`
+`;
+
 const PostDate = styled.div`
   text-align: right;
-`
+`;
 
 const PostDetails = styled.div`
   display: flex;
@@ -124,7 +126,6 @@ const PostDetails = styled.div`
   flex: 1; // 남은 공간을 모두 차지하도록 설정
   margin-right: 20px; // Placeholder와의 간격을 위해 오른쪽 마진 추가
 `;
-
 
 const HotPost = ({ title, content, username, date }) => {
   return (
