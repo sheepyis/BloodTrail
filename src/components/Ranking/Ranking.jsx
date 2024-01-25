@@ -11,11 +11,22 @@ const Ranktext = styled.div`
 
 const FlexContainer = styled.div`
   display: flex;
-  justify-content: space-between; // This will space out the children components
-  align-items: flex-start; // This aligns the children at their start
-  margin: 20px 0; // Adjust as needed for spacing around the containerg
-  gap : 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 3.0208vw 5.1042vw 0;
+  gap: 20px;
+  max-width: 1200px; // 최대 너비 설정
+  margin-left: auto; // 중앙 정렬을 위한 자동 왼쪽 마진
+  margin-right: auto; // 중앙 정렬을 위한 자동 오른쪽 마진
+
+  @media (max-width: 1200px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%; // 너비를 100%로 조정
+  }
 `;
+
 
 const Ranktext2 = styled.div`
   font-size: 18px;

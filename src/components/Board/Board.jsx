@@ -29,11 +29,22 @@ const MoreText = styled.div`
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr); // 2개의 열로 설정
+  grid-template-columns: repeat(2, 1fr); // 2개의 열
+  grid-gap: 20px; // 게시글 사이의 공간
   margin-bottom: 120px;
+  max-width: 1200px; // 최대 너비 설정
+  margin-left: auto; // 중앙 정렬을 위한 자동 왼쪽 마진
+  margin-right: auto; // 중앙 정렬을 위한 자동 오른쪽 마진
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    max-width: 100%; // 너비를 100%로 조정
+  }
 `;
 
 const PostContainer = styled.div`
+margin: 8px auto; // 상하 마진 조정 및 자동 가로 마진으로 중앙 정렬
   width: 572px;
   height: 169px;
   background-color: #FFFFFF; // 자유롭게 변경 가능
@@ -148,7 +159,8 @@ const HotPost = ({ title, content, username, date }) => {
   );
 };
 
-const Board = ({ postsData }) => {
+const Board = ({ postsDatas }) => {
+  const postsData = postsDatas.slice(0,4);
   return (
     <div className="board-container">
       <BoardTop>

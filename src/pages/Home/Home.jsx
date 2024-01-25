@@ -116,7 +116,7 @@ const Home = () => {
             
             <HomeBox>
                 <Ranking rankingData={rankingData} />
-                <Board postsData={hotPost.slice(0,4)} />
+                <Board postsDatas={hotPost} />
                 <Dday/>
                 <Kakao />
             </HomeBox>
