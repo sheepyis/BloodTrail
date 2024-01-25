@@ -82,18 +82,18 @@ const PointScoreContainer = styled.div`
 `;
 
 const personalPointsData = [
-  { id: 1, rank: 1, name: 'User name', score: 100000 },
-  { id: 2, rank: 2, name: 'User name', score: 1000 },
-  { id: 3, rank: 3, name: 'User name', score: 100 },
-  { id: 4, rank: 3, name: 'User name', score: 100 },
+  { type:'personal', id: 1, rank: 1, name: 'User name', score: 100000 },
+  { type:'personal', id: 2, rank: 2, name: 'User name', score: 1000 },
+  { type:'personal', id: 3, rank: 3, name: 'User name', score: 100 },
+  { type:'personal', id: 4, rank: 3, name: 'User name', score: 100 },
   // ... more data
 ];
 
 const crewPointsData = [
-  { id: 11, rank: 1, name: 'Crew name', score: 20000 },
-  { id: 22, rank: 2, name: 'Crew name', score: 2000 },
-  { id: 23, rank: 3, name: 'Crew name', score: 200 },
-  { id: 456, rank: 3, name: 'User name', score: 100 },
+  { type:'crew', id: 11, rank: 1, name: 'Crew name', score: 20000 },
+  { type:'crew', id: 22, rank: 2, name: 'Crew name', score: 2000 },
+  { type:'crew', id: 23, rank: 3, name: 'Crew name', score: 200 },
+  { type:'crew', id: 456, rank: 3, name: 'User name', score: 100 },
   // ... more data
 ];
 
@@ -133,9 +133,8 @@ const CrewPoints = ({ data }) => (
 );
 
 // Usage in a component
-const YourComponent = () => {
+const Ranking = ({}) => {
   return (
-    <>
     <FlexContainer>
       <div>
       <Ranktext>개인 헌혈 포인트</Ranktext>
@@ -146,8 +145,7 @@ const YourComponent = () => {
       <CrewPoints data={crewPointsData.slice(0,3)} />
       </div>
     </FlexContainer>
-    </>
   );
 };
 
-export default YourComponent;
+export default Ranking;
