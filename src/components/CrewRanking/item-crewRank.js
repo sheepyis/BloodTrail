@@ -32,7 +32,7 @@ const CrewRankP3 = styled.p`
     color: ${colors.crewGray3};
 `
 
-// 1위 크루의 포인트 부분 색 변화가 안됨
+// 1위 크루의 포인트 부분 색 변화 안됨
 const CrewRankP4 = styled.p`
     font-weight: 700;
     font-size: 0.9vw;

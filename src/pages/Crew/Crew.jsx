@@ -6,11 +6,13 @@ import SortBoxYes from "../../assets/images/sortbox_yes.png";
 import ArrowDown from "../../assets/images/arrow-down.png";
 import MyCrew from "../../components/MyCrew/MyCrew";
 import ListCrewRank from "../../components/CrewRanking/list-crewRank";
+import ListCrew from "../../components/Crew/list-crew";
 
 const CrewContainer = styled.div`
     width: 100%;
     display: flex;
     padding-top: 0.7vw;
+    margin-bottom: 2vw;
 `
 
 const CrewP = styled.p`
@@ -71,7 +73,7 @@ const Crew = () => {
                 <CrewP2>헌혈 크루 찾기</CrewP2>
             </div>
 
-            <div className="right" style={{width: "55%"}}>
+            <div className="right" style={{width: "55%", background: "pink"}}>
                 <RightTop>
                     <CrewP3 to="/">홈</CrewP3>
                     <CrewP3>{">"}</CrewP3>
@@ -100,6 +102,7 @@ const Crew = () => {
                 <ListCrewRank/>
                 
                 <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>헌혈 크루</CrewP>
+                <ListCrew/>
             </div>
         </CrewContainer>
     )

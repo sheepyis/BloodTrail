@@ -53,7 +53,7 @@ const MyCrew = () => {
             {myCrewData ? (
                 <div className="crewBox" style={{ display: 'flex', gap: '0.65vw', alignItems: 'center' }}>
                     <img src={Profile} alt="profile" style={{ width: '2vw', height: '2vw' }} />
-                    <div className="crewName" style={{ display: 'flex', flexDirection: 'column', gap: '0.1vw', maxWidth: "11.8vw" }}>
+                    <div className="crewName" style={{ display: 'flex', flexDirection: 'column', gap: '0.1vw', width: "11.8vw" }}>
                         <MyCrewP>{myCrewData.title}</MyCrewP>
                         <MyCrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{myCrewData.body}</MyCrewP>
                     </div>
