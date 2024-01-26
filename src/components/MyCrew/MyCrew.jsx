@@ -1,8 +1,8 @@
-// MyCrew.js
-import React from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/color';
 import Profile from '../../assets/images/profile.png';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
 const MyCrewDiv = styled.div`
     width: 30%;
@@ -23,7 +23,7 @@ const MyCrewP = styled.p`
 
 const ChatButton = styled.button`
     width: 100%;
-    height: 2vw;
+    min-height: 2vw;
     border: none;
     border-radius: 0.25vw;
     background-color: #fff6f7;
@@ -34,15 +34,28 @@ const ChatButton = styled.button`
     cursor: pointer;
 `;
 
-const MyCrew = ({ crewData }) => {
+const MyCrew = () => {
+    const [myCrewData, setMyCrewData] = useState(null);
+
+    useEffect(() => {
+        axios.get('https://jsonplaceholder.typicode.com/posts/3')
+            .then(response => {
+                setMyCrewData(response.data);
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, []);
+
     return (
         <MyCrewDiv>
-            {crewData ? (
-                <div className="crewBox" style={{ display: 'flex', background: 'pink', gap: '0.65vw', alignItems: 'center' }}>
+            {myCrewData ? (
+                <div className="crewBox" style={{ display: 'flex', gap: '0.65vw', alignItems: 'center' }}>
                     <img src={Profile} alt="profile" style={{ width: '2vw', height: '2vw' }} />
-                    <div className="crewName" style={{ display: 'flex', flexDirection: 'column', gap: '0.1vw', maxWidth: "11.8vw" }}>
-                        <MyCrewP>{crewData.title}</MyCrewP>
-                        <MyCrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{crewData.body}</MyCrewP>
+                    <div className="crewName" style={{ display: 'flex', flexDirection: 'column', gap: '0.1vw', width: "11.8vw" }}>
+                        <MyCrewP>{myCrewData.title}</MyCrewP>
+                        <MyCrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{myCrewData.body}</MyCrewP>
                     </div>
                 </div>
             ) : (
