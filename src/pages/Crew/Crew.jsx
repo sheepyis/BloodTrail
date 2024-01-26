@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
 import { NavLink } from "react-router-dom";
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SortBoxYes from "../../assets/images/sortbox_yes.png";
 import ArrowDown from "../../assets/images/arrow-down.png";
 import MyCrew from "../../components/MyCrew/MyCrew";
+import ListCrewRank from "../../components/CrewRanking/list-crewRank";
 
 const CrewContainer = styled.div`
     width: 100%;
@@ -64,19 +64,6 @@ const SortDiv = styled.div`
 `
 
 const Crew = () => { 
-    const [myCrewData, setMyCrewData] = useState(null);
-
-    useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/posts/2')
-            .then(response => {
-                setMyCrewData(response.data);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }, []);
-
     return (
         <CrewContainer>
             <div className="left" style={{width: "23.5%", paddingLeft: "3.85%"}}>
@@ -84,7 +71,7 @@ const Crew = () => {
                 <CrewP2>헌혈 크루 찾기</CrewP2>
             </div>
 
-            <div className="right" style={{width: "55%", backgroundColor: "pink"}}>
+            <div className="right" style={{width: "55%"}}>
                 <RightTop>
                     <CrewP3 to="/">홈</CrewP3>
                     <CrewP3>{">"}</CrewP3>
@@ -107,8 +94,11 @@ const Crew = () => {
                 <div className="crewBar" style={{width: "100%", height: "0.1vw", border: "none", backgroundColor: colors.crewGray}} />
 
                 <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>나의 헌혈 크루</CrewP>
-                <MyCrew crewData={myCrewData}/>
+                <MyCrew/>
+
                 <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>헌혈 크루 순위</CrewP>
+                <ListCrewRank/>
+                
                 <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>헌혈 크루</CrewP>
             </div>
         </CrewContainer>
