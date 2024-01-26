@@ -60,7 +60,7 @@ const ItemCrew = (props) => {
             <div className="crewBottomBox" style={{display: "flex", marginTop: "1vw", justifyContent: "space-between"}} >
                 <BottomBox style={{width: "4.1vw"}}>Point<CrewP2>{props.id}</CrewP2></BottomBox>
                 <BottomBox style={{width: "6.75vw"}}>헌혈 참여율<CrewP2>{props.id}</CrewP2>%</BottomBox>
-                <BottomBox style={{width: "4.75vw"}}>인원수<CrewP2>{props.id}</CrewP2>명</BottomBox>
+                <BottomBox style={{width: "4.75vw"}}>인원<CrewP2>{props.id}</CrewP2>명</BottomBox>
             </div>
         </StyleItem>
     )

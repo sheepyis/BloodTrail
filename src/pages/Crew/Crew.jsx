@@ -12,6 +12,7 @@ const CrewContainer = styled.div`
     width: 100%;
     display: flex;
     padding-top: 0.7vw;
+    margin-bottom: 2vw;
 `
 
 const CrewP = styled.p`
