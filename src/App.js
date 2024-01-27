@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import GlobalStyle from './styles/globalStyle';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+
 import Home from './pages/Home/Home';
 import Blood from './pages/Blood/Blood';
 import Community from './pages/Community/Community';
@@ -37,6 +38,7 @@ function App() {
           <Route path="blood" element={<Blood />} />
           <Route path="/community" element={<CommunityWrite />} />
           <Route path="/crew" element={<Crew />} />
+          <Route path="/crewupload" element={<CrewUpload />} />
           <Route path="/live" element={<Live />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
