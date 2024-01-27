@@ -258,6 +258,7 @@ const InputContent = styled.textarea`
 const EnrollContainer = styled.div`
   display: flex;
   justify-content: center;
+  text-align: center;
 `;
 const Enroll = styled.button`
   width: 18.6vw;
@@ -266,6 +267,9 @@ const Enroll = styled.button`
   background: var(--Primary-Red-200, #fff6f7);
   color: var(--Primary-Red-900, #e95458);
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   /* Body/SubTitle/Bold */
   font-family: Pretendard;
