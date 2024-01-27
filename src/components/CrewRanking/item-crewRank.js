@@ -4,6 +4,7 @@ import CrewImage from "../../assets/images/profile.png";
 
 const StyleItem = styled.div`
     width: 7.5vw;
+    height: 9.3vw;
     background-color: ${props => props.isFirstPlace ? colors.crewPink : colors.footerGray};
     border: none;
     border-radius: 0.25vw;
@@ -44,12 +45,12 @@ const ItemCrewRank = (props) => {
 
     return (
         <StyleItem isFirstPlace={isFirstPlace} key={id}>
-            <CrewRankP>{props.id}위</CrewRankP>
+            <CrewRankP>{id}위</CrewRankP>
             <img src={CrewImage} alt="crew" style={{width: "3vw", height: "3vw", marginTop: "0.5vw"}}/>
-            <CrewRankP2>{props.title}</CrewRankP2>
+            <CrewRankP2>{title}</CrewRankP2>
             <div className="PointBox" style={{display: "flex", justifyContent: "center", gap: "0.2vw", alignItems: "center", marginTop: "0.6vw"}} >
                 <CrewRankP3>Point</CrewRankP3>
-                <CrewRankP4>{props.point}점</CrewRankP4>
+                <CrewRankP4>{point}점</CrewRankP4>
             </div>
         </StyleItem>
     )

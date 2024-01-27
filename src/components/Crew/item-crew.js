@@ -4,6 +4,7 @@ import CrewImage from "../../assets/images/profile.png";
 
 const StyleItem = styled.div`
     width: 17vw;
+    height: 6.85vw;
     border: 0.05vw solid ${colors.lightGray};
     border-radius: 0.25vw;
     padding: 1vw;
@@ -37,30 +38,32 @@ const BottomBox = styled.div`
     border-radius: 5vw;
     color: ${colors.crewGray2};
     font-weight: 500;
-    font-size: 0.75vw;
+    font-size: 0.6vw;
 `
 
 const CrewP2 = styled.p`
     font-weight: 600;
-    font-size: 0.75vw;
+    font-size: 0.6vw;
     color: ${colors.crewGray};
 `
 
 const ItemCrew = (props) => {
+    const { id, name, introduce } = props;
+
     return (
-        <StyleItem key={props.id}>
+        <StyleItem key={id}>
             <div className="crewBox" style={{ display: 'flex', gap: '0.65vw', alignItems: 'center' }}>
                 <Crew src={CrewImage} alt="crew"/>
-                <div className="crewName" style={{ display: 'flex', flexDirection: 'column', gap: '0.1vw', width: "14vw" }}>
-                    <CrewP>{props.name}</CrewP>
-                    <CrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{props.introduce}</CrewP>
+                <div className="crewName" style={{ display: 'flex', flexDirection: 'column', gap: '0.1vw', maxWidth: "12vw" }}>
+                    <CrewP>{name}</CrewP>
+                    <CrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{introduce}</CrewP>
                 </div>
             </div>
 
             <div className="crewBottomBox" style={{display: "flex", marginTop: "1vw", justifyContent: "space-between"}} >
-                <BottomBox style={{width: "4.1vw"}}>Point<CrewP2>{props.id}</CrewP2></BottomBox>
-                <BottomBox style={{width: "6.75vw"}}>헌혈 참여율<CrewP2>{props.id}</CrewP2>%</BottomBox>
-                <BottomBox style={{width: "4.75vw"}}>인원<CrewP2>{props.id}</CrewP2>명</BottomBox>
+                <BottomBox style={{width: "4.1vw"}}>Point<CrewP2>{id}</CrewP2></BottomBox>
+                <BottomBox style={{width: "6.75vw"}}>헌혈참여율<CrewP2>{id}</CrewP2>%</BottomBox>
+                <BottomBox style={{width: "4.75vw"}}>인원<CrewP2>{id}</CrewP2>명</BottomBox>
             </div>
         </StyleItem>
     )
