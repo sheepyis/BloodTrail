@@ -11,8 +11,8 @@ import ListCrew from "../../components/Crew/list-crew";
 const CrewContainer = styled.div`
     width: 100%;
     display: flex;
-    padding-top: 0.7vw;
-    margin-bottom: 2vw;
+    padding-top: 2vw;
+    margin-bottom: 4vw;
 `
 
 const CrewP = styled.p`
@@ -73,7 +73,7 @@ const Crew = () => {
                 <CrewP2>헌혈 크루 찾기</CrewP2>
             </div>
 
-            <div className="right" style={{width: "55%", background: "pink"}}>
+            <div className="right" style={{width: "55%"}}>
                 <RightTop>
                     <CrewP3 to="/">홈</CrewP3>
                     <CrewP3>{">"}</CrewP3>
@@ -95,13 +95,13 @@ const Crew = () => {
 
                 <div className="crewBar" style={{width: "100%", height: "0.1vw", border: "none", backgroundColor: colors.crewGray}} />
 
-                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>나의 헌혈 크루</CrewP>
+                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2.5vw"}}>나의 헌혈 크루</CrewP>
                 <MyCrew/>
 
-                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>헌혈 크루 순위</CrewP>
+                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2.5vw"}}>헌혈 크루 순위</CrewP>
                 <ListCrewRank/>
                 
-                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>헌혈 크루</CrewP>
+                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2.5vw"}}>헌혈 크루</CrewP>
                 <ListCrew/>
             </div>
         </CrewContainer>

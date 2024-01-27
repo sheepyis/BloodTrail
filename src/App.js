@@ -9,6 +9,7 @@ import Community from "./pages/Community/Community";
 import Crew from "./pages/Crew/Crew";
 import Live from "./pages/Live/Live";
 import NotFound from "./pages/NotFound/NotFound";
+import CrewUpload from './pages/Crew/CrewUpload';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="blood" element={<Blood />} />
           <Route path="/community" element={<Community />} />
           <Route path="/crew" element={<Crew />} />
+          <Route path="/crewupload" element={<CrewUpload />} />
           <Route path="/live" element={<Live />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
