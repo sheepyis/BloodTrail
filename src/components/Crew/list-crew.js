@@ -5,7 +5,7 @@ import colors from "../../styles/color";
 import ItemCrew from "./item-crew";
 import InputCrew from "../Input/input-crew";
 import Right from "../../assets/images/arrowRight.png";
-import { Link } from 'react-router-dom'; // Link 추가
+import { Link } from 'react-router-dom';
 
 const CrewContainer = styled.div`
     width: 100%;

@@ -45,7 +45,7 @@ const RightMiddle = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 2vw;
-    padding-bottom: 0.5vw;
+    padding-bottom: 1vw;
 `
 
 const SortContainer = styled.div`
