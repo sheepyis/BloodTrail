@@ -12,15 +12,23 @@ const InputUpload = styled.input`
     color: ${colors.crewGray3};
     margin-top: 0.5vw;
 `
+const InputCrewUpload = ({ type, placeholder, value, onChange, ...rest }) => {
+    
+    const handleChange = (event) => {
+        if (onChange) {
+            onChange(event.target.value);
+        }
+    };
 
-const InputCrewUpload = ({ type, placeholder, ...rest }) => {
     return (
         <InputUpload
             type={type}
             placeholder={placeholder}
+            value={value}
+            onChange={handleChange}
             {...rest}
         />
-    )
-}
+    );
+};
 
 export default InputCrewUpload;
