@@ -38,7 +38,7 @@ function App() {
           <Route path="blood" element={<Blood />} />
           <Route path="/community" element={<CommunityWrite />} />
           <Route path="/crew" element={<Crew />} />
-          <Route path="/crewupload" element={<CrewUpload />} />
+          {/* <Route path="/crewupload" element={<CrewUpload />} /> */}
           <Route path="/live" element={<Live />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
