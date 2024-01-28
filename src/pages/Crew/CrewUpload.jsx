@@ -82,7 +82,7 @@ const CrewUpload = () => {
     const handleNameAvailabilityChange = (availability) => {
         setIsNameAvailable(availability);
         console.log("사용 가능 여부: ", availability);
-      };
+    };
 
     const handleTargetParticipationRateChange = (value) => {
         setTargetParticipationRate(value);

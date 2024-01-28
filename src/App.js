@@ -9,6 +9,7 @@ import Blood from './pages/Blood/Blood';
 import Community from './pages/Community/Community';
 import Crew from './pages/Crew/Crew';
 import CrewUpload from './pages/Crew/CrewUpload';
+import CrewDetail from './pages/Crew/CrewDetail';
 import Live from './pages/Live/Live';
 import NotFound from './pages/NotFound/NotFound';
 import CommunityWrite from './pages/Community/CommunityWrite/CommunityWrite';
@@ -41,6 +42,7 @@ function App() {
           <Route path="/community" element={<BloodWrite />} />
           <Route path="/crew" element={<Crew />} />
           <Route path="/crewupload" element={<CrewUpload />} />
+          <Route path="/crewdetail/:id" element={<CrewDetail />} />
           <Route path="/live" element={<Live />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
