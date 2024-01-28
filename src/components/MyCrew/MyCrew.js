@@ -38,7 +38,7 @@ const MyCrew = () => {
     const [myCrewData, setMyCrewData] = useState(null);
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/posts/3')
+        axios.get('https://jsonplaceholder.typicode.com/users/3')
             .then(response => {
                 setMyCrewData(response.data);
                 console.log(response.data);
@@ -54,8 +54,8 @@ const MyCrew = () => {
                 <div className="crewBox" style={{ display: 'flex', gap: '0.65vw', alignItems: 'center' }}>
                     <img src={Profile} alt="profile" style={{ width: '2vw', height: '2vw' }} />
                     <div className="crewName" style={{ display: 'flex', flexDirection: 'column', gap: '0.1vw', width: "11.8vw" }}>
-                        <MyCrewP>{myCrewData.title}</MyCrewP>
-                        <MyCrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{myCrewData.body}</MyCrewP>
+                        <MyCrewP>{myCrewData.name}</MyCrewP>
+                        <MyCrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{myCrewData.email}</MyCrewP>
                     </div>
                 </div>
             ) : (

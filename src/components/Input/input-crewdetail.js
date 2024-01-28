@@ -4,7 +4,7 @@ import Search from "../../assets/images/search.png";
 
 const InputWrapper = styled.div`
     position: relative;
-    width: 72%;
+    width: 90%;
     display: flex;
     align-items: center;
 `;
@@ -33,18 +33,18 @@ const SearchIcon = styled.img`
     height: 1.2vw;
 `;
 
-const InputCrew = ({ type, placeholder, onChange, value }) => {
-  return (
-    <InputWrapper>
-      <CrewInput
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-        value={value}
-      />
-      <SearchIcon src={Search} alt="search" />
-    </InputWrapper>
-  );
+const InputCrewDetail = ({ type, placeholder, onChange, value }) => {
+    return (
+        <InputWrapper>
+        <CrewInput
+            type={type}
+            placeholder={placeholder}
+            onChange={onChange}
+            value={value}
+        />
+        <SearchIcon src={Search} alt="search" />
+        </InputWrapper>
+    );
 };
 
-export default InputCrew;
+export default InputCrewDetail;
