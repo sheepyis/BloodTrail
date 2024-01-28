@@ -8,6 +8,9 @@ import Line from '../../../assets/images/divider_write.png';
 import { css } from 'styled-components';
 import { useState } from 'react';
 import Mark from '../../../assets/images/alert-circle 1.png';
+import Mark2 from '../../../assets/images/check-square 1.png';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -30,9 +33,10 @@ const CrewP2 = styled.p`
   cursor: pointer;
 `;
 
-const CrewP3 = styled(NavLink)`
+const CrewP3 = styled.p`
   font-weight: 500;
-  font-size: 0.6vw;
+  font-size: 0.75vw;
+  margin-top: 1.5vw;
   color: ${colors.crewGray2};
   cursor: pointer;
 `;
@@ -57,24 +61,6 @@ const RightMiddle = styled.div`
   flex-direction: column;
   margin-top: 2vw;
   gap: 0.5vw;
-`;
-
-const SortContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 1vw;
-`;
-
-const SortDiv = styled.div`
-  width: 11.6vw;
-  height: 2.5vw;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: space-between;
-  padding: 0 0.5vw 0 0.5vw;
-  cursor: pointer;
-  border-bottom: 1px solid var(--Gray-Gray-300, #d1d1d1);
 `;
 
 const TitleContainer = styled.div`
@@ -141,6 +127,7 @@ const Imageplus = styled.div`
   align-items: center;
   gap: 0.1vw;
   margin-left: 0.75vw;
+  cursor: pointer;
 `;
 
 const ImageP = styled.p`
@@ -166,6 +153,7 @@ const BoldText = styled.p`
   color: var(--Gray-Gray-900, #17191a);
   font-family: Roboto;
   font-size: 0.9vw;
+  cursor: pointer;
   font-style: normal;
   font-weight: 700;
   line-height: 30px; /* 166.667% */
@@ -175,6 +163,7 @@ const ItalicText = styled.p`
   color: var(--Gray-Gray-900, #17191a);
   font-family: 'Roboto Serif';
   font-size: 1vw;
+  cursor: pointer;
   font-style: italic;
   font-weight: 400;
   line-height: normal;
@@ -187,6 +176,7 @@ const UnderlineText = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  cursor: pointer;
   text-decoration-line: underline;
 `;
 
@@ -196,26 +186,30 @@ const MidlineText = styled.p`
   font-size: 1vw;
   font-style: normal;
   font-weight: 400;
+  cursor: pointer;
   line-height: normal;
   text-decoration-line: strikethrough;
 `;
 
-const InputContent = styled.textarea`
+const InputContent = styled.div`
   width: 100%;
   height: 78%;
   flex-shrink: 0;
-  color: var(--Gray-Gray-500, #9e9e9e); /* 글씨 색상 */
-  font-family: Pretendard; /* 폰트 패밀리 */
-  font-size: 0.75vw; /* 폰트 크기 */
-  font-style: normal; /* 폰트 스타일 */
-  font-weight: 500; /* 폰트 굵기 */
-  line-height: 20px; /* 라인 높이 */
-  letter-spacing: -0.3px; /* 글자 간격 */
-  padding: 1.5vw; /* 내부 패딩 추가 */
-  border: 1px solid #fafafa; /* 테두리 스타일 */
-  background: #fff; /* 배경색 */
-  outline: none; /* 포커스 시 아웃라인 제거 */
-  resize: none; /* 크기 조정 비활성화 */
+  color: var(--Gray-Gray-500, #9e9e9e);
+  font-family: Pretendard;
+  font-size: 0.75vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.3px;
+  padding: 1.5vw;
+  border: 1px solid #fafafa;
+  background: #fff;
+  outline: none;
+  resize: none;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 
   &::placeholder {
     color: var(--Gray-Gray-500, #9e9e9e);
@@ -315,7 +309,6 @@ const InformBlock = styled.div`
   width: ${(props) => props.width};
   height: 2.7vw;
   padding: 0.75vw 0.3vw;
-  justify-content: center;
   align-items: center;
   gap: 15px;
   border-radius: 100px;
@@ -329,24 +322,27 @@ const InformBlocks = styled.div`
 `;
 
 const TextContainer = styled.div`
-  margin-left: 0.3vw;
+  margin-left: 0.5vw;
   display: flex;
   flex-direction: row;
   align-items: center;
   text-align: center;
-  gap: 0.3vw;
+  gap: 0.2vw;
 `;
 
 const InforText = styled.p`
+  margin-left: 0.2vw;
   color: var(--Gray-Gray-900, #17191a);
   /* Body/Body/Semi */
   font-family: Pretendard;
   font-size: 0.75vw;
   font-style: normal;
   font-weight: 600;
+  white-space: nowrap;
 `;
 
 const ContentsText = styled.input`
+  margin-left: ${(props) => props.marginLeft};
   color: var(--Gray-Gray-700, #464a4d);
   width: ${(props) => props.width};
   /* Body/Body/medium */
@@ -357,7 +353,54 @@ const ContentsText = styled.input`
   letter-spacing: -0.3px;
 `;
 
+const RowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+`;
+
 const BloodWrite = () => {
+  const [inputCompleted, setInputCompleted] = useState({
+    registrationNumber: false,
+    bloodProduct: false,
+    requireDay: false,
+    requirePlace: false,
+    bloodType: false,
+  });
+
+  const [allFieldsCompleted, setAllFieldsCompleted] = useState(false);
+
+  useEffect(() => {
+    const allCompleted = Object.values(inputCompleted).every(
+      (status) => status === true
+    );
+    setAllFieldsCompleted(allCompleted);
+  }, [inputCompleted]);
+
+  const changeImageOnEnter = (field, event) => {
+    if (event.key === 'Enter') {
+      setInputCompleted({ ...inputCompleted, [field]: true });
+    }
+  };
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef(null);
+  const contentEditableRef = useRef(null);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.substr(0, 5) === 'image') {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.style.maxWidth = '50%';
+      contentEditableRef.current.appendChild(img);
+    }
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
+
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
@@ -371,8 +414,11 @@ const BloodWrite = () => {
   return (
     <CrewContainer>
       <div className="left" style={{ width: '23.5%', paddingLeft: '3.85%' }}>
-        <CrewP>커뮤니티</CrewP>
-        <CrewP2>자유게시판</CrewP2>
+        <CrewP>지정헌혈</CrewP>
+        <CrewP2>지정헌혈 요청 글</CrewP2>
+        <CrewP3>지정헌혈 요청하기</CrewP3>
+        <CrewP3>지정헌혈 프리미엄</CrewP3>
+        <CrewP3>내가 쓴 글 보기</CrewP3>
       </div>
 
       <div className="right" style={{ width: '55%' }}>
@@ -403,82 +449,108 @@ const BloodWrite = () => {
           <TitleInput placeholder="제목을 입력하세요."></TitleInput>
         </TitleContainer>
 
-        <InformContainer>
+        <InformContainer
+          style={{
+            background: allFieldsCompleted
+              ? 'var(--Primary-Red-50, #FFFAFA)'
+              : 'var(--Gray-Gray-50, #fafafa)',
+          }}
+        >
           <PatientContainer>
             <PatientP>환자 정보</PatientP>
             <BlockContainer>
               <InformBlocks>
-                <InformBlock width="11.8vw">
+                <InformBlock width="13.4vw">
                   <TextContainer>
                     <img
-                      src={Mark}
+                      src={inputCompleted.registrationNumber ? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>수혈자 등록번호</InforText>
                     <ContentsText
-                      placeholder="임시 텍스트"
-                      style={{ width: '40%' }}
+                      placeholder="231117-3117"
+                      style={{ width: '40%', marginLeft: '0.8vw' }}
+                      onKeyDown={(event) =>
+                        changeImageOnEnter('registrationNumber', event)
+                      }
                     ></ContentsText>
                   </TextContainer>
                 </InformBlock>
                 <InformBlock width="11.15vw">
                   <TextContainer>
                     <img
-                      src={Mark}
+                      src={inputCompleted.bloodProduct ? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>필요 혈액제제</InforText>
                     <ContentsText
-                      placeholder="임시 텍스트"
-                      style={{ width: '40%' }}
+                      placeholder="RBC"
+                      style={{ width: '40%', marginLeft: '0.8vw' }}
+                      onKeyDown={(event) =>
+                        changeImageOnEnter('bloodProduct', event)
+                      }
                     ></ContentsText>
                   </TextContainer>
                 </InformBlock>
 
-                <InformBlock width="14.25vw">
+                <InformBlock width="15vw">
                   <TextContainer>
                     <img
-                      src={Mark}
+                      src={inputCompleted.requireDay ? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>요청기간</InforText>
                     <ContentsText
-                      placeholder="임시 텍스트 ~ 임시 텍스트"
-                      style={{ width: '64%' }}
-                    ></ContentsText>
-                  </TextContainer>
-                </InformBlock>
-                <InformBlock width="11.15vw">
-                  <TextContainer>
-                    <img
-                      src={Mark}
-                      style={{ width: '1.2vw', height: '1.2vw' }}
-                    />
-                    <InforText>요청 의료기관</InforText>
-                    <ContentsText
-                      placeholder="임시 텍스트"
-                      style={{ width: '40%' }}
+                      placeholder="2024/02/21~2024/03/21"
+                      style={{ width: '100%', marginLeft: '0.2vw' }}
+                      onKeyDown={(event) =>
+                        changeImageOnEnter('requireDay', event)
+                      }
                     ></ContentsText>
                   </TextContainer>
                 </InformBlock>
               </InformBlocks>
-              <InformBlock width="10.5vw">
-                <TextContainer>
-                  <img src={Mark} style={{ width: '1.2vw', height: '1.2vw' }} />
-                  <InforText>혈액형 정보</InforText>
-                  <ContentsText
-                    placeholder="임시 텍스트"
-                    style={{ width: '40%' }}
-                  ></ContentsText>
-                </TextContainer>
-              </InformBlock>
+              <RowContainer>
+                <InformBlock width="11.15vw">
+                  <TextContainer>
+                    <img
+                      src={inputCompleted.requirePlace ? Mark2 : Mark}
+                      style={{ width: '1.2vw', height: '1.2vw' }}
+                    />
+                    <InforText>요청 의료기관</InforText>
+                    <ContentsText
+                      placeholder="건국대병원"
+                      style={{ width: '40%' }}
+                      onKeyDown={(event) =>
+                        changeImageOnEnter('requirePlace', event)
+                      }
+                    ></ContentsText>
+                  </TextContainer>
+                </InformBlock>
+                <InformBlock width="10.5vw">
+                  <TextContainer>
+                    <img
+                      src={inputCompleted.bloodType ? Mark2 : Mark}
+                      style={{ width: '1.2vw', height: '1.2vw' }}
+                    />
+                    <InforText>혈액형 정보</InforText>
+                    <ContentsText
+                      placeholder="RH+ A형"
+                      style={{ width: '40%' }}
+                      onKeyDown={(event) =>
+                        changeImageOnEnter('bloodType', event)
+                      }
+                    ></ContentsText>
+                  </TextContainer>
+                </InformBlock>
+              </RowContainer>
             </BlockContainer>
           </PatientContainer>
         </InformContainer>
 
         <BlankBox>
           <ToolBox>
-            <Imageplus>
+            <Imageplus onClick={triggerFileInput}>
               <img
                 src={Image}
                 alt="사진 추가"
@@ -486,6 +558,13 @@ const BloodWrite = () => {
               />
               <ImageP>사진추가</ImageP>
             </Imageplus>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              style={{ display: 'none' }}
+              accept="image/*"
+            />
             <img src={Line} alt="구분선" style={{ height: '1.5vw' }} />
             <BoldText onClick={toggleBold}>B</BoldText>
             <ItalicText onClick={toggleItalic}>I</ItalicText>
@@ -494,6 +573,8 @@ const BloodWrite = () => {
           </ToolBox>
 
           <InputContent
+            ref={contentEditableRef}
+            contentEditable
             placeholder="내용을 입력하세요."
             isBold={isBold}
             isItalic={isItalic}
