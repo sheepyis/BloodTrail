@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React, { useState } from 'react';
 import GlobalStyle from './styles/globalStyle';
 import Header from './components/Header/Header';
+import HeaderMenu from "./components/HeaderMenu/HeaderMenu";
 import Footer from './components/Footer/Footer';
 
 import Home from './pages/Home/Home';
@@ -31,7 +32,7 @@ function App() {
       <GlobalStyle />
       <Router>
         <Header onHover={handleHeaderHover} onLeave={handleHeaderLeave} />
-        <Footer
+        <HeaderMenu
           hoveredComponent={hoveredComponent}
           onHover={handleHeaderHover}
           onLeave={handleHeaderLeave}
@@ -46,6 +47,7 @@ function App() {
           <Route path="/live" element={<Live />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer/>
       </Router>
     </>
   );
