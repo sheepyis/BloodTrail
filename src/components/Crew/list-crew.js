@@ -156,6 +156,11 @@ const ListCrew = ({excludeButton, searchInput2, itemsPerPage}) => {
         }
     }
 
+    const handleUpload = () => {
+        window.location.href = "/crewupload";
+    }
+
+
     return (
         <>
             <CrewContainer>
@@ -180,7 +185,9 @@ const ListCrew = ({excludeButton, searchInput2, itemsPerPage}) => {
                         onChange={handleInputChange}
                         value={searchInput}
                     />
-                    <Link to="/crewupload"><Upload>헌혈 크루 등록하기</Upload></Link>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <Upload onClick={handleUpload}>헌혈 크루 등록하기</Upload>
+                    </div>
                 </div>
             )}
 
