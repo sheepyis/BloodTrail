@@ -68,15 +68,19 @@ const ArrowRightStyled = styled(StyledArrow)`
 
 const HomeBox = styled.div`
   width: 65%;
-  margin: 3.0208vw 0 5.1042vw 0;
   background-color: pink;
 `;
 
-const SidebarContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: cdnter;
+const HomeBoxAndSidebar = styled.div`
   width: 100%;
+  padding: 3.0208vw 5vw 5.1042vw 5vw;
+  display: flex;
+  justify-content: center;
+`;
+
+const SidebarContainer = styled.div`
+  width:100%;
+  padding: 1vw;
 `;
 
 const Home = () => {
@@ -131,15 +135,19 @@ const Home = () => {
           ))}
         </DotsContainer>
       </BannerContainer>
-
+      <HomeBoxAndSidebar>
+      <SidebarContainer>
+      </SidebarContainer>
       <HomeBox>
-        <SidebarContainer>
-          <Ranking rankingData={rankingData} />
-          <Dday />
-        </SidebarContainer>
+        <Ranking rankingData={rankingData} />
         <Board postsDatas={hotPost} />
         <Kakao />
       </HomeBox>
+      <SidebarContainer>
+          <Dday />
+      </SidebarContainer>
+      </HomeBoxAndSidebar>
+
     </HomeContainer>
   );
 };

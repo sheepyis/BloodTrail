@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const RankingContainer = styled.div`
+`;
+
 const Ranktext = styled.div`
+  align-items: left;
   font-size: 1.2vw;
   font-weight: 1000;
   color: #17191A;
@@ -12,7 +16,10 @@ const Ranktext = styled.div`
 const FlexContainer = styled.div`
     width: 100%;
     display: flex;
-    margin: 2vw 0;
+    //align-items: center;
+    justify-content: center;
+    margin: 0vw 0;
+    gap : 4%;
 `;
 
 const Ranktext2 = styled.div`
@@ -21,9 +28,8 @@ const Ranktext2 = styled.div`
     color: #464A4D;
 `;
 
-
 const PointsContainer = styled.div`
-  width: 8.75vw;
+  width: calc(55vw/6);
   height: 9.3vw;
   display: flex;
   flex-direction: column;
@@ -39,6 +45,7 @@ const getBackgroundColor = (rank) => {
 const PointCategory = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.75vw;
   padding : 0.5vw;
 `;
@@ -125,7 +132,7 @@ const Ranking = ({ rankingData }) => {
   const personalPointsData = rankingData.filter(item => item.type === 'personal');
   const crewPointsData = rankingData.filter(item => item.type === 'crew');
   return (
-    <div className="ranking-container">
+    <RankingContainer>
       <Ranktext>헌혈 랭킹</Ranktext>
       <FlexContainer>
         <div style={{width: "50%"}}>
@@ -137,7 +144,7 @@ const Ranking = ({ rankingData }) => {
           <CrewPoints data={crewPointsData.slice(0,3)} />
         </div>
       </FlexContainer>
-    </div>
+    </RankingContainer>
   );
 };
 
