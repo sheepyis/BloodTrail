@@ -104,9 +104,6 @@ font-style: normal;
 font-weight: 500;
 line-height: 150%; 
 letter-spacing: -0.36px;
-&:nth-child(2) { 
-        margin-right: 5.3vw; 
-    }
 `
 
 const Dday=()=>{
@@ -124,7 +121,6 @@ const Dday=()=>{
             <LoginButton>로그인</LoginButton>
             </RecContent>
             <LoginContainer>
-                <FindP>아이디찾기</FindP>
                 <FindP>비밀번호찾기</FindP>
                 <FindP>회원가입</FindP>
             </LoginContainer>
