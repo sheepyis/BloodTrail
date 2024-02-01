@@ -7,7 +7,6 @@ import notification2 from "../../assets/images/notification2.png"
 import person from "../../assets/images/person.png";
 import logo from "../../assets/images/logo.png";
 import React,{useState} from "react";
-import Comment from "./Comment/Comment";
 import Notifications from "./Notifications/Notifications";
 import Note from "./Note/Note";
 

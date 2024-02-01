@@ -9,14 +9,15 @@ import Ellipse22 from "../../../assets/images/Ellipse22.png";
 const NoteContainer =styled.div`
     width: 27.0833vw;
     height: 46.2500vw;
-    border-radius: 0.2604vw;
     position: absolute;
     top: 4.1146vw;
     right: 4.4792vw;
     left: 70.2083vw;
     width: 26.5625vw;
     height: 37.6042vw;
-    background: #FFF;
+    border-radius: 0.2604vw;
+    border: 0.0521vw solid var(--Gray-Gray-100, #F2F2F2);
+    background: var(--black-white-white-1000, #FFF);
     z-index:2;
 `
 const NoteTitle1 =styled.div`

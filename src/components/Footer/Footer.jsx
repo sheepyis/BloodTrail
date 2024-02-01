@@ -62,8 +62,7 @@ const Footer = ({hoveredComponent, onHover,onLeave}) => {
             {hoveredComponent ==='blood' && (
             <FooterBox 
                 className="Blood"
-                // onMouseEnter={()=>{ onHover(hoveredComponent)
-                //                     console.log(hoveredComponent)}}
+                onMouseEnter={()=>{ onHover(hoveredComponent)}}
                 onMouseLeave={() => onLeave()}>
                 <ul>
                     <li>
