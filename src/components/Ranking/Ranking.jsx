@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const RankingContainer = styled.div`
+  width: 57.691vw;
 `;
 
 const Ranktext = styled.div`
@@ -14,12 +15,12 @@ const Ranktext = styled.div`
 `;
 
 const FlexContainer = styled.div`
-    width: 100%;
     display: flex;
-    //align-items: center;
     justify-content: center;
-    margin: 0vw 0;
-    gap : 4%;
+`;
+
+const RankingsAndText = styled.div`
+    width: 50%;
 `;
 
 const Ranktext2 = styled.div`
@@ -29,7 +30,7 @@ const Ranktext2 = styled.div`
 `;
 
 const PointsContainer = styled.div`
-  width: calc(55vw/6);
+  width: 16vw;
   height: 9.3vw;
   display: flex;
   flex-direction: column;
@@ -43,11 +44,12 @@ const getBackgroundColor = (rank) => {
 };
 
 const PointCategory = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 0.75vw;
-  padding : 0.5vw;
+  padding : 1vw;
+  align-items: center;
 `;
 
 const Rank = styled.div`
@@ -72,7 +74,8 @@ const Name = styled.div`
 `;
 
 const Score = styled.div`
-  padding-top: 0.3vw;
+
+  align-items: center;
   font-size: 0.9vw;
   font-weight: bold;
   color: ${props => getTextColor(props.rank) || '#464A4D'};
@@ -83,11 +86,13 @@ const getTextColor = (rank) => {
 };
 
 const PointText = styled.div`
+  align-items: center;
   font-size: 0.75vw;
   color: #9E9E9E;
 `;
 
 const PointScoreContainer = styled.div`
+  padding-top: 0.3vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,14 +140,14 @@ const Ranking = ({ rankingData }) => {
     <RankingContainer>
       <Ranktext>헌혈 랭킹</Ranktext>
       <FlexContainer>
-        <div style={{width: "50%"}}>
+        <RankingsAndText>
           <Ranktext2>개인 헌혈 포인트</Ranktext2>
           <IndividualPoints data={personalPointsData.slice(0,3)} />
-        </div>
-        <div style={{width: "50%"}}>
+        </RankingsAndText>
+        <RankingsAndText>
           <Ranktext2>크루 헌혈 포인트</Ranktext2>
           <CrewPoints data={crewPointsData.slice(0,3)} />
-        </div>
+        </RankingsAndText>
       </FlexContainer>
     </RankingContainer>
   );

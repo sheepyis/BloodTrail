@@ -83,6 +83,12 @@ const SidebarContainer = styled.div`
   padding: 1vw;
 `;
 
+const Divider = styled.div`
+  width: 100%; // 구분선의 길이를 Header와 동일하게 설정
+  border-bottom: 1px solid #EEEEEE; // 구분선의 스타일 설정
+  margin-bottom: 10%; // 구분선 아래에 여백 추가
+`;
+
 const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -138,16 +144,18 @@ const Home = () => {
       <HomeBoxAndSidebar>
       <SidebarContainer>
       </SidebarContainer>
+
       <HomeBox>
         <Ranking rankingData={rankingData} />
         <Board postsDatas={hotPost} />
+        <Divider/>
         <Kakao />
       </HomeBox>
+
       <SidebarContainer>
           <Dday />
       </SidebarContainer>
       </HomeBoxAndSidebar>
-
     </HomeContainer>
   );
 };
