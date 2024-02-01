@@ -40,7 +40,7 @@ const GridContainer = styled.div`
 const PostContainer = styled.div`
   display: flex;
   background-color: #FFFFFF;
-  border: 1px solid #EEE;
+  border: 1% solid #EEE;
   border-radius: 5px;
   width: 27vw;
   height: 7.97vw;
