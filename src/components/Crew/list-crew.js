@@ -5,7 +5,7 @@ import colors from "../../styles/color";
 import ItemCrew from "./item-crew";
 import InputCrew from "../Input/input-crew";
 import Right from "../../assets/images/arrowRight.png";
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const CrewContainer = styled.div`
     width: 100%;
@@ -18,7 +18,7 @@ const CrewContainer = styled.div`
 
 const StyleGrid = styled.div`
     width: 100%;
-    height: 24vw;
+    min-height: 24vw;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     overflow: hidden;
@@ -72,16 +72,17 @@ const Arrow = styled.img`
     margin: 0 0.2vw;
 `;
 
-const ITEMS_PER_PAGE = 9;
-const PAGES_PER_VIEW = 10;
+const ListCrew = ({excludeButton, searchInput2, itemsPerPage}) => {
+    const ITEMS_PER_PAGE = itemsPerPage || 9;
+    const PAGES_PER_VIEW = 10;
 
-const ListCrew = () => {
     const [crewData, setCrewData] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('https://jsonplaceholder.typicode.com/users')
             .then(response => {
                 setCrewData(response.data);
             })
@@ -94,9 +95,22 @@ const ListCrew = () => {
         setSearchInput(e.target.value);
     }
 
-    const filteredCrewData = crewData.filter(item => 
-        item && item.title && item.title.toLowerCase().startsWith(searchInput.toLowerCase())
-    );      
+    const filteredCrewData = crewData.filter(item => {
+        const nameLowerCase = item.name.toLowerCase();
+        const searchInputLowerCase = searchInput?.toLowerCase();
+        const searchInput2LowerCase = searchInput2?.toLowerCase();
+
+        if (searchInputLowerCase && searchInput2LowerCase) {
+            return nameLowerCase.startsWith(searchInputLowerCase) || nameLowerCase.startsWith(searchInput2LowerCase);
+        } else if (searchInputLowerCase) {
+            return nameLowerCase.startsWith(searchInputLowerCase);
+        } else if (searchInput2LowerCase) {
+            return nameLowerCase.startsWith(searchInput2LowerCase);
+        } else {
+            return true;
+        }
+    });
+
 
     const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
     const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
@@ -147,25 +161,28 @@ const ListCrew = () => {
             <CrewContainer>
                 <StyleGrid>
                     {currentItems.map((item, index) => (
-                        <ItemCrew
-                            key={index}
-                            id={item.id}
-                            name={item.title}
-                            introduce={item.body}
-                        />
+                        <NavLink to={`/crewdetail/${item.id}`} key={index}>
+                            <ItemCrew
+                                id={item.id}
+                                name={item.name}
+                                introduce={item.email}
+                            />
+                        </NavLink>
                     ))}
                 </StyleGrid>
             </CrewContainer>
 
-            <div className="button" style={{ display: "flex", margin: "0 1vw", alignItems: "center", justifyContent: "space-between", marginTop: "2vw"}}>
-                <InputCrew
-                    type="text"
-                    placeholder="크루 이름을 입력하세요"
-                    onChange={handleInputChange}
-                    value={searchInput}
-                />
-                <Link to="/crewupload"><Upload>헌혈 크루 등록하기</Upload></Link>
-            </div>
+            {!excludeButton && (
+                <div className="ListCrewButton" style={{ display: "flex", margin: "0 1vw", alignItems: "center", justifyContent: "space-between", marginTop: "2vw"}}>
+                    <InputCrew
+                        type="text"
+                        placeholder="크루 이름을 입력하세요"
+                        onChange={handleInputChange}
+                        value={searchInput}
+                    />
+                    <Link to="/crewupload"><Upload>헌혈 크루 등록하기</Upload></Link>
+                </div>
+            )}
 
             <PaginationContainer>
                 <Arrow src={Right} alt="left" onClick={goToPrevPageView} style={{ transform: 'rotate(180deg)' }} />

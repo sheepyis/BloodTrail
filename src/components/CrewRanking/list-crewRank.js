@@ -31,7 +31,7 @@ const ListCrewRank = () => {
     const [visibleRange, setVisibleRange] = useState({ start: 0, end: 6 });
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/todos')
+        axios.get('https://jsonplaceholder.typicode.com/users')
             .then(response => {
                 const sortedData = response.data.sort((a, b) => b.id - a.id);
                 sortedData[0] = { ...sortedData[0], isFirstPlace: true };
@@ -76,7 +76,7 @@ const ListCrewRank = () => {
                         key={index}
                         id={visibleRange.start + index + 1}
                         point={item.id}
-                        title={item.title}
+                        name={item.name}
                         isFirstPlace={item.isFirstPlace || false}
                     />
                 ))}

@@ -41,13 +41,13 @@ const CrewRankP4 = styled.p`
 `
 
 const ItemCrewRank = (props) => {
-    const { id, title, point, isFirstPlace } = props;
+    const { id, name, point, isFirstPlace } = props;
 
     return (
         <StyleItem isFirstPlace={isFirstPlace} key={id}>
             <CrewRankP>{id}위</CrewRankP>
             <img src={CrewImage} alt="crew" style={{width: "3vw", height: "3vw", marginTop: "0.5vw"}}/>
-            <CrewRankP2>{title}</CrewRankP2>
+            <CrewRankP2>{name}</CrewRankP2>
             <div className="PointBox" style={{display: "flex", justifyContent: "center", gap: "0.2vw", alignItems: "center", marginTop: "0.6vw"}} >
                 <CrewRankP3>Point</CrewRankP3>
                 <CrewRankP4>{point}점</CrewRankP4>

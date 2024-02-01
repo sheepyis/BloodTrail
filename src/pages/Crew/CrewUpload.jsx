@@ -82,7 +82,7 @@ const CrewUpload = () => {
     const handleNameAvailabilityChange = (availability) => {
         setIsNameAvailable(availability);
         console.log("사용 가능 여부: ", availability);
-      };
+    };
 
     const handleTargetParticipationRateChange = (value) => {
         setTargetParticipationRate(value);
@@ -139,15 +139,8 @@ const CrewUpload = () => {
                 </RightMiddle>
 
                 <div className="crewBar" style={{ width: "100%", height: "0.1vw", border: "none", backgroundColor: colors.crewGray }} />
-                <div className="crewPoint" style={{ width: "100%", display: "flex", background: colors.footerGray, alignItems: "center", padding: "0.9vw 1.5vw", gap: "0.5vw" }}>
-                    <CrewP style={{ color: colors.black }}>크루 현재 헌혈 포인트</CrewP>
-                    <div className="PointBox" style={{ width: "5vw", height: "2.2vw", border: "none", borderRadius: "5vw", padding: "0.5vw", background: "#FFE7E7", display: "flex", gap: "0.2vw", justifyContent: "center", alignItems: "center" }}>
-                        <CrewP style={{ fontWeight: "600", fontSize: "0.75vw" }}>0</CrewP>
-                        <CrewP style={{ fontSize: "0.75vw" }}>Point</CrewP>
-                    </div>
-                </div>
 
-                <div className="uploadBox" style={{ display: "flex", marginTop: "1vw" }}>
+                <div className="uploadBox" style={{ display: "flex", marginTop: "1.5vw" }}>
                     <div className="uploadLeft" style={{ width: "51.5%" }}>
                         <div className="name" style={{ display: "flex", alignItems: "center", gap: "0.5vw" }}>
                             <CrewP style={{ fontWeight: "700", color: colors.black }}>크루 이름</CrewP>
@@ -193,9 +186,6 @@ const CrewUpload = () => {
                 />
 
                 <div className="crewBar" style={{ width: "100%", height: "0.1vw", border: "none", backgroundColor: colors.lightGray, margin: "2vw 0" }} />
-
-                <CrewP style={{ fontWeight: "700", color: colors.black }}>크루 멤버</CrewP>
-                <CrewP>일단 보류..</CrewP>
 
                 <div className="uploadBox" style={{ width: "100%", display: "flex", justifyContent: "center", margin: "2vw 0" }}>
                     <Upload disabled={!crewName || !isNameAvailable || !targetParticipationRate || !targetPoints || !description} onClick={handleSubmit}>크루 등록하기</Upload>
