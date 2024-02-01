@@ -117,8 +117,8 @@ const GlobalStyle = createGlobalStyle`
         scrollbar-width: none; /* 파이어폭스 */
     }
 
-      /* 빅데스크탑 */
-      html{
+    /* 빅데스크탑 */
+    html{
         font-size: 62.5%;
     }
     
