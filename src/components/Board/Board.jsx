@@ -40,8 +40,8 @@ const GridContainer = styled.div`
 const PostContainer = styled.div`
   display: flex;
   background-color: #FFFFFF;
-  border: 1% solid #EEE;
-  border-radius: 5px;
+  border: 0.1vw solid #EEEEEE;
+  border-radius: 0.5vw;
   width: 27vw;
   height: 7.97vw;
   padding: 3.5%;

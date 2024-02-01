@@ -68,7 +68,6 @@ const ArrowRightStyled = styled(StyledArrow)`
 
 const HomeBox = styled.div`
   width: 65%;
-  background-color: pink;
 `;
 
 const HomeBoxAndSidebar = styled.div`
