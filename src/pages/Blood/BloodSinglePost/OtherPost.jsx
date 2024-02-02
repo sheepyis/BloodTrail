@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { OtherPostDetail } from "./PostData"; 
+import { OtherPostDetail } from "../PostData"; 
 import leftArrow from './Icons/LeftArrow.svg'; 
 import rightArrow from './Icons/RightArrow.svg'; 
 import profileImage from '../../assets/images/profile.png';
