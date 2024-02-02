@@ -6,8 +6,8 @@ import dot2 from "../../assets/images/dot2.png";
 import { Link } from "react-router-dom";
 
 const Card = styled.div`
-    width: 19.7917vw;
-    height: 19.7917vw;
+    width: ${props => props.forOtherPost ? '16.25vw' : ' 19.7917vw'};
+    height: ${props => props.forOtherPost ? '16.25vw' : '19.7917vw'};
     flex-shrink: 0;
     border-radius: 0.2604vw;
     border: 0.0521vw solid var(--Gray-Gray-200, #EEE);
@@ -17,14 +17,15 @@ const Card = styled.div`
 const CardNameContainer = styled.div`
     display: flex;
     flex-direction: row;
+    width: 100%;
     height: 3.4375vw;
+    justify-content: space-between;
 `;
 
 const CardUser = styled.div`
     display: flex;
     padding-left: 1.0417vw;
     padding-top: 1.0417vw;
-    padding-right: 11.9271vw;
 `;
 
 const UserImg = styled.img`
@@ -34,6 +35,7 @@ const UserImg = styled.img`
 `;
 
 const UserName = styled.div`
+    width : 10vw;
     height: 0.9375vw;
     margin: 0.2083vw 0.0000vw 0.0000vw 0.5729vw;
     color: var(--Gray-Gray-700, #464A4D);
@@ -65,7 +67,7 @@ const CardTitleP = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 1.5625vw;
-    width: 14.5833vw;
+    width: auto;
     padding-right: 0.5208vw;
 `;
 
@@ -121,8 +123,8 @@ const Period2 = styled.div`
 `;
 
 const CardPhoto = styled.div`
-    width: 19.6875vw;
-    height: 8.5417vw;
+    width: ${props => props.forOtherPost ? '15.625vw' : '19.6875vw'}; // forOtherPost가 true일 때는 너비를 조금 줄입니다.
+    height: ${props => props.forOtherPost ? '6.5vw' : '8.5417vw'}; // forOtherPost가 true일 때는 높이를 조금 줄입니다.
     flex-shrink: 0;
     background: var(--image, #D9D9D9);
     padding-top: 0.7813vw;
@@ -130,10 +132,10 @@ const CardPhoto = styled.div`
 `;
 
 // CardTmp 컴포넌트 정의, selectBloodType을 prop으로 받음
-const CardTmp = ({ cardType, selectBloodType, linkPath }) => {
+const CardTmp = ({ cardType, selectBloodType, linkPath, forOtherPost }) => {
   return (
     <Link to={linkPath} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-      <Card>
+      <Card forOtherPost={forOtherPost}>
       
         <CardNameContainer>
           <CardUser>
@@ -143,7 +145,7 @@ const CardTmp = ({ cardType, selectBloodType, linkPath }) => {
           <DotImg src={dot} alt="DotImg"/>
         </CardNameContainer>
 
-        {cardType === "type2" && <CardPhoto></CardPhoto>}
+        {cardType === "type2" && <CardPhoto forOtherPost={forOtherPost}></CardPhoto>}
         
         <CardTitle>
           <CardTitleP>지정헌혈 글 제목</CardTitleP>

@@ -47,61 +47,6 @@ const HorizontalScrollContainer = styled.div`
   gap: 10px; // Set gap between the cards
 `;
 
-const PostCard = styled.div`
-  min-width: 31.5%; 
-  height: 260px; 
-  border: 1px solid #ccc;
-  padding: 16px;
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; // Distribute space between items
-`;
-
-const PostHeader = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-`;
-
-const UserName = styled.span`
-  margin-right: auto;
-`;
-
-const ProfilePic = styled.img`
-  width: 20px; // Adjust size as needed
-  height: 20px; // Adjust size as needed
-  border-radius: 50%;
-  margin-right: 12px;
-`;
-
-const PRMTag = styled.span`
-  background-color: #eee; // Light grey background for the PRM tag
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.75em;
-`;
-
-const PostTitle = styled.h3`
-  font-size: 1em;
-  margin-bottom: 8px;
-`;
-
-const PostContent = styled.p`
-  font-size: 5%;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-`;
-
-const ImagePlaceholder = styled.div`
-  background-color: #C4C4C4; // This is the grey background for the placeholder
-  height: 60%; // Adjust the height as needed
-  width: 100%; // This will make it as wide as the PostCard
-  margin-bottom: 12px; // Space between the image and the text content
-`;
-
 const ArrowButton = styled.button`
   cursor: pointer;
   position: absolute;
@@ -157,36 +102,30 @@ const OtherPosts = () => {
 
   return (
     <OtherPostsSection>
+
       <HeaderContainer>
         <OtherPostsHeader>다른 글 보기</OtherPostsHeader>
         <BoardListButton onClick={() => {/* Navigate to board list logic here */}}>
           게시판 목록
         </BoardListButton>
       </HeaderContainer>
-      <CardTmp selectBloodType={selectBloodType} />
+
       <PostsLists>
       <ArrowButton left onClick={goToPrevPage} />
       <HorizontalScrollContainer>
-        {OtherPostDetail.map((post) => (
-          <PostCard key={post.id}>
-            <PostHeader>
-              <ProfilePic src={profileImage} alt="Profile" />
-              <UserName>{post.user}</UserName>
-              <PRMTag>PRM</PRMTag>
-            </PostHeader>
-            <ImagePlaceholder />
-            <PostTitle>{post.title}</PostTitle>
-            <PostContent>{post.content}</PostContent>
-          </PostCard>
-        ))}
+        <CardTmp forOtherPost={true} cardType="type1" selectBloodType="A+" linkPath="/some-path" />
+        <CardTmp forOtherPost={true} cardType="type2" selectBloodType="A+" linkPath="/some-path" />
+        <CardTmp forOtherPost={true} cardType="type1" selectBloodType="A+" linkPath="/some-path" />
       </HorizontalScrollContainer>
       <ArrowButton right onClick={goToNextPage} />
       </PostsLists>
+
       <DotsContainer>
         {Array.from({ length: totalPages }).map((_, index) => (
           <Dot key={index} active={index === currentIndex} onClick={() => goToPage(index)} />
         ))}
       </DotsContainer>
+
     </OtherPostsSection>
   );
 };
