@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import colors from "../../../styles/color";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Ellipse22 from "../../../assets/images/Ellipse22.png";
 
 

@@ -1,16 +1,18 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
 import { NavLink } from "react-router-dom";
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SortBoxYes from "../../assets/images/sortbox_yes.png";
 import ArrowDown from "../../assets/images/arrow-down.png";
 import MyCrew from "../../components/MyCrew/MyCrew";
+import ListCrewRank from "../../components/CrewRanking/list-crewRank";
+import ListCrew from "../../components/Crew/list-crew";
 
 const CrewContainer = styled.div`
     width: 100%;
     display: flex;
-    padding-top: 0.7vw;
+    padding-top: 2vw;
+    margin-bottom: 4vw;
 `
 
 const CrewP = styled.p`
@@ -43,7 +45,7 @@ const RightMiddle = styled.div`
     display: flex;
     justify-content: space-between;
     margin-top: 2vw;
-    padding-bottom: 0.5vw;
+    padding-bottom: 1vw;
 `
 
 const SortContainer = styled.div`
@@ -64,27 +66,14 @@ const SortDiv = styled.div`
 `
 
 const Crew = () => { 
-    const [myCrewData, setMyCrewData] = useState(null);
-
-    useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/posts/2')
-            .then(response => {
-                setMyCrewData(response.data);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }, []);
-
     return (
         <CrewContainer>
-            <div className="left" style={{width: "23.5%", paddingLeft: "3.85%"}}>
+            <div className="left" style={{width: "17%", paddingLeft: "3.85%"}}>
                 <CrewP>헌혈크루</CrewP>
                 <CrewP2>헌혈 크루 찾기</CrewP2>
             </div>
 
-            <div className="right" style={{width: "55%", backgroundColor: "pink"}}>
+            <div className="right" style={{width: "67%"}}>
                 <RightTop>
                     <CrewP3 to="/">홈</CrewP3>
                     <CrewP3>{">"}</CrewP3>
@@ -106,10 +95,14 @@ const Crew = () => {
 
                 <div className="crewBar" style={{width: "100%", height: "0.1vw", border: "none", backgroundColor: colors.crewGray}} />
 
-                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>나의 헌혈 크루</CrewP>
-                <MyCrew crewData={myCrewData}/>
-                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>헌혈 크루 순위</CrewP>
-                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2vw"}}>헌혈 크루</CrewP>
+                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2.5vw"}}>나의 헌혈 크루</CrewP>
+                <MyCrew/>
+
+                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2.5vw"}}>헌혈 크루 순위</CrewP>
+                <ListCrewRank/>
+                
+                <CrewP style={{fontWeight: "700", fontSize: "1.2vw", marginTop: "2.5vw"}}>헌혈 크루</CrewP>
+                <ListCrew/>
             </div>
         </CrewContainer>
     )
