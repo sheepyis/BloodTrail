@@ -5,7 +5,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
 const MyCrewDiv = styled.div`
-    width: 30%;
+    width: 21vw;
     border: 0.05vw solid ${colors.lightGray};
     border-radius: 0.25vw;
     padding: 1vw;

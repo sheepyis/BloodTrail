@@ -3,11 +3,11 @@ import colors from "../../styles/color";
 import CrewImage from "../../assets/images/profile.png";
 
 const StyleItem = styled.div`
-    width: 17vw;
+    width: 21vw;
     height: 6.85vw;
     border: 0.05vw solid ${colors.lightGray};
     border-radius: 0.25vw;
-    padding: 1vw;
+    padding: 1.2vw;
     margin-bottom: 1vw;
 `
 
@@ -60,7 +60,7 @@ const ItemCrew = (props) => {
                 </div>
             </div>
 
-            <div className="crewBottomBox" style={{display: "flex", marginTop: "1vw", justifyContent: "space-between"}} >
+            <div className="crewBottomBox" style={{display: "flex", marginTop: "1vw", gap: "0.7vw"}} >
                 <BottomBox style={{width: "4.1vw"}}>Point<CrewP2>{id}</CrewP2></BottomBox>
                 <BottomBox style={{width: "6.75vw"}}>헌혈참여율<CrewP2>{id}</CrewP2>%</BottomBox>
                 <BottomBox style={{width: "4.75vw"}}>인원<CrewP2>{id}</CrewP2>명</BottomBox>

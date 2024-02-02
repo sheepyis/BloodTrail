@@ -20,15 +20,16 @@ const HeaderContainer = styled.div`
 const MainHeader = styled.div`
     padding:0.2604vw 0vw 0.2604vw 1.8229vw;
     align-items: center;
+    width: 18%;
 `
 const HeaderMenu = styled.div`
     position: relative;
-    padding-left: 6.5vw;
-    padding-right:52.5625vw;
+    padding-right:57vw;
     display:flex;
     align-items: center;
     justify-content: space-between;
     gap: 1vw;
+    white-space: nowrap;
 `
 
 const HeaderP2 = styled(NavLink)`
@@ -93,6 +94,10 @@ const Header = ({onHover}) => {
         setNote(false);
     }
 
+    const handlePersonClick = () => {
+        window.location.href = "/mypage";
+    }
+
     return (
         <div className="Header" style={{
             width: "100%", 
@@ -146,7 +151,7 @@ const Header = ({onHover}) => {
                             <Notifications />
                         </div>)}
 
-                    <IconImage src={person} alt="person" style={{ width: "2.0833vw", height: "2.0833vw", marginTop: "-0.5vw" }} />
+                    <IconImage src={person} alt="person" style={{ width: "2.0833vw", height: "2.0833vw", marginTop: "-0.5vw" }} onClick={handlePersonClick} />
                 </IconContainer>
             </HeaderContainer>
         </div>

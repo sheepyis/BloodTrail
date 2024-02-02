@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import colors from '../../styles/color';
 import Banner from '../../assets/images/Banner.png';
 import ArrowLeft from '../../assets/images/arrow=active.png';
 import { useState } from 'react';

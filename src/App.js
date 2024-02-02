@@ -15,6 +15,7 @@ import Live from './pages/Live/Live';
 import NotFound from './pages/NotFound/NotFound';
 import CommunityWrite from './pages/Community/CommunityWrite/CommunityWrite';
 import BloodWrite from './pages/Blood/BloodWrite/BloodWrite';
+import MyPage from './pages/MyPage/MyPage';
 
 function App() {
   const [hoveredComponent, setHoveredComponent] = useState(null);
@@ -45,6 +46,7 @@ function App() {
           <Route path="/crewupload" element={<CrewUpload />} />
           <Route path="/crewdetail/:id" element={<CrewDetail />} />
           <Route path="/live" element={<Live />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer/>

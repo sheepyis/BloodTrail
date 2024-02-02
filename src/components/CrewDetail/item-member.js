@@ -4,7 +4,7 @@ import CrewImage from "../../assets/images/profile.png";
 import Star from "../../assets/images/star.png";
 
 const StyleItem = styled.div`
-    width: 17vw;
+    width: 21vw;
     height: 6.1vw;
     border: 0.05vw solid ${colors.lightGray};
     border-radius: 0.25vw;

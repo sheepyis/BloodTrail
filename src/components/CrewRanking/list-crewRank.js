@@ -42,30 +42,29 @@ const ListCrewRank = () => {
             });
     }, []);
 
-    // 오른쪽 화살표 맨 마지막 페이지 부분 수정해야 함
     const handleArrowClick = (direction) => {
         const step = 6;
-        const maxStart = Math.max(0, crewData.length - step);
-    
-        if (direction === 'left' && visibleRange.start > 0) {
-            setVisibleRange((prevRange) => ({
-                start: Math.max(0, prevRange.start - step),
-                end: Math.max(0, prevRange.end - step),
-            }));
-        } else if (direction === 'right') {
-            setVisibleRange((prevRange) => {
-                const newStart = Math.min(maxStart, prevRange.start + step);
-                const newEnd = Math.min(crewData.length, newStart + step);
+        const totalDataLength = crewData.length;
+        const maxStart = Math.max(0, totalDataLength - step);
+        const isLastPage = visibleRange.end >= crewData.length;
 
-                const adjustedEnd = newStart === maxStart ? crewData.length : newEnd;
     
-                return {
-                    start: newStart,
-                    end: adjustedEnd,
-                };
+        if (direction === 'left') {
+            const newStart = Math.max(0, visibleRange.start - step);
+            setVisibleRange({
+                start: newStart,
+                end: newStart + step,
+            });
+        } else if (direction === 'right' && !isLastPage) {
+            const newStart = visibleRange.start + step;
+            const newEnd = Math.min(totalDataLength, visibleRange.end + step);
+            setVisibleRange({
+                start: newStart,
+                end: newEnd,
             });
         }
-    };    
+    };
+    
 
     return (
         <CrewRankContainer>

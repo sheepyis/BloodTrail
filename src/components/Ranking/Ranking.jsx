@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const RankingContainer = styled.div`
-  width: 57.691vw;
+  width: 100%;
 `;
 
 const Ranktext = styled.div`
