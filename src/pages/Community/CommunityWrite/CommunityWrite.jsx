@@ -16,8 +16,8 @@ import { useState } from 'react';
 const CrewContainer = styled.div`
   width: 100%;
   display: flex;
-  padding-top: 0.7vw;
-  margin-bottom: 2vw;
+  padding-top: 2vw;
+  margin-bottom: 4vw;
 `;
 
 const CrewP = styled.p`
@@ -292,7 +292,7 @@ const CommunityWrite = () => {
 
   return (
     <CrewContainer>
-      <div className="left" style={{ width: '23.5%', paddingLeft: '3.85%' }}>
+      <div className="left" style={{ width: '17%', paddingLeft: '3.85%' }}>
         <CrewP>커뮤니티</CrewP>
         <CrewP2>자유게시판</CrewP2>
       </div>

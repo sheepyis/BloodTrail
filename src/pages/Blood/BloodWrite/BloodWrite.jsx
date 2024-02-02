@@ -15,8 +15,8 @@ import { useRef } from 'react';
 const CrewContainer = styled.div`
   width: 100%;
   display: flex;
-  padding-top: 0.7vw;
-  margin-bottom: 2vw;
+  padding-top: 2vw;
+  margin-bottom: 4vw;
 `;
 
 const CrewP = styled.p`
@@ -34,21 +34,18 @@ const CrewP2 = styled.p`
 `;
 
 const CrewP3 = styled.p`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.75vw;
-  margin-top: 1.5vw;
   color: ${colors.crewGray2};
+  margin-top: 1.5vw;
   cursor: pointer;
 `;
 
 const CrewP4 = styled.p`
-  color: var(--text-40, rgba(12, 11, 44, 0.4));
-  font-family: Pretendard;
-  font-size: 0.6vw;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
-  letter-spacing: -0.0225rem;
+  font-weight: 600;
+  font-size: 0.75vw;
+  color: ${colors.crewGray2};
+  cursor: pointer;
 `;
 
 const RightTop = styled.div`
@@ -413,7 +410,7 @@ const BloodWrite = () => {
 
   return (
     <CrewContainer>
-      <div className="left" style={{ width: '23.5%', paddingLeft: '3.85%' }}>
+      <div className="left" style={{ width: '17%', paddingLeft: '1.5%' }}>
         <CrewP>지정헌혈</CrewP>
         <CrewP2>지정헌혈 요청 글</CrewP2>
         <CrewP3>지정헌혈 요청하기</CrewP3>
@@ -421,13 +418,13 @@ const BloodWrite = () => {
         <CrewP3>내가 쓴 글 보기</CrewP3>
       </div>
 
-      <div className="right" style={{ width: '55%' }}>
+      <div className="right" style={{ width: '67%' }}>
         <RightTop>
-          <CrewP3 to="/">홈</CrewP3>
-          <CrewP3>{'>'}</CrewP3>
-          <CrewP3>지정헌혈</CrewP3>
-          <CrewP3>{'>'}</CrewP3>
-          <CrewP3>글 작성하기</CrewP3>
+          <CrewP4 to="/">홈</CrewP4>
+          <CrewP4>{'>'}</CrewP4>
+          <CrewP4>지정헌혈</CrewP4>
+          <CrewP4>{'>'}</CrewP4>
+          <CrewP4>글 작성하기</CrewP4>
         </RightTop>
 
         <RightMiddle>
