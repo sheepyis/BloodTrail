@@ -202,8 +202,8 @@ const CardUser =styled.div`
 
 `
 const UserImg = styled.img`
-width: 1.3542vw;
-height: 1.3542vw;
+    width: 1.3542vw;
+    height: 1.3542vw;
     flex-shrink: 0;
 `
 
@@ -309,38 +309,38 @@ const WritePost =styled.button`
     background: var(--black-white-white-1000, #FFF);
     color: var(--Primary-Red-900, #E95458);
     text-align: center;
-font-family: Pretendard;
-font-size: 0.7813vw;
-font-style: normal;
-font-weight: 600;
-line-height: 1.0417vw; /* 133.333% */
+    font-family: Pretendard;
+    font-size: 0.7813vw;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.0417vw; /* 133.333% */
 `
 const PagnationContainer = styled.div`
-margin-top: 3.9583vw;
-display: flex;
-justify-content: center;
-align-items: center;
+    margin-top: 3.9583vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 const Pagnation = styled.div`
-display: flex;
-height: 1.3542vw;
+    display: flex;
+    height: 1.3542vw;
 `
 
 const PagnaionNumber = styled.div`
-display: inline-flex;
-margin-right: 1.3021vw;
-padding: 0.2083vw;
-justify-content: center;
-align-items: center;
-color: var(--Gray-Gray-700, #464A4D);
-text-align: center;
+    display: inline-flex;
+    margin-right: 1.3021vw;
+    padding: 0.2083vw;
+    justify-content: center;
+    align-items: center;
+    color: var(--Gray-Gray-700, #464A4D);
+    text-align: center;
 
-font-family: Pretendard;
-font-size: 0.6250vw;
-font-style: normal;
-font-weight: 500;
-line-height: 150%; /* 0.9375vw */
-letter-spacing: -0.0187vw;
+    font-family: Pretendard;
+    font-size: 0.6250vw;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 0.9375vw */
+    letter-spacing: -0.0187vw;
 
 &:active{
     border-radius: 5.2083vw;
@@ -355,49 +355,49 @@ letter-spacing: -0.0187vw;
 }
 `
 const PagnaionNumber2 = styled.div`
-display: inline-flex;
-// padding: 0.2083vw;
-justify-content: center;
-align-items: center;
-color: var(--Gray-Gray-700, #464A4D);
-text-align: center;
+    display: inline-flex;
+    // padding: 0.2083vw;
+    justify-content: center;
+    align-items: center;
+    color: var(--Gray-Gray-700, #464A4D);
+    text-align: center;
 
-font-family: Pretendard;
-font-size: 0.6250vw;
-font-style: normal;
-font-weight: 500;
-line-height: 150%; /* 0.9375vw */
-letter-spacing: -0.0187vw;
+    font-family: Pretendard;
+    font-size: 0.6250vw;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 0.9375vw */
+    letter-spacing: -0.0187vw;
 
 &:active{
     border-radius: 5.2083vw;
-background: var(--Primary-Red-200, #FFF6F7);
-color: var(--Primary-Red-900, #E95458);
-text-align: center;
-font-family: Inter;
-font-size: 0.6250vw;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+    background: var(--Primary-Red-200, #FFF6F7);
+    color: var(--Primary-Red-900, #E95458);
+    text-align: center;
+    font-family: Inter;
+    font-size: 0.6250vw;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 `
 
 const DotImg2 =styled.img`
-width: 0.7292vw;
-height: 0.1042vw;
-flex-shrink: 0;
-margin: 0.6250vw 1.2500vw 0.6250vw 0.0000vw;
+    width: 0.7292vw;
+    height: 0.1042vw;
+    flex-shrink: 0;
+    margin: 0.6250vw 1.2500vw 0.6250vw 0.0000vw;
 `
 const PagnationImg = styled.img`
-width: 1.2500vw;
-height: 1.2500vw;
-margin-right: 1.2500vw;
+    width: 1.2500vw;
+    height: 1.2500vw;
+    margin-right: 1.2500vw;
 `
 const PagnationImg2 = styled.img`
-width: 1.2500vw;
-height: 1.2500vw;
-transform: rotate(180deg);
-margin-left: 1.2500vw;
+    width: 1.2500vw;
+    height: 1.2500vw;
+    transform: rotate(180deg);
+    margin-left: 1.2500vw;
 `
 
 
