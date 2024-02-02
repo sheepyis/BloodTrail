@@ -3,10 +3,9 @@ import colors from "../../styles/color";
 import { Link, NavLink } from "react-router-dom";
 import add_comment from "../../assets/images/add_comment.png";
 import notification1 from "../../assets/images/notification1.png"
-import notification2 from "../../assets/images/notification2.png"
 import person from "../../assets/images/person.png";
 import logo from "../../assets/images/logo.png";
-import React,{useState} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Notifications from "./Notifications/Notifications";
 import Note from "./Note/Note";
 
@@ -21,24 +20,21 @@ const HeaderContainer = styled.div`
 const MainHeader = styled.div`
     padding:0.2604vw 0vw 0.2604vw 1.8229vw;
     align-items: center;
+    width: 18%;
 `
 const HeaderMenu = styled.div`
     position: relative;
-    padding-left: 7.4479vw;
-    padding-right:52.5625vw;
+    padding-right:57vw;
     display:flex;
-    height: 3.4375vw;
     align-items: center;
     justify-content: space-between;
+    gap: 1vw;
+    white-space: nowrap;
 `
 
 const HeaderP2 = styled(NavLink)`
-
-
     font-weight: 400;
-    font-size: 0.9375vw;
-    padding: 1.1979vw 0.9375vw 0.5208vw  1.1979vw;
-    
+    font-size: 0.9375vw;    
     &:hover {
         font-weight: 700;
     }
@@ -71,25 +67,35 @@ const LogoImage = styled.img`
 `
 
 const Header = ({onHover}) => { 
+    const [notificationsModal, setNotifications] = useState(false);
+    const [noteModal, setNote] = useState(false);
+    const modalRef = useRef(null);
 
-    const [notificationsModal,setNotifications] = useState(false);
-    const [NoteModal,setNote] = useState(false);
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                setNote(false);
+                setNotifications(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
-    const handleNoteOpen =()=>{
-        setNote(true);
+    const handleNoteToggle = () => {
+        setNote((prevState) => !prevState);
+        setNotifications(false);
     }
 
-    const handleNoteClose =()=>{
+    const handleNotificationToggle = () => {
+        setNotifications((prevState) => !prevState);
         setNote(false);
     }
 
-
-    const handleNotificationOpen =()=>{ // 알림아이콘 누르면 모달 뜨도록
-        setNotifications(true);
-    }
-
-    const handleNotificationClose =()=>{ // 닫기
-        setNotifications(false); 
+    const handlePersonClick = () => {
+        window.location.href = "/mypage";
     }
 
     return (
@@ -131,23 +137,21 @@ const Header = ({onHover}) => {
                     </HeaderP2>
                 </HeaderMenu>
                 <IconContainer>
+                    <IconImage src={add_comment} alt="comment" style={{ width: "1.5625vw", height: "1.5625vw" }}
+                        onClick={handleNoteToggle} />
+                        {noteModal && (
+                        <div className="modalOutside" onClick={handleNoteToggle}>
+                            <Note />
+                        </div>)}
 
-                    <IconImage src={add_comment} alt="comment" style={{width: "1.5625vw", height: "1.5625vw"}} 
-                                onClick={handleNoteOpen}/>
-                                {NoteModal &&(  // 클릭시 모달생성
-                                    <div className ="modalOutside" onClick={handleNoteClose}> 
-                                        <Note/>
-                                    </div>)} 
-                    
-                    <IconImage src={notification1} alt="notifications" style={{width: "1.8229vw", height: "1.8229vw", marginLeft: "0.3vw"}} 
-                                onClick={handleNotificationOpen}/>
-                                {notificationsModal &&(  // 클릭시 모달생성
-                                    <div className ="modalOutside" onClick={handleNotificationClose}> 
-                                        <Notifications />
-                                    </div>)} 
-                                    {/* notification 모달 클릭시 사라짐, 클릭시 헤더의 아이콘 위치가 움직이는 상황 발생.. */}
+                    <IconImage src={notification1} alt="notifications" style={{ width: "1.8229vw", height: "1.8229vw", marginLeft: "0.3vw" }}
+                        onClick={handleNotificationToggle} />
+                    {notificationsModal && (
+                        <div className="modalOutside" onClick={handleNotificationToggle}>
+                            <Notifications />
+                        </div>)}
 
-                    <IconImage src={person} alt="person" style={{width: "2.0833vw", height: "2.0833vw", marginTop: "-0.5vw"}}/>
+                    <IconImage src={person} alt="person" style={{ width: "2.0833vw", height: "2.0833vw", marginTop: "-0.5vw" }} onClick={handlePersonClick} />
                 </IconContainer>
             </HeaderContainer>
         </div>
