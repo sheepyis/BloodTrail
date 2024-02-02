@@ -13,7 +13,7 @@ const HeaderBox = styled.div`
     height: 16.5625vw;
     width: 100vw;
     padding-top: 1vw;
-    padding-left: 21.6vw;
+    padding-left: 14.5vw;
     align-items: center;
     justify-content: space-evenly;
 

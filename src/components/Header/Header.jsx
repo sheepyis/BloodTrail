@@ -20,11 +20,11 @@ const HeaderContainer = styled.div`
 const MainHeader = styled.div`
     padding:0.2604vw 0vw 0.2604vw 1.8229vw;
     align-items: center;
-    width: 23.5%;
+    width: 18%;
 `
 const HeaderMenu = styled.div`
     position: relative;
-    padding-right:51.5vw;
+    padding-right:57vw;
     display:flex;
     align-items: center;
     justify-content: space-between;

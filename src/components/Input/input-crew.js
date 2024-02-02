@@ -4,7 +4,7 @@ import Search from "../../assets/images/search.png";
 
 const InputWrapper = styled.div`
     position: relative;
-    width: 72%;
+    width: 77%;
     display: flex;
     align-items: center;
 `;

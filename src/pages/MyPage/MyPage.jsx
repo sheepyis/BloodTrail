@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
 import { NavLink } from "react-router-dom";
+import MyProfile from "../../components/MyProfile/MyProfile";
+import MyDonation from "../../components/MyDonation/MyDonation";
+import MyCrew from "../../components/MyCrew/MyCrew";
 
 const MyPageContainer = styled.div`
     width: 100%;
@@ -35,10 +38,19 @@ const RightTop = styled.div`
     gap: 0.5vw;
 `
 
+const EditButton = styled.button`
+    border: none;
+    border-radius: 0.25vw;
+    background-color: #FFFAFA;
+    color: ${colors.mainRed};
+    font-size: 0.75vw;
+    padding: 0.5vw;
+`
+
 const MyPage = () => {
     return (
         <MyPageContainer>
-            <div className="left" style={{width: "23.5%", paddingLeft: "3.85%"}}>
+            <div className="left" style={{width: "17%", paddingLeft: "3.85%"}}>
                 <MyPageP>내 정보</MyPageP>
                 <MyPageP2>내 프로필</MyPageP2>
                 <MyPageP style={{marginTop: "1.5vw"}}>개인정보 처리방침</MyPageP>
@@ -46,7 +58,7 @@ const MyPage = () => {
                 <MyPageP style={{marginTop: "1.5vw"}}>회원탈퇴</MyPageP>
             </div>
 
-            <div className="right" style={{width: "55%"}}>
+            <div className="right" style={{width: "67%"}}>
                 <RightTop>
                     <MyPageP3 to="/">홈</MyPageP3>
                     <MyPageP3>{">"}</MyPageP3>
@@ -54,6 +66,28 @@ const MyPage = () => {
                     <MyPageP3>{">"}</MyPageP3>
                     <MyPageP3>내 프로필</MyPageP3>
                 </RightTop>
+
+                <div className="profile" style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", margin: "2vw 0 1vw 0"}}>
+                    <MyPageP style={{fontSize: "1.2vw", fontWeight: "bold"}}>내 프로필</MyPageP>
+                    <EditButton>정보 수정하기</EditButton>
+                </div>
+                <MyProfile />
+
+                <div className="blood" style={{width: "100%", marginTop: "2vw"}}>
+                    <MyPageP style={{fontSize: "0.8vw", fontWeight: "bold", color: colors.black, marginBottom: "1vw"}}>나의 헌혈 증서</MyPageP>
+                    <MyDonation />
+                </div>
+
+                <div className="upload" style={{width: "100%", marginTop: "2vw"}}>
+                    <MyPageP style={{fontSize: "0.8vw", fontWeight: "bold", color: colors.black, marginBottom: "1vw"}}>내가 쓴 글</MyPageP>
+                    
+                </div>
+
+                <div className="mycrew" style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "2vw"}}>
+                <MyPageP style={{fontSize: "0.8vw", fontWeight: "bold", color: colors.black}}>나의 헌혈 크루</MyPageP>
+                    <EditButton>크루 관리하기</EditButton>
+                </div>
+                <MyCrew />
             </div>
         </MyPageContainer>
     )
