@@ -12,8 +12,8 @@ const NotificationContainer= styled.div`
     width: 26.5625vw;
     height: 37.6042vw;
     border-radius: 0.2604vw;
-    // border: 0.0694vw solid var(--text-40, rgba(12, 11, 44, 0.40));
-    background: #FFF;
+    border: 0.0521vw solid var(--Gray-Gray-100, #F2F2F2);
+    background: var(--black-white-white-1000, #FFF);
     z-index:2;
 `
 
