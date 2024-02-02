@@ -132,7 +132,8 @@ const CardPhoto = styled.div`
 // CardTmp 컴포넌트 정의, selectBloodType을 prop으로 받음
 const CardTmp = ({ cardType, selectBloodType, linkPath }) => {
   return (
-    <Link to={linkPath} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>      <Card>
+    <Link to={linkPath} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+      <Card>
       
         <CardNameContainer>
           <CardUser>
