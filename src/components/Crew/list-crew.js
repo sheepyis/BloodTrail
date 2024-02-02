@@ -5,7 +5,7 @@ import colors from "../../styles/color";
 import ItemCrew from "./item-crew";
 import InputCrew from "../Input/input-crew";
 import Right from "../../assets/images/arrowRight.png";
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const CrewContainer = styled.div`
     width: 100%;
