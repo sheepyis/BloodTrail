@@ -349,14 +349,16 @@ const Blood = () => {
                 <CardTmp cardType="type2" selectBloodType="B+" linkPath="./bloodSinglePost/SinglePost"/>
                 <CardTmp selectBloodType={selectBloodType} linkPath="./bloodSinglePost/SinglePost"/>
                 <Card></Card>
-                
+
                 <Card></Card>
                 <Card></Card>
                 <Card></Card>
             </CardContainer>
 
             <WritePostContainer>
+                <Link to="./BloodWrite/Bloodwrite" style={{ textDecoration: 'none' }}>
                 <WritePost>글 작성하기</WritePost>
+                </Link>
             </WritePostContainer>
 
             <PagnationContainer>

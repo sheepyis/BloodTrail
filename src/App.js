@@ -7,7 +7,6 @@ import Footer from './components/Footer/Footer';
 
 import Home from './pages/Home/Home';
 import Blood from './pages/Blood/Blood';
-import SinglePost from "./pages/Blood/BloodSinglePost/SinglePost";
 import Community from './pages/Community/Community';
 import Crew from './pages/Crew/Crew';
 import CrewUpload from './pages/Crew/CrewUpload';
@@ -16,6 +15,8 @@ import Live from './pages/Live/Live';
 import NotFound from './pages/NotFound/NotFound';
 import CommunityWrite from './pages/Community/CommunityWrite/CommunityWrite';
 import BloodWrite from './pages/Blood/BloodWrite/BloodWrite';
+import SinglePost from './pages/Blood/BloodSinglePost/SinglePost';
+
 import MyPage from './pages/MyPage/MyPage';
 
 function App() {
