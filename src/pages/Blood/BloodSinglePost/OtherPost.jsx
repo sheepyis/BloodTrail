@@ -5,6 +5,8 @@ import leftArrow from '../Icons/LeftArrow.svg';
 import rightArrow from '../Icons/RightArrow.svg'; 
 import profileImage from '../../../assets/images/profile.png';
 import CardTmp from '../CardTmp';
+import { Link } from "react-router-dom";
+
 
 const OtherPostsSection = styled.section`
   position: relative;
@@ -106,7 +108,9 @@ const OtherPosts = () => {
       <HeaderContainer>
         <OtherPostsHeader>다른 글 보기</OtherPostsHeader>
         <BoardListButton onClick={() => {/* Navigate to board list logic here */}}>
+          <Link to="../Blood" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
           게시판 목록
+          </Link>
         </BoardListButton>
       </HeaderContainer>
 
