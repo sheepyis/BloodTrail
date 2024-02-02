@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer';
 
 import Home from './pages/Home/Home';
 import Blood from './pages/Blood/Blood';
+import SinglePost from "./pages/Blood/BloodSinglePost/SinglePost";
 import Community from './pages/Community/Community';
 import Crew from './pages/Crew/Crew';
 import CrewUpload from './pages/Crew/CrewUpload';
@@ -41,6 +42,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="blood" element={<Blood />} />
+          <Route path="Blood/BloodSinglePost/SinglePost" element={<SinglePost />} />
           <Route path="/community" element={<BloodWrite />} />
           <Route path="/crew" element={<Crew />} />
           <Route path="/crewupload" element={<CrewUpload />} />
@@ -48,6 +50,8 @@ function App() {
           <Route path="/live" element={<Live />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="*" element={<NotFound />} />
+
+          
         </Routes>
         <Footer/>
       </Router>

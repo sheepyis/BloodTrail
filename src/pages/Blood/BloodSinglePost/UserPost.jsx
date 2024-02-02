@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PostDetail } from "../PostData";
-import { ReactComponent as DotIcon } from './Icons/Dot.svg';
-import { ReactComponent as HeartIcon } from './Icons/Heart.svg';
-import { ReactComponent as ShareIcon } from './Icons/Share.svg';
+import { PostDetail } from "./PostData";
+import { ReactComponent as DotIcon } from '../Icons/Dot.svg';
+import { ReactComponent as HeartIcon } from '../Icons/Heart.svg';
+import { ReactComponent as ShareIcon } from '../Icons/Share.svg';
 
 const HeaderText = styled.div`
   font-size: 24px;

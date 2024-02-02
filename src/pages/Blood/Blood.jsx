@@ -449,6 +449,7 @@ const Blood = () => {
 
             <CardContainer>
                 <Card>
+                  <Link to="./bloodSinglePost/SinglePost" style={{ textDecoration: 'none', color: 'inherit' }}>
                     <CardNameContainer>
                         <CardUser>
                             <UserImg src = {Ellipse8} alt = "UserImg"/>
@@ -468,6 +469,7 @@ const Blood = () => {
                         <Period1>요청기간</Period1>
                         <Period2>~2023.12.14</Period2>
                     </CardRequestPeriod>
+                  </Link>
                 </Card>
             
 

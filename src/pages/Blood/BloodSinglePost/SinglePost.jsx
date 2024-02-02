@@ -20,7 +20,7 @@ const Divider = styled.div`
   margin-bottom: 10px; // 구분선 아래에 여백 추가
 `;
 
-const Blood = () => {
+const SinglePost = () => {
     return (
         <Tmpblank>
         <Homecontainer>
@@ -31,3 +31,5 @@ const Blood = () => {
         </Tmpblank>
     )
 }
+
+export default SinglePost;
