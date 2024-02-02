@@ -6,6 +6,7 @@ import dot from "../../assets/images/dot.png";
 import dot2 from "../../assets/images/dot2.png";
 import arrow_12px2 from "../../assets/images/arrow_12px2.png";
 import arrow_down from "../../assets/images/arrow-down.png";
+import CardTmp from './CardTmp';
 import { Link } from "react-router-dom";
 
 
@@ -173,13 +174,14 @@ const BloodTap =styled.div`
 `
 
 const CardContainer =styled.div`
+    
     padding-top: 2.6042vw;
     display: grid; 
     grid-template-columns: repeat(3, minmax(auto, 1fr));
     align-items: center; 
     justify-content: space-between;
+    gap: 1.5625vw;
 `
-
 const Card = styled.div`
     width: 19.7917vw;
     height: 19.7917vw;
@@ -187,120 +189,12 @@ const Card = styled.div`
     border-radius: 0.2604vw;
     border: 0.0521vw solid var(--Gray-Gray-200, #EEE);
     background: var(--black-white-white-1000, #FFF);
-    margin: 0vw 1.5625vw 1.5625vw 0vw;
-    
-` 
+`;
 
-const CardNameContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    height: 3.4375vw;
-`
-const CardUser =styled.div`
-    display: flex;
-    padding-left: 1.0417vw;
-    padding-top: 1.0417vw;
-    padding-right:  11.9271vw;
 
-`
-const UserImg = styled.img`
-width: 1.3542vw;
-height: 1.3542vw;
-    flex-shrink: 0;
-`
-
-const UserName = styled.div`
-    height: 0.9375vw;
-    margin : 0.2083vw 0.0000vw 0.0000vw 0.5729vw;
-    color: var(--Gray-Gray-700, #464A4D);
-    font-family: Pretendard;
-    font-size: 0.6250vw;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 0.9375vw;
-    letter-spacing: -0.0187vw;
-`
-const DotImg = styled.img`
-    width: 0.1042vw;
-    height: 0.8333vw;
-    flex-shrink: 0;
-    margin: 0.7813vw 0.7813vw;
-`
-
-const CardTitle =styled.div`
-    display: flex;
-    flex-direction: row;
-    padding-left: 1.0417vw;
-
-`
-const CardTitleP = styled.div`
-    color: var(--Gray-Gray-900, #17191A);
-    font-family: Pretendard;
-    font-size: 0.9375vw;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 1.5625vw;
-    width: 14.5833vw;
-    padding-right: 0.5208vw;
-`
-
-const CardP = styled.div`
-    padding-left: 1.0417vw;
-    color: var(--Gray-Gray-700, #464A4D);
-    font-family: Pretendard;
-    font-size: 0.7813vw;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.8229vw;
-    letter-spacing: -0.0156vw;
-    
-    &.type1{
-        width: 17.7083vw;
-        height: 11.2500vw;
-    }
-    &.type2{
-        width: 17.7083vw; 
-        height: 1.0417vw;
-    }
-`
-const BloodType =styled.div`
-    display: inline-flex;
-    padding: 0.1563vw 0.4167vw;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5208vw;
-    border-radius: 5.2083vw;
-    border: 0.0521vw solid var(--Gray-Gray-300, #D1D1D1);
-    background: var(--black-white-white-1000, #FFF);
-`
-const CardRequestPeriod =styled.div`
-    display: flex;
-    flex-direction: row;
-    padding: 1.0417vw 0.0000vw 1.0417vw 1.0474vw;
-    color: var(--Gray-Gray-500, #9E9E9E);
-    font-family: Pretendard;
-    font-size: 0.6250vw;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 0.9375vw;
-    letter-spacing: -0.0187vw;
-`
-const Period1 =styled.div`
-  padding-right: 0.4187vw;
-`
-const Period2 =styled.div`
-`
-const CardPhoto =styled.div`
-    width: 19.6875vw;
-    height: 8.5417vw;
-    flex-shrink: 0;
-    background: var(--image, #D9D9D9);
-    padding-top: 0.7813vw;
-    margin-bottom: 0.7813vw;
-`
 const WritePostContainer= styled.div`
-float: right;
-padding-top: 0.5208vw; //CardContainer에서 1.5625vw 간격 벌려놔서 추가로 0.5208vw;
+    float: right;
+    padding-top: 0.5208vw; //CardContainer에서 1.5625vw 간격 벌려놔서 추가로 0.5208vw;
 `
 const WritePost =styled.button`
     width: 14.0625vw;
@@ -311,41 +205,68 @@ const WritePost =styled.button`
     background: var(--black-white-white-1000, #FFF);
     color: var(--Primary-Red-900, #E95458);
     text-align: center;
-font-family: Pretendard;
-font-size: 0.7813vw;
-font-style: normal;
-font-weight: 600;
-line-height: 1.0417vw; /* 133.333% */
+    font-family: Pretendard;
+    font-size: 0.7813vw;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.0417vw; /* 133.333% */
 `
 const PagnationContainer = styled.div`
-margin-top: 3.9583vw;
-display: flex;
-justify-content: center;
-align-items: center;
+    margin-top: 3.9583vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 const Pagnation = styled.div`
-display: flex;
-height: 1.3542vw;
+    display: flex;
+    height: 1.3542vw;
 `
 
 const PagnaionNumber = styled.div`
-display: inline-flex;
-margin-right: 1.3021vw;
-padding: 0.2083vw;
-justify-content: center;
-align-items: center;
-color: var(--Gray-Gray-700, #464A4D);
-text-align: center;
+    display: inline-flex;
+    margin-right: 1.3021vw;
+    padding: 0.2083vw;
+    justify-content: center;
+    align-items: center;
+    color: var(--Gray-Gray-700, #464A4D);
+    text-align: center;
 
-font-family: Pretendard;
-font-size: 0.6250vw;
-font-style: normal;
-font-weight: 500;
-line-height: 150%; /* 0.9375vw */
-letter-spacing: -0.0187vw;
+    font-family: Pretendard;
+    font-size: 0.6250vw;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 0.9375vw */
+    letter-spacing: -0.0187vw;
 
-&:active{
-    border-radius: 5.2083vw;
+    &:active{
+        border-radius: 5.2083vw;
+        background: var(--Primary-Red-200, #FFF6F7);
+        color: var(--Primary-Red-900, #E95458);
+        text-align: center;
+        font-family: Inter;
+        font-size: 0.6250vw;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+`
+const PagnaionNumber2 = styled.div`
+    display: inline-flex;
+    // padding: 0.2083vw;
+    justify-content: center;
+    align-items: center;
+    color: var(--Gray-Gray-700, #464A4D);
+    text-align: center;
+
+    font-family: Pretendard;
+    font-size: 0.6250vw;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 0.9375vw */
+    letter-spacing: -0.0187vw;
+
+    &:active{
+        border-radius: 5.2083vw;
     background: var(--Primary-Red-200, #FFF6F7);
     color: var(--Primary-Red-900, #E95458);
     text-align: center;
@@ -354,52 +275,25 @@ letter-spacing: -0.0187vw;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-}
-`
-const PagnaionNumber2 = styled.div`
-display: inline-flex;
-// padding: 0.2083vw;
-justify-content: center;
-align-items: center;
-color: var(--Gray-Gray-700, #464A4D);
-text-align: center;
-
-font-family: Pretendard;
-font-size: 0.6250vw;
-font-style: normal;
-font-weight: 500;
-line-height: 150%; /* 0.9375vw */
-letter-spacing: -0.0187vw;
-
-&:active{
-    border-radius: 5.2083vw;
-background: var(--Primary-Red-200, #FFF6F7);
-color: var(--Primary-Red-900, #E95458);
-text-align: center;
-font-family: Inter;
-font-size: 0.6250vw;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-}
+    }
 `
 
 const DotImg2 =styled.img`
-width: 0.7292vw;
-height: 0.1042vw;
-flex-shrink: 0;
-margin: 0.6250vw 1.2500vw 0.6250vw 0.0000vw;
+    width: 0.7292vw;
+    height: 0.1042vw;
+    flex-shrink: 0;
+    margin: 0.6250vw 1.2500vw 0.6250vw 0.0000vw;
 `
 const PagnationImg = styled.img`
-width: 1.2500vw;
-height: 1.2500vw;
-margin-right: 1.2500vw;
+    width: 1.2500vw;
+    height: 1.2500vw;
+    margin-right: 1.2500vw;
 `
 const PagnationImg2 = styled.img`
-width: 1.2500vw;
-height: 1.2500vw;
-transform: rotate(180deg);
-margin-left: 1.2500vw;
+    width: 1.2500vw;
+    height: 1.2500vw;
+    transform: rotate(180deg);
+    margin-left: 1.2500vw;
 `
 
 
@@ -448,59 +342,14 @@ const Blood = () => {
             </BloodContainer>
 
             <CardContainer>
-                <Card>
-                  <Link to="./bloodSinglePost/SinglePost" style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <CardNameContainer>
-                        <CardUser>
-                            <UserImg src = {Ellipse8} alt = "UserImg"/>
-                            <UserName>user name</UserName>
-                        </CardUser>
-                            <DotImg src = {dot} alt = "DotImg"/>
-                    </CardNameContainer>
+                <CardTmp cardType="type2" selectBloodType="B-" linkPath="./bloodSinglePost/SinglePost"/>
+                <CardTmp cardType="type1" selectBloodType="O+" linkPath="./bloodSinglePost/SinglePost"/>
+                <CardTmp cardType="type2" selectBloodType="AB-" linkPath="./bloodSinglePost/SinglePost"/>
 
-                   
-                    <CardTitle>
-                        <CardTitleP>지정헌혈 글 제목</CardTitleP>
-                        <BloodType>{selectBloodType}</BloodType>
-                    </CardTitle>
+                <CardTmp cardType="type2" selectBloodType="B+" linkPath="./bloodSinglePost/SinglePost"/>
+                <CardTmp selectBloodType={selectBloodType} linkPath="./bloodSinglePost/SinglePost"/>
+                <Card></Card>
                 
-                    <CardP className="type1">지정헌혈 글 내용입니다</CardP>
-                    <CardRequestPeriod>
-                        <Period1>요청기간</Period1>
-                        <Period2>~2023.12.14</Period2>
-                    </CardRequestPeriod>
-                  </Link>
-                </Card>
-            
-
-                
-                <Card>
-                    <CardNameContainer>
-                        <CardUser>
-                            <UserImg src = {Ellipse8} alt = "UserImg"/>
-                            <UserName>user name</UserName>
-                        </CardUser>
-                            <DotImg src = {dot} alt = "DotImg"/>
-                    </CardNameContainer>
-
-                   <CardPhoto></CardPhoto>
-                    <CardTitle>
-                        <CardTitleP>지정헌혈 글 제목</CardTitleP>
-                        <BloodType>{selectBloodType}</BloodType>
-                    </CardTitle>
-
-                    <CardP className="type2">지정헌혈 글 내용입니다</CardP>
-                    <CardRequestPeriod>
-                        <Period1>요청기간</Period1>
-                        <Period2>~2023.12.14</Period2>
-                    </CardRequestPeriod>
-                </Card>
-                <Card></Card>
-
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
-
                 <Card></Card>
                 <Card></Card>
                 <Card></Card>

@@ -4,6 +4,7 @@ import { OtherPostDetail } from "./PostData";
 import leftArrow from '../Icons/LeftArrow.svg'; 
 import rightArrow from '../Icons/RightArrow.svg'; 
 import profileImage from '../../../assets/images/profile.png';
+import CardTmp from '../CardTmp';
 
 const OtherPostsSection = styled.section`
   position: relative;
@@ -137,6 +138,7 @@ const Dot = styled.div`
 `;
 
 const OtherPosts = () => {
+  const [selectBloodType, setSelectBloodType] = useState("A+");
   const [currentIndex, setCurrentIndex] = useState(0);
   const postsPerPage = 2;
   const totalPages = Math.ceil(OtherPostDetail.length / postsPerPage);
@@ -161,6 +163,7 @@ const OtherPosts = () => {
           게시판 목록
         </BoardListButton>
       </HeaderContainer>
+      <CardTmp selectBloodType={selectBloodType} />
       <PostsLists>
       <ArrowButton left onClick={goToPrevPage} />
       <HorizontalScrollContainer>
