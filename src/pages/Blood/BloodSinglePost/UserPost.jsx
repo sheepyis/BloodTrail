@@ -6,17 +6,10 @@ import { ReactComponent as HeartIcon } from '../Icons/Heart.svg';
 import { ReactComponent as ShareIcon } from '../Icons/Share.svg';
 
 const HeaderText = styled.div`
-  font-size: 24px;
-  font-weight: 1000;
+  font-size: 1.3vw;
+  font-weight: 500;
   color: #17191A;
-  margin-bottom: 20px;
-  @media (max-width: 992px) {
-    font-size: 20px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 18px;
-  }
+  margin-bottom: 1.5vw;
 `;
 
 const PageLayout = styled.div`
@@ -24,35 +17,34 @@ const PageLayout = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 20px;
+  padding: 1vw;
 `;
 
 const Header = styled.div`
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 2vw;
   flex-direction: column;
   display: flex;
 `;
 
 const CopyButton = styled.button`
-  font-size: 8px;
-  border: 1px solid #D1D1D1;
+  height: 2vw;
+  font-size: 0.6vw;
+  border: 0.1vw solid #D1D1D1;
   color: #464A4D;
   cursor: pointer;
-  padding: 7px; 
-  margin-left: 10px; 
-  border-radius: 5px;
+  padding: 0.6vw;
+  border-radius: 0.4vw;
 `;
 
 const ReportButton = styled.button`
-  font-size: 8px;
   color: #464A4D; 
   cursor: pointer;
-  padding: 7px;
-  margin-left: 5px;
+  padding: 0.4vw;
+  margin-left: 0.5vw;
   svg {
-    width: 15px;
-    height: 15px;
+    width: 1vw;
+    height: 1vw;
   }
 `;
 
@@ -62,7 +54,7 @@ const TitleDetail = styled.div`
   justify-content: space-between;
   align-items: center; 
   color: #9E9E9E;
-  padding: 5px;
+  padding: 0.5vw;
 `;
 
 const UserInfo = styled.div`
@@ -73,8 +65,8 @@ const UserInfo = styled.div`
 
 const Divider = styled.div`
   width: 100%;
-  border-bottom: 1px solid #E0E0E0;
-  margin-bottom: 10px; 
+  border-bottom: 0.5vw solid #EEEEEE;
+  margin-bottom: 0.5vw;
 `;
 
 const TagContainer = styled.div`
