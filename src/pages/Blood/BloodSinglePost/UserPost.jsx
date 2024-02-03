@@ -55,6 +55,7 @@ const TitleDetail = styled.div`
   align-items: center; 
   color: #9E9E9E;
   padding: 0.5vw;
+  font-size: 0.6vw;
 `;
 
 const UserInfo = styled.div`
@@ -65,7 +66,7 @@ const UserInfo = styled.div`
 
 const Divider = styled.div`
   width: 100%;
-  border-bottom: 0.5vw solid #EEEEEE;
+  border-bottom: 0.1vw solid #EEEEEE;
   margin-bottom: 0.5vw;
 `;
 
@@ -80,11 +81,11 @@ const TagContainer = styled.div`
 
 const Tag = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 1vw;
   background-color: #FFFAFA;
-  padding: 5px 10px;
-  font-size: 12px;
-  border-radius: 15px; 
+  padding: 0.6vw 1vw;
+  font-size: 0.7vw;
+  border-radius: 12vw; 
   color: #17191A;
   white-space: nowrap;
 `;
@@ -96,17 +97,17 @@ const TagCategory = styled.div`
 const ContentArea = styled.div`
   width: 80%;
   background-color: #D9D9D9;
-  min-height: 200px;
-  margin-bottom: 20px;
-  padding: 10px;
-  margin-bottom: 20px;
+  min-height: 15vw;
+  padding: 1vw;
+  margin-bottom: 2vw;
 `;
 
 const Details = styled.div`
   white-space: normal;
   word-break: break-all; 
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 2vw;
+  font-size: 0.6vw;
 `;
 
 const InteractionBar = styled.div`
@@ -116,13 +117,7 @@ const InteractionBar = styled.div`
   justify-content: flex-end;
   align-items: center;
   color: #9E9E9E;
-`;
-
-const Footer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 0.6vw;
 `;
 
 const FooterBar = styled.div`
@@ -130,19 +125,19 @@ const FooterBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 1vw 0;
 `;
 
 const InteractionButtons = styled.div`
   display: flex;
-  gap: 30px;
+  gap: 1.4vw;
   justify-content: flex-start;
 `;
 
 const HeartWrapper = styled.div`
-  font-size: 15px;
+  font-size: 0.9vw;
   display: flex;
-  gap : 10px;
+  gap : 0.5vw;
   align-items: center;
 `;
 
@@ -150,14 +145,14 @@ const IconWrapper = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${props => props.color || '#F3777A'};
+  border: 0.1vw solid ${props => props.color || '#F3777A'};
   border-radius: 50%;
-  padding: 10px;
+  padding: 0.6vw;
   cursor: pointer;
 
   svg {
-    width: 15px;
-    height: 15px;
+    width: 1vw;
+    height: 1vw;
     fill: none;
     stroke: ${props => props.color || '#F3777A'};
   }
@@ -186,10 +181,10 @@ const RightContainer = styled.div`
 
 const ChatButton = styled.div`
   background-color: #FFF6F7;
-  padding: 10px 74px;
-  border-radius: 5px;
+  padding: 0.6vw 4vw;
+  border-radius: 0.3vw;
   color: #E95458;
-  font-size: 0.9em;
+  font-size: 0.6vw;
   cursor: pointer;
   justify-content: center;
 `;

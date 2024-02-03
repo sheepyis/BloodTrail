@@ -71,17 +71,18 @@ const BoardListButton = styled.button`
 `;
 
 const ArrowButton = styled.button`
-  width: 2vw;
+  width: 4vw;
   height: 2vw;
   cursor: pointer;
   z-index: 10;
   background-color: transparent;
   background-image: url(${({ type }) => type === 'next' ? rightArrow : leftArrow});
   background-repeat: no-repeat;
+  background-position: center;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  ${({ type }) => type === 'next' ? `right: -5vw; top: 45%` : `left: -5vw;`}
+  ${({ type }) => type === 'next' ? `right: -6.5vw; background-size:2.5vw` : `left: -6.5vw; background-size:1.5vw`}
 `;
 
 // Custom arrow components
