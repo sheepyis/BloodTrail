@@ -62,6 +62,7 @@ const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  font-size: 0.7vw;
 `;
 
 const Divider = styled.div`
@@ -88,6 +89,7 @@ const Tag = styled.div`
   border-radius: 12vw; 
   color: #17191A;
   white-space: nowrap;
+  font-size: 0.7vw;
 `;
 
 const TagCategory = styled.div`
@@ -107,7 +109,7 @@ const Details = styled.div`
   word-break: break-all; 
   width: 100%;
   margin-bottom: 2vw;
-  font-size: 0.6vw;
+  font-size: 0.7vw;
 `;
 
 const InteractionBar = styled.div`
@@ -117,7 +119,7 @@ const InteractionBar = styled.div`
   justify-content: flex-end;
   align-items: center;
   color: #9E9E9E;
-  font-size: 0.6vw;
+  font-size: 0.7vw;
 `;
 
 const FooterBar = styled.div`
@@ -184,7 +186,7 @@ const ChatButton = styled.div`
   padding: 0.6vw 4vw;
   border-radius: 0.3vw;
   color: #E95458;
-  font-size: 0.6vw;
+  font-size: 0.7vw;
   cursor: pointer;
   justify-content: center;
 `;
