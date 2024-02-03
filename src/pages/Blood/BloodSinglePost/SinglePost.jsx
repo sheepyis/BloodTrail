@@ -4,6 +4,7 @@ import OtherPost from "./OtherPost";
 
 const Tmpblank = styled.div`
   margin-top: 5vw;
+  margin-bottom: 5vw;
 `;
 
 const Homecontainer = styled.div`
@@ -15,9 +16,9 @@ const Homecontainer = styled.div`
 `
 
 const Divider = styled.div`
-  width: 100%; // 구분선의 길이를 Header와 동일하게 설정
-  border-bottom: 0.5vw solid #EEEEEE; // 구분선의 스타일 설정
-  margin-bottom: 0.5vw; // 구분선 아래에 여백 추가
+  width: 100%;
+  border-bottom: 0.5vw solid #EEEEEE;
+  margin-bottom: 0.5vw;
 `;
 
 const SinglePost = () => {
