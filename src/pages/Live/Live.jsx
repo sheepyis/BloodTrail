@@ -172,14 +172,6 @@ const ChatApp = () => {
     }
   };
 
-  const scrollToBottom = () => {
-    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   const toggleDropDown = () => {
