@@ -92,6 +92,7 @@ const CardP = styled.div`
 `;
 
 const BloodType = styled.div`
+    font-size: 0.7vw;
     display: inline-flex;
     padding: 0.1563vw 0.4167vw;
     justify-content: center;
