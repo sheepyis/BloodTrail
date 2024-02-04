@@ -11,6 +11,7 @@ import Kakao from '../../api/Kakao';
 import Ranking from '../../components/Ranking/Ranking';
 import Board from '../../components/Board/Board';
 import { rankingData, hotPost } from './HomeData';
+import axios from "axios"
 
 const HomeContainer = styled.div`
   width: 100%;
@@ -87,7 +88,9 @@ const Divider = styled.div`
   margin-bottom: 10%; // 구분선 아래에 여백 추가
 `;
 
+
 const Home = () => {
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -111,11 +114,37 @@ const Home = () => {
     );
   };
 
+  /* rankingData, hotPost axios GET
+
+   useEffect(() => {
+    const fetchRankingData = async () => {
+      try {
+        const response = await axios.get("https://my-json-server.typicode.com/typicode/demo/db");
+        setRankingData(response.data.rankingData);
+      } catch (error) {
+        console.error('Error fetching ranking data: ', error);
+      }
+    };
+
+    const fetchHotPostData = async () => {
+      try {
+        const response = await axios.get("https://my-json-server.typicode.com/typicode/demo/db");
+        setHotPost(response.data.hotPost);
+      } catch (error) {
+        console.error('Error fetching hot post data: ', error);
+      }
+    };
+
+    fetchRankingData();
+    fetchHotPostData();
+
+  */
+
   return (
     <HomeContainer>
       <BannerContainer>
         <ArrowLeftStyled
-          src={ArrowLeft}
+          src={}ArrowLeft
           alt="Left Arrow"
           onClick={handleLeftArrowClick}
         />
