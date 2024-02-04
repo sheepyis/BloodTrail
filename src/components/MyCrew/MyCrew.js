@@ -20,27 +20,27 @@ const MyCrewDiv = styled.div`
 
 const MyCrewP = styled.p`
     font-weight: 500;
-    font-size: 1.5rem;
+    font-size: 0.75vw;
     color: ${colors.crewGray};
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 
     @media screen and (max-width:767px) {
-        font-size: 0.75vw;
+        font-size: 0.75rem;
     }
 `;
 
 const MyCrewP2 = styled.p`
     font-weight: 500;
-    font-size: 1.2rem;
+    font-size: 0.6vw;
     color: ${colors.crewGray2};
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 
     @media screen and (max-width:767px) {
-        font-size: 0.6vw;
+        font-size: 0.6rem;
     }
 `
 
@@ -57,10 +57,10 @@ const ChatButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 0.75vw;
 
     @media screen and (max-width:767px) {
-        font-size: 0.75vw;
+        font-size: 0.75rem;
     }
 `;
 
