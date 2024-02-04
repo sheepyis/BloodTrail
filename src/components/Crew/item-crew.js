@@ -3,7 +3,7 @@ import colors from "../../styles/color";
 import CrewImage from "../../assets/images/profile.png";
 
 const StyleItem = styled.div`
-    width: 21vw;
+    width: 95%;
     min-height: 6.85vw;
     border: 0.05vw solid ${colors.lightGray};
     border-radius: 0.25vw;
