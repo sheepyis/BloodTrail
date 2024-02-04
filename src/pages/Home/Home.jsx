@@ -10,7 +10,7 @@ import Dday from '../../components/Dday/Dday';
 import Kakao from '../../api/Kakao';
 import Ranking from '../../components/Ranking/Ranking';
 import Board from '../../components/Board/Board';
-import { rankingData, hotPost } from './HomeData';
+import { hotPost } from './HomeData';
 import axios from "axios"
 
 const HomeContainer = styled.div`
@@ -173,8 +173,8 @@ const Home = () => {
       </SidebarContainer>
 
       <HomeBox>
-        <Ranking rankingData={rankingData} home={'home'} />
-        <Board postsDatas={hotPost} />
+        <Ranking home={'home'} />
+        <Board postsDatas={hotPost} home={'home'} />
         <Divider/>
         <Kakao />
       </HomeBox>
