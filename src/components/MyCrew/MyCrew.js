@@ -26,7 +26,7 @@ const MyCrewP = styled.p`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    @media screen and (max-width:374px) {
+    @media screen and (max-width:600px) {
         font-size: 0.75rem;
     }
 `;
@@ -39,7 +39,7 @@ const MyCrewP2 = styled.p`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    @media screen and (max-width:374px) {
+    @media screen and (max-width:600px) {
         font-size: 0.6rem;
     }
 `
@@ -59,7 +59,7 @@ const ChatButton = styled.button`
     justify-content: center;
     font-size: 0.75vw;
 
-    @media screen and (max-width:374px) {
+    @media screen and (max-width:600px) {
         font-size: 0.75rem;
     }
 `;
@@ -68,7 +68,7 @@ const ProfileImage = styled.img`
     width: 2vw;
     height: 2vw;
 
-    @media screen and (max-width:374px) {
+    @media screen and (max-width:600px) {
         width: 1.5rem;
         height: 1.5rem;
     }
