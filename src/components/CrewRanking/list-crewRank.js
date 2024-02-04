@@ -26,7 +26,7 @@ const CrewRank = styled.img`
     cursor: pointer;
 `
 
-const ListCrewRank = () => {
+const ListCrewRank = ({home}) => {
     const [crewData, setCrewData] = useState([]);
     const [visibleRange, setVisibleRange] = useState({ start: 0, end: 6 });
 
@@ -36,6 +36,7 @@ const ListCrewRank = () => {
                 const sortedData = response.data.sort((a, b) => b.id - a.id);
                 sortedData[0] = { ...sortedData[0], isFirstPlace: true };
                 setCrewData(sortedData);
+                if (home) setVisibleRange({start:0,end:3});
             })
             .catch(error => {
                 console.error('Error: ', error);
@@ -43,6 +44,8 @@ const ListCrewRank = () => {
     }, []);
 
     const handleArrowClick = (direction) => {
+        if (home) return;
+
         const step = 6;
         const totalDataLength = crewData.length;
         const maxStart = Math.max(0, totalDataLength - step);
@@ -67,22 +70,26 @@ const ListCrewRank = () => {
     
 
     return (
-        <CrewRankContainer>
-            <CrewRank src={Left} alt="left" style={{ marginLeft: "1vw" }} onClick={() => handleArrowClick('left')} />
-            <StyleGrid>
-                {crewData.slice(visibleRange.start, visibleRange.end).map((item, index) => (
-                    <ItemCrewRank
-                        key={index}
-                        id={visibleRange.start + index + 1}
-                        point={item.id}
-                        name={item.name}
-                        isFirstPlace={item.isFirstPlace || false}
-                    />
-                ))}
-            </StyleGrid>
-            <CrewRank src={Left} alt="right" style={{ rotate: "180deg", marginRight: "1vw" }} onClick={() => handleArrowClick('right')} />
-        </CrewRankContainer>
-    );
+      <CrewRankContainer>
+          {!home && (
+              <CrewRank src={Left} alt="left" style={{ marginLeft: "1vw" }} onClick={() => handleArrowClick('left')} />
+          )}
+          <StyleGrid>
+              {crewData.slice(visibleRange.start, visibleRange.end).map((item, index) => (
+                  <ItemCrewRank
+                      key={index}
+                      id={visibleRange.start + index + 1}
+                      point={item.id}
+                      name={item.name}
+                      isFirstPlace={item.isFirstPlace || false}
+                  />
+              ))}
+          </StyleGrid>
+          {!home && (
+              <CrewRank src={Left} alt="right" style={{ rotate: "180deg", marginRight: "1vw" }} onClick={() => handleArrowClick('right')} />
+          )}
+      </CrewRankContainer>
+  );
 };
 
 export default ListCrewRank;

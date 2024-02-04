@@ -173,7 +173,7 @@ const Home = () => {
       </SidebarContainer>
 
       <HomeBox>
-        <Ranking rankingData={rankingData} />
+        <Ranking rankingData={rankingData} home={'home'} />
         <Board postsDatas={hotPost} />
         <Divider/>
         <Kakao />

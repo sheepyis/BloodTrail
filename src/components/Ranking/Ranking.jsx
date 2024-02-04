@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import CrewRankingData from '../CrewRanking/list-crewRank';
 
 const RankingContainer = styled.div`
   width: 100%;
@@ -133,9 +134,9 @@ const CrewPoints = ({ data }) => (
   </PointCategory>
 );
 
-const Ranking = ({ rankingData }) => {
+const Ranking = ({ rankingData, home }) => {
   const personalPointsData = rankingData.filter(item => item.type === 'personal');
-  const crewPointsData = rankingData.filter(item => item.type === 'crew');
+  //const crewPointsData = rankingData.filter(item => item.type === 'crew');
   return (
     <RankingContainer>
       <Ranktext>헌혈 랭킹</Ranktext>
@@ -146,7 +147,7 @@ const Ranking = ({ rankingData }) => {
         </RankingsAndText>
         <RankingsAndText>
           <Ranktext2>크루 헌혈 포인트</Ranktext2>
-          <CrewPoints data={crewPointsData.slice(0,3)} />
+          <CrewRankingData home={home} />
         </RankingsAndText>
       </FlexContainer>
     </RankingContainer>
