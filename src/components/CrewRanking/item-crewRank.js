@@ -4,12 +4,13 @@ import CrewImage from "../../assets/images/profile.png";
 
 const StyleItem = styled.div`
     width: 9vw;
-    height: 9.3vw;
+    min-height: 9.3vw;
     background-color: ${props => props.isFirstPlace ? colors.crewPink : colors.footerGray};
     border: none;
     border-radius: 0.25vw;
     text-align: center;
     padding: 0.5vw 0.5vw 0.5vw 0.5vw;
+    white-space: nowrap;
 `
 
 const CrewRankP = styled.p`
@@ -48,7 +49,7 @@ const ItemCrewRank = (props) => {
             <CrewRankP>{id}위</CrewRankP>
             <img src={CrewImage} alt="crew" style={{width: "3vw", height: "3vw", marginTop: "0.5vw"}}/>
             <CrewRankP2 style={{marginTop: "0.2vw"}}>{name}</CrewRankP2>
-            <div className="PointBox" style={{display: "flex", justifyContent: "center", gap: "0.2vw", alignItems: "center", marginTop: "0.2rem"}} >
+            <div className="PointBox" style={{display: "flex", justifyContent: "center", gap: "0.2vw", alignItems: "center", marginTop: "0.2vw"}} >
                 <CrewRankP3>Point</CrewRankP3>
                 <CrewRankP4>{point}점</CrewRankP4>
             </div>

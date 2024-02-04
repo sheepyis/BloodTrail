@@ -5,7 +5,7 @@ import Star from "../../assets/images/star.png";
 
 const StyleItem = styled.div`
     width: 21vw;
-    height: 6.1vw;
+    min-height: 6.1vw;
     border: 0.05vw solid ${colors.lightGray};
     border-radius: 0.25vw;
     padding: 1vw;
@@ -50,8 +50,8 @@ const BottomBox = styled.div`
 
 const ItemMember = (props) => {
     const { id, name, username } = props;
-    console.log(name);
-    console.log(username);
+/*     console.log(name);
+    console.log(username); */
 
     return (
         <StyleItem key={id}>

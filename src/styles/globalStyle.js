@@ -118,32 +118,32 @@ const GlobalStyle = createGlobalStyle`
     }
 
     /* 빅데스크탑 */
-    html{
+    p, div, button, input {
         font-size: 62.5%;
     }
     
     @media screen and (max-width:1799px) {
         /* 데스크탑 */
-        html{
+        p, div, button, input {
             font-size: 50%;
         }
     }
     @media screen and (max-width:1199px) {
         /* 데스크탑 */
-        html{
+        p, div, button, input  {
             font-size: 45%;
         }
     }
 
     @media screen and (max-width:991px) {
         /* 타블렛 */
-        html{
+        p, div, button, input  {
             font-size: 40%;
         }
     }
     @media screen and (max-width:767px) {
         /* 모바일 */
-        html{
+        p, div, button, input  {
             font-size: 30%;
         }
     }
