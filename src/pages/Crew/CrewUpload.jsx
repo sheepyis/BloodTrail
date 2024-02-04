@@ -117,7 +117,7 @@ const CrewUpload = () => {
 
     return (
         <CrewContainer>
-            <div className="left" style={{ width: "17%", paddingLeft: "3.85%" }}>
+            <div className="left" style={{ width: '17%', paddingLeft: '2.5%'}}>
                 <CrewP>헌혈크루</CrewP>
                 <CrewP2>헌혈 크루 찾기</CrewP2>
             </div>

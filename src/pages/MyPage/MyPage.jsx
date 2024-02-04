@@ -50,12 +50,12 @@ const EditButton = styled.button`
 const MyPage = () => {
     return (
         <MyPageContainer>
-            <div className="left" style={{width: "17%", paddingLeft: "3.85%"}}>
+            <div className="left" style={{width: "17%", paddingLeft: "2.5%"}}>
                 <MyPageP>내 정보</MyPageP>
                 <MyPageP2>내 프로필</MyPageP2>
-                <MyPageP style={{marginTop: "1.5vw"}}>개인정보 처리방침</MyPageP>
-                <MyPageP style={{marginTop: "1.5vw"}}>서비스 이용약관</MyPageP>
-                <MyPageP style={{marginTop: "1.5vw"}}>회원탈퇴</MyPageP>
+                <MyPageP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>개인정보 처리방침</MyPageP>
+                <MyPageP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>서비스 이용약관</MyPageP>
+                <MyPageP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>회원탈퇴</MyPageP>
             </div>
 
             <div className="right" style={{width: "67%"}}>

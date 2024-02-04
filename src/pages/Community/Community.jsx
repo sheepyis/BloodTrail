@@ -1,7 +1,8 @@
 import React,{useState} from "react";
 import styled from "styled-components";
-import arrow_12px from "../../assets/images/arrow_12px.png";
-import Ellipse8 from "../../assets/images/Ellipse8.png";
+import colors from "../../styles/color";
+import SortBoxYes from '../../assets/images/sortbox_yes.png';
+import ArrowDown from '../../assets/images/arrow-down.png';
 import dot from "../../assets/images/dot.png";
 import dot2 from "../../assets/images/dot2.png";
 import arrow_12px2 from "../../assets/images/arrow_12px2.png";
@@ -13,129 +14,111 @@ import CardTmp from '../../components/Card/Card';
 const Container = styled.div`
     display: flex;
     width: 100%;
-    height: 91.1458vw;
-
+    padding-top: 2vw;
+    margin-bottom: 4vw;
 `
-const SideBar = styled.div`
-    display: flex;
-    width: 17.7083vw;
-    height: 91.1458vw;
-    flex-direction: column;
-    padding-top: 1.3021vw;
-    align-items: flex-start;
-    flex-shrink: 0;
 
-    .title{
-        width: 17.7083vw;
-        height: 3.1250vw;
-        color: var(--Gray-Gray-900, #17191A);
-        font-family: Pretendard;
-        font-size: 0.9375vw;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 1.5625vw; 
-        padding: 0.7813vw 0.0000vw 0.7813vw 1.5625vw;
-    }
-    .list{
-        width: 17.7083vw;
-        height: 2.6042vw;
-        flex-shrink: 0;
-        color: var(--Gray-Gray-900, #17191A);
-        font-family: Pretendard;
-        font-size: 0.7813vw;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 1.0417vw;
-        letter-spacing: -0.0156vw;
-        padding: 0.7813vw 0.0000vw 0.7813vw 1.5625vw;
-        &:hover{
-            color: var(--Primary-Red-900, #E95458);
-            font-family: Pretendard;
-            font-size: 0.7813vw;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 1.0417vw; 
-        }
-    }
+const CommunityP = styled.p`
+    font-weight: 500;
+    font-size: 0.9vw;
+    color: ${colors.crewGray};
+`
+
+const CommunityP2 = styled.p`
+    font-weight: 600;
+    font-size: 0.75vw;
+    color: ${colors.mainRed};
+    margin-top: 1.5vw;
+    cursor: pointer;
+`
+
+const SideBar = styled.div`
+    width: 17%;
+    padding-left: 2.5%;
 `
 const MainConationer =styled.div`
-    padding-left: 1.0417vw;
+    width: 67%;
 `
 const Breadcrums = styled.div`
     display: flex;
-    width: 62.5000vw;
-    height: 3.1250vw;
-    padding: 0.9375vw 52.2917vw 0.9375vw 0.2083vw;
-    align-items: center;
-    flex-shrink: 0;
+    gap: 0.5vw;
 `
 const BreadcrumsP = styled.div`
-    color: var(--Gray-Gray-700, #464A4D);
-    font-family: Pretendard;
-    font-size: 0.6250vw;
-    font-style: normal;
     font-weight: 500;
-    line-height: * 0.9375vw;
-    letter-spacing: -0.0187vw;
-    padding-right: 0.2083vw; 
+    font-size: 0.6vw;
+    color: ${colors.crewGray2};
+    cursor: pointer;
 `
-const BreadcrumsIcon = styled.img`
-    width: 1.2500vw;
-    height: 1.2500vw;
-`
-const Title = styled.div`
-    display: flex;
-    flex-direction: row;
-`
-const MainTitle = styled.div`
-    padding: 2.0833vw 0.0000vw 1.6667vw 0.5208vw;
-    color: var(--Gray-Gray-900, #17191A);
-    padding-right: 44.4271vw;
-    /* Body/Headline/medium */
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 42px; /* 175% */
-`
-const DropdownBoard1 =styled.div`
-    display: flex;
-    align-items: flex-end;
-`
-const DropdownBoardContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    border: 1px solid var(--Gray-Gray-200, #EEE);
-    background: var(--black-white-white-1000, #FFF);
-    width: 12.0833vw;
-    height: 2.6042vw;
-    padding: 0.7813vw;
-    flex-shrink: 0;
-`
-const DropdownBoardBox =styled.div`
-    color: var(--Gray-Gray-700, #464A4D);
-    font-family: Pretendard;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px; /* 133.333% */
-    letter-spacing: -0.3px;
-    height:1.0417vw;
-    width: 9.2708vw;
-`
-const DropdownBoardlist =styled.div`
 
+
+const RightMiddle = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1vw;
+    margin-top: 2vw;
+    position: relative;
+`;
+
+const SortContainer = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+`;
+
+const SortDiv = styled.div`
+    width: 11.6vw;
+    height: 2.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.5vw 0 0.5vw;
+    border: 0.05vw solid ${colors.lightGray};
+    cursor: pointer;
+`;
+
+const SortBox = styled.div`
+    width: 11.6vw;
+    min-height: 5.8vw;
+    padding: 0.4vw 0;
+    border: 0.05vw solid ${colors.lightGray};
+    position: absolute;
+    z-index: 1;
+    background-color: ${colors.white};
+    right: 0;
+    margin-top: 2.7vw;
+    display: ${({ show }) => (show ? "flex" : "none")};
+    flex-direction: column;
+    justify-content: space-between;
 `
+
+const HoverDiv = styled.div`
+    width: 100%;
+    height: 2.5vw;
+    font-size: 0.75vw;
+    font-weight: 500;
+    color: ${colors.crewGray2};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5vw;
+
+    &:hover {
+        font-size: 0.75vw;
+        font-weight: 600;
+        color: ${colors.crewGray};
+        background-color: ${colors.lightGray};
+    }
+`
+
 const DropdownImg =styled.img`
     width: 1.2500vw;
     height: 1.2500vw;
     flex-shrink: 0;
 `
-const TitleLine =styled.div`
-    padding-bottom: 2.5000vw;
-`
+
 const BoardContainer = styled.div`
-    width: 62.5000vw;
+    width: 100%;
+    padding-left: 1.5vw;
 `
 
 const CardContainer =styled.div`
@@ -264,23 +247,21 @@ const CardPhoto =styled.div`
     margin-bottom: 0.7813vw;
 `
 const WritePostContainer= styled.div`
-    float: right;
-    padding-top: 0.5208vw; //CardContainer에서 1.5625vw 간격 벌려놔서 추가로 0.5208vw;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 0.8vw;
+    margin: 1vw 0;
 `
 const WritePost =styled.button`
-    width: 14.0625vw;
-    height: 2.0833vw;
-    flex-shrink: 0;
-    border-radius: 0.2604vw;
-    border: 0.0521vw solid var(--Primary-Red-500, #FFB2B5);
-    background: var(--black-white-white-1000, #FFF);
-    color: var(--Primary-Red-900, #E95458);
+    width: 13.5vw;
+    height: 2vw;
+    border-radius: 0.25vw;
+    border: 0.05vw solid #FFB2B5;
+    color: ${colors.mainRed};
     text-align: center;
-font-family: Pretendard;
-font-size: 0.7813vw;
-font-style: normal;
-font-weight: 600;
-line-height: 1.0417vw; /* 133.333% */
+    font-size: 0.75vw;
+    font-weight: 600;
 `
 const PagnationContainer = styled.div`
 margin-top: 3.4375vw;
@@ -428,45 +409,53 @@ const DropdownSearch = styled.div`
 `
 
 const Community = () => {
-
-    const [selectBloodType,setBloodType] =useState("A+");
-
-    const handleBlood = (bloodType) =>{
-        setBloodType(bloodType); // bloodtype 선택하면 게시물, 타이틀 바뀌도록
-    }
+    const [selectedSort, setSelectedSort] = useState("신규순");
+    const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
+    
+    const handleSortSelection = (sortType) => {
+        setSelectedSort(sortType);
+        setIsSortBoxVisible(false);
+    };
 
     return (
-      <Container>
+        <Container>
         <SideBar>
-            <div className="title">커뮤니티</div>
-            <div className="list">명예 헌혈 게시판</div>
-            <div className="list">헌혈 인증 게시판</div>
-            <div className="list">헌혈 정보 공유 게시판</div>
-            <div className="list">내가 쓴 글 보기</div>
+            <CommunityP>커뮤니티</CommunityP>
+            <CommunityP2>자유게시판</CommunityP2>
+            <CommunityP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>명예 헌혈 게시판</CommunityP>
+            <CommunityP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>헌혈 인증 게시판</CommunityP>
+            <CommunityP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>헌혈 정보 공유 게시판</CommunityP>
+            <CommunityP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>내가 쓴 글 보기</CommunityP>
 
         </SideBar>
 
         <MainConationer>
         <Breadcrums>
-            <BreadcrumsP>홈</BreadcrumsP><BreadcrumsIcon src={arrow_12px} alt="arrow_12px"/>
-            <BreadcrumsP>커뮤니티</BreadcrumsP><BreadcrumsIcon src={arrow_12px} alt="arrow_12px"/>
+            <BreadcrumsP>홈</BreadcrumsP>
+            <BreadcrumsP>{">"}</BreadcrumsP>
+            <BreadcrumsP>커뮤니티</BreadcrumsP>
+            <BreadcrumsP>{">"}</BreadcrumsP>
             <BreadcrumsP>자유게시판</BreadcrumsP>
         </Breadcrums>
 
-        <Title>
-            <MainTitle>자유게시판</MainTitle>
-            <DropdownBoard1>
-                <DropdownBoardContainer>
-                    <DropdownBoardBox>신규순</DropdownBoardBox>
-                    <DropdownImg src = {arrow_down} alt = "arrow_down"/>
-                </DropdownBoardContainer>
-            </DropdownBoard1>
-        </Title>
-            <TitleLine>
-                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 1200 2" fill="none">
-                <path d="M0 1L1200 1.0001" stroke="#17191A" stroke-width="2"/>
-                </svg>
-            </TitleLine>
+        <RightMiddle>
+            <CommunityP style={{ fontSize: '1.2vw' }}>자유게시판</CommunityP>
+            <SortContainer>
+                <img src={SortBoxYes} alt="sortBox" style={{ width: '1.2vw', height: '1.2vw' }}/>
+                <SortDiv onClick={() => setIsSortBoxVisible(!isSortBoxVisible)}>
+                    <CommunityP style={{ fontSize: '0.75vw', color: colors.crewGray2 }}>{selectedSort}</CommunityP>
+                    <img src={ArrowDown} alt="arrow-down" style={{ width: '1.2vw', height: '1.2vw' }}/>
+                </SortDiv>
+            </SortContainer>
+            {selectedSort && (
+                <SortBox show={isSortBoxVisible}>
+                    <HoverDiv onClick={() => handleSortSelection("신규순")}>신규순</HoverDiv>
+                    <HoverDiv onClick={() => handleSortSelection("공감순")}>공감순</HoverDiv>
+                </SortBox>
+            )}
+        </RightMiddle>
+
+        <div className="crewBar" style={{ width: '100%', height: '0.1vw', border: 'none', backgroundColor: colors.crewGray, marginBottom: "2vw"}}/>
         
 
         <BoardContainer>
