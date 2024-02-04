@@ -65,8 +65,8 @@ const RegistP = styled.p`
 const ScanContainer = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
   margin-bottom: 1.75vw;
+  flex-direction: column;
 `;
 
 const ScanP = styled.p`
@@ -90,10 +90,68 @@ const RegistP2 = styled.p`
 
 const GraphContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 10vw;
+  flex-direction: row;
+  height: 2.5vw;
   background-color: white;
-  border: 1px solid var(--Gray-Gray-300, #d1d1d1);
+  border: 1px solid var(--Gray-Gray-200, #eee);
+  border-bottom: none; // 하단 테두리 제외
+
+  &:last-child {
+    border-bottom: 1px solid var(--Gray-Gray-200, #eee);
+  }
+`;
+
+const RowContainer = styled.div`
+  background: var(--Gray-Gray-50, #fafafa);
+  width: 8.05vw;
+  height: 2.393vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const GraphP = styled.p`
+  color: var(--Gray-Gray-500, #9e9e9e);
+  text-align: center;
+
+  /* Body/Body/medium */
+  font-family: Pretendard;
+  font-size: 0.75vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1vw;
+  letter-spacing: -0.3px;
+`;
+
+const CellContainer = styled.div`
+  display: flex;
+  padding-left: 1.2vw;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2.1vw;
+`;
+
+const ScanButton = styled.button`
+  display: flex;
+  width: 12.5vw;
+  padding: 0.5vw 1.5vw;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.5vw;
+  border-radius: ${(props) => (props.primary ? '100px' : '5vw')};
+  border: ${(props) =>
+    props.primary
+      ? '2px solid var(--Primary-Red-500, #FFB2B5)'
+      : '2px solid var(--Gray-Gray-200, #eee)'};
+  background: var(--Blank-blank, rgba(255, 255, 255, 0));
 `;
 
 const MyDonation = () => {
@@ -102,6 +160,13 @@ const MyDonation = () => {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
+  const tableData = [
+    { label: '이름', value: '이름' },
+    { label: '생년월일', value: '0000년 00월 00일' },
+    { label: '헌혈 종류', value: '헌혈' },
+    { label: '헌혈 일자', value: '0000년 00월 00일' },
+  ];
 
   return (
     <>
@@ -176,8 +241,21 @@ const MyDonation = () => {
               >
                 아래 내용을 확인해주세요.
               </RegistP2>
-              <GraphContainer />
+              {tableData.map((data, index) => (
+                <GraphContainer key={index}>
+                  <RowContainer>
+                    <GraphP>{data.label}</GraphP>
+                  </RowContainer>
+                  <CellContainer>
+                    <GraphP>{data.value}</GraphP>
+                  </CellContainer>
+                </GraphContainer>
+              ))}
             </ScanContainer>
+            <ButtonContainer>
+              <ScanButton>다시 스캔하기</ScanButton>
+              <ScanButton primary>헌혈 증서 등록하기</ScanButton>
+            </ButtonContainer>
           </ModalContent>
         </ModalBackground>
       )}
