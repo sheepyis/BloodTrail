@@ -144,7 +144,7 @@ const Home = () => {
     <HomeContainer>
       <BannerContainer>
         <ArrowLeftStyled
-          src={}ArrowLeft
+          src={ArrowLeft}
           alt="Left Arrow"
           onClick={handleLeftArrowClick}
         />
