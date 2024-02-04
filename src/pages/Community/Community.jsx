@@ -7,6 +7,8 @@ import dot2 from "../../assets/images/dot2.png";
 import arrow_12px2 from "../../assets/images/arrow_12px2.png";
 import search1 from "../../assets/images/search1.png";
 import arrow_down from "../../assets/images/arrow-down.png";
+import { Link } from "react-router-dom";
+import CardTmp from '../../components/Card/Card';
 
 const Container = styled.div`
     display: flex;
@@ -425,7 +427,7 @@ const DropdownSearch = styled.div`
     letter-spacing: -0.0156vw;
 `
 
-const Blood = () => {
+const Community = () => {
 
     const [selectBloodType,setBloodType] =useState("A+");
 
@@ -469,55 +471,12 @@ const Blood = () => {
 
         <BoardContainer>
        
-            <CardContainer>
-                <Card>
-                    <CardNameContainer>
-                        <CardUser>
-                            <UserImg src = {Ellipse8} alt = "UserImg"/>
-                            <UserName>user name</UserName>
-                        </CardUser>
-                            <DotImg src = {dot} alt = "DotImg"/>
-                    </CardNameContainer>
+        <CardContainer>
+                <CardTmp cardType="type1" selectBloodType="B-" linkPath="./CommunitySinglePost/SinglePost"/>
+                <CardTmp cardType="type1" selectBloodType="O+" linkPath="./CommunitySinglePost/SinglePost"/>
+                <CardTmp cardType="type2" selectBloodType="AB-" linkPath="./CommunitySinglePost/SinglePost"/>
 
-                   
-                    <CardTitle>
-                        <CardTitleP>지정헌혈 글 제목</CardTitleP>
-                        <BloodType>{selectBloodType}</BloodType>
-                    </CardTitle>
-                
-                    <CardP className="type1">지정헌혈 글 내용입니다</CardP>
-                    <CardRequestPeriod>
-                        <Period1>요청기간</Period1>
-                        <Period2>~2023.12.14</Period2>
-                    </CardRequestPeriod>
-                </Card>
-            
-
-                
-                <Card>
-                    <CardNameContainer>
-                        <CardUser>
-                            <UserImg src = {Ellipse8} alt = "UserImg"/>
-                            <UserName>user name</UserName>
-                        </CardUser>
-                            <DotImg src = {dot} alt = "DotImg"/>
-                    </CardNameContainer>
-
-                   <CardPhoto></CardPhoto>
-                    <CardTitle>
-                        <CardTitleP>지정헌혈 글 제목</CardTitleP>
-                        <BloodType>{selectBloodType}</BloodType>
-                    </CardTitle>
-
-                    <CardP className="type2">지정헌혈 글 내용입니다</CardP>
-                    <CardRequestPeriod>
-                        <Period1>요청기간</Period1>
-                        <Period2>~2023.12.14</Period2>
-                    </CardRequestPeriod>
-                </Card>
-                <Card></Card>
-
-                <Card></Card>
+                <CardTmp cardType="type1" selectBloodType="B+" linkPath="./CommunitySinglePost/SinglePost"/>
                 <Card></Card>
                 <Card></Card>
 
@@ -561,4 +520,4 @@ const Blood = () => {
     )
 }
 
-export default Blood;
+export default Community;

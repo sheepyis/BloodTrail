@@ -13,6 +13,7 @@ import SinglePost from './pages/Blood/BloodSinglePost/SinglePost';
 import BloodWrite from './pages/Blood/BloodWrite/BloodWrite';
 
 import Community from './pages/Community/Community';
+//import SinglePost from './pages/Community/CommunitySinglePost/SinglePost';
 import CommunityWrite from './pages/Community/CommunityWrite/CommunityWrite';
 
 import Crew from './pages/Crew/Crew';

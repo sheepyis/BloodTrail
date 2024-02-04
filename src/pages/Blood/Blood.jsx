@@ -6,7 +6,7 @@ import dot from "../../assets/images/dot.png";
 import dot2 from "../../assets/images/dot2.png";
 import arrow_12px2 from "../../assets/images/arrow_12px2.png";
 import arrow_down from "../../assets/images/arrow-down.png";
-import CardTmp from './CardTmp';
+import CardTmp from '../../components/Card/Card';
 import { Link } from "react-router-dom";
 import BoardDropdown from "./BoardDropdown/BoardDropdown";
 

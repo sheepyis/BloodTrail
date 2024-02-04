@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { OtherPostDetail } from "./PostData"; 
-import CardTmp from '../CardTmp';
+import CardTmp from '../../../components/Card/Card';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

@@ -21,7 +21,7 @@ const Divider = styled.div`
   margin-bottom: 10px; // 구분선 아래에 여백 추가
 `;
 
-const Community = () => {
+const SinglePost = () => {
     return (
         <Tmpblank>
         <Homecontainer>
@@ -34,3 +34,4 @@ const Community = () => {
         </Tmpblank>
     )
 }
+export default SinglePost;
