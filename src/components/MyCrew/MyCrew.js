@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 
 const MyCrewDiv = styled.div`
     width: 21vw;
+    min-height: 7.45vw;
     border: 0.05vw solid ${colors.lightGray};
     border-radius: 0.25vw;
     padding: 1vw;

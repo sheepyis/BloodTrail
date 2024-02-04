@@ -26,12 +26,13 @@ const StyleGrid = styled.div`
 
 const Upload = styled.button`
     width: 13.5vw;
-    height: 2vw;
+    min-height: 2vw;
     border: 0.05vw solid #FFB2B5;
     border-radius: 0.25vw;
     cursor: pointer;
     font-weight: 600;
     font-size: 0.75vw;
+    white-space: nowrap;
     color: ${colors.mainRed};
 `
 
