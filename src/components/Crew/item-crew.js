@@ -4,11 +4,12 @@ import CrewImage from "../../assets/images/profile.png";
 
 const StyleItem = styled.div`
     width: 21vw;
-    height: 6.85vw;
+    min-height: 6.85vw;
     border: 0.05vw solid ${colors.lightGray};
     border-radius: 0.25vw;
     padding: 1.2vw;
     margin-bottom: 1vw;
+    white-space: nowrap;
 `
 
 const Crew = styled.img`
