@@ -73,7 +73,7 @@ const handleCheckDuplicate = () => {
   };
 
   const checkAvailability = (data) => {
-    return !data.some((item) => item.username === inputValue);
+    return !data.some((item) => item.name === inputValue);
   };
 
   return (
