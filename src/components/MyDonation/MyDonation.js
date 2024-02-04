@@ -3,6 +3,8 @@ import colors from '../../styles/color';
 import Plus from '../../assets/images/plus.png';
 import { useState } from 'react';
 import close from '../../assets/images/close_24px.png';
+import { useRef } from 'react';
+
 const DonationContainer = styled.div`
   width: 100%;
   height: 10vw;
@@ -161,6 +163,27 @@ const MyDonation = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태
+  const fileInputRef = useRef(null);
+
+  // 파일 선택기를 열기 위한 함수
+  const handleFileInputClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // 파일이 선택되었을 때 실행될 함수
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); // 파일로부터 이미지 URL 생성
+      setSelectedImage(imageUrl); // 이미지 URL 상태 업데이트
+    }
+  };
+
   const tableData = [
     { label: '이름', value: '이름' },
     { label: '생년월일', value: '0000년 00월 00일' },
@@ -194,7 +217,11 @@ const MyDonation = () => {
           <ModalContent onClick={(e) => e.stopPropagation()}>
             <RegistContainer>
               <RegistP>헌혈 증서 등록하기</RegistP>
-              <img src={close} style={{ width: '0.7vw', height: '0.7vw' }} />
+              <img
+                src={close}
+                style={{ width: '0.7vw', height: '0.7vw', cursor: 'pointer' }}
+                onClick={closeModal}
+              />
             </RegistContainer>
             <ScanContainer>
               <ScanP style={{ marginLeft: '0.5vw' }}>헌혈 증서 스캔하기</ScanP>
@@ -207,29 +234,45 @@ const MyDonation = () => {
               >
                 헌혈 증서 사진을 등록해주세요.
               </RegistP2>
-              <DonationContainer>
-                <div
-                  className="plusDonation"
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '0.3vw',
-                  }}
-                >
+              <DonationContainer onClick={handleFileInputClick}>
+                {' '}
+                {/* DonationContainer 클릭 시 파일 입력 트리거 */}
+                {selectedImage ? (
                   <img
-                    src={Plus}
-                    alt="plus"
-                    style={{
-                      width: '1.2vw',
-                      height: '1.2vw',
-                      cursor: 'pointer',
-                    }}
-                    onClick={toggleModal}
+                    src={selectedImage}
+                    alt="Selected Donation Certificate"
+                    style={{ width: '100%', height: 'auto' }}
                   />
-                </div>
+                ) : (
+                  <div
+                    className="plusDonation"
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '0.3vw',
+                    }}
+                  >
+                    <img
+                      src={Plus}
+                      alt="plus"
+                      style={{
+                        width: '1.2vw',
+                        height: '1.2vw',
+                        cursor: 'pointer',
+                      }}
+                    />
+                  </div>
+                )}
               </DonationContainer>
             </ScanContainer>
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+              accept="image/*" // 이미지 파일만 허용
+            />
             <ScanContainer>
               <ScanP style={{ marginLeft: '0.5vw' }}>정보 확인하기</ScanP>
               <RegistP2
