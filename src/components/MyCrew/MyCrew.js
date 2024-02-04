@@ -25,15 +25,31 @@ const MyCrewP = styled.p`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    @media screen and (max-width:767px) {
+        font-size: 0.75rem;
+    }
 `;
+
+const MyCrewP2 = styled.p`
+    font-weight: 500;
+    font-size: 0.6vw;
+    color: ${colors.crewGray2};
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    @media screen and (max-width:767px) {
+        font-size: 0.6rem;
+    }
+`
 
 const ChatButton = styled.button`
     width: 100%;
-    min-height: 2vw;
+    padding: 0.5vw;
     border: none;
     border-radius: 0.25vw;
     background-color: #fff6f7;
-    font-size: 0.75vw;
     font-weight: 600;
     color: ${colors.mainRed};
     cursor: pointer;
@@ -41,6 +57,11 @@ const ChatButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.75vw;
+
+    @media screen and (max-width:767px) {
+        font-size: 0.75rem;
+    }
 `;
 
 const MyCrew = () => {
@@ -64,7 +85,7 @@ const MyCrew = () => {
                     <img src={Profile} alt="profile" style={{ width: '1.5vw', height: "1.5vw" }} />
                     <div className="crewName" style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", width: "85%"}}>
                         <MyCrewP>{myCrewData.name}</MyCrewP>
-                        <MyCrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{myCrewData.email}</MyCrewP>
+                        <MyCrewP2>{myCrewData.email}</MyCrewP2>
                     </div>
                 </div>
             ) : (
