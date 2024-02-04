@@ -11,7 +11,6 @@ import Kakao from '../../api/Kakao';
 import Ranking from '../../components/Ranking/Ranking';
 import Board from '../../components/Board/Board';
 import { hotPost } from './HomeData';
-import axios from "axios"
 
 const HomeContainer = styled.div`
   width: 100%;

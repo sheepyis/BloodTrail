@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import ItemCrewRank from "./item-crewRank";
 import Left from "../../assets/images/arrowLeft.png";
+import { NavLink } from 'react-router-dom';
 
 const CrewRankContainer = styled.div`
     width: 100%;
@@ -77,6 +78,7 @@ const ListCrewRank = ({home}) => {
           )}
           <StyleGrid>
               {crewData.slice(visibleRange.start, visibleRange.end).map((item, index) => (
+                  //<NavLink to={`/crewdetail/${item.id}`} key={index}>
                   <ItemCrewRank
                       key={index}
                       id={visibleRange.start + index + 1}
@@ -84,6 +86,7 @@ const ListCrewRank = ({home}) => {
                       name={item.name}
                       isFirstPlace={item.isFirstPlace || false}
                   />
+                  //</NavLink>
               ))}
           </StyleGrid>
           {!home && (
