@@ -8,13 +8,13 @@ import arrow_12px2 from "../../assets/images/arrow_12px2.png";
 import arrow_down from "../../assets/images/arrow-down.png";
 import CardTmp from './CardTmp';
 import { Link } from "react-router-dom";
+import BoardDropdown from "./BoardDropdown/BoardDropdown";
 
 
 const Container = styled.div`
     display: flex;
     width: 100%;
     height: 91.1458vw;
-
 `
 const SideBar = styled.div`
     display: flex;
@@ -86,6 +86,7 @@ const BreadcrumsIcon = styled.img`
 `
 const Title = styled.div`
     padding: 2.0833vw 0.0000vw 1.7708vw 0.5208vw;
+    position: relative;
 `
 const MainTitle = styled.div`
     color: var(--Gray-Gray-900, #17191A);
@@ -109,8 +110,8 @@ const BoardContainer = styled.div`
 `
 
 const DropdownBoardContainer = styled.div`
-    display: flex;
-    flex-direction: row;
+    display: inline-flex;
+    position: relative;
     border: 1px solid var(--Gray-Gray-200, #EEE);
     background: var(--black-white-white-1000, #FFF);
     float: right;
@@ -118,8 +119,10 @@ const DropdownBoardContainer = styled.div`
     height: 2.6042vw;
     padding: 0.7813vw;
     flex-shrink: 0;
+    cursor: pointer;
 `
 const DropdownBoardBox =styled.div`
+    position: relative;
     color: var(--Gray-Gray-700, #464A4D);
     font-family: Pretendard;
     font-size: 15px;
@@ -129,10 +132,9 @@ const DropdownBoardBox =styled.div`
     letter-spacing: -0.3px;
     height:1.0417vw;
     width: 9.2708vw;
+    position: relative;
 `
-const DropdownBoardlist =styled.div`
 
-`
 const DropdownImg =styled.img`
     width: 1.2500vw;
     height: 1.2500vw;
@@ -173,8 +175,7 @@ const BloodTap =styled.div`
     
 `
 
-const CardContainer =styled.div`
-    
+const CardContainer =styled.div`   
     padding-top: 2.6042vw;
     display: grid; 
     grid-template-columns: repeat(3, minmax(auto, 1fr));
@@ -267,14 +268,14 @@ const PagnaionNumber2 = styled.div`
 
     &:active{
         border-radius: 5.2083vw;
-    background: var(--Primary-Red-200, #FFF6F7);
-    color: var(--Primary-Red-900, #E95458);
-    text-align: center;
-    font-family: Inter;
-    font-size: 0.6250vw;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
+        background: var(--Primary-Red-200, #FFF6F7);
+        color: var(--Primary-Red-900, #E95458);
+        text-align: center;
+        font-family: Inter;
+        font-size: 0.6250vw;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
     }
 `
 
@@ -300,11 +301,17 @@ const PagnationImg2 = styled.img`
 const Blood = () => {
 
     const [selectBloodType,setBloodType] =useState("A+");
+    const [selectBloodBoardType, setBloodBoardType] = useState("신규순");
+    
 
     const handleBlood = (bloodType) =>{
         setBloodType(bloodType); // bloodtype 선택하면 게시물, 타이틀 바뀌도록
     }
+    const handleBoardType =(BoardType) =>{
+        setBloodBoardType(BoardType);
+    }
 
+    
     return (
       <Container>
         <SideBar>
@@ -323,10 +330,15 @@ const Blood = () => {
         <Title>
             <MainTitle>지정헌혈 요청 글</MainTitle>
             <SubTitle>{selectBloodType} 요청 글</SubTitle>
-            <DropdownBoardContainer>
-                <DropdownBoardBox>신규순</DropdownBoardBox>
+            <DropdownBoardContainer onClick={()=>setBloodBoardType(!selectBloodBoardType)}>
+                <DropdownBoardBox>
+                    {selectBloodBoardType}
+                    
+                </DropdownBoardBox>
                 <DropdownImg src = {arrow_down} alt = "arrow_down"/>
+                
             </DropdownBoardContainer>
+            <BoardDropdown isVisible={selectBloodBoardType} handleBoardType={handleBoardType}/>
         </Title>
 
         <BoardContainer>
