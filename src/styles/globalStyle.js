@@ -74,7 +74,35 @@ const GlobalStyle = createGlobalStyle`
         -webkit-touch-callout: none;
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         scroll-behavior: smooth;
+        font-size: 62.5%;
     }
+
+        @media screen and (max-width:1799px) {
+        /* 데스크탑 */
+        html {
+            font-size: 50%;
+        }
+    }
+    @media screen and (max-width:1199px) {
+        /* 데스크탑 */
+        html {
+            font-size: 45%;
+        }
+    }
+
+    @media screen and (max-width:991px) {
+        /* 타블렛 */
+        html {
+            font-size: 40%;
+        }
+    }
+    @media screen and (max-width:767px) {
+        /* 모바일 */
+        html {
+            font-size: 30%;
+        }
+    }
+    
     ul, li {
         padding-left: 0rem;
         list-style: none;
@@ -116,38 +144,6 @@ const GlobalStyle = createGlobalStyle`
         -ms-overflow-style: none; /* 인터넷 익스플로러 */
         scrollbar-width: none; /* 파이어폭스 */
     }
-
-    /* 빅데스크탑 */
-    p, div, button, input {
-        font-size: 62.5%;
-    }
-    
-    @media screen and (max-width:1799px) {
-        /* 데스크탑 */
-        p, div, button, input {
-            font-size: 50%;
-        }
-    }
-    @media screen and (max-width:1199px) {
-        /* 데스크탑 */
-        p, div, button, input  {
-            font-size: 45%;
-        }
-    }
-
-    @media screen and (max-width:991px) {
-        /* 타블렛 */
-        p, div, button, input  {
-            font-size: 40%;
-        }
-    }
-    @media screen and (max-width:767px) {
-        /* 모바일 */
-        p, div, button, input  {
-            font-size: 30%;
-        }
-    }
-
 `;
 
 export default GlobalStyle;
