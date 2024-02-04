@@ -167,13 +167,13 @@ const ListCrew = ({excludeButton, searchInput2, itemsPerPage}) => {
             <CrewContainer>
                 <StyleGrid>
                     {currentItems.map((item, index) => (
-                        <NavLink to={`/crewdetail/${item.id}`} key={index}>
-                            <ItemCrew
-                                id={item.id}
-                                name={item.name}
-                                introduce={item.email}
-                            />
-                        </NavLink>
+                        <ItemCrew
+                            key={index}
+                            id={item.id}
+                            name={item.name}
+                            introduce={item.email}
+                            onClick={() => window.location.href = `/crewdetail/${item.id}`}
+                        />
                     ))}
                 </StyleGrid>
             </CrewContainer>

@@ -10,6 +10,7 @@ const StyleItem = styled.div`
     padding: 1.2vw;
     margin-bottom: 1vw;
     white-space: nowrap;
+    cursor: pointer;
 `
 
 const Crew = styled.img`
@@ -48,23 +49,21 @@ const CrewP2 = styled.p`
     color: ${colors.crewGray};
 `
 
-const ItemCrew = (props) => {
-    const { id, name, introduce } = props;
-
+const ItemCrew = ({ id, name, introduce, onClick }) => {
     return (
-        <StyleItem key={id}>
+        <StyleItem onClick={() => onClick(id)}>
             <div className="crewBox" style={{ display: 'flex', gap: '0.65vw', alignItems: 'center' }}>
-                <Crew src={CrewImage} alt="crew"/>
+                <Crew src={CrewImage} alt="crew" />
                 <div className="crewName" style={{ display: 'flex', flexDirection: 'column', gap: '0.1vw', maxWidth: "12vw" }}>
                     <CrewP>{name}</CrewP>
-                    <CrewP style={{fontSize: "0.6vw", color: colors.crewGray2}}>{introduce}</CrewP>
+                    <CrewP style={{ fontSize: "0.6vw", color: colors.crewGray2 }}>{introduce}</CrewP>
                 </div>
             </div>
 
-            <div className="crewBottomBox" style={{display: "flex", marginTop: "1vw", gap: "0.7vw"}} >
-                <BottomBox style={{width: "4.1vw"}}>Point<CrewP2>{id}</CrewP2></BottomBox>
-                <BottomBox style={{width: "6.75vw"}}>헌혈참여율<CrewP2>{id}</CrewP2>%</BottomBox>
-                <BottomBox style={{width: "4.75vw"}}>인원<CrewP2>{id}</CrewP2>명</BottomBox>
+            <div className="crewBottomBox" style={{ display: "flex", marginTop: "1vw", gap: "0.7vw" }}>
+                <BottomBox style={{ width: "4.1vw" }}>Point<CrewP2>{id}</CrewP2></BottomBox>
+                <BottomBox style={{ width: "6.75vw" }}>헌혈참여율<CrewP2>{id}</CrewP2>%</BottomBox>
+                <BottomBox style={{ width: "4.75vw" }}>인원<CrewP2>{id}</CrewP2>명</BottomBox>
             </div>
         </StyleItem>
     )
