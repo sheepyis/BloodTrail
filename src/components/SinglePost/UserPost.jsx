@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { PostDetail } from "./PostData";
 import { ReactComponent as DotIcon } from './Icons/Dot.svg';
@@ -192,18 +192,19 @@ const ChatButton = styled.div`
   justify-content: center;
 `;
 
-const PostDetailPage = () => {
+const PostDetailPage = ({id}) => {
+  const post=PostDetail[0]; // axios로 받아오기
   const postData = PostDetail[0];
 
   return (
     <PageLayout>
       <Header>
         <HeaderText>
-          {postData.title}
+          {post.title}
         </HeaderText>
         <TitleDetail>
           <UserInfo>
-            <div>{postData.user}</div>
+            <div>{post.userId}</div>
           </UserInfo>
           <div>
             <CopyButton onClick={() => {
@@ -241,7 +242,7 @@ const PostDetailPage = () => {
 
       <ContentArea />
       <Details>
-        {postData.content}
+        {post.body}
       </Details>
       <FooterBar>
         <LeftContainer>

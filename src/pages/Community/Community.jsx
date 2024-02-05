@@ -121,11 +121,14 @@ const BoardContainer = styled.div`
     padding-left: 1.5vw;
 `
 
-const CardContainer =styled.div`
+const CardContainer =styled.div`   
+    padding-top: 2.6vw;
+    padding-left: 0.7vw;
     display: grid; 
     grid-template-columns: repeat(3, minmax(auto, 1fr));
     align-items: center; 
     justify-content: space-between;
+    gap: 1.5vw;
 `
 
 const Card = styled.div`
@@ -135,117 +138,8 @@ const Card = styled.div`
     border-radius: 0.2604vw;
     border: 0.0521vw solid var(--Gray-Gray-200, #EEE);
     background: var(--black-white-white-1000, #FFF);
-    margin: 0vw 1.5625vw 1.5625vw 0vw;
-    
-` 
+`;
 
-const CardNameContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    height: 3.4375vw;
-`
-const CardUser =styled.div`
-    display: flex;
-    padding-left: 1.0417vw;
-    padding-top: 1.0417vw;
-    padding-right:  11.9271vw;
-
-`
-const UserImg = styled.img`
-width: 1.3542vw;
-height: 1.3542vw;
-    flex-shrink: 0;
-`
-
-const UserName = styled.div`
-    height: 0.9375vw;
-    margin : 0.2083vw 0.0000vw 0.0000vw 0.5729vw;
-    color: var(--Gray-Gray-700, #464A4D);
-    font-family: Pretendard;
-    font-size: 0.6250vw;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 0.9375vw;
-    letter-spacing: -0.0187vw;
-`
-const DotImg = styled.img`
-    width: 0.1042vw;
-    height: 0.8333vw;
-    flex-shrink: 0;
-    margin: 0.7813vw 0.7813vw;
-`
-
-const CardTitle =styled.div`
-    display: flex;
-    flex-direction: row;
-    padding-left: 1.0417vw;
-
-`
-const CardTitleP = styled.div`
-    color: var(--Gray-Gray-900, #17191A);
-    font-family: Pretendard;
-    font-size: 0.9375vw;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 1.5625vw;
-    width: 14.5833vw;
-    padding-right: 0.5208vw;
-`
-
-const CardP = styled.div`
-    padding-left: 1.0417vw;
-    color: var(--Gray-Gray-700, #464A4D);
-    font-family: Pretendard;
-    font-size: 0.7813vw;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.8229vw;
-    letter-spacing: -0.0156vw;
-    
-    &.type1{
-        width: 17.7083vw;
-        height: 11.2500vw;
-    }
-    &.type2{
-        width: 17.7083vw; 
-        height: 1.0417vw;
-    }
-`
-const BloodType =styled.div`
-    display: inline-flex;
-    padding: 0.1563vw 0.4167vw;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5208vw;
-    border-radius: 5.2083vw;
-    border: 0.0521vw solid var(--Gray-Gray-300, #D1D1D1);
-    background: var(--black-white-white-1000, #FFF);
-`
-const CardRequestPeriod =styled.div`
-    display: flex;
-    flex-direction: row;
-    padding: 1.0417vw 0.0000vw 1.0417vw 1.0474vw;
-    color: var(--Gray-Gray-500, #9E9E9E);
-    font-family: Pretendard;
-    font-size: 0.6250vw;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 0.9375vw;
-    letter-spacing: -0.0187vw;
-`
-const Period1 =styled.div`
-    padding-right: 0.4187vw;
-`
-const Period2 =styled.div`
-`
-const CardPhoto =styled.div`
-    width: 19.6875vw;
-    height: 8.5417vw;
-    flex-shrink: 0;
-    background: var(--image, #D9D9D9);
-    padding-top: 0.7813vw;
-    margin-bottom: 0.7813vw;
-`
 const WritePostContainer= styled.div`
     width: 100%;
     display: flex;
@@ -461,18 +355,18 @@ const Community = () => {
         <BoardContainer>
        
         <CardContainer>
-                <CardTmp cardType="type1" selectBloodType="B-" linkPath="../../components/SinglePost/Singlepost"/>
-                <CardTmp cardType="type1" selectBloodType="O+" linkPath="../../components/SinglePost/Singlepost"/>
-                <CardTmp cardType="type2" selectBloodType="AB-" linkPath="../../components/SinglePost/Singlepost"/>
+            <CardTmp cardType="type1" selectBloodType="B-" id="4" />
+            <CardTmp cardType="type1" selectBloodType="O+" id="5" />
+            <CardTmp cardType="type2" selectBloodType="AB-" id="1" />
 
-                <CardTmp cardType="type1" selectBloodType="B+" linkPath="../../components/SinglePost/Singlepost"/>
-                <Card></Card>
-                <Card></Card>
+            <CardTmp cardType="type1" selectBloodType="B+" id="2" />
+            <Card></Card>
+            <Card></Card>
 
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
-            </CardContainer>
+            <Card></Card>
+            <Card></Card>
+            <Card></Card>
+        </CardContainer>
 
             <WritePostContainer>
                 <WritePost>글 작성하기</WritePost>

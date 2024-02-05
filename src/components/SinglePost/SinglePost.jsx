@@ -21,11 +21,11 @@ const Divider = styled.div`
   margin-bottom: 10px; // 구분선 아래에 여백 추가
 `;
 
-const SinglePost = () => {
+const SinglePost = ({id}) => {
     return (
         <Tmpblank>
         <Homecontainer>
-          <UserPost/>
+          <UserPost id={id}/>
           <Divider />
           <Comment />
           <Divider />

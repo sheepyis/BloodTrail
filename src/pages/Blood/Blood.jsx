@@ -335,12 +335,12 @@ const Blood = () => {
             </BloodContainer>
 
             <CardContainer>
-                <CardTmp cardType="type2" selectBloodType="B-" linkPath="../../components/SinglePost/Singlepost"/>
-                <CardTmp cardType="type1" selectBloodType="O+" linkPath="../../components/SinglePost/Singlepost"/>
-                <CardTmp cardType="type2" selectBloodType="AB-" linkPath="../../components/SinglePost/Singlepost"/>
+                <CardTmp cardType="type2" selectBloodType="B-" id="1" />
+                <CardTmp cardType="type1" selectBloodType="O+" id="2" />
+                <CardTmp cardType="type2" selectBloodType="AB-" id="3" />
 
-                <CardTmp cardType="type2" selectBloodType="B+" linkPath="../../components/SinglePost/Singlepost"/>
-                <CardTmp selectBloodType={selectBloodType} linkPath="../../components/SinglePost/Singlepost"/>
+                <CardTmp cardType="type2" selectBloodType="B+" id="5" />
+                <Card></Card>
                 <Card></Card>
 
                 <Card></Card>
