@@ -41,14 +41,14 @@ function App() {
   };
 
   const closeMenu = () =>{
-    setMenuVisible(false)
+    setHoveredComponent(null);
 }
 
   return (
     <>
       <GlobalStyle />
       <Router>
-        <Header onHover={handleHeaderHover} onLeave={handleHeaderLeave} closeMenu={closeMenu}/>
+        <Header onHover={handleHeaderHover} onLeave={handleHeaderLeave}/>
         <HeaderMenu
           hoveredComponent={hoveredComponent}
           onHover={handleHeaderHover}
