@@ -12,6 +12,8 @@ import Write3 from '../../../assets/images/Write-3.png';
 import Write from '../../../assets/images/Write.png';
 import { css } from 'styled-components';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -204,7 +206,7 @@ const MidlineText = styled.p`
   text-decoration-line: strikethrough;
 `;
 
-const InputContent = styled.textarea`
+const InputContent = styled.div`
   width: 100%;
   height: 78%;
   flex-shrink: 0;
@@ -290,14 +292,55 @@ const CommunityWrite = () => {
   const toggleUnderline = () => setIsUnderline(!isUnderline);
   const toggleStrikethrough = () => setIsStrikethrough(!isStrikethrough);
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.substr(0, 5) === 'image') {
+      const img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.style.maxWidth = '50%';
+      contentEditableRef.current.appendChild(img);
+    }
+  };
+
+  const [inputCompleted, setInputCompleted] = useState({
+    registrationNumber: false,
+    bloodProduct: false,
+    requireDay: false,
+    requirePlace: false,
+    bloodType: false,
+  });
+
+  const [allFieldsCompleted, setAllFieldsCompleted] = useState(false);
+
+  useEffect(() => {
+    const allCompleted = Object.values(inputCompleted).every(
+      (status) => status === true
+    );
+    setAllFieldsCompleted(allCompleted);
+  }, [inputCompleted]);
+
+  const changeImageOnEnter = (field, event) => {
+    if (event.key === 'Enter') {
+      setInputCompleted({ ...inputCompleted, [field]: true });
+    }
+  };
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef(null);
+  const contentEditableRef = useRef(null);
+
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
+
   return (
     <CrewContainer>
-      <div className="left" style={{ width: '17%', paddingLeft: '3.85%' }}>
+      <div className="left" style={{ width: '17%', paddingLeft: '2.5%' }}>
         <CrewP>커뮤니티</CrewP>
         <CrewP2>자유게시판</CrewP2>
       </div>
 
-      <div className="right" style={{ width: '55%' }}>
+      <div className="right" style={{ width: '67%' }}>
         <RightTop>
           <CrewP3 to="/">홈</CrewP3>
           <CrewP3>{'>'}</CrewP3>
@@ -355,7 +398,7 @@ const CommunityWrite = () => {
 
         <BlankBox>
           <ToolBox>
-            <Imageplus>
+            <Imageplus onClick={triggerFileInput}>
               <img
                 src={Image}
                 alt="사진 추가"
@@ -363,6 +406,13 @@ const CommunityWrite = () => {
               />
               <ImageP>사진추가</ImageP>
             </Imageplus>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleImageChange}
+              style={{ display: 'none' }}
+              accept="image/*"
+            />
             <img src={Line} alt="구분선" style={{ height: '1.5vw' }} />
             <BoldText onClick={toggleBold}>B</BoldText>
             <ItalicText onClick={toggleItalic}>I</ItalicText>
@@ -371,6 +421,8 @@ const CommunityWrite = () => {
           </ToolBox>
 
           <InputContent
+            ref={contentEditableRef}
+            contentEditable
             placeholder="내용을 입력하세요."
             isBold={isBold}
             isItalic={isItalic}
