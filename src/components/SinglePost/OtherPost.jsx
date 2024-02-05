@@ -117,7 +117,14 @@ const OtherPosts = () => {
       <PostsLists>
         <Slider {...settings}>
           {OtherPostDetail.map((post, index) => (
-            <CardTmp key={index} forOtherPost={true} cardType={post.type} selectBloodType="A+" linkPath={post.linkPath} />
+            <CardTmp
+            cardType = {`type${post.id/4 % 2 + 1}`}
+            selectBloodType="B-"
+            key="22"//{post.id}
+            userId = "username" //{post.userId}
+            title="title"//{post.title}
+            body="bodydydddyydyd"//{post.body}
+          />
           ))}
         </Slider>
       </PostsLists>

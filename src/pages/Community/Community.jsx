@@ -303,9 +303,9 @@ const DropdownSearch = styled.div`
   letter-spacing: -0.0156vw;
 `;
 
-const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
 
 const Community = () => {
+
   const [selectedSort, setSelectedSort] = useState('신규순');
   const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
 
@@ -336,6 +336,17 @@ const Community = () => {
       } catch (error) {
         console.error('게시글을 불러오는 데 실패했습니다.', error);
       }
+
+
+    const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
+
+    const [selectedSort, setSelectedSort] = useState("신규순");
+    const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
+    
+    const handleSortSelection = (sortType) => {
+        setSelectedSort(sortType);
+        setIsSortBoxVisible(false);
+
     };
 
     fetchPosts();
@@ -414,6 +425,7 @@ const Community = () => {
         />
 
         <BoardContainer>
+
           <CardContainer>
             {currentPosts.map((post) => (
               <CardTmp
@@ -459,6 +471,47 @@ const Community = () => {
             <PagnaionNumber2>N</PagnaionNumber2>
             <PagnationImg2 src={arrow_12px2} alt="arrow2" />
           </PagnationContainer>
+
+       
+            <CardContainer>
+              {currentPosts.map((post) => (
+                      <CardTmp
+                        cardType = {`type${post.id/4 % 2 + 1}`}
+                        selectBloodType="B-"
+                        key={post.id}
+                        userId = {post.userId}
+                        title={post.title}
+                        body={post.body}
+                      />
+                  ))}
+              </CardContainer>
+
+            <WritePostContainer>
+                <WritePost>글 작성하기</WritePost>
+            </WritePostContainer>
+
+            <SearchContainer>
+                <SearchBox>
+                    <SearchBar ><input className ="search" type="text" placeholder="글 제목을 입력하세요"/></SearchBar>
+                    <SearchImg src ={search1} alt="search1"/>
+                </SearchBox>
+                <DropdownSearchBox>
+                    <DropdownSearch>제목</DropdownSearch>
+                    <DropdownImg src ={arrow_down} alt="arrow_down"/>
+                </DropdownSearchBox>
+            </SearchContainer>
+            <PagnationContainer>
+              <PagnationImg src={arrow_12px2} alt="arrow2"/>
+                    <PagnaionNumber>1</PagnaionNumber>
+                    <PagnaionNumber>2</PagnaionNumber> 
+                    <PagnaionNumber>3</PagnaionNumber>
+                    <PagnaionNumber>4</PagnaionNumber>
+                    <PagnaionNumber>5</PagnaionNumber>
+                    <DotImg2 src={dot2} alt="dot2"/>
+                    <PagnaionNumber2>N</PagnaionNumber2>
+                    <PagnationImg2 src={arrow_12px2} alt="arrow2" />
+                </PagnationContainer>
+
         </BoardContainer>
       </MainConationer>
     </Container>
