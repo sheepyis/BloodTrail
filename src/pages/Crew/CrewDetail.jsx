@@ -93,25 +93,15 @@ const PointDiv = styled.div`
     gap: 0.1vw;
 `
 
-const DetailButton = styled.button`
-    width: 13.6vw;
-    height: 2.5vw;
-    border: none;
-    border-radius: 0.25vw;
-    background-color: ${colors.crewPink};
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.9vw;
-    color: ${colors.mainRed};
-`
-
 const SearchDiv = styled.div`
+    width: 5.5vw;
     height: 1.9vw;
     border: 0.05vw solid #D1D1D1;
     border-radius: 0.25vw;
     padding: 0.5vw;
     display: flex;
     align-items: center;
+    justify-content: center;
 `
 
 const CrewDetail = () => {
@@ -120,6 +110,7 @@ const CrewDetail = () => {
     const [loading, setLoading] = useState(true);
     const [showReport, setShowReport] = useState(false);
     const [searchInput2, setSearchInput2] = useState('');
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -182,7 +173,7 @@ const CrewDetail = () => {
                         </div>
                         <div className="copy" style={{display: "flex", alignItems: "center", gap: "0.5vw"}}>
                             <CopyButton onClick={handleCopyUrl}>URL 복사</CopyButton>
-                            <img src={Dot} alt="dot" style={{width: "1.15vw", height: "1.2vw", cursor: "pointer", position: "relative"}} onClick={toggleReport}/>
+                            <img src={Dot} alt="dot" style={{width: "0.01vw", height: "0.8vw", cursor: "pointer", position: "relative"}} onClick={toggleReport}/>
                             {showReport && <DotDiv>신고하기</DotDiv>}
                         </div>
                     </div>
@@ -217,11 +208,6 @@ const CrewDetail = () => {
 
                 <CrewP style={{fontWeight: "700", marginTop: "1.5vw"}}>크루 멤버</CrewP>
                 <ListMember username={crew.username} />
-
-                <div className="button" style={{width: "100%", display: "flex", justifyContent: "center", gap: "0.65vw", margin: "3vw 0"}}>
-                    <DetailButton>채팅하기</DetailButton>
-                    <DetailButton>크루 가입하기</DetailButton>
-                </div>
 
                 <div className="bar" style={{width: "100%", height: "0.5vw", border: "none", backgroundColor: colors.lightGray, marginBottom: "3vw"}}/>
 
