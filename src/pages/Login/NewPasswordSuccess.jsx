@@ -41,7 +41,7 @@ const Title = styled.div`
 const JoinBox = styled.div`
     display: flex;
     flex-direction: column;
-    padding-top: 19px;
+    padding-top: 0.9896vw;
     color: var(--Gray-Gray-900, #17191A);
     font-family: Pretendard;
     font-size: 0.9375vw;
@@ -56,24 +56,24 @@ color: var(--Gray-Gray-900, #17191A);
 
 /* Body/Headline/medium */
 font-family: Pretendard;
-font-size: 24px;
+font-size: 1.2500vw;
 font-style: normal;
 font-weight: 500;
-line-height: 42px; /* 175% */
+line-height: 2.1875vw; /* 175% */
 `
 const BoxP2 = styled.div`
 display: flex;
 justify-content: center;
-padding: 10px 0px 70px 0px;
+padding: 0.5208vw 0.0000vw 3.6458vw 0.0000vw;
 color: var(--Gray-Gray-700, #464A4D);
 
 /* Body/Body/medium */
 font-family: Pretendard;
-font-size: 15px;
+font-size: 0.7813vw;
 font-style: normal;
 font-weight: 500;
-line-height: 20px; /* 133.333% */
-letter-spacing: -0.3px;
+line-height: 1.0417vw; /* 133.333% */
+letter-spacing: -0.0156vw;
 `
 
 const NextButton = styled.div`
