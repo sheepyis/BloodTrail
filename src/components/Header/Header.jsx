@@ -8,6 +8,7 @@ import logo from "../../assets/images/logo.png";
 import React, { useState, useEffect, useRef } from "react";
 import Notifications from "./Notifications/Notifications";
 import Note from "./Note/Note";
+import {useMediaQuery} from 'react-responsive';
 
 
 const HeaderContainer = styled.div`
@@ -57,8 +58,6 @@ const IconContainer = styled.div`
 
 const IconImage = styled.img`
     cursor: pointer;
-    
-
 `
 
 const LogoImage = styled.img`
@@ -66,11 +65,11 @@ const LogoImage = styled.img`
     cursor: pointer;
 `
 
-const Header = ({onHover}) => { 
+
+const Header = ({onHover,closeMenu,setMenuVisible}) => { 
     const [notificationsModal, setNotifications] = useState(false);
     const [noteModal, setNote] = useState(false);
     const modalRef = useRef(null);
-    const[isMenuVisible, setMenuVisible] = useState(false);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -106,9 +105,6 @@ const Header = ({onHover}) => {
         setMenuVisible(false);
     }
 
-    const closeMenu = () =>{
-        setMenuVisible(false)
-    }
 
     return (
         <div className="Header" style={{
@@ -129,8 +125,7 @@ const Header = ({onHover}) => {
                 <HeaderMenu onCLick={closeMenu}>
                     <HeaderP2 
                         to="/blood"
-                        onMouseEnter={()=>{ onHover('blood')}}
-                        onCLick={closeMenu}>
+                        onMouseEnter={()=>{ onHover('blood')}}>
                         지정헌혈
                     </HeaderP2>
                     <HeaderP2 

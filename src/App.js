@@ -30,6 +30,7 @@ import NotFound from './pages/NotFound/NotFound';
 
 function App() {
   const [hoveredComponent, setHoveredComponent] = useState(null);
+  const[isMenuVisible, setMenuVisible] = useState(false);
 
   const handleHeaderHover = (component) => {
     setHoveredComponent(component);
@@ -39,15 +40,20 @@ function App() {
     setHoveredComponent(null);
   };
 
+  const closeMenu = () =>{
+    setMenuVisible(false)
+}
+
   return (
     <>
       <GlobalStyle />
       <Router>
-        <Header onHover={handleHeaderHover} onLeave={handleHeaderLeave} />
+        <Header onHover={handleHeaderHover} onLeave={handleHeaderLeave}/>
         <HeaderMenu
           hoveredComponent={hoveredComponent}
           onHover={handleHeaderHover}
           onLeave={handleHeaderLeave}
+          closeMenu={closeMenu}
         />
         <Routes>
           <Route path="/" element={<Home />} />
