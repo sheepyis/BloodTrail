@@ -192,8 +192,8 @@ const ChatButton = styled.div`
   justify-content: center;
 `;
 
-const PostDetailPage = ({id}) => {
-  const post=PostDetail[0]; // axios로 받아오기
+const PostDetailPage = () => {
+  const post = PostDetail[0]; // axios로 받아오기
   const postData = PostDetail[0];
 
   return (
