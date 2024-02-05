@@ -304,10 +304,12 @@ const DropdownSearch = styled.div`
     letter-spacing: -0.0156vw;
 `
 
-const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
 
 
 const Community = () => {
+
+    const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
+
     const [selectedSort, setSelectedSort] = useState("신규순");
     const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
     
@@ -390,6 +392,7 @@ const Community = () => {
                         cardType = {`type${post.id/4 % 2 + 1}`}
                         selectBloodType="B-"
                         key={post.id}
+                        userId = {post.userId}
                         title={post.title}
                         body={post.body}
                       />

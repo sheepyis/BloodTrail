@@ -133,14 +133,14 @@ const CardPhoto = styled.div`
 `;
 
 // CardTmp 컴포넌트 정의, selectBloodType을 prop으로 받음
-const CardTmp = ({ cardType, selectBloodType, title, content, userName, requestPeriodStart, requestPeriodEnd, forOtherPost }) => {  return (
+const CardTmp = ({ cardType, selectBloodType, title, body, userId, requestPeriodStart, requestPeriodEnd, forOtherPost }) => {  return (
     <Link to='../../components/SinglePost/Singlepost' style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
       <Card forOtherPost={forOtherPost}>
       
         <CardNameContainer>
           <CardUser>
             <UserImg src={Ellipse8} alt="UserImg"/>
-            <UserName>user name</UserName>
+            <UserName>{title.slice(0,10)}</UserName>
           </CardUser>
           <DotImg src={dot} alt="DotImg"/>
         </CardNameContainer>
@@ -148,11 +148,11 @@ const CardTmp = ({ cardType, selectBloodType, title, content, userName, requestP
         {cardType === "type2" && <CardPhoto forOtherPost={forOtherPost}></CardPhoto>}
         
         <CardTitle>
-          <CardTitleP>지정헌혈 글 제목</CardTitleP>
+          <CardTitleP>{title.slice(0,16)}</CardTitleP>
           <BloodType>{selectBloodType}</BloodType>
         </CardTitle>
 
-        <CardP className={cardType}>지정헌혈 글 내용입니다</CardP>
+        <CardP className={cardType}>{body.slice(0,50)}</CardP>
         <CardRequestPeriod>
           <Period1>요청기간</Period1>
           <Period2>~2023.12.14</Period2>

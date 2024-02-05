@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import colors from "../../styles/color";
 import SortBoxYes from '../../assets/images/sortbox_yes.png';
@@ -8,6 +8,8 @@ import arrow_12px2 from "../../assets/images/arrow_12px2.png";
 import CardTmp from '../../components/Card/Card';
 import { Link } from "react-router-dom";
 import BoardDropdown from "./BoardDropdown/BoardDropdown";
+import axios from "axios";
+
 
 const Container = styled.div`
     display: flex;
@@ -269,6 +271,9 @@ const PagnationImg2 = styled.img`
 
 
 const Blood = () => {
+
+    const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
+
     const [selectBloodType,setBloodType] =useState("A+");
     const [selectedSort, setSelectedSort] = useState("신규순");
     const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
@@ -278,9 +283,34 @@ const Blood = () => {
     }
 
     const handleSortSelection = (sortType) => {
-        setSelectedSort(sortType);
-        setIsSortBoxVisible(false);
-    };
+      setSelectedSort(sortType);
+      setIsSortBoxVisible(false);
+  };
+
+    const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+
+    // 현재 페이지에 따라 표시할 게시글을 계산
+    const indexOfLastPost = currentPage * POSTS_PER_PAGE;
+    const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    // 페이지 번호를 설정하는 함수
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const pageCount = Math.ceil(posts.length / POSTS_PER_PAGE);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+                setPosts(response.data);
+            } catch (error) {
+                console.error("게시글을 불러오는 데 실패했습니다.", error);
+            }
+        };
+
+        fetchPosts();
+        }, []);
     
     return (
       <Container>
@@ -337,18 +367,17 @@ const Blood = () => {
             </BloodContainer>
 
             <CardContainer>
-                <CardTmp cardType="type2" selectBloodType="B-" id="1" />
-                <CardTmp cardType="type1" selectBloodType="O+" id="2" />
-                <CardTmp cardType="type2" selectBloodType="AB-" id="3" />
-
-                <CardTmp cardType="type2" selectBloodType="B+" id="5" />
-                <Card></Card>
-                <Card></Card>
-
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
-            </CardContainer>
+              {currentPosts.map((post) => (
+                      <CardTmp
+                        cardType = {`type${post.id/4 % 2 + 1}`}
+                        selectBloodType="B-"
+                        key={post.id}
+                        userId = {post.userId}
+                        title={post.title}
+                        body={post.body}
+                      />
+                  ))}
+              </CardContainer>
 
             <WritePostContainer>
                 <Link to="./BloodWrite/Bloodwrite" style={{ textDecoration: 'none' }}>
