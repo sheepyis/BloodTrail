@@ -9,6 +9,7 @@ import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 
 import Blood from './pages/Blood/Blood';
+import BloodPremium from './pages/Blood/BloodPremium';
 import BloodWrite from './pages/Blood/BloodWrite/BloodWrite';
 
 import Community from './pages/Community/Community';
@@ -51,6 +52,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blood" element={<Blood />} />
+          <Route path="/blood/bloodPremium" element={<BloodPremium />} />
           <Route path="/blood/bloodWrite/bloodwrite" element={<BloodWrite />} />
           <Route path="/components/SinglePost/SinglePost" element={<SinglePost />} />
           <Route path="/community" element={<Community />} />

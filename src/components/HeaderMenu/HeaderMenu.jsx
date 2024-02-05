@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 const HeaderMenuContainer = styled.div`
     position: absolute;
@@ -58,11 +60,11 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave}) => {
                 onMouseLeave={() => onLeave()}>
                 <ul>
                     <li>
-                        <HeaderP>지정헌혈 요청 글</HeaderP> 
-                        <HeaderP>지정헌혈 요청하기</HeaderP>
-                        <HeaderP>지정헌혈 프리미엄</HeaderP>
-                        <HeaderP>내가 쓴 글 보기</HeaderP>
-                    </li>
+                        <Link to="/blood" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 요청 글</HeaderP></Link>
+                        <Link to="/blood/bloodwrite/bloodwrite" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 요청하기</HeaderP></Link>
+                        <Link to="/blood/bloodpremium" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 프리미엄</HeaderP></Link>
+                        <Link to="/myposts" style={{ textDecoration: 'none' }}><HeaderP>내가 쓴 글 보기</HeaderP></Link>
+                      </li>
                 </ul>
             </HeaderBox>
             )}
@@ -73,13 +75,13 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave}) => {
                 onMouseEnter={()=>{ onHover(hoveredComponent)}}
                 onMouseLeave={() => onLeave()}>
                 <ul>
-                    <li>
-                <HeaderP>자유게시판</HeaderP>
-                <HeaderP>명예 헌혈 게시판</HeaderP>
-                <HeaderP>헌혈 인증 게시판</HeaderP>
-                <HeaderP>헌혈 정보 공유 게시판</HeaderP>
-                <HeaderP>내가 쓴 글 보기</HeaderP>
-                    </li>
+                  <li>
+                        <Link to="/community"><HeaderP>자유게시판</HeaderP></Link>
+                        <Link to="/community/honor"><HeaderP>명예 헌혈 게시판</HeaderP></Link>
+                        <Link to="/community/certification"><HeaderP>헌혈 인증 게시판</HeaderP></Link>
+                        <Link to="/community/info"><HeaderP>헌혈 정보 공유 게시판</HeaderP></Link>
+                        <Link to="/myposts/community"><HeaderP>내가 쓴 글 보기</HeaderP></Link>
+                  </li>
                 </ul>
             </HeaderBox>
             )}
@@ -91,8 +93,8 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave}) => {
                 onMouseLeave={() => onLeave()}>
                 <ul>
                     <li>
-                <HeaderP>헌혈 크루 가입하기</HeaderP>
-                <HeaderP>내 헌혈 크루 가기</HeaderP>
+                        <Link to="/crew"><HeaderP>헌혈 크루 가입하기</HeaderP></Link>
+                        <Link to="/crew"><HeaderP>내 헌혈 크루 가기</HeaderP></Link>
                     </li>
                 </ul>
             </HeaderBox>
@@ -105,7 +107,7 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave}) => {
                 onMouseLeave={() => onLeave()}>
                 <ul>
                     <li>
-                <HeaderP>live</HeaderP>
+                        <Link to="/live"><HeaderP>Live</HeaderP></Link>
                     </li>
                 </ul>
             </HeaderBox>

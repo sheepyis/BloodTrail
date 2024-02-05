@@ -286,11 +286,9 @@ const Blood = () => {
       <Container>
         <SideBar>
             <BloodP>지정헌혈</BloodP>
-            <BloodP2>지정헌혈 요청 글</BloodP2>
+            <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>지정헌혈 요청 글</BloodP>
             <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>지정헌혈 요청하기</BloodP>
-            <Link to="/blood/bloodpremium" style={{ textDecoration: 'none' }}>
-            <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>지정헌혈 프리미엄</BloodP>
-            </Link>
+            <BloodP2>지정헌혈 프리미엄</BloodP2>
             <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>내가 쓴 글 보기</BloodP>
         </SideBar>
 
@@ -303,7 +301,7 @@ const Blood = () => {
             <BreadcrumsP>지정헌혈 요청 글</BreadcrumsP>
         </Breadcrums>
 
-        <BloodP style={{marginTop: "2vw", fontSize: '1.2vw'}}>지정헌혈 요청글</BloodP>
+        <BloodP style={{marginTop: "2vw", fontSize: '1.2vw'}}>지정헌혈 프리미엄</BloodP>
         <RightMiddle>
             <BloodP style={{ color: colors.crewGray3, marginTop: "0.3vw" }}>{selectBloodType} 요청 글</BloodP>
             <SortContainer>
