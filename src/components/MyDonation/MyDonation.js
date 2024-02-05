@@ -4,16 +4,25 @@ import Plus from '../../assets/images/plus.png';
 import { useState } from 'react';
 import close from '../../assets/images/close_24px.png';
 import { useRef } from 'react';
+import { useEffect } from 'react';
 
 const DonationContainer = styled.div`
   width: 100%;
-  height: 10vw;
+  height: 10vw; // 또는 적절한 높이 설정
   border: none;
   border-radius: 0.25vw;
   background-color: ${colors.footerGray};
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden; // 컨테이너 밖으로 내용물이 넘치는 것을 방지
+`;
+
+const StyledImage = styled.img`
+  width: 100%; // 컨테이너 너비에 맞춤
+  height: 100%; // 컨테이너 높이에 맞춤
+  object-fit: cover; // 비율을 유지하면서 컨테이너를 채움
+  // 필요한 경우 object-position을 추가하여 이미지 정렬 조정
 `;
 
 const DonationP = styled.p`
@@ -142,13 +151,22 @@ const ButtonContainer = styled.div`
 `;
 
 const ScanButton = styled.button`
+  color: var(--Gray-Gray-900, #17191a);
+  text-align: center;
+
+  /* Body/SubTitle/Medium */
+  font-family: Pretendard;
+  font-size: 0.9vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5vw;
   display: flex;
   width: 12.5vw;
   padding: 0.5vw 1.5vw;
   justify-content: center;
   align-items: flex-end;
   gap: 0.5vw;
-  border-radius: ${(props) => (props.primary ? '100px' : '5vw')};
+  border-radius: ${(props) => (props.primary ? '5vw' : '5vw')};
   border: ${(props) =>
     props.primary
       ? '2px solid var(--Primary-Red-500, #FFB2B5)'
@@ -156,8 +174,30 @@ const ScanButton = styled.button`
   background: var(--Blank-blank, rgba(255, 255, 255, 0));
 `;
 
+const SliderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1vw;
+`;
+
 const MyDonation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+    }
+  };
+
+  const handleRescan = () => {
+    setSelectedImage(null);
+    fileInputRef.current.value = null;
+  };
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -167,21 +207,8 @@ const MyDonation = () => {
     setIsModalOpen(false);
   };
 
-  const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태
-  const fileInputRef = useRef(null);
-
-  // 파일 선택기를 열기 위한 함수
   const handleFileInputClick = () => {
     fileInputRef.current.click();
-  };
-
-  // 파일이 선택되었을 때 실행될 함수
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file); // 파일로부터 이미지 URL 생성
-      setSelectedImage(imageUrl); // 이미지 URL 상태 업데이트
-    }
   };
 
   const tableData = [
@@ -235,13 +262,10 @@ const MyDonation = () => {
                 헌혈 증서 사진을 등록해주세요.
               </RegistP2>
               <DonationContainer onClick={handleFileInputClick}>
-                {' '}
-                {/* DonationContainer 클릭 시 파일 입력 트리거 */}
                 {selectedImage ? (
-                  <img
+                  <StyledImage
                     src={selectedImage}
                     alt="Selected Donation Certificate"
-                    style={{ width: '100%', height: 'auto' }}
                   />
                 ) : (
                   <div
@@ -296,7 +320,7 @@ const MyDonation = () => {
               ))}
             </ScanContainer>
             <ButtonContainer>
-              <ScanButton>다시 스캔하기</ScanButton>
+              <ScanButton onClick={handleRescan}>다시 스캔하기</ScanButton>
               <ScanButton primary>헌혈 증서 등록하기</ScanButton>
             </ButtonContainer>
           </ModalContent>
