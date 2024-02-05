@@ -106,6 +106,10 @@ const Header = ({onHover}) => {
         setMenuVisible(false);
     }
 
+    const closeMenu = () =>{
+        setMenuVisible(false);
+    }
+
     return (
         <div className="Header" style={{
             width: "100%", 
@@ -126,29 +130,25 @@ const Header = ({onHover}) => {
                     <HeaderP2 
                         to="/blood"
                         onMouseEnter={()=>{ onHover('blood')}}
-                        onTouchStart={handleTouchStart}
-                        onTouchEnd={handleTouchEnd}>
+                        onCLick={closeMenu}>
                         지정헌혈
                     </HeaderP2>
                     <HeaderP2 
                         to="/community"
                         onMouseEnter={()=>{ onHover('community')}}
-                        onTouchStart={handleTouchStart}
-                        onTouchEnd={handleTouchEnd}>
+                        onCLick={closeMenu}>
                         커뮤니티
                     </HeaderP2>
                     <HeaderP2 
                         to="/crew"
                         onMouseEnter={()=>{ onHover('crew')}}
-                        onTouchStart={handleTouchStart}
-                        onTouchEnd={handleTouchEnd}>
+                        onCLick={closeMenu}>
                         헌혈크루
                     </HeaderP2>
                     <HeaderP2 
                         to="/live"
                         onMouseEnter={()=>{ onHover('live')}}
-                        onTouchStart={handleTouchStart}
-                        onTouchEnd={handleTouchEnd}>
+                        onCLick={closeMenu}>
                         라이브
                     </HeaderP2>
                 </HeaderMenu>
