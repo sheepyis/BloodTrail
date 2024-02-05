@@ -9,12 +9,12 @@ import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
 
 import Blood from './pages/Blood/Blood';
-import SinglePost from './pages/Blood/BloodSinglePost/SinglePost';
 import BloodWrite from './pages/Blood/BloodWrite/BloodWrite';
 
 import Community from './pages/Community/Community';
-//import SinglePost from './pages/Community/CommunitySinglePost/SinglePost';
 import CommunityWrite from './pages/Community/CommunityWrite/CommunityWrite';
+
+import SinglePost from './components/SinglePost/SinglePost';
 
 import Crew from './pages/Crew/Crew';
 import CrewUpload from './pages/Crew/CrewUpload';
@@ -52,7 +52,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blood" element={<Blood />} />
           <Route path="/blood/bloodWrite/bloodwrite" element={<BloodWrite />} />
-          <Route path="/blood/bloodsinglepost/singlepost" element={<SinglePost />} />
+          <Route path="/components/SinglePost/SinglePost" element={<SinglePost />} />
           <Route path="/community" element={<Community />} />
           <Route path="/communityWrite" element={<CommunityWrite />} />
           <Route path="/crew" element={<Crew />} />

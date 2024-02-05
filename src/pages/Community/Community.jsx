@@ -461,11 +461,11 @@ const Community = () => {
         <BoardContainer>
        
         <CardContainer>
-                <CardTmp cardType="type1" selectBloodType="B-" linkPath="./CommunitySinglePost/SinglePost"/>
-                <CardTmp cardType="type1" selectBloodType="O+" linkPath="./CommunitySinglePost/SinglePost"/>
-                <CardTmp cardType="type2" selectBloodType="AB-" linkPath="./CommunitySinglePost/SinglePost"/>
+                <CardTmp cardType="type1" selectBloodType="B-" linkPath="../../components/SinglePost/Singlepost"/>
+                <CardTmp cardType="type1" selectBloodType="O+" linkPath="../../components/SinglePost/Singlepost"/>
+                <CardTmp cardType="type2" selectBloodType="AB-" linkPath="../../components/SinglePost/Singlepost"/>
 
-                <CardTmp cardType="type1" selectBloodType="B+" linkPath="./CommunitySinglePost/SinglePost"/>
+                <CardTmp cardType="type1" selectBloodType="B+" linkPath="../../components/SinglePost/Singlepost"/>
                 <Card></Card>
                 <Card></Card>
 

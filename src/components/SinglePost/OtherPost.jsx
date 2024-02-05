@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { OtherPostDetail } from "./PostData"; 
-import CardTmp from '../../../components/Card/Card';
+import CardTmp from '../Card/Card';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import leftArrow from '../Icons/LeftArrow.svg'; 
-import rightArrow from '../Icons/RightArrow.svg'; 
+import leftArrow from './Icons/LeftArrow.svg'; 
+import rightArrow from './Icons/RightArrow.svg'; 
 
 
 const OtherPostsSection = styled.section`
