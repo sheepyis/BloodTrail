@@ -107,7 +107,7 @@ const Header = ({onHover}) => {
     }
 
     const closeMenu = () =>{
-        setMenuVisible(false);
+        setMenuVisible(false)
     }
 
     return (
@@ -126,7 +126,7 @@ const Header = ({onHover}) => {
                     </Link>
                 </MainHeader>
                 
-                <HeaderMenu>
+                <HeaderMenu onCLick={closeMenu}>
                     <HeaderP2 
                         to="/blood"
                         onMouseEnter={()=>{ onHover('blood')}}
@@ -135,20 +135,17 @@ const Header = ({onHover}) => {
                     </HeaderP2>
                     <HeaderP2 
                         to="/community"
-                        onMouseEnter={()=>{ onHover('community')}}
-                        onCLick={closeMenu}>
+                        onMouseEnter={()=>{ onHover('community')}}>
                         커뮤니티
                     </HeaderP2>
                     <HeaderP2 
                         to="/crew"
-                        onMouseEnter={()=>{ onHover('crew')}}
-                        onCLick={closeMenu}>
+                        onMouseEnter={()=>{ onHover('crew')}}>
                         헌혈크루
                     </HeaderP2>
                     <HeaderP2 
                         to="/live"
-                        onMouseEnter={()=>{ onHover('live')}}
-                        onCLick={closeMenu}>
+                        onMouseEnter={()=>{ onHover('live')}}>
                         라이브
                     </HeaderP2>
                 </HeaderMenu>
