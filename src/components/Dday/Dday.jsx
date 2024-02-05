@@ -1,4 +1,5 @@
-import styled from "styled-components"
+import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 const HomeContainer = styled.div`
     width: 100%;
@@ -118,10 +119,14 @@ const Dday=()=>{
             <RecContent>
             <Dquestion>D-?</Dquestion>
             <Checkdate>나의 전혈 가능 날짜를 확인하세요</Checkdate>
-            <LoginButton>로그인</LoginButton>
+            <Link to="./login" style={{ textDecoration: 'none' }}>
+                <LoginButton>로그인</LoginButton>
+            </Link>
             </RecContent>
             <LoginContainer>
-                <FindP>비밀번호찾기</FindP>
+                <Link to="./findPassword">
+                    <FindP>비밀번호찾기</FindP>
+                </Link>
                 <FindP>회원가입</FindP>
             </LoginContainer>
         </Rectangle>

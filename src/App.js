@@ -27,6 +27,10 @@ import MyPage from './pages/MyPage/MyPage';
 
 import NotFound from './pages/NotFound/NotFound';
 
+import Login from './pages/Login/Login'
+import FindPassword from './pages/Login/FindPassword';
+import NewPassword from './pages/Login/NewPassword';
+import NewPasswordSuccess from './pages/Login/NewPasswordSuccess';
 
 function App() {
   const [hoveredComponent, setHoveredComponent] = useState(null);
@@ -69,8 +73,10 @@ function App() {
           <Route path="/live" element={<Live />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="*" element={<NotFound />} />
-
-          
+          <Route path="/login" element={<Login/>} />
+          <Route path="/findPassword" element={<FindPassword/>}/>
+          <Route path="/findPassword/newPassword" element={<NewPassword/>}/>
+          <Route path="/findPassword/newPassword/success" element={<NewPasswordSuccess/>}/>
         </Routes>
         <Footer/>
       </Router>
