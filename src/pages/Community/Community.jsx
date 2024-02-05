@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import colors from "../../styles/color";
 import SortBoxYes from '../../assets/images/sortbox_yes.png';
@@ -10,6 +10,8 @@ import search1 from "../../assets/images/search1.png";
 import arrow_down from "../../assets/images/arrow-down.png";
 import { Link } from "react-router-dom";
 import CardTmp from '../../components/Card/Card';
+import axios from "axios";
+
 
 const Container = styled.div`
     display: flex;
@@ -302,6 +304,9 @@ const DropdownSearch = styled.div`
     letter-spacing: -0.0156vw;
 `
 
+const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
+
+
 const Community = () => {
     const [selectedSort, setSelectedSort] = useState("신규순");
     const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
@@ -310,6 +315,31 @@ const Community = () => {
         setSelectedSort(sortType);
         setIsSortBoxVisible(false);
     };
+
+    const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+
+    // 현재 페이지에 따라 표시할 게시글을 계산
+    const indexOfLastPost = currentPage * POSTS_PER_PAGE;
+    const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
+    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+    // 페이지 번호를 설정하는 함수
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const pageCount = Math.ceil(posts.length / POSTS_PER_PAGE);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+                setPosts(response.data);
+            } catch (error) {
+                console.error("게시글을 불러오는 데 실패했습니다.", error);
+            }
+        };
+
+        fetchPosts();
+        }, []);
 
     return (
         <Container>
@@ -354,19 +384,17 @@ const Community = () => {
 
         <BoardContainer>
        
-        <CardContainer>
-            <CardTmp cardType="type1" selectBloodType="B-" id="4" />
-            <CardTmp cardType="type1" selectBloodType="O+" id="5" />
-            <CardTmp cardType="type2" selectBloodType="AB-" id="1" />
-
-            <CardTmp cardType="type1" selectBloodType="B+" id="2" />
-            <Card></Card>
-            <Card></Card>
-
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
-        </CardContainer>
+            <CardContainer>
+              {currentPosts.map((post) => (
+                      <CardTmp
+                        cardType = {`type${post.id/4 % 2 + 1}`}
+                        selectBloodType="B-"
+                        key={post.id}
+                        title={post.title}
+                        body={post.body}
+                      />
+                  ))}
+              </CardContainer>
 
             <WritePostContainer>
                 <WritePost>글 작성하기</WritePost>
@@ -382,10 +410,8 @@ const Community = () => {
                     <DropdownImg src ={arrow_down} alt="arrow_down"/>
                 </DropdownSearchBox>
             </SearchContainer>
-
             <PagnationContainer>
-                <Pagnation>
-                    <PagnationImg src={arrow_12px2} alt="arrow2"/>
+              <PagnationImg src={arrow_12px2} alt="arrow2"/>
                     <PagnaionNumber>1</PagnaionNumber>
                     <PagnaionNumber>2</PagnaionNumber> 
                     <PagnaionNumber>3</PagnaionNumber>
@@ -394,8 +420,7 @@ const Community = () => {
                     <DotImg2 src={dot2} alt="dot2"/>
                     <PagnaionNumber2>N</PagnaionNumber2>
                     <PagnationImg2 src={arrow_12px2} alt="arrow2" />
-                </Pagnation>
-            </PagnationContainer>
+                </PagnationContainer>
         </BoardContainer>
         </MainConationer>
 

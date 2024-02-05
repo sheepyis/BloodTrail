@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 const BoardContainer = styled.div`
   width: 100%;
@@ -136,6 +137,7 @@ const PostDate = styled.div`
 
 const HotPost = ({ title, content, username, date }) => {
   return (
+    <Link to={"../SinglePost/SinglePost"} style={{ textDecoration: 'none', color: 'inherit' }}>
     <PostContainer>
       <PostContentContainer>
       <TitleAndContentContainer>
@@ -152,6 +154,7 @@ const HotPost = ({ title, content, username, date }) => {
       </PostContentContainer>
       <Placeholder />
     </PostContainer>
+    </Link>
   );
 };
 

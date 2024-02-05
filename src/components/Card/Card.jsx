@@ -133,8 +133,7 @@ const CardPhoto = styled.div`
 `;
 
 // CardTmp 컴포넌트 정의, selectBloodType을 prop으로 받음
-const CardTmp = ({ cardType, selectBloodType, forOtherPost }) => {
-  return (
+const CardTmp = ({ cardType, selectBloodType, title, content, userName, requestPeriodStart, requestPeriodEnd, forOtherPost }) => {  return (
     <Link to='../../components/SinglePost/Singlepost' style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
       <Card forOtherPost={forOtherPost}>
       
