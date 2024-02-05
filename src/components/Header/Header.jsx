@@ -125,22 +125,30 @@ const Header = ({onHover}) => {
                 <HeaderMenu>
                     <HeaderP2 
                         to="/blood"
-                        onMouseEnter={()=>{ onHover('blood')}}>
+                        onMouseEnter={()=>{ onHover('blood')}}
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}>
                         지정헌혈
                     </HeaderP2>
                     <HeaderP2 
                         to="/community"
-                        onMouseEnter={()=>{ onHover('community')}}>
+                        onMouseEnter={()=>{ onHover('community')}}
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}>
                         커뮤니티
                     </HeaderP2>
                     <HeaderP2 
                         to="/crew"
-                        onMouseEnter={()=>{ onHover('crew')}}>
+                        onMouseEnter={()=>{ onHover('crew')}}
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}>
                         헌혈크루
                     </HeaderP2>
                     <HeaderP2 
                         to="/live"
-                        onMouseEnter={()=>{ onHover('live')}}>
+                        onMouseEnter={()=>{ onHover('live')}}
+                        onTouchStart={handleTouchStart}
+                        onTouchEnd={handleTouchEnd}>
                         라이브
                     </HeaderP2>
                 </HeaderMenu>
