@@ -134,7 +134,7 @@ const CrewUpload = () => {
                 </RightTop>
 
                 <RightMiddle>
-                    <CrewP style={{ fontSize: "1.2vw" }}>헌혈 크루 찾기</CrewP>
+                    <CrewP style={{ fontSize: "1.2vw" }}>헌혈 크루</CrewP>
                     <CrewP style={{ fontSize: "0.6vw", color: colors.crewGray3, marginTop: "0.2vw" }}>헌혈 크루를 등록하거나 관리해보세요.</CrewP>
                 </RightMiddle>
 
