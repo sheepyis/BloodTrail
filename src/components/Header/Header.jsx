@@ -125,22 +125,26 @@ const Header = ({onHover,closeMenu,setMenuVisible}) => {
                 <HeaderMenu onCLick={closeMenu}>
                     <HeaderP2 
                         to="/blood"
-                        onMouseEnter={()=>{ onHover('blood')}}>
+                        onMouseEnter={()=>{ onHover('blood')}}
+                        onCLick={closeMenu}>
                         지정헌혈
                     </HeaderP2>
                     <HeaderP2 
                         to="/community"
-                        onMouseEnter={()=>{ onHover('community')}}>
+                        onMouseEnter={()=>{ onHover('community')}}
+                        onCLick={closeMenu}>
                         커뮤니티
                     </HeaderP2>
                     <HeaderP2 
                         to="/crew"
-                        onMouseEnter={()=>{ onHover('crew')}}>
+                        onMouseEnter={()=>{ onHover('crew')}}
+                        onCLick={closeMenu}>
                         헌혈크루
                     </HeaderP2>
                     <HeaderP2 
                         to="/live"
-                        onMouseEnter={()=>{ onHover('live')}}>
+                        onMouseEnter={()=>{ onHover('live')}}
+                        onCLick={closeMenu}>
                         라이브
                     </HeaderP2>
                 </HeaderMenu>
