@@ -48,7 +48,7 @@ function App() {
     <>
       <GlobalStyle />
       <Router>
-        <Header onHover={handleHeaderHover} onLeave={handleHeaderLeave}/>
+        <Header onHover={handleHeaderHover} onLeave={handleHeaderLeave} closeMenu={closeMenu}/>
         <HeaderMenu
           hoveredComponent={hoveredComponent}
           onHover={handleHeaderHover}
