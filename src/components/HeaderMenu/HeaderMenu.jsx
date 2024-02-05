@@ -46,16 +46,17 @@ const HeaderP = styled.p`
     }
 `
 
-const HeaderMenu = ({hoveredComponent, onHover,onLeave}) => {
+const HeaderMenu = ({hoveredComponent, onHover,onLeave,handleTouchEnd,handleTouchStart}) => {
     return (
         <HeaderMenuContainer>
 
             {hoveredComponent ==='blood' && (
             <HeaderBox 
                 className="Blood"
-                // onMouseEnter={()=>{ onHover(hoveredComponent)
-                //                     console.log(hoveredComponent)}}
-                onMouseLeave={() => onLeave()}>
+                onMouseEnter={()=>{ onHover(hoveredComponent)}}
+                onMouseLeave={() => onLeave()}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}>
                 <ul>
                     <li>
                         <HeaderP>지정헌혈 요청 글</HeaderP> 
@@ -71,7 +72,9 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave}) => {
             <HeaderBox 
                 className="Community"
                 onMouseEnter={()=>{ onHover(hoveredComponent)}}
-                onMouseLeave={() => onLeave()}>
+                onMouseLeave={() => onLeave()}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}>
                 <ul>
                     <li>
                 <HeaderP>자유게시판</HeaderP>
@@ -88,7 +91,9 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave}) => {
             <HeaderBox 
                 className="Crew"
                 onMouseEnter={()=>{ onHover(hoveredComponent)}}
-                onMouseLeave={() => onLeave()}>
+                onMouseLeave={() => onLeave()}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}>
                 <ul>
                     <li>
                 <HeaderP>헌혈 크루 가입하기</HeaderP>
@@ -102,7 +107,9 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave}) => {
             <HeaderBox 
                 className="Live"
                 onMouseEnter={()=>{ onHover(hoveredComponent)}}
-                onMouseLeave={() => onLeave()}>
+                onMouseLeave={() => onLeave()}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}>
                 <ul>
                     <li>
                 <HeaderP>live</HeaderP>

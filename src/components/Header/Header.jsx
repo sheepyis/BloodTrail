@@ -70,6 +70,7 @@ const Header = ({onHover}) => {
     const [notificationsModal, setNotifications] = useState(false);
     const [noteModal, setNote] = useState(false);
     const modalRef = useRef(null);
+    const[isMenuVisible, setMenuVisible] = useState(false);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -96,6 +97,13 @@ const Header = ({onHover}) => {
 
     const handlePersonClick = () => {
         window.location.href = "/mypage";
+    }
+
+    const handleTouchStart = () =>{
+        setMenuVisible(true);
+    }
+    const handleTouchEnd = () =>{
+        setMenuVisible(false);
     }
 
     return (
