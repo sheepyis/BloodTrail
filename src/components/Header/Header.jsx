@@ -70,6 +70,7 @@ const Header = ({onHover}) => {
     const [notificationsModal, setNotifications] = useState(false);
     const [noteModal, setNote] = useState(false);
     const modalRef = useRef(null);
+    const[isMenuVisible, setMenuVisible] = useState(false);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -98,6 +99,17 @@ const Header = ({onHover}) => {
         window.location.href = "/mypage";
     }
 
+    const handleTouchStart = () =>{
+        setMenuVisible(true);
+    }
+    const handleTouchEnd = () =>{
+        setMenuVisible(false);
+    }
+
+    const closeMenu = () =>{
+        setMenuVisible(false)
+    }
+
     return (
         <div className="Header" style={{
             width: "100%", 
@@ -114,10 +126,11 @@ const Header = ({onHover}) => {
                     </Link>
                 </MainHeader>
                 
-                <HeaderMenu>
+                <HeaderMenu onCLick={closeMenu}>
                     <HeaderP2 
                         to="/blood"
-                        onMouseEnter={()=>{ onHover('blood')}}>
+                        onMouseEnter={()=>{ onHover('blood')}}
+                        onCLick={closeMenu}>
                         지정헌혈
                     </HeaderP2>
                     <HeaderP2 
