@@ -12,8 +12,6 @@ import Ranking from '../../components/Ranking/Ranking';
 import Board from '../../components/Board/Board';
 import { hotPost } from './HomeData';
 
-const Test2 = styled.div`
-`;
 
 const HomeContainer = styled.div`
   width: 100%;
