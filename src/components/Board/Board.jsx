@@ -137,7 +137,7 @@ const PostDate = styled.div`
 
 const HotPost = ({ title, content, username, date }) => {
   return (
-    <Link to={"../SinglePost/SinglePost"} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link to={"./singlepost"} style={{ textDecoration: 'none', color: 'inherit' }}>
     <PostContainer>
       <PostContentContainer>
       <TitleAndContentContainer>
@@ -164,7 +164,9 @@ const Board = ({ postsDatas }) => {
     <BoardContainer>
       <BoardTop>
         <BoardText>자유게시판 HOT</BoardText>
+        <Link to={"/Community"} style={{ textDecoration: 'none', color: 'inherit' }}>
         <MoreText>더보기</MoreText>
+        </Link>
       </BoardTop>
       <GridContainer>
         {Array.isArray(postsData) && postsData.map(post => (

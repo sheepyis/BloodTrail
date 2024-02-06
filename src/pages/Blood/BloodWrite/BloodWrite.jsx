@@ -412,8 +412,8 @@ const BloodWrite = () => {
     <CrewContainer>
       <div className="left" style={{ width: '17%', paddingLeft: '2.5%' }}>
         <CrewP>지정헌혈</CrewP>
-        <CrewP2>지정헌혈 요청 글</CrewP2>
-        <CrewP3>지정헌혈 요청하기</CrewP3>
+        <CrewP3>지정헌혈 요청 글</CrewP3>
+        <CrewP2>지정헌혈 요청하기</CrewP2>
         <CrewP3>지정헌혈 프리미엄</CrewP3>
         <CrewP3>내가 쓴 글 보기</CrewP3>
       </div>
