@@ -127,7 +127,9 @@ const Dday=()=>{
                 <Link to="./findPassword">
                     <FindP>비밀번호찾기</FindP>
                 </Link>
-                <FindP>회원가입</FindP>
+                <Link to ="./signupService">
+                    <FindP>회원가입</FindP>
+                </Link>
             </LoginContainer>
         </Rectangle>
     </HomeContainer>
