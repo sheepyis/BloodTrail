@@ -107,12 +107,12 @@ const Email = styled.div`
     }
 `
 const VerificationCode = styled.div`
-color: var(--Gray-Gray-500, #9E9E9E);
-font-family: Pretendard;
-font-size: 0.9375vw;
-font-style: normal;
-font-weight: 700;
-line-height: 1.5625vw; /* 166.667% */
+    color: var(--Gray-Gray-500, #9E9E9E);
+    font-family: Pretendard;
+    font-size: 0.9375vw;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.5625vw; /* 166.667% */
 .register{
     display: flex;
     position: relative;

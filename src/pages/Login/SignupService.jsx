@@ -189,7 +189,7 @@ const Signup = () => {
                     <BreadcrumsP>{">"}</BreadcrumsP>
                     <BreadcrumsP>로그인</BreadcrumsP>
                     <BreadcrumsP>{">"}</BreadcrumsP>
-                    <BreadcrumsP>비밀번호 찾기</BreadcrumsP>
+                    <BreadcrumsP>회원가입</BreadcrumsP>
                 </Breadcrums>
 
                 <Title>회원가입</Title>
