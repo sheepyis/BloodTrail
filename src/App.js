@@ -33,6 +33,7 @@ import NewPassword from './pages/Login/NewPassword';
 import NewPasswordSuccess from './pages/Login/NewPasswordSuccess';
 import SignupService from './pages/Login/SignupService';
 import Signup from './pages/Login/Signup';
+import SignupFinish from "./pages/Login/SignupFinish";
 
 function App() {
   const [hoveredComponent, setHoveredComponent] = useState(null);
@@ -81,6 +82,7 @@ function App() {
           <Route path="/findPassword/newPassword/success" element={<NewPasswordSuccess/>}/>
           <Route path="/signupService" element={<SignupService/>}/>
           <Route path="/signupService/signup" element={<Signup/>}/>
+          <Route path="/signupService/signup/finish" element={<SignupFinish/>}/>
         </Routes>
         <Footer/>
       </Router>
