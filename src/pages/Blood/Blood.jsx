@@ -119,7 +119,7 @@ const BloodContainer = styled.div`
     align-items: center;
     border-bottom: 0.05vw solid ${colors.crewGray3};
 `
-const BloodTap =styled.div`
+const BloodTap = styled.div`
     display: flex;
     width: 7.8125vw;
     padding: 0.5208vw 1.3542vw;
@@ -157,6 +157,7 @@ const CardContainer =styled.div`
     justify-content: space-between;
     gap: 1.5vw;
 `
+
 const Card = styled.div`
     width: 19.7917vw;
     height: 19.7917vw;
@@ -165,7 +166,6 @@ const Card = styled.div`
     border: 0.0521vw solid var(--Gray-Gray-200, #EEE);
     background: var(--black-white-white-1000, #FFF);
 `;
-
 
 const WritePostContainer= styled.div`
     width: 100%;
