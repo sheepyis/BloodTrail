@@ -6,9 +6,11 @@ import dot2 from "../../assets/images/dot2.png";
 import { Link } from "react-router-dom";
 
 const Card = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: ${props => props.forOtherPost ? '16.25vw' : ' 19.7917vw'};
     height: ${props => props.forOtherPost ? '16.25vw' : '19.7917vw'};
-    flex-shrink: 0;
     border-radius: 0.2604vw;
     border: 0.0521vw solid var(--Gray-Gray-200, #EEE);
     background: var(--black-white-white-1000, #FFF);
@@ -24,8 +26,7 @@ const CardNameContainer = styled.div`
 
 const CardUser = styled.div`
     display: flex;
-    padding-left: 1.0417vw;
-    padding-top: 1.0417vw;
+    padding: 1.0417vw;
 `;
 
 const UserImg = styled.img`
@@ -57,7 +58,7 @@ const DotImg = styled.img`
 const CardTitle = styled.div`
     display: flex;
     flex-direction: row;
-    padding-left: 1.0417vw;
+    padding-left: 1.0417vw
 `;
 
 const CardTitleP = styled.div`
@@ -72,7 +73,7 @@ const CardTitleP = styled.div`
 `;
 
 const CardP = styled.div`
-    padding-left: 1.0417vw;
+    padding: 1.0417vw;
     color: var(--Gray-Gray-700, #464A4D);
     font-family: Pretendard;
     font-size: 0.7813vw;
@@ -80,6 +81,7 @@ const CardP = styled.div`
     font-weight: 500;
     line-height: 1.8229vw;
     letter-spacing: -0.0156vw;
+    overflow: hidden;
     
     &.type1 {
         width: 17.7083vw;
@@ -91,7 +93,16 @@ const CardP = styled.div`
     }
 `;
 
+const CardContent = styled.div`
+    height : 100%;
+    display: flex; /* Make sure it's a flex container */
+    flex-direction: column; /* Children are organized vertically */
+    justify-content: space-between; /* Spread out the children */
+`;
+
 const BloodType = styled.div`
+    min-width : 2vw;
+    height : 1.5vw;
     font-size: 0.7vw;
     display: inline-flex;
     padding: 0.1563vw 0.4167vw;
@@ -148,15 +159,17 @@ const CardTmp = ({ cardType, selectBloodType, title, body, userId, forOtherPost 
         {cardType === "type2" && <CardPhoto forOtherPost={forOtherPost}></CardPhoto>}
         
         <CardTitle>
-          <CardTitleP>sdfff</CardTitleP>
+          <CardTitleP>{body.slice(0,32)}</CardTitleP>
           <BloodType>{selectBloodType}</BloodType>
         </CardTitle>
 
-        <CardP className={cardType}>vodyydff</CardP>
+        <CardContent>
+        <CardP className={cardType}>{body}</CardP>
         <CardRequestPeriod>
           <Period1>요청기간</Period1>
           <Period2>~2023.12.14</Period2>
         </CardRequestPeriod>
+        </CardContent>
         
       </Card>
     </Link>

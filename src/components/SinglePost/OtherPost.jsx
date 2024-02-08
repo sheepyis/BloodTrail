@@ -44,6 +44,15 @@ const OtherPostsSection = styled.section`
 const PostsLists = styled.div`
   width: 80%;
   margin: 0 auto;
+  .slick-slide {
+    margin: 0 1.5vw; // 좌우 마진을 추가하여 슬라이드 간 간격을 조정
+    width : 100%;
+    height: 10vw; // 높이를 자동으로 설정하여 컨텐츠에 맞게 조정
+  }
+
+  .slick-list {
+    margin: 0 -1vw; // .slick-slide에 추가한 마진을 상쇄하기 위해 사용
+  }
 `;
 
 const HeaderContainer = styled.div`
