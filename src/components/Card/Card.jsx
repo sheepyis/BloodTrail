@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 
 const Card = styled.div`
     display: flex;
-    flex-direction: column; /* Organize children vertically */
-    justify-content: space-between; /* Spread out the children */
+    flex-direction: column;
+    justify-content: space-between;
     width: ${props => props.forOtherPost ? '16.25vw' : ' 19.7917vw'};
     height: ${props => props.forOtherPost ? '16.25vw' : '19.7917vw'};
     border-radius: 0.2604vw;
@@ -73,7 +73,7 @@ const CardTitleP = styled.div`
 `;
 
 const CardP = styled.div`
-    padding: 0vw 1.0417vw;
+    padding: 1.0417vw;
     color: var(--Gray-Gray-700, #464A4D);
     font-family: Pretendard;
     font-size: 0.7813vw;
