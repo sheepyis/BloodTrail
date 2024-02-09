@@ -128,7 +128,6 @@ const CardPhoto = styled.div`
     height: ${props => props.forOtherPost ? '6.5vw' : '8.5417vw'}; // forOtherPost가 true일 때는 높이를 조금 줄입니다.
     flex-shrink: 0;
     background: var(--image, #D9D9D9);
-    padding-top: 0.7813vw;
     margin-bottom: 0.7813vw;
 `;
 
