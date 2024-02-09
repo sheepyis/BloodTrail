@@ -149,8 +149,9 @@ const BloodTap = styled.div`
 `
 
 const CardContainer =styled.div`   
+    width: 80%;
     padding-top: 2.6vw;
-    padding-left: 0.7vw;
+    padding-left: 1.8vw;
     display: grid; 
     grid-template-columns: repeat(3, minmax(auto, 1fr));
     align-items: center; 
@@ -368,15 +369,15 @@ const Blood = () => {
 
             <CardContainer>
               {currentPosts.map((post) => (
-                      <CardTmp
-                        cardType = {`type${post.id/4 % 2 + 1}`}
-                        selectBloodType="B-"
-                        key={post.id}
-                        userId = {post.userId}
-                        title={post.title}
-                        body={post.body}
-                      />
-                  ))}
+                  <CardTmp
+                    cardType = {`type${post.id/4 % 2 + 1}`}
+                    selectBloodType="B-"
+                    key={post.id}
+                    userId = {post.userId}
+                    title={post.title}
+                    body={post.body}
+                  />
+              ))}
               </CardContainer>
 
             <WritePostContainer>
