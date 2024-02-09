@@ -135,7 +135,7 @@ const Login = () =>{
                             <Link to ="/findPassword">
                                 <FindP>비밀번호찾기</FindP>
                             </Link>
-                            <Link to="/join">
+                            <Link to="/signupService">
                                 <FindP>회원가입</FindP>
                             </Link>
                         </FindContainer>
