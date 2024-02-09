@@ -10,7 +10,6 @@ import Dday from '../../components/Dday/Dday';
 import Kakao from '../../api/Kakao';
 import Ranking from '../../components/Ranking/Ranking';
 import Board from '../../components/Board/Board';
-import { hotPost } from './HomeData';
 
 
 const HomeContainer = styled.div`
@@ -174,7 +173,7 @@ const Home = () => {
 
       <HomeBox>
         <Ranking home={'home'} />
-        <Board postsDatas={hotPost} home={'home'} />
+        <Board home={'home'} />
         <Divider/>
         <Kakao />
       </HomeBox>
