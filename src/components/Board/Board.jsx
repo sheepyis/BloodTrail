@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const BoardContainer = styled.div`
   width: 100%;
@@ -137,7 +138,7 @@ const PostDate = styled.div`
 
 const HotPost = ({ title, content, username, date }) => {
   return (
-    <Link to={"./singlepost"} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link to={"/components/SinglePost/SinglePost"} style={{ textDecoration: 'none', color: 'inherit' }}>
     <PostContainer>
       <PostContentContainer>
       <TitleAndContentContainer>
@@ -159,7 +160,22 @@ const HotPost = ({ title, content, username, date }) => {
 };
 
 const Board = ({ postsDatas }) => {
-  const postsData = postsDatas.slice(0,4);
+  const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+            setPosts(response.data);
+        } catch (error) {
+            console.error("게시글을 불러오는 데 실패했습니다.", error);
+        }
+    };
+
+    fetchPosts();
+    }, []);
+
+  const postsData = posts.slice(0,4);
   return (
     <BoardContainer>
       <BoardTop>
@@ -170,7 +186,13 @@ const Board = ({ postsDatas }) => {
       </BoardTop>
       <GridContainer>
         {Array.isArray(postsData) && postsData.map(post => (
-          <HotPost key={post.id} title={post.title} content={post.content} username={post.username} date={post.date} />
+          <HotPost
+            key={post.id}
+            title={post.title}
+            content={post.body}
+            username="username"//{post.userId}
+            date="2023.12.25"//{post.date}
+            />
         ))}
       </GridContainer>
     </BoardContainer>
