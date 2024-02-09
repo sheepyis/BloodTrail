@@ -3,7 +3,6 @@ import styled from "styled-components";
 import colors from "../../styles/color";
 import {Link} from "react-router-dom";
 import group208 from "../../assets/images/Group 208.png"
-import group209 from "../../assets/images/Group 209.png"
 
 const Container = styled.div`
     display: flex;
@@ -146,7 +145,7 @@ const SignupFinish = () => {
                     <RedLine/>
                     <LineImg src={group208} alt="group 208"/>
                     <RedLine/>
-                    <LineImg src={group209} alt="group 209"/>
+                    <LineImg src={group208} alt="group 208"/>
                 </LineContainer>
 
                 <JoinBox>
