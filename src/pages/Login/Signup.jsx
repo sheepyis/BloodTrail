@@ -4,6 +4,7 @@ import colors from "../../styles/color";
 import {Link} from "react-router-dom";
 import group208 from "../../assets/images/Group 208.png";
 import group209 from "../../assets/images/Group 209.png";
+import ArrowDown from '../../assets/images/arrow-down.png';
 
 const Container = styled.div`
     display: flex;
@@ -146,7 +147,7 @@ const Birth = styled.div`
     padding-bottom: 1.6667vw;
     .birth{
         display: flex;
-        width: 61.4583vw;
+        width: 28.8021vw;
         height: 3.1250vw;
         padding: 0.5208vw 0.5208vw 0.5208vw 0.7813vw;
         margin-top: 0.5208vw;
@@ -188,6 +189,20 @@ const Password = styled.div`
         letter-spacing: -0.0156vw;
     }
 `
+const PasswordTitle =styled.div`
+    display: flex;
+    align-items: center;
+`
+const PasswordInfo = styled.div`
+    margin : 6px 10px 6px 10px;
+    color: var(--Gray-Gray-500, #9E9E9E);
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; /* 18px */
+    letter-spacing: -0.36px;
+`
 const PhoneNumber = styled.div`
     padding-bottom: 1.6667vw;
     .phoneNumber{
@@ -211,14 +226,17 @@ const PhoneNumber = styled.div`
         letter-spacing: -0.0156vw;
     }
 `
-
-const VerificationCode = styled.div`
+const VerificationBox = styled.div`
     color: var(--Gray-Gray-500, #9E9E9E);
     font-family: Pretendard;
     font-size: 0.9375vw;
     font-style: normal;
     font-weight: 700;
     line-height: 1.5625vw; /* 166.667% */
+`
+const Verification = styled.div`
+display: flex;
+flex-direction: row;
 .register{
     display: flex;
     position: relative;
@@ -249,7 +267,7 @@ const VerificationCode = styled.div`
     position: absolute;
     height: 2.0833vw;
     top:28%;
-    left: 37%;
+    right: 2%;
     padding: 0.5208vw;
     justify-content: center;
     align-items: center;
@@ -268,6 +286,60 @@ const VerificationCode = styled.div`
   }
 }
 `
+const Email = styled.div`
+    display: flex;
+    width: 28.8021vw;
+    height: 3.1250vw;
+    padding: 0.5208vw 0.5208vw 0.5208vw 0.7813vw;
+    margin-top: 0.5208vw;
+    margin-left: 0.5208vw;
+    align-items: center;
+    gap: 0.8333vw;
+    flex-shrink: 0;
+    border-radius: 0.2604vw;
+    border: 0.0521vw solid var(--Gray-Gray-300, #D1D1D1);
+`
+const EmailP = styled.div`
+width: 26.0417vw;
+color: var(--Gray-Gray-500, #9E9E9E);
+
+/* Body/Body/medium */
+font-family: Pretendard;
+font-size: 0.7813vw;
+font-style: normal;
+font-weight: 500;
+line-height: 1.0417vw; /* 133.333% */
+letter-spacing: -0.0156vw;
+`
+const EmailBox = styled.div`
+display: ${({ show }) => (show ? "flex" : "none")};
+flex-direction: column;
+position: absolute;
+top: 98%;
+right:23.8%;
+z-index: 1;
+width: 28.8021vw;
+margin: 0.5208vw 0.5208vw 0.5208vw 0.7813vw;
+border: 0.05vw solid ${colors.lightGray};
+background-color: ${colors.white};
+`
+const HoverDiv = styled.div`
+display: flex;
+padding: 0.5208vw 0.5208vw 0.5208vw 0.7813vw;
+color: var(--Gray-Gray-500, #9E9E9E);
+height:3vw;
+align-items: center;
+font-family: Pretendard;
+font-size: 0.7813vw;
+font-style: normal;
+font-weight: 500;
+line-height: 1.0417vw; /* 133.333% */
+letter-spacing: -0.0156vw;
+&:hover {
+    font-weight: 600;
+    background-color: ${colors.lightGray};
+}
+` 
 const NextButton = styled.div`
     display: flex;
     justify-content: center;
@@ -290,7 +362,26 @@ const NextButton = styled.div`
     }
 `
 
-const Signup = () =>{
+const Signup = () =>
+{
+    const [selectedEmail, setSelectedEmail] = useState("email.com");
+    const [isVisible, setIsVisible] = useState(false);
+
+    const handleEmail=(email) =>{
+        setSelectedEmail(email);
+        setIsVisible(false);
+    }
+
+    const [inputValue, setInputValue] = useState({
+        userName: '',
+        userNickname:'',
+        userBirth:'',
+        userPassword: '',
+        userPhoneNumber: '',
+        userEmail: '',
+      });
+
+    const { userName,userNickname, userBirth,userPassword,userPhoneNumber,userEmail, } = inputValue;
 
     return(
         <Container>
@@ -329,7 +420,10 @@ const Signup = () =>{
                         <input className="birth" type="text" placeholder="00 년 00 월 00 일"/>
                     </Birth>
                     <Password>
-                        비밀번호
+                        <PasswordTitle>
+                            비밀번호
+                            <PasswordInfo>* 8자 이상 작성해주세요</PasswordInfo>
+                        </PasswordTitle>
                         <input className="password" type="text" placeholder="비밀번호를 선택해주세요"/>
                     </Password>
                     <PhoneNumber>
@@ -337,13 +431,25 @@ const Signup = () =>{
                         <input className="phoneNumber" type="text" placeholder="전화번호를 입력해주세요"/>
                     </PhoneNumber>
 
-                    <VerificationCode>
+                    <VerificationBox>
                         이메일
+                        <Verification>
                             <div className='register'>
                             <input className="verificationCode" type="text" placeholder="텍스트를 입력해주세요"/>
                             <button className="registerButton">인증하기</button>
                             </div>
-                    </VerificationCode>
+                        
+                            <Email onClick={() => setIsVisible(!isVisible)}>
+                                <EmailP style={{ fontSize: '0.7813vw'}}>{selectedEmail}</EmailP>
+                                <img src={ArrowDown} alt="arrow-down" style={{ width: '1.2vw', height: '1.2vw' }}/>
+                            </Email>
+                            {selectedEmail && (
+                            <EmailBox show={isVisible}>
+                                <HoverDiv onClick={() => handleEmail("naver.com")}>naver.com</HoverDiv>
+                                <HoverDiv onClick={() => handleEmail("gmail.com")}>gmail.com</HoverDiv>
+                            </EmailBox>
+            )}          </Verification>
+                    </VerificationBox>
                 </JoinBox>
 
                 <NextButton>
