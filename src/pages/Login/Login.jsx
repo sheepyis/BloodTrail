@@ -1,7 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
 import colors from "../../styles/color";
 import {Link} from "react-router-dom";
+import alert from "../../assets/images/alert-circle 1.png";
 
 const Container = styled.div`
     display: flex;
@@ -76,6 +77,30 @@ const InputBox = styled.div`
         border-bottom: 0.0521vw solid var(--Gray-Gray-500, #9E9E9E);
     }
 `
+const Alert = styled.div`
+    display: inline-flex;
+    position: absolute;
+    top:38%;
+    left: 39.8%;
+    padding: 0.5208vw;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5208vw;
+    border-radius: 0.2604vw;
+    background: var(--Primary-Red-200, #FFF6F7);
+`
+const AlertP = styled.div`
+    color: var(--State-Red-500, #E31C22);
+
+    /* Body/Body/medium */
+    font-family: Pretendard;
+    font-size: 0.7813vw;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.0417vw; /* 133.333% */
+    letter-spacing: -0.0156vw;
+    padding-left: 0.5208vw;
+`
 const LoginButton =styled.button`
     width: 19.3750vw;
     height: 2.6042vw;
@@ -112,6 +137,12 @@ const FindP= styled.p`
 
 const Login = () =>{
 
+    const [inputValue, setInputValue] = useState({
+        userId: '',
+        userPassword: '',
+    });
+
+    const { userId, userPassword } = inputValue;
 
     return (
         <Container>
@@ -126,8 +157,19 @@ const Login = () =>{
                 <LoginContainer>
                     <LoginBox>
                         <InputBox>
-                            <input className="id" type="text" placeholder="ID"/>
-                            <input className="password" type="password" placeholder="PASSWORD"/>
+                            <input className="id" type="text" placeholder="ID" value={inputValue.userId}
+                            onChange={(e)=>setInputValue({...inputValue,userId: e.target.value})}/>
+                            <input className="password" type="password" placeholder="PASSWORD" value={inputValue.userPassword}
+                            onChange={(e)=>setInputValue({...inputValue,userPassword: e.target.value})}/>
+                            {inputValue.userId===''&& inputValue.userPassword===''&&(
+                                <Alert>
+                                    <img src={alert} alt="alert-circle" style={{ width: '1.2vw', height: '1.2vw' }}></img>
+                                    <AlertP>임시텍스트</AlertP>
+                                </Alert>)}
+                            {/* <LoginButton onClick ={()=>{
+                                if (inputValue.userId===''&& inputValue.userPassword===''){
+                                    return()};
+                            }}> */}
                             <LoginButton><input className="login" type="submit" value="로그인"/></LoginButton>
                         </InputBox>
                         
