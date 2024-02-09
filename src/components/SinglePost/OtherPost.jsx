@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 import styled from 'styled-components';
 
 import { OtherPostDetail } from "./PostData"; 
@@ -12,21 +15,18 @@ import rightArrow from './Icons/RightArrow.svg';
 
 
 const OtherPostsSection = styled.section`
-  position: relative;
-  margin: 5% 0;
+  margin: 4vw 0 10vw;
   max-width: 100%; 
-  margin-left: auto;
-  margin-right: auto;
-
   .slick-dots {
     top: 110%;
       li {
-        margin: 0 0.25rem;
+        width:2vw;
+        margin: 0vw; 0.2vw;
       }
       button {
         display: block;
-        width: 1rem;
-        height: 1rem;
+        width: 0.8vw;
+        height: 0.8vw;
         padding: 0;
         
         border: none;
@@ -44,15 +44,6 @@ const OtherPostsSection = styled.section`
 const PostsLists = styled.div`
   width: 80%;
   margin: 0 auto;
-  .slick-slide {
-    margin: 0 1.5vw; // 좌우 마진을 추가하여 슬라이드 간 간격을 조정
-    width : 100%;
-    height: 10vw; // 높이를 자동으로 설정하여 컨텐츠에 맞게 조정
-  }
-
-  .slick-list {
-    margin: 0 -1vw; // .slick-slide에 추가한 마진을 상쇄하기 위해 사용
-  }
 `;
 
 const HeaderContainer = styled.div`
@@ -91,10 +82,16 @@ const ArrowButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  ${({ type }) => type === 'next' ? `right: -6.5vw; background-size:2.5vw` : `left: -6.5vw; background-size:1.5vw`}
+  background-size:1.5vw;
+  ${({ type }) => type === 'next' ? `right: -6.5vw;` : `left: -6.5vw;`}
 `;
 
-// Custom arrow components
+const CardGap = styled.div`
+  width: 100%;
+  padding: 0 0.5vw;
+  box-sizing: border-box;
+`
+
 const NextArrow = (props) => {
   const { onClick } = props;
   return <ArrowButton onClick={onClick} type="next" />;
@@ -115,7 +112,24 @@ const settings = {
   prevArrow: <PrevArrow />,
 };
 
+
 const OtherPosts = () => {
+  const [posts, setPosts] = useState([]);
+  
+  useEffect(() => {
+  
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+            setPosts(response.data.slice(0,9));
+        } catch (error) {
+            console.error("게시글을 불러오는 데 실패했습니다.", error);
+        }
+    };
+
+    fetchPosts();
+    }, []);
+
   return (
     <OtherPostsSection>
       <HeaderContainer>
@@ -125,15 +139,18 @@ const OtherPosts = () => {
 
       <PostsLists>
         <Slider {...settings}>
-          {OtherPostDetail.map((post, index) => (
+          {posts.map((post) => (
+          <CardGap>
             <CardTmp
-            cardType = {`type${post.id/4 % 2 + 1}`}
-            selectBloodType="B-"
-            key="22"//{post.id}
-            userId = "username" //{post.userId}
-            title="title"//{post.title}
-            body="bodydydddyydyd"//{post.body}
-          />
+              forOtherPost={true}
+              cardType = {`type${post.id/4 % 2 + 1}`}
+              selectBloodType="B-"
+              key={post.id}
+              userId = {post.userId}
+              title={post.title}
+              body={post.body}
+            />
+          </CardGap>
           ))}
         </Slider>
       </PostsLists>
