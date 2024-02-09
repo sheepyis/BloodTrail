@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from "styled-components";
 import colors from "../../styles/color";
 import {Link} from "react-router-dom";
@@ -186,6 +186,13 @@ const NextButton = styled.div`
 
 const FindPassword = () => {
 
+    const [inputValue, setInputValue] = useState({
+        userName: '',
+        userEmail: '',
+      });
+    
+      const { userName, userEmail } = inputValue;
+    
     return(
         <Container>
             <SideBar/>
