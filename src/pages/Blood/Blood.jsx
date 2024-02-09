@@ -285,7 +285,7 @@ const Blood = () => {
     const handleSortSelection = (sortType) => {
       setSelectedSort(sortType);
       setIsSortBoxVisible(false);
-  };
+    };
 
     const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호

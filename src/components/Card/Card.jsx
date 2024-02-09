@@ -73,7 +73,6 @@ const CardTitleP = styled.div`
 `;
 
 const CardP = styled.div`
-    padding: 1.0417vw;
     color: var(--Gray-Gray-700, #464A4D);
     font-family: Pretendard;
     font-size: 0.7813vw;
@@ -82,22 +81,14 @@ const CardP = styled.div`
     line-height: 1.8229vw;
     letter-spacing: -0.0156vw;
     overflow: hidden;
-    
-    &.type1 {
-        width: 17.7083vw;
-        height: 11.2500vw;
-    }
-    &.type2{
-      width: 17.7083vw; 
-      height: 1.0417vw;
-    }
 `;
 
 const CardContent = styled.div`
+    padding: 1vw;
     height : 100%;
-    display: flex; /* Make sure it's a flex container */
-    flex-direction: column; /* Children are organized vertically */
-    justify-content: space-between; /* Spread out the children */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `;
 
 const BloodType = styled.div`
@@ -107,7 +98,6 @@ const BloodType = styled.div`
     display: inline-flex;
     padding: 0.1563vw 0.4167vw;
     justify-content: center;
-    align-items: center;
     gap: 0.5208vw;
     border-radius: 5.2083vw;
     border: 0.0521vw solid var(--Gray-Gray-300, #D1D1D1);
@@ -117,7 +107,6 @@ const BloodType = styled.div`
 const CardRequestPeriod = styled.div`
     display: flex;
     flex-direction: row;
-    padding: 1.0417vw 0.0000vw 1.0417vw 1.0474vw;
     color: var(--Gray-Gray-500, #9E9E9E);
     font-family: Pretendard;
     font-size: 0.6250vw;
@@ -135,7 +124,7 @@ const Period2 = styled.div`
 `;
 
 const CardPhoto = styled.div`
-    width: ${props => props.forOtherPost ? '15.625vw' : '19.6875vw'}; // forOtherPost가 true일 때는 너비를 조금 줄입니다.
+    width: 100%;
     height: ${props => props.forOtherPost ? '6.5vw' : '8.5417vw'}; // forOtherPost가 true일 때는 높이를 조금 줄입니다.
     flex-shrink: 0;
     background: var(--image, #D9D9D9);
@@ -144,7 +133,11 @@ const CardPhoto = styled.div`
 `;
 
 // CardTmp 컴포넌트 정의, selectBloodType을 prop으로 받음
-const CardTmp = ({ cardType, selectBloodType, title, body, userId, forOtherPost }) => {  return (
+const CardTmp = ({ cardType, selectBloodType, title, body, userId, forOtherPost }) => {
+  const displayTitle = forOtherPost ? title.slice(0, 20) : title.slice(0,32);
+  const displayBody = cardType === "type2" ? body.slice(0, 40) : body.slice(0,70);
+  
+  return (
     <Link to='../../components/SinglePost/Singlepost' style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
       <Card forOtherPost={forOtherPost}>
       
@@ -159,16 +152,18 @@ const CardTmp = ({ cardType, selectBloodType, title, body, userId, forOtherPost 
         {cardType === "type2" && <CardPhoto forOtherPost={forOtherPost}></CardPhoto>}
         
         <CardTitle>
-          <CardTitleP>{body.slice(0,32)}</CardTitleP>
+          <CardTitleP>{displayTitle}</CardTitleP>
           <BloodType>{selectBloodType}</BloodType>
         </CardTitle>
 
         <CardContent>
-        <CardP className={cardType}>{body}</CardP>
-        <CardRequestPeriod>
-          <Period1>요청기간</Period1>
-          <Period2>~2023.12.14</Period2>
-        </CardRequestPeriod>
+        <CardP className={cardType}>{displayBody}</CardP>
+        {!forOtherPost && (
+            <CardRequestPeriod>
+              <Period1>요청기간</Period1>
+              <Period2>~2023.12.14</Period2>
+            </CardRequestPeriod>
+          )}
         </CardContent>
         
       </Card>
