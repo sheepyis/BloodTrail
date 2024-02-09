@@ -316,19 +316,21 @@ display: ${({ show }) => (show ? "flex" : "none")};
 flex-direction: column;
 position: absolute;
 top: 98%;
-right:23.8%;
+right:25.3%;
 z-index: 1;
-width: 28.8021vw;
+width: 27.2917vw;
 margin: 0.5208vw 0.5208vw 0.5208vw 0.7813vw;
 border: 0.05vw solid ${colors.lightGray};
 background-color: ${colors.white};
 `
 const HoverDiv = styled.div`
 display: flex;
+width: 27.2917vw;
+height: 3.1250vw;
 padding: 0.5208vw 0.5208vw 0.5208vw 0.7813vw;
-color: var(--Gray-Gray-500, #9E9E9E);
-height:3vw;
 align-items: center;
+gap: 0.8333vw;
+color: var(--Gray-Gray-900, #17191A);
 font-family: Pretendard;
 font-size: 0.7813vw;
 font-style: normal;
@@ -445,8 +447,10 @@ const Signup = () =>
                             </Email>
                             {selectedEmail && (
                             <EmailBox show={isVisible}>
-                                <HoverDiv onClick={() => handleEmail("naver.com")}>naver.com</HoverDiv>
-                                <HoverDiv onClick={() => handleEmail("gmail.com")}>gmail.com</HoverDiv>
+                                <HoverDiv onClick={() => handleEmail("@email.com")}>@email.com</HoverDiv>
+                                <HoverDiv onClick={() => handleEmail("@email.com")}>@email.com</HoverDiv>
+                                <HoverDiv onClick={() => handleEmail("@email.com")}>@email.com</HoverDiv>
+                                <HoverDiv onClick={() => handleEmail("@email.com")}>@email.com</HoverDiv>
                             </EmailBox>
             )}          </Verification>
                     </VerificationBox>
