@@ -114,7 +114,7 @@ const GraphContainer = styled.div`
 const RowContainer = styled.div`
   background: var(--Gray-Gray-50, #fafafa);
   width: 8.05vw;
-  height: 2.393vw;
+  /* height: 2.393vw; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -139,6 +139,7 @@ const CellContainer = styled.div`
   padding-left: 1.2vw;
   justify-content: center;
   align-items: center;
+  text-align: center;
 `;
 
 const ButtonContainer = styled.div`
@@ -157,12 +158,11 @@ const ScanButton = styled.button`
   font-size: 0.9vw;
   font-style: normal;
   font-weight: 500;
-  line-height: 1.5vw;
   display: flex;
   width: 12.5vw;
   padding: 0.5vw 1.5vw;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   gap: 0.5vw;
   border-radius: ${(props) => (props.primary ? '5vw' : '5vw')};
   border: ${(props) =>
@@ -170,6 +170,35 @@ const ScanButton = styled.button`
       ? '2px solid var(--Primary-Red-500, #FFB2B5)'
       : '2px solid var(--Gray-Gray-200, #eee)'};
   background: var(--Blank-blank, rgba(255, 255, 255, 0));
+`;
+
+const ValueP = styled.p`
+  border-radius: 2.5vw;
+  background: var(--Gray-Gray-100, #f2f2f2);
+  color: var(--Gray-Gray-500, #9e9e9e);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 0.8vw;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  padding: 0.3vw 0.7vw;
+  display: flex; // flex 컨테이너로 만듦
+  justify-content: center; // 자식 요소를 중앙에 수평 정렬
+  align-items: center;
+`;
+
+const DefaultValueP = styled.p`
+  color: var(--Gray-Gray-500, #9e9e9e);
+  font-family: Pretendard;
+  font-size: 0.75vw;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  display: flex; // flex 컨테이너로 만듦
+  justify-content: center; // 자식 요소를 중앙에 수평 정렬
+  align-items: center;
+  text-align: center;
 `;
 
 const MyDonation = () => {
@@ -203,10 +232,8 @@ const MyDonation = () => {
   };
 
   const tableData = [
-    { label: '이름', value: '이름' },
-    { label: '생년월일', value: '0000년 00월 00일' },
     { label: '헌혈 종류', value: '헌혈' },
-    { label: '헌혈 일자', value: '0000년 00월 00일' },
+    { label: '헌혈 일자', value: '0000년00월 00일' },
   ];
 
   return (
@@ -288,7 +315,7 @@ const MyDonation = () => {
               onChange={handleFileChange}
               accept="image/*" // 이미지 파일만 허용
             />
-            <ScanContainer>
+            <ScanContainer style={{ marginBottom: '3.8vw' }}>
               <ScanP style={{ marginLeft: '0.5vw' }}>정보 확인하기</ScanP>
               <RegistP2
                 style={{
@@ -305,7 +332,11 @@ const MyDonation = () => {
                     <GraphP>{data.label}</GraphP>
                   </RowContainer>
                   <CellContainer>
-                    <GraphP>{data.value}</GraphP>
+                    {data.label === '헌혈 일자' ? (
+                      <DefaultValueP>{data.value}</DefaultValueP>
+                    ) : (
+                      <ValueP>{data.value}</ValueP>
+                    )}
                   </CellContainer>
                 </GraphContainer>
               ))}
