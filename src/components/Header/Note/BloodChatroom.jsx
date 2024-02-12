@@ -4,12 +4,34 @@ import arrow from '../../../assets/images/arrow_12px2.png';
 import profile2 from '../../../assets/images/profile2.png';
 import image from '../../../assets/images/image 1.png';
 import BloodChat from './BloodChat';
+import colors from '../../../styles/color';
+import CrewChat from './CrewChat';
 
 const Container = styled.div`
     width: 100%;
     flex-shrink: 0;
     border-radius: 0.0000vw 0.0000vw 0.2604vw 0.2604vw;
     background: var(--Gray-Gray-50, #FAFAFA);
+`
+const NoteTitle2 =styled.div`
+    display: flex;
+    background: var(--black-white-white-1000, #FFF);
+`
+const NoteElement =styled.div`
+    padding: 0.7813vw 0.7813vw 0.7813vw 0.7813vw;
+    display: flex;
+    font-size: 0.7813vw;
+    justify-content: center;
+    align-items: center;
+    height: 2.6042vw;
+
+&.blood{
+    font-weight: 700;
+    border-bottom: 0.16vw solid var(--Primary-Red-700, #F3777A);
+}
+&:hover {
+    font-weight: 700;
+}
 `
 const ChatContainer = styled.div`
     height: 34.5vw;
@@ -167,17 +189,24 @@ const InputText = styled.div`
   }
 }
 `
-const BloodChatroom=()=>{
+const BloodChatroom=({handleBloodChat,handleCrewChat})=>{
     const [back, setBack] = useState(false);
+    const [crewChat, setCrewChat] = useState(false);
+    const [bloodChat, setBloodChat] = useState(false);
 
+  
     const handleBack =()=>{
         setBack(true);
     }
     return(
        
         <Container>
-            {!back &&(
+            {!back && (
             <>
+            <NoteTitle2>
+                <NoteElement className="crew" onClick={handleCrewChat}>크루</NoteElement>
+                <NoteElement className="blood">지정헌혈 요청글</NoteElement>
+            </NoteTitle2>
             <ChatContainer>
                 <Header>
                     <BackIcon src={arrow} alt="back_arrow" onClick={handleBack}/>
@@ -211,7 +240,8 @@ const BloodChatroom=()=>{
                 </InputText>
             </Rectangle>
             </> )}
-            {back&&(<BloodChat/>)}
+            {back&&(<BloodChat  handleCrewChat={handleCrewChat}
+                                handleBloodChat={handleBloodChat}/>)}
         </Container>
     )
 }

@@ -5,12 +5,33 @@ import profile2 from '../../../assets/images/profile2.png';
 import image from '../../../assets/images/image 1.png';
 import CrewChat from './CrewChat';
 import dot from "../../../assets/images/dot.png";
+import colors from '../../../styles/color';
 
 const Container = styled.div`
     width: 100%;
     flex-shrink: 0;
     border-radius: 0.0000vw 0.0000vw 0.2604vw 0.2604vw;
     background: var(--Gray-Gray-50, #FAFAFA);
+`
+const NoteTitle2 =styled.div`
+    display: flex;
+    background: var(--black-white-white-1000, #FFF);
+`
+const NoteElement =styled.div`
+    padding: 0.7813vw 0.7813vw 0.7813vw 0.8vw;
+    display: flex;
+    font-size: 0.7813vw;
+    justify-content: center;
+    align-items: center;
+    height: 2.6042vw;
+
+&.crew{
+    font-weight: 700;
+    border-bottom: 0.16vw solid var(--Primary-Red-700, #F3777A);
+}
+&:hover {
+    font-weight: 700;
+}
 `
 const ChatContainer = styled.div`
     height: 34.5vw;
@@ -37,8 +58,6 @@ const HeaderP = styled.div`
     padding-top: 1.5625vw;
     color: var(--Gray-Gray-500, #9E9E9E);
     text-align: center;
-
-    /* Body/Body/medium */
     font-family: Pretendard;
     font-size: 0.7813vw;
     font-style: normal;
@@ -172,9 +191,12 @@ const InputText = styled.div`
   }
 }
 `
-const BloodChatroom=()=>{
+const BloodChatroom=({handleBloodChat, handleCrewChat})=>{
     const [back, setBack] = useState(false);
+    const [bloodChat,setBloodChat] = useState(false);    
+    const [crewChat, setCrewChat] = useState(false);
 
+    
     const handleBack =()=>{
         setBack(true);
     }
@@ -184,6 +206,11 @@ const BloodChatroom=()=>{
             {!back &&(
             <>
             <ChatContainer>
+                <NoteTitle2>
+                    <NoteElement className="crew">크루</NoteElement>
+                    <NoteElement className="blood" onClick={handleBloodChat}>지정헌혈 요청글</NoteElement>
+                </NoteTitle2>
+
                 <Header>
                     <BackIcon src={arrow} alt="back_arrow" onClick={handleBack}/>
                     <HeaderLine/>
@@ -211,7 +238,8 @@ const BloodChatroom=()=>{
                 </InputText>
             </Rectangle>
             </> )}
-            {back&&(<CrewChat/>)}
+            {back && (<CrewChat handleCrewChat={handleCrewChat}
+                                handleBloodChat={handleBloodChat}/>)}
         </Container>
     )
 }
