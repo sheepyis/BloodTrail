@@ -98,6 +98,18 @@ const Header = ({onHover,closeMenu,setMenuVisible}) => {
         window.location.href = "/mypage";
     }
 
+    const handleModalOutsideClick = (event) => {
+        if (!modalRef.current.contains(event.target)) {
+            setNote(false);
+            setNotifications(false);
+        }
+    }
+    
+    const handleModalInnerClick = (event) => {
+        event.stopPropagation();
+    }
+
+
     const handleTouchStart = () =>{
         setMenuVisible(true);
     }
@@ -115,7 +127,7 @@ const Header = ({onHover,closeMenu,setMenuVisible}) => {
         }}
             
         >
-            <HeaderContainer>
+            <HeaderContainer ref={modalRef} onClick={handleModalOutsideClick}>
                 <MainHeader>
                     <Link to="/">
                         <LogoImage src={logo} alt="logo" />

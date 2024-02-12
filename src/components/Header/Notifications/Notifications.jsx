@@ -56,9 +56,13 @@ const NotificationP =styled.div`
 
 const Notifications = () => {
 
+    const handleModalInnerClick = (event) => {
+        event.stopPropagation();
+    };
+
 
     return(
-        <NotificationContainer>
+        <NotificationContainer onClick={handleModalInnerClick}>
             <NotificationTitle>
                 알림
             </NotificationTitle>
