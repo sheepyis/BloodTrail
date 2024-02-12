@@ -3,8 +3,8 @@ import styled from "styled-components";
 import colors from "../../../styles/color";
 import { NavLink } from "react-router-dom";
 import Ellipse22 from "../../../assets/images/Ellipse22.png";
-
-
+import setting from "../../../assets/images/settings 1.png"; 
+import plus from "../../../assets/images/plus.png";
 
 const NoteContainer =styled.div`
     width: 27.0833vw;
@@ -20,6 +20,17 @@ const NoteContainer =styled.div`
     background: var(--black-white-white-1000, #FFF);
     z-index:2;
 `
+const TitleBox = styled.div`
+    display: flex;
+    justify-content: center;
+`
+const Icon = styled.div`
+    position: absolute;
+    align-items: center;
+    top: 3.5%;
+    right: 0%;
+    padding: 0px 4px;
+`
 const NoteTitle1 =styled.div`
     text-align: center;
     height: 3.5417vw;
@@ -28,13 +39,13 @@ const NoteTitle1 =styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 30px; /* 166.667% */
-    padding-top: 0.9896vw;
+    padding-top: 18px;
      
 `
 const NoteTitle2 =styled.div`
     display: flex;
 `
-const NoteElement =styled(NavLink)`
+const NoteElement =styled.div`
     padding: 0.7813vw 0.7813vw 0.7813vw 0.7813vw;
     display: flex;
     font-size: 0.7813vw;
@@ -59,6 +70,7 @@ const NoteElement =styled(NavLink)`
 const ChatContainer =styled.div`
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 `
 
 const ChatBox =styled.div`
@@ -100,10 +112,20 @@ const ChatP =styled.div`
 
 const Note= () => {
 
+    const handleModalInnerClick = (event) => {
+        event.stopPropagation();
+    };
+
 
     return(
-        <NoteContainer>
-            <NoteTitle1>쪽지</NoteTitle1>
+        <NoteContainer onClick={handleModalInnerClick}>
+            <TitleBox>
+                <NoteTitle1>쪽지</NoteTitle1>
+                <Icon>
+                    <img src={plus} alt="plus" style={{width: '1.25vw', height: '1.25vw', margin: '0px 7px 0px 0px'}}/>
+                    <img src={setting} slt ="setting" style={{width: '1.25vw', height: '1.25vw', margin: '0px 20px 0px 0px'}}/>
+                </Icon>
+            </TitleBox>
             <NoteTitle2>
                 <NoteElement>크루</NoteElement>
                 <NoteElement>지정헌혈 요청글</NoteElement>
