@@ -19,12 +19,7 @@ const NoteElement =styled.div`
     display: flex;
     font-size: 0.78vw;
     justify-content: center;
-    align-items: center;
-    height: 2.6w;
     color: var(--Gray-Gray-700, #464A4D);
-    text-align: center;
-
-    /* GNB/LABEL/bold */
     font-family: Pretendard;
     font-size: 0.78vw;
     font-style: normal;

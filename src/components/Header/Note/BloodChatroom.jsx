@@ -22,8 +22,6 @@ const NoteElement =styled.div`
     display: flex;
     font-size: 0.7813vw;
     justify-content: center;
-    align-items: center;
-    height: 2.6042vw;
 
 &.blood{
     font-weight: 700;
@@ -86,8 +84,6 @@ const OtherUserName = styled.div`
     padding-left: 0.5208vw;
     align-items: center;
     color: var(--Gray-Gray-500, #9E9E9E);
-
-    /* Body/Body_small/medium */
     font-family: Pretendard;
     font-size: 0.6250vw;
     font-style: normal;
@@ -96,11 +92,11 @@ const OtherUserName = styled.div`
     letter-spacing: -0.0187vw;
 `
 const OtherUserText = styled.div`
+    display: flex;
     margin-top: 0.6250vw;
     margin-left: 1.0417vw;
     max-width: 80%;
     word-break: break-all;
-    display: flex;
     padding: 0.7813vw 1.0417vw;
     align-items: center;
     gap: 0.5208vw;
@@ -108,7 +104,6 @@ const OtherUserText = styled.div`
     background: var(--black-white-white-1000, #FFF);
     color: var(--Gray-Gray-900, #17191A);
 
-    /* Body/Body/medium */
     font-family: Pretendard;
     font-size: 0.7813vw;
     font-style: normal;
