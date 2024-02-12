@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import styled from 'styled-components';
+import colors from "../../../styles/color";
 import Ellipse22 from "../../../assets/images/Ellipse22.png";
 import BloodChatroom from './BloodChatroom';
 
@@ -8,6 +9,35 @@ const ChatContainer =styled.div`
     flex-direction: column;
     overflow-y: scroll;
     background: var(--black-white-white-1000, #FFF);
+`
+const NoteTitle2 =styled.div`
+    display: flex;
+    background: var(--black-white-white-1000, #FFF);
+`
+const NoteElement =styled.div`
+    padding: 0.78vw 0.78vw 0.78vw 0.78vw;
+    display: flex;
+    font-size: 0.78vw;
+    justify-content: center;
+    align-items: center;
+    height: 2.6w;
+    color: var(--Gray-Gray-700, #464A4D);
+    text-align: center;
+
+    /* GNB/LABEL/bold */
+    font-family: Pretendard;
+    font-size: 0.78vw;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.04vw; /* 133.333% */
+
+&.blood{
+    font-weight: 700;
+    border-bottom: 0.16vw solid var(--Primary-Red-700, #F3777A);
+}
+&:hover {
+    font-weight: 700;
+}
 `
 
 const ChatBox =styled.div`
@@ -47,14 +77,15 @@ const ChatP =styled.div`
     align-items: center;
 `
 const Rectangle = styled.div`
-width: 519px;
-height: 5px;
-flex-shrink: 0;
-background: var(--Gray-Gray-100, #F2F2F2);
+    height: 0.26vw;
+    flex-shrink: 0;
+    background: var(--Gray-Gray-100, #F2F2F2);
 `
 
-const BloodChat =()=>{
+const BloodChat =({handleCrewChat, handleBloodChat})=>{
     const [isChatroom,setIsChatroom]=useState(false);
+    const [crewChat, setCrewChat] = useState(false);
+    const [bloodChat, setBloodChat] = useState(false);
 
     const handleChatroom =()=>{
         setIsChatroom(true);
@@ -63,33 +94,42 @@ const BloodChat =()=>{
         <ChatContainer>
             {!isChatroom && (
                 <>
-                    <ChatBox>
+            <NoteTitle2>
+                <NoteElement className="crew" onClick={handleCrewChat}>크루</NoteElement>
+                <NoteElement className="blood" onClick={handleBloodChat}>지정헌혈 요청글</NoteElement>
+            </NoteTitle2>
+        
+                    <ChatBox onClick={handleChatroom}>
                         <ChatPerson src={Ellipse22} alt="chat_person" />
                         <ChatBoxP>
-                            <ChatName onClick={handleChatroom}>채팅방 이름</ChatName>
+                            <ChatName>채팅방 이름</ChatName>
                             <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
                         </ChatBoxP>
                     </ChatBox>
                     <Rectangle />
-                    <ChatBox>
+                    
+                    <ChatBox onClick={handleChatroom}>
                         <ChatPerson src={Ellipse22} alt="chat_person" />
                         <ChatBoxP>
-                            <ChatName onClick={handleChatroom}>채팅방 이름</ChatName>
+                            <ChatName>채팅방 이름</ChatName>
                             <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
                         </ChatBoxP>
                     </ChatBox>
                     <Rectangle />
-                    <ChatBox>
+
+                    <ChatBox onClick={handleChatroom}>
                         <ChatPerson src={Ellipse22} alt="chat_person" />
                         <ChatBoxP>
-                            <ChatName onClick={handleChatroom}>채팅방 이름</ChatName>
+                            <ChatName>채팅방 이름</ChatName>
                             <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
                         </ChatBoxP>
                     </ChatBox>
                     <Rectangle />
                 </>
             )}
-            {isChatroom && <BloodChatroom />}
+            {isChatroom && <BloodChatroom 
+                            handleCrewChat={handleCrewChat}
+                            handleBloodChat={handleBloodChat}/>}
         </ChatContainer>
     );
 }

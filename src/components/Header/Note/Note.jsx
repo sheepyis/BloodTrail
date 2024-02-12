@@ -11,13 +11,11 @@ import BloodChat from "./BloodChat";
 
 const NoteContainer =styled.div`
     width: 27.0833vw;
-    height: 46.2500vw;
+    height: 46.25vw;
     position: absolute;
     top: 4.1146vw;
     right: 4.4792vw;
     left: 70.2083vw;
-    width: 26.5625vw;
-    height: 37.6042vw;
     border-radius: 0.2604vw;
     border: 0.0521vw solid var(--Gray-Gray-100, #F2F2F2);
     background: var(--black-white-white-1000, #FFF);
@@ -32,42 +30,32 @@ const Icon = styled.div`
     align-items: center;
     top: 3.5%;
     right: 0%;
-    padding: 0px 4px;
+    padding: 0.00vw 0.21vw;
 `
 const NoteTitle1 =styled.div`
     text-align: center;
-    height: 3.5417vw;
     font-family: Pretendard;
-    font-size: 18px;
+    font-size: 0.94vw;
     font-style: normal;
     font-weight: 700;
-    line-height: 30px; /* 166.667% */
-    padding-top: 18px;
-     
+    line-height: 1.56vw; /* 166.667% */
+    padding: 0.94vw;
 `
 const NoteTitle2 =styled.div`
     display: flex;
+    margin-left: 2.92vw;
 `
 const NoteElement =styled.div`
-    margin: 0.7813vw 0.7813vw 0.7813vw 0.7813vw;
+    padding: 0.7813vw 0.7813vw 0.7813vw 0.7813vw;
     display: flex;
     font-size: 0.7813vw;
     justify-content: center;
     align-items: center;
     height: 2.6042vw;
 
-    &:hover {
-        font-weight: 700;
-
-    }
-
-    &:active {
-        font-weight: 700;
-        text-decoration: underline;
-        text-decoration-color: ${colors.mainRed};
-        text-decoration-thickness: 0.1vw;
-        text-underline-offset: 0.4vw;
-    }
+&:hover {
+    font-weight: 700;
+}
 `
 
 const ChatContainer =styled.div`
@@ -75,43 +63,49 @@ const ChatContainer =styled.div`
     flex-direction: column;
     overflow-y: scroll;
 `
+const ChatBox =styled.div`
+    height: 5.5vw;
+    padding: 1vw;
+    display: flex;
+    flex-direction: row:
+    background: yellow;
+`
+const ChatPerson= styled.img`
+    width: 3.3789vw;
+    height: 3.3854vw;
+    cursor: pointer;
+`
+const ChatBoxP =styled.div`
+    margin-left: 0.7797vw;
+    align-item: center;
+`
 
-// const ChatBox =styled.div`
-//     height: 5.4688vw;
-//     padding: 1.0417vw 1.0417vw 1.0417vw 1.0417vw;
-//     display: flex;
-//     flex-direction: row:
-// `
-// const ChatPerson= styled.img`
-//     width: 3.3789vw;
-//     height: 3.3854vw;
-//     cursor: pointer;
-// `
-// const ChatBoxP =styled.div`
-//     margin-left: 0.7797vw;
-//     align-item: center;
-// `
+const ChatName =styled.div`
+    display: flex;
+    color: var(--Gray-Gray-700, #464A4D);
+    width: 18.5938vw;
+    height: 1.5104vw;
+    font-family: Pretendard;
+    font-size: 0.6250vw;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 0.9375vw;
+    letter-spacing: -0.0187vw;
+    align-items: center;
+`
 
-// const ChatName =styled.div`
-//     display: flex;
-//     color: var(--Gray-Gray-700, #464A4D);
-//     width: 18.5938vw;
-//     height: 1.5104vw;
-//     font-family: Pretendard;
-//     font-size: 0.6250vw;
-//     font-style: normal;
-//     font-weight: 500;
-//     line-height: 0.9375vw;
-//     letter-spacing: -0.0187vw;
-//     align-items: center;
-// `
+const ChatP =styled.div`
+    display: flex;
+    width: 20.8333vw;
+    height: 1.5104vw;
+    align-items: center;
+`
+const Rectangle = styled.div`
+    width: 100%;
+    height: 0.26vw;
 
-// const ChatP =styled.div`
-//     display: flex;
-//     width: 20.8333vw;
-//     height: 1.5104vw;
-//     align-items: center;`
-
+    background: var(--Gray-Gray-100, #F2F2F2);
+`
 
 const Note= () => {
 
@@ -124,7 +118,6 @@ const Note= () => {
         setBloodChat(false);
     };
 
-
     const handleBloodChat =()=>{
         setBloodChat(true);
         setCrewChat(false);
@@ -135,26 +128,82 @@ const Note= () => {
     };
     
 
-
     return(
         <NoteContainer onClick={handleModalInnerClick}>
             <TitleBox>
                 <NoteTitle1>쪽지</NoteTitle1>
                 <Icon>
-                    <img src={plus} alt="plus" style={{width: '1.25vw', height: '1.25vw', margin: '0px 7px 0px 0px'}}/>
-                    <img src={setting} slt ="setting" style={{width: '1.25vw', height: '1.25vw', margin: '0px 20px 0px 0px'}}/>
+                    <img src={plus} alt="plus" style={{width: '1.25vw', height: '1.25vw', margin: '0.00vw 0.36vw 0.00vw 0.00vw'}}/>
+                    <img src={setting} slt ="setting" style={{width: '1.25vw', height: '1.25vw', margin: '0.00vw 1.04vw 0.00vw 0.00vw'}}/>
                 </Icon>
             </TitleBox>
+            {!crewChat && !bloodChat &&(            
+            <>
             <NoteTitle2>
                 <NoteElement onClick={handleCrewChat}>크루</NoteElement>
                 <NoteElement onClick={handleBloodChat}>지정헌혈 요청글</NoteElement>
             </NoteTitle2>
+       
             <ChatContainer>
-            {crewChat && (<CrewChat/>)}
-            {bloodChat && (<BloodChat/>)}
+                <div className="etc">
+                <ChatBox>
+                    <ChatPerson src={Ellipse22} alt="chat_person" />
+                    <ChatBoxP>
+                        <ChatName>채팅방 이름</ChatName>
+                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
+                    </ChatBoxP>
+                </ChatBox>
+                <ChatBox>
+                    <ChatPerson src={Ellipse22} alt="chat_person" />
+                    <ChatBoxP>
+                        <ChatName>채팅방 이름</ChatName>
+                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
+                    </ChatBoxP>
+                </ChatBox>
+                <ChatBox>
+                    <ChatPerson src={Ellipse22} alt="chat_person" />
+                    <ChatBoxP>
+                        <ChatName>채팅방 이름</ChatName>
+                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
+                    </ChatBoxP>
+                </ChatBox>
+                </div>
+                <Rectangle />
 
+                <div className="crew" onClick={handleCrewChat}>
+                <ChatBox>
+                    <ChatPerson src={Ellipse22} alt="chat_person" />
+                    <ChatBoxP>
+                        <ChatName>채팅방 이름</ChatName>
+                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
+                    </ChatBoxP>
+                </ChatBox>
+                <ChatBox>
+                    <ChatPerson src={Ellipse22} alt="chat_person" />
+                    <ChatBoxP>
+                        <ChatName>채팅방 이름</ChatName>
+                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
+                    </ChatBoxP>
+                </ChatBox>
+                </div>
+                <Rectangle />
+
+                <div className="blood" onClick={handleBloodChat}>
+                <ChatBox>
+                    <ChatPerson src={Ellipse22} alt="chat_person" />
+                    <ChatBoxP>
+                        <ChatName>채팅방 이름</ChatName>
+                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
+                    </ChatBoxP>
+                </ChatBox>
+                </div>
             </ChatContainer>
-            
+            </>
+            )}
+            {crewChat && <CrewChat  handleCrewChat={handleCrewChat}
+                                    handleBloodChat={handleBloodChat}/>}
+            {bloodChat && <BloodChat handleCrewChat={handleCrewChat}
+                            handleBloodChat={handleBloodChat}/>}   
         </NoteContainer>
     )
 }
