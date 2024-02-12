@@ -109,7 +109,6 @@ const Header = ({onHover,closeMenu,setMenuVisible}) => {
         event.stopPropagation();
     }
 
-
     const handleTouchStart = () =>{
         setMenuVisible(true);
     }

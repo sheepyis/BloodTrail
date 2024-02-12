@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useRef, useEffect} from 'react';
 import styled from 'styled-components';
 import arrow from '../../../assets/images/arrow_12px2.png';
 import profile2 from '../../../assets/images/profile2.png';
@@ -62,6 +62,30 @@ const HeaderP = styled.div`
     font-weight: 500;
     line-height: 1.0417vw; /* 133.333% */
     letter-spacing: -0.0156vw;
+`
+const NotifyMenu = styled.div`
+    display: flex;
+    position: absolute;
+    top: 10%;
+    width: 7.92vw;
+    padding: 0.42vw 0.00vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.26vw;
+    border: 0.05vw solid var(--Gray-Gray-100, #F2F2F2);
+    background: var(--black-white-white-1000, #FFF);
+`
+const HoverDiv = styled.div`
+    display: flex;
+    width: 7.81vw;
+    padding: 0.78vw 1.04vw;
+    align-items: center;
+    gap: 0.52vw;
+&:hover{
+    height: 2.60vw;
+    background: var(--Gray-Gray-200, #EEE);
+}
 `
 
 const ChatBox = styled.div`
@@ -193,33 +217,73 @@ const BloodChatroom=({handleBloodChat, handleCrewChat})=>{
     const [back, setBack] = useState(false);
     const [bloodChat,setBloodChat] = useState(false);    
     const [crewChat, setCrewChat] = useState(false);
+    const [notify,setNotify] = useState(false);
+    const [notify2,setNotify2] = useState(false);
+    const notifyMenuRef = useRef(null); 
 
-    
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+        
+    const handleClickOutside = (event) => {
+        if (notifyMenuRef.current && !notifyMenuRef.current.contains(event.target)) {
+            setNotify(false); 
+            setNotify2(false); 
+        }
+    }; 
+
+    const handleNotify = () =>{
+        setNotify(true);
+    };
+
+    const handleNotify2 =()=>{
+        setNotify(false);
+        setNotify2(true);
+    };
+
     const handleBack =()=>{
         setBack(true);
-    }
+    };
+
     return(
        
-        <Container>
+        <Container ref={notifyMenuRef} onClick={handleClickOutside}>
             {!back &&(
             <>
-            <ChatContainer>
-                <NoteTitle2>
+            <ChatContainer ref={notifyMenuRef} onClick={handleClickOutside}>
+                <NoteTitle2 ref={notifyMenuRef} onClick={handleClickOutside}>
                     <NoteElement className="crew">크루</NoteElement>
                     <NoteElement className="blood" onClick={handleBloodChat}>지정헌혈 요청글</NoteElement>
                 </NoteTitle2>
 
-                <Header>
+                <Header ref={notifyMenuRef} onClick={handleClickOutside}>
                     <BackIcon src={arrow} alt="back_arrow" onClick={handleBack}/>
                     <HeaderLine/>
                 </Header>
                 <HeaderP>채팅방이 개설되었습니다</HeaderP>
-
-                <ChatBox>
+                {notify && (
+                    <NotifyMenu>
+                        <HoverDiv onClick={handleNotify2}>신고하기</HoverDiv>
+                    </NotifyMenu>
+                )}
+                {notify2 && (
+                    <NotifyMenu>
+                        <HoverDiv>불건전함</HoverDiv>
+                        <HoverDiv>욕설/비하</HoverDiv>
+                        <HoverDiv>사칭/사기</HoverDiv>
+                        <HoverDiv>금전적 요구</HoverDiv>
+                        <HoverDiv>기타</HoverDiv>
+                    </NotifyMenu>
+                )}
+                <ChatBox ref={notifyMenuRef} onClick={handleClickOutside}>
                     <OtherUserInfo>
                         <img src= {profile2} alt="profile" style ={{width: '2.0793vw', height: '2.0833vw'}}/>
                         <OtherUserName>other user name</OtherUserName>
-                        <ChatNotify src ={dot} alert="신고하기"/>
+                        <ChatNotify src ={dot} alert="신고하기" onClick={handleNotify}/>
                     </OtherUserInfo>
                     <OtherUserText>지정헌혈 요청글 채팅방입니다.</OtherUserText>
                 </ChatBox>
