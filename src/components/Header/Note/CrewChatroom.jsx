@@ -22,8 +22,6 @@ const NoteElement =styled.div`
     display: flex;
     font-size: 0.7813vw;
     justify-content: center;
-    align-items: center;
-    height: 2.6042vw;
 
 &.crew{
     font-weight: 700;
