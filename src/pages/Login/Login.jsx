@@ -3,6 +3,7 @@ import styled from "styled-components";
 import colors from "../../styles/color";
 import {Link} from "react-router-dom";
 import alert from "../../assets/images/alert-circle 1.png";
+import axios from 'axios';
 
 const Container = styled.div`
     display: flex;
@@ -136,6 +137,17 @@ const FindP= styled.p`
 
 
 const Login = () =>{
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post('https://bloodtrail.site/auth/login', {
+                email: inputValue.userId,
+                password: inputValue.userPassword
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error: ', error);
+        }
+    };
 
     const [inputValue, setInputValue] = useState({
         userId: '',
@@ -170,7 +182,7 @@ const Login = () =>{
                                 if (inputValue.userId===''&& inputValue.userPassword===''){
                                     return()};
                             }}> */}
-                            <LoginButton><input className="login" type="submit" value="로그인"/></LoginButton>
+                            <LoginButton onClick={handleSubmit}><input className="login" type="submit" value="로그인"/></LoginButton>
                         </InputBox>
                         
                         <FindContainer>
