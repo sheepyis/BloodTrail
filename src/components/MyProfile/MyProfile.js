@@ -24,6 +24,9 @@ const ProfileBox = styled.div`
 const MyProfileP = styled.p`
     font-size: 0.9vw;
     color: ${colors.black};
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `
 
 const BloodBox = styled.div`
@@ -85,7 +88,7 @@ const MyProfile = () => {
         <MyProfileContainer>
             <div className="left" style={{width: "50%"}}>
                 <ProfileBox>
-                    <div className="Left" style={{display: "flex", flexDirection: "column", justifyContent: "center", gap: "0.5vw", width: "50%"}}>
+                    <div className="Left" style={{display: "flex", flexDirection: "column", justifyContent: "center", gap: "0.8vw", width: "50%"}}>
                         <div style={{display: "flex", alignItems: "center", gap: "0.7vw", }}>
                             <img src={MyProfileImage} alt="profile" style={{width: "3vw", height: "3vw"}}/>
                             <div className="detail1" style={{display: "flex", flexDirection: "column", gap: "0.5vw"}}>
@@ -97,7 +100,7 @@ const MyProfile = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="detail">
+                        <div className="detail" style={{display: "flex", flexDirection: "column", gap: "0.3vw"}}>
                             <Box>
                                 <MyProfileP style={{fontWeight: "600", fontSize: "0.75vw", color: colors.crewGray2}}>Email</MyProfileP>
                                 <MyProfileP style={{fontWeight: "500", fontSize: "0.75vw", color: colors.crewGray2}}>{userData ? userData.email : "Loading..."}</MyProfileP>
@@ -110,7 +113,7 @@ const MyProfile = () => {
                     </div>
                     <div style={{display: "flex", justifyContent: "space-between", flexDirection: "column", alignItems: "center", width: "50%", height: "100%", border: "none", borderRadius: "0.25vw", padding: "0.5vw", background: "#FFE7E7"}}>
                         <MyProfileP style={{fontWeight: "500"}}>Point</MyProfileP>
-                        <PointBox>{userData ? userData.point : "Loading..."}점</PointBox>
+                        <PointBox>{userData ? userData.point : "0"}점</PointBox>
                     </div>
                 </ProfileBox>
             </div>
@@ -120,13 +123,13 @@ const MyProfile = () => {
                         <MyProfileP style={{fontSize: "0.8vw", fontWeight: "bold"}}>나의 헌혈 횟수</MyProfileP>
                         <div className="detail3" style={{display: "flex", gap: "0.5vw", marginTop: "1.4vw"}}>
                             <BloodBox>
-                                <MyProfileP style={{fontSize: "0.75vw"}}>전혈 {userData ? userData.whole : "Loading..."} 회</MyProfileP>
+                                <MyProfileP style={{fontSize: "0.75vw"}}>전혈 {userData ? userData.whole : "0"} 회</MyProfileP>
                             </BloodBox>
                             <BloodBox>
-                                <MyProfileP style={{fontSize: "0.75vw"}}>혈장 {userData ? userData.plasma : "Loading..."} 회</MyProfileP>
+                                <MyProfileP style={{fontSize: "0.75vw"}}>혈장 {userData ? userData.plasma : "0"} 회</MyProfileP>
                             </BloodBox>
                             <BloodBox>
-                                <MyProfileP style={{fontSize: "0.75vw"}}>혈소판 {userData ? userData.platelet : "Loading..."} 회</MyProfileP>
+                                <MyProfileP style={{fontSize: "0.75vw"}}>혈소판 {userData ? userData.platelet : "0"} 회</MyProfileP>
                             </BloodBox>
                         </div>
                     </div>
