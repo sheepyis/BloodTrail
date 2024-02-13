@@ -138,6 +138,8 @@ const FindP= styled.p`
 
 const Login = () =>{
     const handleSubmit = async () => {
+        console.log(userId);
+        console.log(userPassword);
         try {
             const response = await axios.post('https://bloodtrail.site/auth/login', {
                 email: inputValue.userId,
