@@ -78,24 +78,30 @@ const MyCrew = () => {
     const [myCrewData, setMyCrewData] = useState(null);
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/users/3')
-            .then(response => {
-                setMyCrewData(response.data);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        const token = localStorage.getItem('accessToken');
+        axios.get('https://bloodtrail.site/crew/mycrew', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            setMyCrewData(response.data);
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }, []);
+
 
     return (
         <MyCrewDiv>
             {myCrewData ? (
                 <div className="crewBox" style={{ display: 'flex', gap: "0.65vw", alignItems: 'center'}}>
                     <ProfileImage src={Profile} alt="profile" />
-                    <div className="crewName" style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", width: "85%"}}>
-                        <MyCrewP>{myCrewData.name}</MyCrewP>
-                        <MyCrewP2>{myCrewData.email}</MyCrewP2>
+                    <div className="crewName" style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", width: "85%", gap: "0.3vw"}}>
+                        <MyCrewP>{myCrewData.result.crew_name}</MyCrewP>
+                        <MyCrewP2>{myCrewData.result.description}</MyCrewP2>
                     </div>
                 </div>
             ) : (
