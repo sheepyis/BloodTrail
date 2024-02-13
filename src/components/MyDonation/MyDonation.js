@@ -242,25 +242,35 @@ const MyDonation = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', selectedImage);
+    // fileInputRef.current.files[0]을 사용하여 선택된 파일에 접근
+    const file = fileInputRef.current.files[0];
 
-    try {
-      const response = await fetch('https://api.ocrservice.com/scan', {
-        method: 'POST',
-        body: formData,
-      });
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-      } else {
-        console.error('OCR 스캔 실패:', response.statusText);
-        alert('헌혈증서 스캔에 실패했습니다.');
+      // 로컬 스토리지에서 액세스 토큰을 가져옴
+      const accessToken = localStorage.getItem('accessToken');
+
+      try {
+        const response = await fetch('https://bloodtrail.site/history/image', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            // Authorization 헤더에 액세스 토큰을 추가
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          // 성공적으로 응답을 받았을 때의 처리를 추가합니다.
+        }
+      } catch (error) {
+        console.error('스캔 중 오류 발생:', error);
+        alert('스캔 중 문제가 발생했습니다.');
       }
-    } catch (error) {
-      console.error('스캔 중 오류 발생:', error);
-      alert('스캔 중 문제가 발생했습니다.');
     }
   };
 
@@ -371,7 +381,9 @@ const MyDonation = () => {
             </ScanContainer>
             <ButtonContainer>
               <ScanButton onClick={handleRescan}>다시 스캔하기</ScanButton>
-              <ScanButton primary>헌혈 증서 등록하기</ScanButton>
+              <ScanButton primary onClick={handleUploadAndScan}>
+                헌혈 증서 등록하기
+              </ScanButton>
             </ButtonContainer>
           </ModalContent>
         </ModalBackground>
