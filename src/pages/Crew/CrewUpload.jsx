@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
 import { NavLink } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputCrewUpload from "../../components/Input/input-crewupload";
 import InputCrewUpload2 from "../../components/Input/input-crewupload2";
 import axios from "axios";
@@ -68,21 +68,28 @@ const Upload = styled.button`
 
 
 const CrewUpload = () => {
-    const [crewName, setCrewName] = useState("");
-    const [targetParticipationRate, setTargetParticipationRate] = useState("");
-    const [targetPoints, setTargetPoints] = useState("");
+    const [name, setCrewName] = useState("");
+    const [goal_point, setTargetParticipationRate] = useState("");
+    const [goal_rate, setTargetPoints] = useState("");
     const [description, setDescription] = useState("");
-    const [isNameAvailable, setIsNameAvailable] = useState(false);
+    const [isNameAvailable, setIsNameAvailable] = useState(false); 
+
+    const [accessToken, setAccessToken] = useState("");
+
+    useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        setAccessToken(token);
+    }, []);
 
     const handleCrewNameChange = (name) => {
         setCrewName(name);
         console.log("크루 이름: ", name);
     };
 
-    const handleNameAvailabilityChange = (availability) => {
+    const handleAvailabilityChange = (availability) => {
         setIsNameAvailable(availability);
-        console.log("사용 가능 여부: ", availability);
     };
+
 
     const handleTargetParticipationRateChange = (value) => {
         setTargetParticipationRate(value);
@@ -99,21 +106,29 @@ const CrewUpload = () => {
 
     const handleSubmit = () => {
         const formData = {
-            crewName,
-            targetParticipationRate,
-            targetPoints,
+            name,
+            goal_point,
+            goal_rate,
             description
         };
 
-        axios.post("https://jsonplaceholder.typicode.com/posts", formData)
+        const config = {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
+          };
+        
+          axios
+            .post("https://bloodtrail.site/crew", formData, config)
             .then((response) => {
-                console.log("Success", formData);
-                window.location.href = "/crew";
+              console.log("Success", formData);
+              //window.location.href = "/crew";
+              console.log("크루 등록 완료");
             })
             .catch((error) => {
-                console.error("Error:", error);
+              console.error("Error:", error);
             });
-    };
+        };
 
     return (
         <CrewContainer>
@@ -151,7 +166,7 @@ const CrewUpload = () => {
                             type="text"
                             placeholder="크루 이름을 입력하세요."
                             onNameChange={handleCrewNameChange}
-                            onAvailabilityChange={handleNameAvailabilityChange} 
+                            onAvailabilityChange={handleAvailabilityChange}
                         />
 
                         <CrewP style={{ fontWeight: "700", color: colors.black, marginTop: "2vw" }}>목표 헌혈 참여율</CrewP>
@@ -188,7 +203,7 @@ const CrewUpload = () => {
                 <div className="crewBar" style={{ width: "100%", height: "0.1vw", border: "none", backgroundColor: colors.lightGray, margin: "2vw 0" }} />
 
                 <div className="uploadBox" style={{ width: "100%", display: "flex", justifyContent: "center", margin: "2vw 0" }}>
-                    <Upload disabled={!crewName || !isNameAvailable || !targetParticipationRate || !targetPoints || !description} onClick={handleSubmit}>크루 등록하기</Upload>
+                    <Upload disabled={!setIsNameAvailable || !goal_point || !goal_rate || !description} onClick={handleSubmit}>크루 등록하기</Upload>
                 </div>
             </div>
         </CrewContainer>
