@@ -368,7 +368,10 @@ const Signup = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleEmail = (email) => {
-    setSelectedEmail(email);
+    setInputValue((prevState) => ({
+      ...prevState,
+      userEmail: prevState.userEmail + email
+    }));
     setIsVisible(false);
   };
 
@@ -523,7 +526,7 @@ const Signup = () => {
             </PasswordTitle>
             <input
               className="password"
-              type="text"
+              type="password"
               placeholder="비밀번호를 선택해주세요"
               password="userPassword"
               value={inputValue.userPassword}
