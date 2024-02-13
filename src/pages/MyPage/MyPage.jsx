@@ -5,6 +5,8 @@ import MyProfile from "../../components/MyProfile/MyProfile";
 import MyDonation from "../../components/MyDonation/MyDonation";
 import MyCrew from "../../components/MyCrew/MyCrew";
 import Credit from "../../components/Credit/Credit";
+import MyUpload from "../../components/MyUpload/MyUpload";
+import ListMyUpload from "../../components/MyUpload/list-myupload";
 
 const MyPageContainer = styled.div`
     width: 100%;
@@ -83,7 +85,8 @@ const MyPage = () => {
 
                 <div className="upload" style={{width: "100%", marginTop: "2vw"}}>
                     <MyPageP style={{fontSize: "0.8vw", fontWeight: "bold", color: colors.black, marginBottom: "1vw"}}>내가 쓴 글</MyPageP>
-                    
+                    <MyUpload />
+                    <ListMyUpload />
                 </div>
 
                 <div className="mycrew" style={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "2vw"}}>
