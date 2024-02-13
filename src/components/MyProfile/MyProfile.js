@@ -63,45 +63,45 @@ const MyProfile = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    // 로컬 스토리지에서 access와 refresh 토큰을 가져옴
     const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = localStorage.getItem('refreshToken');
-
-    // access와 refresh 토큰을 콘솔에 출력
-    console.log('Access Token:', accessToken);
-    console.log('Refresh Token:', refreshToken);
-
     const config = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     };
-
+  
     axios
       .get('https://bloodtrail.site/auth/profile', config)
       .then((response) => {
         if (response.data) {
           console.log(response);
-          const user = response.data;
+          const user = response.data.result;
+  
+          // 날짜 형식 변환
+          const formattedBirth = new Date(user.birth).toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+          }).replace(/\./g, '').split(' ').join('.');
+  
           setUserData({
-            name: user.result.nickname,
-            username: user.result.name,
-            birth: user.result.birth,
-            email: user.result.email,
-            phone: user.result.phone,
-            point: user.result.point,
-
-            whole: user.result.id,
-            plasma: user.result.id,
-            platelet: user.result.id,
-            _id: user.result.id,
+            name: user.nickname,
+            username: user.name,
+            birth: formattedBirth,
+            email: user.email,
+            phone: user.phone,
+            point: user.point,
+            whole: user.id,
+            plasma: user.id,
+            platelet: user.id,
+            _id: user._id,
           });
         }
       })
       .catch((error) => {
         console.error('Error: ', error);
       });
-  }, []);
+  }, []);  
 
   return (
     <MyProfileContainer>

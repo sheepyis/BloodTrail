@@ -149,7 +149,7 @@ const Login = () => {
 
       localStorage.setItem('accessToken', response.data.result.accessToken);
       localStorage.setItem('refreshToken', response.data.result.refreshToken);
-      //   window.location.href = '/';
+      window.location.href = '/';
     } catch (error) {
       console.error('Error: ', error);
     }
