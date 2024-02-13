@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import group208 from "../../assets/images/Group 208.png";
 import group209 from "../../assets/images/Group 209.png";
 import ArrowDown from '../../assets/images/arrow-down.png';
+import axios from "axios";
 
 const Container = styled.div`
     display: flex;
@@ -382,6 +383,34 @@ const Signup = () =>
         userPhoneNumber: '',
         userEmail: '',
       });
+    
+  
+    const handleInputChange = (e) => {
+        setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(
+                "https://bloodtrail.site/auth/register",
+                {
+                    name: userName,
+                    nickname: userNickname,
+                    birth: userBirth,
+                    password: userPassword,
+                    phone: userPhoneNumber,
+                    email: userEmail,
+                }
+            );
+            console.log(response.data);
+
+            // // 회원가입 성공 시 localStorage에 닉네임 저장
+        } catch (error) {
+            console.error("에러: ", error);
+            // 회원가입 실패 처리
+        }
+    };
 
     const { userName,userNickname, userBirth,userPassword,userPhoneNumber,userEmail, } = inputValue;
 
@@ -456,9 +485,9 @@ const Signup = () =>
                     </VerificationBox>
                 </JoinBox>
 
-                <NextButton>
+                <NextButton onClick={handleSubmit}>
                     <Link to="./finish">
-                    <input className='nextButton' type="submit" value="회원가입"/>
+                    <input className='nextButton' type="submit" value="회원가입" />
                     </Link>
                 </NextButton>
 
