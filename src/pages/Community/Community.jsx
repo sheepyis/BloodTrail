@@ -118,17 +118,17 @@ const DropdownImg = styled.img`
 
 const BoardContainer = styled.div`
   width: 100%;
-  padding-left: 1.5vw;
 `;
 
 const CardContainer = styled.div`
-  padding-top: 2.6vw;
-  padding-left: 0.7vw;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(auto, 1fr));
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5vw;
+width: 80%;
+padding-top: 2.6vw;
+padding-left: 1.8vw;
+display: grid; 
+grid-template-columns: repeat(3, minmax(auto, 1fr));
+align-items: center; 
+justify-content: space-between;
+gap: 1.5vw;
 `;
 
 const Card = styled.div`
