@@ -38,29 +38,34 @@ const CheckButton = styled.button`
   color: ${colors.mainRed};
 `;
 
-const InputCrewUpload2 = ({ type, placeholder, onNameChange, onAvailabilityChange, ...rest }) => {
+const InputCrewUpload2 = ({ type, placeholder, onNameChange, onAvailabilityChange }) => {
   const [inputValue, setInputValue] = useState("");
-  const [available, setAvailable] = useState(false);
-  const [serverData, setServerData] = useState([]);
   const [checked, setChecked] = useState(false);
-  const [isNameAvailable, setIsNameAvailable] = useState(false);
+  const [available, setAvailable] = useState(false);
 
-const handleCheckDuplicate = () => {
+  const handleCheckDuplicate = () => {
+    const token = localStorage.getItem("accessToken");
     axios
-      .get("https://jsonplaceholder.typicode.com/users")
+      .post(
+        "https://bloodtrail.site/crew/check-name",
+        { name: inputValue },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
       .then((response) => {
         console.log(response.data);
-        setServerData(response.data);
-        const isAvailable = checkAvailability(response.data);
-        setAvailable(isAvailable);
-        setChecked(true);
-        
-        if (isAvailable) {
-            onNameChange(inputValue);
-            onAvailabilityChange(true);
+        if (response.data.isSuccess === true) {
+          setAvailable(true);
+          onAvailabilityChange(true);
+          onNameChange(inputValue);
         } else {
-            onAvailabilityChange(false);
+          setAvailable(false);
+          onAvailabilityChange(false);
         }
+        setChecked(true);
       })
       .catch((error) => {
         console.error("Error: ", error);
@@ -72,14 +77,10 @@ const handleCheckDuplicate = () => {
     setChecked(false);
   };
 
-  const checkAvailability = (data) => {
-    return !data.some((item) => item.name === inputValue);
-  };
-
   return (
     <>
         <InputContainer>
-        <InputUpload2 type={type} placeholder={placeholder} onChange={handleChange} {...rest} />
+        <InputUpload2 type={type} placeholder={placeholder} onChange={handleChange} />
         <CheckButton onClick={handleCheckDuplicate}>중복확인</CheckButton>
         </InputContainer>
         {checked && inputValue && !available && <span style={{ color: colors.mainRed, position: "absolute", fontWeight: "700", fontSize: "0.6vw", marginTop: "0.2vw" }}>이름이 이미 존재합니다.</span>}
