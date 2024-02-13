@@ -357,6 +357,63 @@ const RowContainer = styled.div`
 `;
 
 const BloodWrite = () => {
+  const [imageFile, setImageFile] = useState(null);
+  const [registrationNumber, setRegistrationNumber] = useState('');
+  const [bloodProduct, setBloodProduct] = useState('');
+  const [requireDay, setRequireDay] = useState('');
+  const [requirePlace, setRequirePlace] = useState('');
+  const [bloodType, setBloodType] = useState('');
+
+  const handleRegistrationNumberChange = (e) =>
+    setRegistrationNumber(e.target.value);
+  const handleBloodProductChange = (e) => setBloodProduct(e.target.value);
+  const handleRequireDayChange = (e) => setRequireDay(e.target.value);
+  const handleRequirePlaceChange = (e) => setRequirePlace(e.target.value);
+  const handleBloodTypeChange = (e) => setBloodType(e.target.value);
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append(
+      'title',
+      document.querySelector('input[type="text"]').value
+    );
+    formData.append('content', contentEditableRef.current.innerText);
+    formData.append('registrationNumber', registrationNumber);
+    formData.append('bloodProduct', bloodProduct);
+    formData.append('requireDay', requireDay);
+    formData.append('requirePlace', requirePlace);
+    formData.append('bloodType', bloodType);
+
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
+    try {
+      const response = await fetch('여기에_백엔드_API_엔드포인트_입력', {
+        method: 'POST',
+        body: formData,
+        // headers: {
+        //   'Authorization': 'Bearer 여기에_토큰_입력'
+        // },
+      });
+
+      if (response.ok) {
+        // 요청이 성공적으로 처리됐을 때의 로직
+        const data = await response.json(); // JSON 응답 처리
+        console.log('성공:', data);
+        alert('글이 성공적으로 등록되었습니다.');
+      } else {
+        // 서버 에러 처리
+        console.error('서버 에러:', response.statusText);
+        alert('글 등록에 실패했습니다.');
+      }
+    } catch (error) {
+      // 네트워크 에러 처리
+      console.error('네트워크 에러:', error);
+      alert('글 등록 중 문제가 발생했습니다.');
+    }
+  };
+
   const [inputCompleted, setInputCompleted] = useState({
     registrationNumber: false,
     bloodProduct: false,

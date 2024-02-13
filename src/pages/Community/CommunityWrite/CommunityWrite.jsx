@@ -282,6 +282,8 @@ const Enroll = styled.button`
 `;
 
 const CommunityWrite = () => {
+  const [imageFile, setImageFile] = useState(null);
+
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
@@ -295,11 +297,42 @@ const CommunityWrite = () => {
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file && file.type.substr(0, 5) === 'image') {
+      setImageFile(file);
       const img = document.createElement('img');
       img.src = URL.createObjectURL(file);
       img.style.maxWidth = '50%';
       contentEditableRef.current.appendChild(img);
     }
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append(
+      'title',
+      document.querySelector('input[type="text"]').value
+    ); //제목입력값
+    formData.append('content', contentEditableRef.current.innerText);
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
+    // try{
+    //   const response = await fetch('',{
+    //     method:'POST',
+    //     body:formData,
+    //   })
+    // }
+
+    //   if (response.ok) {
+    //     // 성공 처리 로직
+    //     alert('글이 성공적으로 등록되었습니다.');
+    //   } else {
+    //     // 오류 처리
+    //     alert('글 등록에 실패했습니다.');
+    //   }
+    // } catch (error) {
+    //   console.error('서버와의 통신 중 오류가 발생했습니다.', error);
+    // }
   };
 
   const [inputCompleted, setInputCompleted] = useState({
@@ -431,8 +464,16 @@ const CommunityWrite = () => {
           />
         </BlankBox>
 
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleImageChange}
+          style={{ display: 'none' }}
+          accept="image/*"
+        />
+
         <EnrollContainer>
-          <Enroll>글 등록하기</Enroll>
+          <Enroll onClick={handleSubmit}>글 등록하기</Enroll>
         </EnrollContainer>
       </div>
     </CrewContainer>

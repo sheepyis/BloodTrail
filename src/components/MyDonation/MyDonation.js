@@ -236,6 +236,34 @@ const MyDonation = () => {
     { label: '헌혈 일자', value: '0000년00월 00일' },
   ];
 
+  const handleUploadAndScan = async () => {
+    if (!selectedImage) {
+      alert('먼저 이미지를 선택해주세요.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', selectedImage);
+
+    try {
+      const response = await fetch('https://api.ocrservice.com/scan', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+      } else {
+        console.error('OCR 스캔 실패:', response.statusText);
+        alert('헌혈증서 스캔에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('스캔 중 오류 발생:', error);
+      alert('스캔 중 문제가 발생했습니다.');
+    }
+  };
+
   return (
     <>
       <DonationContainer>
