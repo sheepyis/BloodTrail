@@ -432,7 +432,7 @@ const Signup = () => {
         userData
       );
       console.log(response.data);
-      window.location.href = "/finish";
+      window.location.href = "/signupService/signup/finish";
     } catch (error) {
       console.error('에러: ', error);
     }
@@ -449,7 +449,6 @@ const Signup = () => {
       console.log(response.data);
     } catch (error) {
       console.error('에러: ', error);
-      // 회원가입 실패 처리
     }
   };
 
