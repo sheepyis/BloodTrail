@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import colors from "../../styles/color";
-import SortBoxYes from '../../assets/images/sortbox_yes.png';
+// import SortBoxYes from '../../assets/images/sortbox_yes.png';
 import ArrowDown from '../../assets/images/arrow-down.png';
 import dot2 from "../../assets/images/dot2.png";
 import arrow_12px2 from "../../assets/images/arrow_12px2.png";
 import CardTmp from '../../components/Card/Card';
 import { Link } from "react-router-dom";
-import BoardDropdown from "./BoardDropdown/BoardDropdown";
+// import BoardDropdown from "./BoardDropdown/BoardDropdown";
 import axios from "axios";
-
 
 const Container = styled.div`
     display: flex;
@@ -74,7 +73,21 @@ const SortDiv = styled.div`
     border: 0.05vw solid ${colors.lightGray};
     cursor: pointer;
 `;
-
+const BloodSortBox = styled.div`
+    width: 11.6vw;
+    min-height: 8.3vw;
+    padding: 0.4vw 0;
+    margin-right: 12.6563vw;
+    border: 0.05vw solid ${colors.lightGray};
+    position: absolute;
+    z-index: 1;
+    background-color: ${colors.white};
+    right: 0;
+    margin-top: 2.7vw;
+    display: ${({ show }) => (show ? "flex" : "none")};
+    flex-direction: column;
+    justify-content: space-between;
+`
 const SortBox = styled.div`
     width: 11.6vw;
     min-height: 8.3vw;
@@ -90,7 +103,26 @@ const SortBox = styled.div`
     justify-content: space-between;
 `
 
-const HoverDiv = styled.div`
+const HoverDiv1 = styled.div`
+    width: 100%;
+    height: 2.5vw;
+    font-size: 0.75vw;
+    font-weight: 500;
+    color: ${colors.crewGray2};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5vw;
+
+    &:hover {
+        font-size: 0.75vw;
+        font-weight: 600;
+        color: ${colors.crewGray};
+        background-color: ${colors.lightGray};
+    }
+`
+
+const HoverDiv2 = styled.div`
     width: 100%;
     height: 2.5vw;
     font-size: 0.75vw;
@@ -119,7 +151,7 @@ const BloodContainer = styled.div`
     align-items: center;
     border-bottom: 0.05vw solid ${colors.crewGray3};
 `
-const BloodTap =styled.div`
+const BloodTap = styled.div`
     display: flex;
     width: 7.8125vw;
     padding: 0.5208vw 1.3542vw;
@@ -149,14 +181,16 @@ const BloodTap =styled.div`
 `
 
 const CardContainer =styled.div`   
+    width: 80%;
     padding-top: 2.6vw;
-    padding-left: 0.7vw;
+    padding-left: 1.8vw;
     display: grid; 
     grid-template-columns: repeat(3, minmax(auto, 1fr));
     align-items: center; 
     justify-content: space-between;
     gap: 1.5vw;
 `
+
 const Card = styled.div`
     width: 19.7917vw;
     height: 19.7917vw;
@@ -165,7 +199,6 @@ const Card = styled.div`
     border: 0.0521vw solid var(--Gray-Gray-200, #EEE);
     background: var(--black-white-white-1000, #FFF);
 `;
-
 
 const WritePostContainer= styled.div`
     width: 100%;
@@ -269,12 +302,15 @@ const PagnationImg2 = styled.img`
     margin-left: 1.2500vw;
 `
 
-
 const Blood = () => {
 
     const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
 
     const [selectBloodType,setBloodType] =useState("A+");
+
+    const [selectBloodSort, setSelectedBloodSort] = useState("WB");
+    const [isSortBloodVisible, setIsSortBloodVisible]= useState(false);
+
     const [selectedSort, setSelectedSort] = useState("신규순");
     const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
 
@@ -282,10 +318,15 @@ const Blood = () => {
         setBloodType(bloodType); // bloodtype 선택하면 게시물, 타이틀 바뀌도록
     }
 
+    const handleSortBlood=(SortBloodType) =>{
+        setSelectedBloodSort(SortBloodType);
+        setIsSortBloodVisible(false);
+    }
+
     const handleSortSelection = (sortType) => {
       setSelectedSort(sortType);
       setIsSortBoxVisible(false);
-  };
+    };
 
     const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
@@ -337,17 +378,29 @@ const Blood = () => {
         <RightMiddle>
             <BloodP style={{ color: colors.crewGray3, marginTop: "0.3vw" }}>{selectBloodType} 요청 글</BloodP>
             <SortContainer>
-                <img src={SortBoxYes} alt="sortBox" style={{ width: '1.2vw', height: '1.2vw' }}/>
+                <SortDiv onClick={() => setIsSortBloodVisible(!isSortBloodVisible)}>
+                    <BloodP style={{ fontSize: '0.75vw', color: colors.crewGray2 }}>{selectBloodSort}</BloodP> 
+                    <img src={ArrowDown} alt="arrow-down" style={{ width: '1.2vw', height: '1.2vw' }}/>
+                </SortDiv>
+
                 <SortDiv onClick={() => setIsSortBoxVisible(!isSortBoxVisible)}>
                     <BloodP style={{ fontSize: '0.75vw', color: colors.crewGray2 }}>{selectedSort}</BloodP>
                     <img src={ArrowDown} alt="arrow-down" style={{ width: '1.2vw', height: '1.2vw' }}/>
                 </SortDiv>
             </SortContainer>
+             {selectBloodSort && (
+                <BloodSortBox show={isSortBloodVisible}>
+                    <HoverDiv1 onClick={() => handleSortBlood("RBC")}>RBC</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("F-RBC")}>F-RBC</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("W-RBC")}>W-RBC</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("PLT")}>PLT</HoverDiv1>
+                </BloodSortBox>
+            )}
             {selectedSort && (
                 <SortBox show={isSortBoxVisible}>
-                    <HoverDiv onClick={() => handleSortSelection("신규순")}>신규순</HoverDiv>
-                    <HoverDiv onClick={() => handleSortSelection("공감순")}>공감순</HoverDiv>
-                    <HoverDiv onClick={() => handleSortSelection("마감기간순")}>마감기간순</HoverDiv>
+                    <HoverDiv2 onClick={() => handleSortSelection("신규순")}>신규순</HoverDiv2>
+                    <HoverDiv2 onClick={() => handleSortSelection("공감순")}>공감순</HoverDiv2>
+                    <HoverDiv2 onClick={() => handleSortSelection("마감기간순")}>마감기간순</HoverDiv2>
                 </SortBox>
             )}
         </RightMiddle>
@@ -368,15 +421,15 @@ const Blood = () => {
 
             <CardContainer>
               {currentPosts.map((post) => (
-                      <CardTmp
-                        cardType = {`type${post.id/4 % 2 + 1}`}
-                        selectBloodType="B-"
-                        key={post.id}
-                        userId = {post.userId}
-                        title={post.title}
-                        body={post.body}
-                      />
-                  ))}
+                  <CardTmp
+                    cardType = {`type${post.id/4 % 2 + 1}`}
+                    selectBloodType="B-"
+                    key={post.id}
+                    userId = {post.userId}
+                    title={post.title}
+                    body={post.body}
+                  />
+              ))}
               </CardContainer>
 
             <WritePostContainer>
@@ -405,5 +458,7 @@ const Blood = () => {
     )
 }
 
+
 export default Blood;
+
 
