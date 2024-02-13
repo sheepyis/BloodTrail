@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import MyProfile from "../../components/MyProfile/MyProfile";
 import MyDonation from "../../components/MyDonation/MyDonation";
 import MyCrew from "../../components/MyCrew/MyCrew";
+import Credit from "../../components/Credit/Credit";
 
 const MyPageContainer = styled.div`
     width: 100%;
@@ -67,6 +68,8 @@ const MyPage = () => {
                     <MyPageP3>내 프로필</MyPageP3>
                 </RightTop>
 
+                <Credit />
+                
                 <div className="profile" style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", margin: "2vw 0 1vw 0"}}>
                     <MyPageP style={{fontSize: "1.2vw", fontWeight: "bold"}}>내 프로필</MyPageP>
                     <EditButton>정보 수정하기</EditButton>
