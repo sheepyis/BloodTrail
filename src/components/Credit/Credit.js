@@ -1,5 +1,8 @@
+// Credit.js
+import React, { useState } from "react";
 import styled from "styled-components";
 import colors from "../../styles/color";
+import CreditModal from "./CreditModal";
 
 const CreditContainer = styled.div`
     width: 100%;
@@ -38,15 +41,19 @@ const CreditButton = styled.button`
 `
 
 const Credit = () => {
+    const [showModal, setShowModal] = useState(false);
+
     return (
         <CreditContainer>
             <div className="CreditPDiv" style={{display: "flex", flexDirection: "column", gap: "0.15vw"}}>
                 <CreditP>프리미엄 결제하기</CreditP>
                 <CreditP style={{fontSize: "0.6vw", fontWeight: "500", color: colors.crewGray2}}>블러드 트레일 프리미엄을 결제하고 더 많은 혜택을 받아보세요!</CreditP>
             </div>
-            <CreditButton>결제하기</CreditButton>
+            <CreditButton onClick={() => setShowModal(true)}>결제하기</CreditButton>
+
+            {showModal && <CreditModal onClose={() => setShowModal(false)} />}
         </CreditContainer>
-    )
+    );
 }
 
 export default Credit;
