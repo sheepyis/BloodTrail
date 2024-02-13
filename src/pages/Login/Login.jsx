@@ -146,6 +146,7 @@ const Login = () =>{
                 password: inputValue.userPassword
             });
             console.log(response.data);
+            window.location.href = "/";
         } catch (error) {
             console.error('Error: ', error);
         }
