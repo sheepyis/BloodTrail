@@ -117,7 +117,7 @@ const MyCrew = () => {
             }}
           >
             <MyCrewP>{myCrewData.crew_name}</MyCrewP> {/* 크루 이름 표시 */}
-            <MyCrewP2>{myCrewData.email}</MyCrewP2>
+            <MyCrewP2>{myCrewData.description}</MyCrewP2>
           </div>
         </div>
       ) : (
