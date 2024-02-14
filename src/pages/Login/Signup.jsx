@@ -364,8 +364,8 @@ const NextButton = styled.div`
   }
 `;
 const ErrorMessage = styled.div`
-  height: 0.1w; // 오류 메시지 공간 확보
-  color: #E95458; // 오류 메시지 색상
+  height: 0.1w;
+  color: #E95458;
   font-size: 0.7vw;
 `;
 
