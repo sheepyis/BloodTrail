@@ -6,6 +6,7 @@ import group208 from '../../assets/images/Group 208.png';
 import group209 from '../../assets/images/Group 209.png';
 import ArrowDown from '../../assets/images/arrow-down.png';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -362,10 +363,21 @@ const NextButton = styled.div`
     background: var(--Primary-Red-200, #fff6f7);
   }
 `;
+const ErrorMessage = styled.div`
+  height: 0.1w; // 오류 메시지 공간 확보
+  color: #E95458; // 오류 메시지 색상
+  font-size: 0.7vw;
+`;
 
 const Signup = () => {
   const [selectedEmail, setSelectedEmail] = useState('email.com');
   const [isVisible, setIsVisible] = useState(false);
+  const [emailMessage, setEmailMessage] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [nicknameError, setNicknameError] = useState('');
+  const [birthError, setBirthError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
 
   const handleEmail = (email) => {
     setInputValue((prevState) => ({
@@ -410,6 +422,44 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setNameError('');
+    setNicknameError('');
+    setBirthError('');
+    setPasswordError('');
+    setPhoneError('');
+    setEmailMessage('');
+
+    let isValid = true;
+    if (!inputValue.userName.trim()) {
+      setNameError('이름을 입력해주세요.');
+      isValid = false;
+    }
+    if (!inputValue.userNickname.trim()) {
+      setNicknameError('닉네임을 입력해주세요.');
+      isValid = false;
+    }
+    if (!inputValue.userBirth.trim()) {
+      setBirthError('생년월일을 입력해주세요.');
+      isValid = false;
+    }
+    if (!inputValue.userPassword.trim()) {
+      setPasswordError('비밀번호를 입력해주세요.');
+      isValid = false;
+    }
+    if (!inputValue.userPhoneNumber.trim()) {
+      setPhoneError('전화번호를 입력해주세요.');
+      isValid = false;
+    }
+    if (!inputValue.userEmail.trim()) {
+      setEmailMessage('이메일을 입력해주세요.');
+      isValid = false;
+    }
+  
+    if (!isValid) {
+      return; // 입력값이 유효하지 않으면 여기서 함수 종료
+    }
+  
+
     try {
       const {
         userName,
@@ -431,8 +481,34 @@ const Signup = () => {
         'https://bloodtrail.site/auth/register',
         userData
       );
+
       console.log(response.data);
-      window.location.href = "/signupService/signup/finish";
+        
+      if (response.data.isSuccess) {
+        window.location.href = "/signupService/signup/finish";
+      }
+      else {
+        switch (response.data.message) {
+          case "올바른 이메일 주소를 입력해주세요.":
+            setEmailMessage("올바른 이메일 주소를 입력해주세요.");
+            break;
+          case "이미 존재하는 이메일입니다.":
+            setEmailMessage("이미 존재하는 이메일입니다.");
+            break;
+          case "이미 존재하는 닉네임입니다.":
+            setNicknameError("이미 존재하는 닉네임입니다.");
+            break;
+          case "올바른 핸드폰 번호를 입력해주세요.":
+            setPhoneError("올바른 핸드폰 번호를 입력해주세요.");
+            break;
+          case "올바른 비밀번호 형식을 지켜주세요.":
+            setPasswordError("올바른 비밀번호 형식을 지켜주세요.");
+            break;
+          default:
+            setEmailMessage("서버 에러, 관리자에게 문의 바랍니다");
+            break;
+        }
+      }
     } catch (error) {
       console.error('에러: ', error);
     }
@@ -445,10 +521,17 @@ const Signup = () => {
         'https://bloodtrail.site/auth/check-email',
         { email: userEmail }
       );
+      if (response.data.isSuccess){
+        setEmailMessage('이메일 인증 완료');
+      }
+      else {
+        setEmailMessage('이메일 인증 실패');
+      }
       console.log(inputValue);
       console.log(response.data);
     } catch (error) {
       console.error('에러: ', error);
+      setEmailMessage('이메일 인증 중 오류가 발생했습니다.')
     }
   };
 
@@ -495,6 +578,7 @@ const Signup = () => {
               value={inputValue.userName}
               onChange={handleInputChange}
             />
+          <ErrorMessage>{nameError}</ErrorMessage>
           </Name>
           <Nickname>
             닉네임
@@ -506,6 +590,7 @@ const Signup = () => {
               value={inputValue.userNickname}
               onChange={handleInputChange2}
             />
+          <ErrorMessage>{nicknameError}</ErrorMessage>
           </Nickname>
           <Birth>
             생년월일
@@ -517,6 +602,7 @@ const Signup = () => {
               value={inputValue.userBirth}
               onChange={handleInputChange3}
             />
+            <ErrorMessage>{birthError}</ErrorMessage>
           </Birth>
           <Password>
             <PasswordTitle>
@@ -531,6 +617,7 @@ const Signup = () => {
               value={inputValue.userPassword}
               onChange={handleInputChange4}
             />
+            <ErrorMessage>{passwordError}</ErrorMessage>
           </Password>
           <PhoneNumber>
             전화번호
@@ -542,6 +629,7 @@ const Signup = () => {
               value={inputValue.userPhoneNumber}
               onChange={handleInputChange5}
             />
+            <ErrorMessage>{phoneError}</ErrorMessage>
           </PhoneNumber>
 
           <VerificationBox>
@@ -587,6 +675,7 @@ const Signup = () => {
                 </EmailBox>
               )}{' '}
             </Verification>
+            <ErrorMessage>{emailMessage}</ErrorMessage>
           </VerificationBox>
         </JoinBox>
 
