@@ -69,21 +69,25 @@ const MyProfile = () => {
         Authorization: `Bearer ${accessToken}`,
       },
     };
-  
+
     axios
       .get('https://bloodtrail.site/auth/profile', config)
       .then((response) => {
         if (response.data) {
           console.log(response);
           const user = response.data.result;
-  
+
           // 날짜 형식 변환
-          const formattedBirth = new Date(user.birth).toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-          }).replace(/\./g, '').split(' ').join('.');
-  
+          const formattedBirth = new Date(user.birth)
+            .toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })
+            .replace(/\./g, '')
+            .split(' ')
+            .join('.');
+
           setUserData({
             name: user.nickname,
             username: user.name,
@@ -101,7 +105,7 @@ const MyProfile = () => {
       .catch((error) => {
         console.error('Error: ', error);
       });
-  }, []);  
+  }, []);
 
   return (
     <MyProfileContainer>
