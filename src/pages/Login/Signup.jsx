@@ -572,11 +572,11 @@ const Signup = () => {
               </Email>
               {selectedEmail && (
                 <EmailBox show={isVisible}>
-                  <HoverDiv onClick={() => handleEmail('@email.com')}>
-                    @email.com
+                  <HoverDiv onClick={() => handleEmail('@gmail.com')}>
+                    @gmail.com
                   </HoverDiv>
-                  <HoverDiv onClick={() => handleEmail('@email.com')}>
-                    @email.com
+                  <HoverDiv onClick={() => handleEmail('@naver.com')}>
+                    @naver.com
                   </HoverDiv>
                   <HoverDiv onClick={() => handleEmail('@email.com')}>
                     @email.com
