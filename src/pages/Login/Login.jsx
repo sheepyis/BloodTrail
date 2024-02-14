@@ -133,7 +133,41 @@ const FindP= styled.p`
     font-style: normal;
     font-weight: 500;
     line-height: 150%; 
-    letter-spacing: -0.0187vw;`
+    letter-spacing: -0.0187vw;
+    `
+
+// 리프레시 토큰을 사용하여 액세스 토큰을 갱신하는 함수
+const refreshAccessToken = async () => {
+  try {
+    const accessToken = localStorage.getItem('accessToken'); 
+    const refreshToken = localStorage.getItem('refreshToken');
+
+  if (!refreshToken) {
+    console.log("no refresh!!!");
+    return;
+  }
+
+  console.log(accessToken);
+  console.log(refreshToken);
+
+  const response = await axios.post(
+      'https://bloodtrail.site/auth/regenerate-token',
+      {}, // POST 요청 본문이 필요하지 않은 경우 빈 객체 전달
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'refresh': `Bearer ${refreshToken}`
+        }
+      }
+  );
+
+  console.log("refresh complete!!!!!!!!!!!!!!!!!!!!");
+  console.log(response.data);
+  
+  } catch (error) {
+  console.error('Error refreshing access token: ', error); // 에러 처리
+  }
+};
 
 
 const Login = () =>{
@@ -145,8 +179,24 @@ const Login = () =>{
                 email: inputValue.userId,
                 password: inputValue.userPassword
             });
+            
             console.log(response.data);
-            window.location.href = "/";
+
+            const {accessToken, refreshToken} = response.data.result;
+
+            console.log("printing tokens!!!!!!!!!!!!!!");
+            
+            console.log(accessToken);
+            console.log(refreshToken);
+            
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+
+            await refreshAccessToken();
+
+            console.log("finish");
+
+            //window.location.href = "/";
         } catch (error) {
             console.error('Error: ', error);
         }
