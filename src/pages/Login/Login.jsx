@@ -171,46 +171,56 @@ const refreshAccessToken = async () => {
 
 
 const Login = () =>{
+    const [inputValue, setInputValue] = useState({
+      userId: '',
+      userPassword: '',
+    });
+    const { userId, userPassword } = inputValue;
+    const [alertMessage, setAlertMessage] = useState("");
+
     const handleSubmit = async () => {
         console.log(userId);
         console.log(userPassword);
+        if (!inputValue.userId || !inputValue.userPassword) {
+          setAlertMessage("아이디와 비밀번호를 모두 입력해주세요.");
+          return;
+        }
+
         try {
             const response = await axios.post('https://bloodtrail.site/auth/login', {
                 email: inputValue.userId,
                 password: inputValue.userPassword
             });
-            
+
+            const { message } = response.data;
+            console.log(message);
+
+            if (message==="SUCCESS!"){
+              const {accessToken, refreshToken} = response.data.result;
+              localStorage.setItem('accessToken', accessToken);
+              localStorage.setItem('refreshToken', refreshToken);
+              await refreshAccessToken();
+
+              console.log("Login successful");
+              window.location.href = "/";
+            }
+            else {
+              setAlertMessage(message);
+            }
+      
             console.log(response.data);
 
-            const {accessToken, refreshToken} = response.data.result;
-
-            console.log("printing tokens!!!!!!!!!!!!!!");
-            
-            console.log(accessToken);
-            console.log(refreshToken);
-            
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
-
-            await refreshAccessToken();
-
-            console.log("finish");
-
-            //window.location.href = "/";
         } catch (error) {
             console.error('Error: ', error);
+            setAlertMessage("로그인 처리 중 오류가 발생했습니다.");
         }
     };
 
-    const [inputValue, setInputValue] = useState({
-        userId: '',
-        userPassword: '',
-    });
 
-    const { userId, userPassword } = inputValue;
 
     return (
         <Container>
+          
             <SideBar/>
             <MainConationer>
                 <Breadcrums>
@@ -219,22 +229,21 @@ const Login = () =>{
                     <BreadcrumsP>로그인</BreadcrumsP>
                 </Breadcrums>
                 <Title>로그인</Title>
+                
                 <LoginContainer>
+                  
                     <LoginBox>
                         <InputBox>
                             <input className="id" type="text" placeholder="ID" value={inputValue.userId}
                             onChange={(e)=>setInputValue({...inputValue,userId: e.target.value})}/>
                             <input className="password" type="password" placeholder="PASSWORD" value={inputValue.userPassword}
                             onChange={(e)=>setInputValue({...inputValue,userPassword: e.target.value})}/>
-                            {inputValue.userId===''&& inputValue.userPassword===''&&(
+                             {alertMessage &&(
                                 <Alert>
                                     <img src={alert} alt="alert-circle" style={{ width: '1.2vw', height: '1.2vw' }}></img>
-                                    <AlertP>임시텍스트</AlertP>
-                                </Alert>)}
-                            {/* <LoginButton onClick ={()=>{
-                                if (inputValue.userId===''&& inputValue.userPassword===''){
-                                    return()};
-                            }}> */}
+                                    <AlertP>{alertMessage}</AlertP>
+                                </Alert>
+                             )}
                             <LoginButton onClick={handleSubmit}><input className="login" type="submit" value="로그인"/></LoginButton>
                         </InputBox>
                         
