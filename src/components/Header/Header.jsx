@@ -4,12 +4,12 @@ import { Link, NavLink } from "react-router-dom";
 import add_comment from "../../assets/images/add_comment.png";
 import notification1 from "../../assets/images/notification1.png"
 import person from "../../assets/images/person.png";
-import logo from "../../assets/images/logo.png";
+// import logo from "../../assets/images/logo.png";
 import React, { useState, useEffect, useRef } from "react";
 import Notifications from "./Notifications/Notifications";
 import Note from "./Note/Note";
 import {useMediaQuery} from 'react-responsive';
-
+import logo from "../../assets/images/bloodtrail_logo_red 1.png";
 
 const HeaderContainer = styled.div`
     position: relative;

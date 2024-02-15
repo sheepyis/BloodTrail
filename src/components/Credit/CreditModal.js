@@ -90,6 +90,7 @@ const callback=(response)=> {
         console.log("imp_uid:",imp_uid);
         console.log("merchant_uid:", merchant_uid);
 
+
     } else {
         alert(`결제 실패: ${response.error_msg}`);
         console.log("결제 실패");
