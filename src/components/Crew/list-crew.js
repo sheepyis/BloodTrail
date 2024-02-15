@@ -82,56 +82,80 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    axios
-      .get('https://jsonplaceholder.typicode.com/users')
-      .then((response) => {
-        setCrewData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error: ', error);
-      });
-  }, []);
+    const fetchCrewData = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
 
-  //   useEffect(() => {
-  //     const accessToken = localStorage.getItem('accessToken');
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     };
+        const response = await axios.get(
+          `https://bloodtrail.site/crew?page=${currentPage}`,
+          config
+        );
 
-  //     axios
-  //       .get(`https://bloodtrail.site/crew/search?keyword=${searchInput}`, config)
-  //       .then((response) => {
-  //         setCrewData(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error: ', error);
-  //       });
-  //   }, [searchInput]);
+        // crewList 배열을 crewData 상태에 설정
+        if (
+          response.data &&
+          response.data.result &&
+          Array.isArray(response.data.result.crewList)
+        ) {
+          setCrewData(response.data.result.crewList);
+        } else {
+          console.error('배열을 예상했지만 받은 것:', response.data);
+          setCrewData([]); // 응답이 예상과 다르면 빈 배열로 설정
+        }
+
+        // 페이징 정보 설정 (선택적)
+        if (
+          response.data.result.currentPage &&
+          response.data.result.totalPage
+        ) {
+          // setCurrentPage와 setTotalPage 같은 상태 설정 함수 사용
+        }
+      } catch (error) {
+        console.error('오류:', error);
+        setCrewData([]); // 오류 발생 시 빈 배열로 설정
+      }
+    };
+
+    fetchCrewData();
+  }, [currentPage]);
 
   const handleInputChange = (e) => {
     setSearchInput(e.target.value);
   };
 
-  const filteredCrewData = crewData.filter((item) => {
-    const nameLowerCase = item.name.toLowerCase();
-    const searchInputLowerCase = searchInput?.toLowerCase();
-    const searchInput2LowerCase = searchInput2?.toLowerCase();
+  const filteredCrewData = Array.isArray(crewData)
+    ? crewData.filter((item) => {
+        // item.name이 정의되어 있지 않을 수 있으므로, 안전하게 접근
+        const nameLowerCase = item.name ? item.name.toLowerCase() : '';
 
-    if (searchInputLowerCase && searchInput2LowerCase) {
-      return (
-        nameLowerCase.startsWith(searchInputLowerCase) ||
-        nameLowerCase.startsWith(searchInput2LowerCase)
-      );
-    } else if (searchInputLowerCase) {
-      return nameLowerCase.startsWith(searchInputLowerCase);
-    } else if (searchInput2LowerCase) {
-      return nameLowerCase.startsWith(searchInput2LowerCase);
-    } else {
-      return true;
-    }
-  });
+        // searchInput과 searchInput2가 비어있지 않은지 확인
+        const searchInputLowerCase = searchInput
+          ? searchInput.toLowerCase()
+          : '';
+        const searchInput2LowerCase = searchInput2
+          ? searchInput2.toLowerCase()
+          : '';
+
+        // 검색 로직은 동일하게 유지
+        if (searchInputLowerCase && searchInput2LowerCase) {
+          return (
+            nameLowerCase.startsWith(searchInputLowerCase) ||
+            nameLowerCase.startsWith(searchInput2LowerCase)
+          );
+        } else if (searchInputLowerCase) {
+          return nameLowerCase.startsWith(searchInputLowerCase);
+        } else if (searchInput2LowerCase) {
+          return nameLowerCase.startsWith(searchInput2LowerCase);
+        } else {
+          return true; // 검색어가 없는 경우 모든 데이터를 반환
+        }
+      })
+    : [];
 
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
@@ -184,6 +208,12 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
     window.location.href = '/crewupload';
   };
 
+  const handleCrewClick = (crewId) => {
+    console.log(`Crew with ID ${crewId} was clicked`);
+    // 여기에서 클릭된 크루의 ID를 사용하여 원하는 작업을 수행할 수 있습니다.
+    // 예: 상세 페이지로의 라우팅, 상세 정보 표시 등
+  };
+
   return (
     <>
       <CrewContainer>
@@ -191,10 +221,13 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
           {currentItems.map((item, index) => (
             <ItemCrew
               key={index}
-              id={item.id}
-              name={item.name}
-              introduce={item.email}
-              onClick={() => (window.location.href = `/crewdetail/${item.id}`)}
+              id={item._id}
+              name={item.crew_name}
+              introduce={item.description}
+              points={item.points} // 예시, 실제 데이터 구조에 따라 다를 수 있음
+              participationRate={item.participationRate} // 예시, 실제 데이터 구조에 따라 다를 수 있음
+              memberCount={item.crew_member.length}
+              onClick={handleCrewClick}
             />
           ))}
         </StyleGrid>
