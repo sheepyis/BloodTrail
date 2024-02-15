@@ -334,7 +334,7 @@ const RowContainer = styled.div`
   gap: 1vw;
 `;
 
-const BloodWrite = ({setIsCredit}) => {
+const BloodWrite = ({isCredit}) => {
   const [imageFile, setImageFile] = useState(null);
   const [registrationNumber, setRegistrationNumber] = useState('');
   const [bloodProduct, setBloodProduct] = useState('');
@@ -443,7 +443,7 @@ const BloodWrite = ({setIsCredit}) => {
       <div className="right" style={{ width: '67%' }}>
       <Breadcrums pageLabel="지정헌혈" currentPage="지정헌혈 요청하기"/>
 
-        {setIsCredit && setIsCredit(false) && (
+        {isCredit && (
                     <CreditModal />
         )}
         <RightMiddle>
