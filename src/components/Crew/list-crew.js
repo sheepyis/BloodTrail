@@ -18,7 +18,6 @@ const CrewContainer = styled.div`
 
 const StyleGrid = styled.div`
   width: 100%;
-  min-height: 24vw;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   overflow: hidden;
@@ -97,10 +96,11 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
         )}`,
         config
       );
-      setSearchedCrewData(response.data.result.crewList); // 검색 결과를 searchedCrewData 상태에 저장
+      setSearchedCrewData(response.data.result.crewList);
+      console.log(response.data.result.crewList);
     } catch (error) {
-      console.error('Search error:', error);
-      setSearchedCrewData([]); // 오류 발생 시 searchedCrewData를 빈 배열로 설정
+      console.error('Error:', error);
+      setSearchedCrewData([]);
     }
   };
 
@@ -152,8 +152,7 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
 
   const filteredCrewData = Array.isArray(crewData)
     ? crewData.filter((item) => {
-        // item.name이 정의되어 있지 않을 수 있으므로, 안전하게 접근
-        const nameLowerCase = item.name ? item.name.toLowerCase() : '';
+        const nameLowerCase = item.crew_name ? item.crew_name.toLowerCase() : '';
 
         // searchInput과 searchInput2가 비어있지 않은지 확인
         const searchInputLowerCase = searchInput
@@ -244,9 +243,9 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
               id={item._id}
               name={item.crew_name}
               introduce={item.description}
-              points={item.points} // 예시, 실제 데이터 구조에 따라 다를 수 있음
-              participationRate={item.participationRate} // 예시, 실제 데이터 구조에 따라 다를 수 있음
-              memberCount={item.crew_member.length}
+              points={item.now[1]}
+              participationRate={item.now[0]}
+              memberCount={item.crew_count}
               onClick={handleCrewClick}
             />
           ))}

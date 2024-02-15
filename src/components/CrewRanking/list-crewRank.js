@@ -48,46 +48,44 @@ const ListCrewRank = ({ home }) => {
       .get(`https://bloodtrail.site/crew/rank?page=${currentPage}`, config)
       .then((response) => {
         setCrewData(response.data.result.crewList);
+        console.log(response.data.result.crewList);
       })
       .catch((error) => {
-        console.error('Error fetching crew rank data:', error);
+        console.error('Error: ', error);
       });
   }, [currentPage]);
 
   const handleArrowClick = (direction) => {
     if (direction === 'left' && currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
-    } else if (direction === 'right') {
+    } else if (direction === 'right' && !isLastPage()) {
       setCurrentPage((prev) => prev + 1);
     }
+  };
+  
+  const isLastPage = () => {
+    return crewData.length === 0 || crewData.length < 6;
   };
 
   return (
     <CrewRankContainer>
-      <StyleGrid home={home}>
-        {crewData.map((crew, index) => (
-          <ItemCrewRank
-            key={crew.id}
-            id={index + 1 + (currentPage - 1) * crewData.length} // 순위 계산
-            name={crew.name}
-            point={crew.point}
-            isFirstPlace={index === 0}
-          />
-        ))}
-      </StyleGrid>
       {!home && (
         <>
-          <CrewRank
-            src={Left}
-            alt="left"
-            onClick={() => setCurrentPage(currentPage - 1)}
-          />
-          <CrewRank
-            src={Left}
-            alt="right"
-            style={{ transform: 'rotate(180deg)' }}
-            onClick={() => setCurrentPage(currentPage + 1)}
-          />
+          <CrewRank src={Left} alt="left" onClick={() => handleArrowClick('left')}/>
+
+          <StyleGrid home={home}>
+            {crewData.map((crew, index) => (
+              <ItemCrewRank
+                key={index}
+                id={index + 1 + (currentPage - 1) * crewData.length} // 순위 계산
+                name={crew.crew_name}
+                point={crew.now[1]}
+                isFirstPlace={index === 0}
+              />
+            ))}
+          </StyleGrid>
+
+          <CrewRank src={Left} alt="right" style={{ transform: 'rotate(180deg)' }} onClick={() => handleArrowClick('right')}/>
         </>
       )}
     </CrewRankContainer>
