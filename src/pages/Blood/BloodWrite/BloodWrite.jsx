@@ -486,7 +486,7 @@ const BloodWrite = ({setIsCredit}) => {
         </RightTop>
 
         {setIsCredit && setIsCredit(false) && (
-                    <Credit />
+                    <CreditModal />
         )}
 
         <RightMiddle>
