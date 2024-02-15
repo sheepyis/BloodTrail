@@ -115,8 +115,8 @@ const NewPassword = () => {
                 <Title>비밀번호 찾기</Title>
 
                 <JoinBox>
-                    <BoxP>비밀번호가 변경되었습니다</BoxP>
-                    <BoxP2>변경된 비밀번호로 다시 로그인하세요.</BoxP2>
+                    <BoxP>새로운 비밀번호가 이메일로 전송되었습니다.</BoxP>
+                    <BoxP2>이메일을 확인해주세요.</BoxP2>
                     <NextButton>
                     <Link to="/">
                     <input className='newPasswordSuccess' type="submit" value="다시 로그인하기"/>
