@@ -597,7 +597,7 @@ const Signup = () => {
             <input
               className="birth"
               type="text"
-              placeholder="00 년 00 월 00 일"
+              placeholder="0000 년 00 월 00 일"
               birth="userBirth"
               value={inputValue.userBirth}
               onChange={handleInputChange3}
