@@ -208,7 +208,7 @@ const CrewDetail = () => {
                 </div>
 
                 <CrewP style={{fontWeight: "700", marginTop: "1.5vw"}}>크루 멤버</CrewP>
-                {crew && <ListMember username={crew.username} />}
+                {crew && <ListMember username={crew.result.crew_member[0].name} id={id}/>}
 
                 <div className="bar" style={{width: "100%", height: "0.5vw", border: "none", backgroundColor: colors.lightGray, marginBottom: "3vw"}}/>
 
