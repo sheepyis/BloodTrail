@@ -7,6 +7,9 @@ import ArrowDown from '../../assets/images/arrow-down.png';
 import MyCrew from '../../components/MyCrew/MyCrew';
 import ListCrewRank from '../../components/CrewRanking/list-crewRank';
 import ListCrew from '../../components/Crew/list-crew';
+import Sidebar from "../../components/Navigation/Sidebar";
+import Breadcrums from "../../components/Navigation/Breadcrums";
+
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -111,19 +114,12 @@ const Crew = () => {
 
   return (
     <CrewContainer>
-      <div className="left" style={{ width: '17%', paddingLeft: '2.5%' }}>
-        <CrewP>헌혈크루</CrewP>
-        <CrewP2>헌혈 크루 찾기</CrewP2>
-      </div>
+      <Sidebar pageLabel="헌혈크루" currentPage="헌혈 크루 찾기"/>
 
       <div className="right" style={{ width: '67%' }}>
-        <RightTop>
-          <CrewP3 to="/">홈</CrewP3>
-          <CrewP3>{'>'}</CrewP3>
-          <CrewP3>헌혈크루</CrewP3>
-          <CrewP3>{'>'}</CrewP3>
-          <CrewP3>헌혈 크루 찾기</CrewP3>
-        </RightTop>
+        <Breadcrums pageLabel="헌혈크루" currentPage="헌혈 크루 찾기"/>
+
+
 
         <RightMiddle>
             <CrewP style={{ fontSize: '1.2vw' }}>헌혈 크루 찾기</CrewP>

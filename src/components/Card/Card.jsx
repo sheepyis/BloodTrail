@@ -132,12 +132,13 @@ const CardPhoto = styled.div`
 `;
 
 // CardTmp 컴포넌트 정의, selectBloodType을 prop으로 받음
-const CardTmp = ({ cardType, selectBloodType, title, body, userId, forOtherPost }) => {
+const CardTmp = ({ board, cardType, selectBloodType, title, body, userId, forOtherPost }) => {
   const displayTitle = forOtherPost ? title.slice(0, 20) : title.slice(0,32);
   const displayBody = cardType === "type2" ? body.slice(0, 40) : body.slice(0,70);
-  
+  const linkPath = `../../components/SinglePost/Singlepost?board=${board}`;
+
   return (
-    <Link to='../../components/SinglePost/Singlepost' style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+    <Link to={linkPath} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
       <Card forOtherPost={forOtherPost}>
       
         <CardNameContainer>

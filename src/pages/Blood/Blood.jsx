@@ -9,6 +9,9 @@ import CardTmp from '../../components/Card/Card';
 import { Link } from "react-router-dom";
 // import BoardDropdown from "./BoardDropdown/BoardDropdown";
 import axios from "axios";
+import Sidebar from "../../components/Navigation/Sidebar";
+import Breadcrums from "../../components/Navigation/Breadcrums";
+
 
 const Container = styled.div`
     display: flex;
@@ -23,31 +26,8 @@ const BloodP = styled.p`
     color: ${colors.crewGray};
 `
 
-const BloodP2 = styled.p`
-    font-weight: 600;
-    font-size: 0.75vw;
-    color: ${colors.mainRed};
-    margin-top: 1.5vw;
-    cursor: pointer;
-`
-
-const SideBar = styled.div`
-    width: 17%;
-    padding-left: 2.5%;
-`
 const MainConationer =styled.div`
     width: 67%;
-`
-
-const Breadcrums = styled.div`
-    display: flex;
-    gap: 0.5vw;
-`
-const BreadcrumsP = styled.div`
-    font-weight: 500;
-    font-size: 0.6vw;
-    color: ${colors.crewGray2};
-    cursor: pointer;
 `
 
 const RightMiddle = styled.div`
@@ -55,13 +35,13 @@ const RightMiddle = styled.div`
     justify-content: space-between;
     padding-bottom: 1vw;
     position: relative;
-`;
+`
 
 const SortContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 1vw;
-`;
+`
 
 const SortDiv = styled.div`
     width: 11.6vw;
@@ -72,7 +52,8 @@ const SortDiv = styled.div`
     padding: 0 0.5vw 0 0.5vw;
     border: 0.05vw solid ${colors.lightGray};
     cursor: pointer;
-`;
+`
+
 const BloodSortBox = styled.div`
     width: 11.6vw;
     min-height: 8.3vw;
@@ -88,6 +69,7 @@ const BloodSortBox = styled.div`
     flex-direction: column;
     justify-content: space-between;
 `
+
 const SortBox = styled.div`
     width: 11.6vw;
     min-height: 8.3vw;
@@ -314,6 +296,11 @@ const Blood = () => {
     const [selectedSort, setSelectedSort] = useState("신규순");
     const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState();
+
+    const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
+
     const handleBlood = (bloodType) =>{
         setBloodType(bloodType); // bloodtype 선택하면 게시물, 타이틀 바뀌도록
     }
@@ -328,23 +315,32 @@ const Blood = () => {
       setIsSortBoxVisible(false);
     };
 
-    const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-
+   
     // 현재 페이지에 따라 표시할 게시글을 계산
     const indexOfLastPost = currentPage * POSTS_PER_PAGE;
     const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-    // 페이지 번호를 설정하는 함수
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const pageCount = Math.ceil(posts.length / POSTS_PER_PAGE);
 
     useEffect(() => {
+      const accessToken = localStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
         const fetchPosts = async () => {
             try {
-                const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-                setPosts(response.data);
+                //const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+                const response = await axios.get(`https://bloodtrail.site/blood/${currentPage}/all`,config);
+                if (response.data.isSuccess && response.data.code === 2000) { 
+                  console.log(response.data);           
+                  setPosts(response.data.result.bloodList);
+                  setCurrentPage(response.data.result.currentPage);
+                  setTotalPages(response.data.result.totalPages);
+              } else {
+                  console.error("Failed to fetch posts: ", response.data.message);
+              }
             } catch (error) {
                 console.error("게시글을 불러오는 데 실패했습니다.", error);
             }
@@ -355,24 +351,10 @@ const Blood = () => {
     
     return (
       <Container>
-        <SideBar>
-            <BloodP>지정헌혈</BloodP>
-            <BloodP2>지정헌혈 요청 글</BloodP2>
-            <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>지정헌혈 요청하기</BloodP>
-            <Link to="/blood/bloodpremium" style={{ textDecoration: 'none' }}>
-            <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>지정헌혈 프리미엄</BloodP>
-            </Link>
-            <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>내가 쓴 글 보기</BloodP>
-        </SideBar>
-
+        <Sidebar pageLabel="지정헌혈" currentPage="지정헌혈 요청 글"/>
+        
         <MainConationer>
-        <Breadcrums>
-            <BreadcrumsP>홈</BreadcrumsP>
-            <BreadcrumsP>{">"}</BreadcrumsP>
-            <BreadcrumsP>지정헌혈</BreadcrumsP>
-            <BreadcrumsP>{">"}</BreadcrumsP>
-            <BreadcrumsP>지정헌혈 요청 글</BreadcrumsP>
-        </Breadcrums>
+        <Breadcrums pageLabel="지정헌혈" currentPage="지정헌혈 요청 글"/>
 
         <BloodP style={{marginTop: "2vw", fontSize: '1.2vw'}}>지정헌혈 요청글</BloodP>
         <RightMiddle>
@@ -422,12 +404,22 @@ const Blood = () => {
             <CardContainer>
               {currentPosts.map((post) => (
                   <CardTmp
-                    cardType = {`type${post.id/4 % 2 + 1}`}
-                    selectBloodType="B-"
-                    key={post.id}
-                    userId = {post.userId}
+                    board='blood'
+
+                    cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
+                    selectBloodType={post.blood_type}
+
+                    key={post._id}
+
+                    userId = {post.writer.nickname}
+                    userImg = {post.writer.profile_image}
+
+                    thumb={post.image && post.image.length > 0 ? post.image : undefined}
                     title={post.title}
-                    body={post.body}
+                    body={post.content}
+                    
+                    start_date={post.start_date}
+                    end_date={post.end_date}
                   />
               ))}
               </CardContainer>
