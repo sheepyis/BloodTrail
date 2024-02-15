@@ -33,7 +33,7 @@ const SearchIcon = styled.img`
   height: 1.2vw;
 `;
 
-const InputCrew = ({ type, placeholder, onChange, value, onSearchClick }) => {
+const InputCrew = ({ type, placeholder, onChange, value }) => {
   return (
     <InputWrapper>
       <CrewInput
@@ -42,7 +42,7 @@ const InputCrew = ({ type, placeholder, onChange, value, onSearchClick }) => {
         onChange={onChange}
         value={value}
       />
-      <SearchIcon src={Search} alt="search" onClick={onSearchClick} />
+      <SearchIcon src={Search} alt="search"/>
     </InputWrapper>
   );
 };
