@@ -25,10 +25,6 @@ const MyCrewP = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-
-  @media screen and (max-width: 600px) {
-    font-size: 0.75rem;
-  }
 `;
 
 const MyCrewP2 = styled.p`
@@ -38,10 +34,6 @@ const MyCrewP2 = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-
-  @media screen and (max-width: 600px) {
-    font-size: 0.6rem;
-  }
 `;
 
 const ChatButton = styled.button`
@@ -58,20 +50,11 @@ const ChatButton = styled.button`
   align-items: center;
   justify-content: center;
   font-size: 0.75vw;
-
-  @media screen and (max-width: 600px) {
-    font-size: 0.75rem;
-  }
 `;
 
 const ProfileImage = styled.img`
   width: 2vw;
   height: 2vw;
-
-  @media screen and (max-width: 600px) {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
 `;
 
 const MyCrew = () => {
@@ -84,47 +67,48 @@ const MyCrew = () => {
         Authorization: `Bearer ${accessToken}`,
       },
     };
-
-    axios
-      .get('https://bloodtrail.site/crew/mycrew', config)
-      .then((response) => {
-        // Response body를 콘솔에 출력
-        console.log(response.data);
+  
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://bloodtrail.site/crew/mycrew', config);
         setMyCrewData(response.data.result);
-
-        // ...
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error: ', error);
-      });
+      }
+    };
+  
+    fetchData();
   }, []);
+  
 
   return (
-    <MyCrewDiv>
+    <>
       {myCrewData ? (
-        <div
-          className="crewBox"
-          style={{ display: 'flex', gap: '0.65vw', alignItems: 'center' }}
-        >
-          <ProfileImage src={Profile} alt="profile" />
+        <MyCrewDiv>
           <div
-            className="crewName"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              width: '85%',
-            }}
+            className="crewBox"
+            style={{ display: 'flex', gap: '0.65vw', alignItems: 'center' }}
           >
-            <MyCrewP>{myCrewData.crew_name}</MyCrewP> {/* 크루 이름 표시 */}
-            <MyCrewP2>{myCrewData.description}</MyCrewP2>
+            <ProfileImage src={Profile} alt="profile" />
+            <div
+              className="crewName"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                width: '85%',
+              }}
+            >
+              <MyCrewP>{myCrewData.crew_name}</MyCrewP>
+              <MyCrewP2>{myCrewData.description}</MyCrewP2>
+            </div>
           </div>
-        </div>
+          <ChatButton>채팅하기</ChatButton>
+        </MyCrewDiv>
       ) : (
-        <MyCrewP>크루 정보 없음</MyCrewP>
+        <MyCrewP style={{marginTop: "1vw"}}>크루 정보 없음</MyCrewP>
       )}
-      <ChatButton>채팅하기</ChatButton>
-    </MyCrewDiv>
+    </>
   );
 };
 

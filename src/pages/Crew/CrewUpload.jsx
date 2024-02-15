@@ -120,10 +120,13 @@ const CrewUpload = () => {
     axios
       .post('https://bloodtrail.site/crew', formData, config)
       .then((response) => {
-        console.log(response.data);
-        console.log('Success', formData);
-        window.location.href = '/crew';
-        console.log('크루 등록 완료');
+        if(response.data.isSuccess == false) {
+          alert("이미 크루에 가입했습니다.");
+        } else {
+          console.log(response.data);
+          console.log('Success', formData);
+          window.location.href = '/crew';
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
