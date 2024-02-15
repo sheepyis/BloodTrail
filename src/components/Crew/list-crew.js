@@ -80,6 +80,29 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
   const [crewData, setCrewData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchedCrewData, setSearchedCrewData] = useState([]);
+
+  const handleSearch = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    try {
+      const response = await axios.get(
+        `https://bloodtrail.site/crew/search?keyword=${encodeURIComponent(
+          searchInput
+        )}`,
+        config
+      );
+      setSearchedCrewData(response.data.result.crewList); // 검색 결과를 searchedCrewData 상태에 저장
+    } catch (error) {
+      console.error('Search error:', error);
+      setSearchedCrewData([]); // 오류 발생 시 searchedCrewData를 빈 배열로 설정
+    }
+  };
 
   useEffect(() => {
     const fetchCrewData = async () => {
@@ -96,7 +119,6 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
           config
         );
 
-        // crewList 배열을 crewData 상태에 설정
         if (
           response.data &&
           response.data.result &&
@@ -108,21 +130,21 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
           setCrewData([]); // 응답이 예상과 다르면 빈 배열로 설정
         }
 
-        // 페이징 정보 설정 (선택적)
         if (
           response.data.result.currentPage &&
           response.data.result.totalPage
         ) {
-          // setCurrentPage와 setTotalPage 같은 상태 설정 함수 사용
         }
       } catch (error) {
         console.error('오류:', error);
-        setCrewData([]); // 오류 발생 시 빈 배열로 설정
+        setCrewData([]);
       }
     };
 
     fetchCrewData();
   }, [currentPage]);
+
+  const displayData = searchedCrewData.length > 0 ? searchedCrewData : crewData;
 
   const handleInputChange = (e) => {
     setSearchInput(e.target.value);
@@ -210,8 +232,6 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
 
   const handleCrewClick = (crewId) => {
     console.log(`Crew with ID ${crewId} was clicked`);
-    // 여기에서 클릭된 크루의 ID를 사용하여 원하는 작업을 수행할 수 있습니다.
-    // 예: 상세 페이지로의 라우팅, 상세 정보 표시 등
   };
 
   return (
@@ -249,7 +269,9 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
             placeholder="크루 이름을 입력하세요"
             onChange={handleInputChange}
             value={searchInput}
+            onSearchClick={handleSearch}
           />
+
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Upload onClick={handleUpload}>헌혈 크루 등록하기</Upload>
           </div>
