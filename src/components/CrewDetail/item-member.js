@@ -49,7 +49,7 @@ const BottomBox = styled.div`
 `
 
 const ItemMember = (props) => {
-    const { id, name, username } = props;
+    const { id, name, username, participationRate } = props;
 /*     console.log(name);
     console.log(username); */
 
@@ -65,7 +65,7 @@ const ItemMember = (props) => {
 
             <BottomBox>
                 <CrewP2>헌혈 참여율 </CrewP2>
-                <CrewP2>{id}</CrewP2>
+                <CrewP2>{participationRate}</CrewP2>
                 <CrewP2>%</CrewP2>
             </BottomBox>
         </StyleItem>
