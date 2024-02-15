@@ -219,7 +219,8 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
   };
 
   const handleCrewClick = (crewId) => {
-    console.log(`Crew with ID ${crewId} was clicked`);
+    console.log(`${crewId}`);
+    window.location.href = `/crewdetail/${crewId}`;
   };
 
   return (
