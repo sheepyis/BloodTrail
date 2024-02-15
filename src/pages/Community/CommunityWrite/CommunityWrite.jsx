@@ -14,6 +14,7 @@ import { css } from 'styled-components';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import axios from 'axios';
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -284,6 +285,13 @@ const Enroll = styled.button`
 const CommunityWrite = () => {
   const [imageFile, setImageFile] = useState(null);
 
+  const [postType, setPostType] = useState(''); // 게시글 유형 상태 초기화
+
+  // 게시글 유형 변경 핸들러
+  const handlePostTypeChange = (event) => {
+    setPostType(event.target.value);
+  };
+
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
@@ -306,33 +314,39 @@ const CommunityWrite = () => {
   };
 
   const handleSubmit = async () => {
+    // localStorage에서 액세스 토큰 가져오기
+    const accessToken = localStorage.getItem('accessToken');
+
     const formData = new FormData();
-    formData.append(
-      'title',
-      document.querySelector('input[type="text"]').value
-    ); //제목입력값
+    formData.append('title', title);
     formData.append('content', contentEditableRef.current.innerText);
+    formData.append('types', postType);
     if (imageFile) {
-      formData.append('image', imageFile);
+      formData.append('files', imageFile);
     }
 
-    // try{
-    //   const response = await fetch('',{
-    //     method:'POST',
-    //     body:formData,
-    //   })
-    // }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    };
 
-    //   if (response.ok) {
-    //     // 성공 처리 로직
-    //     alert('글이 성공적으로 등록되었습니다.');
-    //   } else {
-    //     // 오류 처리
-    //     alert('글 등록에 실패했습니다.');
-    //   }
-    // } catch (error) {
-    //   console.error('서버와의 통신 중 오류가 발생했습니다.', error);
-    // }
+    try {
+      const response = await axios.post(
+        'https://bloodtrail.site/post',
+        formData,
+        config
+      );
+
+      if (response.status === 200) {
+        alert('게시글이 성공적으로 등록되었습니다.');
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.error('게시글 등록 중 오류가 발생했습니다.', error);
+      alert('게시글 등록에 실패했습니다.');
+    }
   };
 
   const [inputCompleted, setInputCompleted] = useState({
@@ -344,6 +358,12 @@ const CommunityWrite = () => {
   });
 
   const [allFieldsCompleted, setAllFieldsCompleted] = useState(false);
+
+  const [title, setTitle] = useState('');
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
 
   useEffect(() => {
     const allCompleted = Object.values(inputCompleted).every(
@@ -404,23 +424,28 @@ const CommunityWrite = () => {
         />
 
         <TitleContainer>
-          <TitleInput placeholder="제목을 입력하세요."></TitleInput>
-          <SortDiv>
-            <CrewP
+          <TitleInput
+            placeholder="제목을 입력하세요."
+            value={title}
+            onChange={handleTitleChange}
+          />
+          <SortContainer>
+            <select
+              value={postType}
+              onChange={handlePostTypeChange}
               style={{
-                fontSize: '0.75vw',
-                color: colors.crewGray2,
-                paddingLeft: '3.2vw',
+                width: '100%',
+                height: '2.5vw',
+                border: '1px solid #d1d1d1',
+                borderRadius: '5px',
+                padding: '0.5vw',
               }}
             >
-              자유게시판
-            </CrewP>
-            <img
-              src={ArrowDown}
-              alt="arrow-down"
-              style={{ width: '1.2vw', height: '1.2vw' }}
-            />
-          </SortDiv>
+              <option value="">게시판 선택</option> {/* 초기 선택 안내 옵션 */}
+              <option value="FREE">자유게시판</option> {/* 옵션 예시 */}
+              {/* 필요한 만큼 <option> 태그를 추가하여 다른 게시판 유형 제공 */}
+            </select>
+          </SortContainer>
         </TitleContainer>
 
         {/*  style={{ width: '0.05vw', height: '1.75vw' }} */}

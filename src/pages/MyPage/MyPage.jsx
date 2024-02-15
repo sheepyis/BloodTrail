@@ -50,7 +50,7 @@ const EditButton = styled.button`
     padding: 0.5vw;
 `
 
-const MyPage = () => {
+const MyPage = ({setIsCredit}) => {
     return (
         <MyPageContainer>
             <div className="left" style={{width: "17%", paddingLeft: "2.5%"}}>
@@ -69,9 +69,9 @@ const MyPage = () => {
                     <MyPageP3>{">"}</MyPageP3>
                     <MyPageP3>내 프로필</MyPageP3>
                 </RightTop>
-
-                <Credit />
-                
+                {setIsCredit && setIsCredit(false) && (
+                    <Credit />
+                )}
                 <div className="profile" style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", margin: "2vw 0 1vw 0"}}>
                     <MyPageP style={{fontSize: "1.2vw", fontWeight: "bold"}}>내 프로필</MyPageP>
                     <EditButton>정보 수정하기</EditButton>

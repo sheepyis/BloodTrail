@@ -11,8 +11,10 @@ import Mark from '../../../assets/images/alert-circle 1.png';
 import Mark2 from '../../../assets/images/check-square 1.png';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import CreditModal from '../../../components/Credit/CreditModal';
 import Sidebar from "../../../components/Navigation/Sidebar";
 import Breadcrums from "../../../components/Navigation/Breadcrums";
+
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -330,7 +332,7 @@ const RowContainer = styled.div`
   gap: 1vw;
 `;
 
-const BloodWrite = () => {
+const BloodWrite = ({setIsCredit}) => {
   const [imageFile, setImageFile] = useState(null);
   const [registrationNumber, setRegistrationNumber] = useState('');
   const [bloodProduct, setBloodProduct] = useState('');
@@ -446,6 +448,9 @@ const BloodWrite = () => {
       <div className="right" style={{ width: '67%' }}>
       <Breadcrums pageLabel="지정헌혈" currentPage="지정헌혈 요청하기"/>
 
+        {setIsCredit && setIsCredit(false) && (
+                    <CreditModal />
+        )}
         <RightMiddle>
           <CrewP style={{ fontSize: '1.2vw' }}>글 작성하기</CrewP>
         </RightMiddle>
