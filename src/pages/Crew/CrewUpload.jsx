@@ -122,7 +122,7 @@ const CrewUpload = () => {
       .then((response) => {
         console.log(response.data);
         console.log('Success', formData);
-        // window.location.href = '/crew';
+        window.location.href = '/crew';
         console.log('크루 등록 완료');
       })
       .catch((error) => {
