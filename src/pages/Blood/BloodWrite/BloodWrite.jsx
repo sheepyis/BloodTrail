@@ -11,6 +11,7 @@ import Mark from '../../../assets/images/alert-circle 1.png';
 import Mark2 from '../../../assets/images/check-square 1.png';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import CreditModal from '../../../components/Credit/CreditModal';
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -356,7 +357,7 @@ const RowContainer = styled.div`
   gap: 1vw;
 `;
 
-const BloodWrite = () => {
+const BloodWrite = ({setIsCredit}) => {
   const [imageFile, setImageFile] = useState(null);
   const [registrationNumber, setRegistrationNumber] = useState('');
   const [bloodProduct, setBloodProduct] = useState('');
@@ -483,6 +484,10 @@ const BloodWrite = () => {
           <CrewP4>{'>'}</CrewP4>
           <CrewP4>글 작성하기</CrewP4>
         </RightTop>
+
+        {setIsCredit && setIsCredit(false) && (
+                    <Credit />
+        )}
 
         <RightMiddle>
           <CrewP style={{ fontSize: '1.2vw' }}>글 작성하기</CrewP>
