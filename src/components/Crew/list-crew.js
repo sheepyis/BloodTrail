@@ -79,9 +79,9 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
   const [crewData, setCrewData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchedCrewData, setSearchedCrewData] = useState([]);
+/*   const [searchedCrewData, setSearchedCrewData] = useState([]); */
 
-  const handleSearch = async () => {
+/*   const handleSearch = async () => {
     const accessToken = localStorage.getItem('accessToken');
     const config = {
       headers: {
@@ -91,9 +91,7 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
 
     try {
       const response = await axios.get(
-        `https://bloodtrail.site/crew/search?keyword=${encodeURIComponent(
-          searchInput
-        )}`,
+        `https://bloodtrail.site/crew?page=${currentPage}`,
         config
       );
       setSearchedCrewData(response.data.result.crewList);
@@ -102,7 +100,7 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
       console.error('Error:', error);
       setSearchedCrewData([]);
     }
-  };
+  }; */
 
   useEffect(() => {
     const fetchCrewData = async () => {
@@ -143,41 +141,32 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
 
     fetchCrewData();
   }, [currentPage]);
-
-  const displayData = searchedCrewData.length > 0 ? searchedCrewData : crewData;
+  
+  /* const displayData = searchedCrewData.length > 0 ? searchedCrewData : crewData; */
 
   const handleInputChange = (e) => {
-    setSearchInput(e.target.value);
+    const input = e.target.value.toLowerCase();
+    setSearchInput(input);
   };
 
-  const filteredCrewData = Array.isArray(crewData)
-    ? crewData.filter((item) => {
-        const nameLowerCase = item.crew_name ? item.crew_name.toLowerCase() : '';
-
-        // searchInput과 searchInput2가 비어있지 않은지 확인
-        const searchInputLowerCase = searchInput
-          ? searchInput.toLowerCase()
-          : '';
-        const searchInput2LowerCase = searchInput2
-          ? searchInput2.toLowerCase()
-          : '';
-
-        // 검색 로직은 동일하게 유지
-        if (searchInputLowerCase && searchInput2LowerCase) {
-          return (
-            nameLowerCase.startsWith(searchInputLowerCase) ||
-            nameLowerCase.startsWith(searchInput2LowerCase)
-          );
-        } else if (searchInputLowerCase) {
-          return nameLowerCase.startsWith(searchInputLowerCase);
-        } else if (searchInput2LowerCase) {
-          return nameLowerCase.startsWith(searchInput2LowerCase);
-        } else {
-          return true; // 검색어가 없는 경우 모든 데이터를 반환
-        }
-      })
-    : [];
-
+  // 백엔드 api 쓰지 않음 -> 한글은 ㅋ 검색하면 안나오고 크까지 쳐야 검색이 됨
+  const filteredCrewData = crewData.filter(item => {
+    const nameLowerCase = item.crew_name.toLowerCase();
+    const searchInputLowerCase = searchInput?.toLowerCase();
+    const searchInput2LowerCase = searchInput2?.toLowerCase();
+    
+    if (searchInputLowerCase && searchInput2LowerCase) {
+      return nameLowerCase.includes(searchInputLowerCase) || nameLowerCase.includes(searchInput2LowerCase);
+    } else if (searchInputLowerCase) {
+      return nameLowerCase.includes(searchInputLowerCase);
+    } else if (searchInput2LowerCase) {
+      return nameLowerCase.includes(searchInput2LowerCase);
+    } else {
+      return true;
+    }
+  });
+  
+  
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
   const currentItems = filteredCrewData.slice(
@@ -268,7 +257,7 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
             placeholder="크루 이름을 입력하세요"
             onChange={handleInputChange}
             value={searchInput}
-            onSearchClick={handleSearch}
+            /* onSearchClick={handleSearch} */
           />
 
           <div style={{ display: 'flex', alignItems: 'center' }}>
