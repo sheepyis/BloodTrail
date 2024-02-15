@@ -50,7 +50,8 @@ const EditButton = styled.button`
     padding: 0.5vw;
 `
 
-const MyPage = ({setIsCredit}) => {
+const MyPage = ({isCredit}) => {
+   
     return (
         <MyPageContainer>
             <div className="left" style={{width: "17%", paddingLeft: "2.5%"}}>
@@ -69,7 +70,7 @@ const MyPage = ({setIsCredit}) => {
                     <MyPageP3>{">"}</MyPageP3>
                     <MyPageP3>내 프로필</MyPageP3>
                 </RightTop>
-                {setIsCredit && setIsCredit(false) && (
+                {isCredit && (
                     <Credit />
                 )}
                 <div className="profile" style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", margin: "2vw 0 1vw 0"}}>

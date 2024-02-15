@@ -357,7 +357,7 @@ const RowContainer = styled.div`
   gap: 1vw;
 `;
 
-const BloodWrite = ({setIsCredit}) => {
+const BloodWrite = ({isCredit}) => {
   const [imageFile, setImageFile] = useState(null);
   const [registrationNumber, setRegistrationNumber] = useState('');
   const [bloodProduct, setBloodProduct] = useState('');
@@ -485,7 +485,7 @@ const BloodWrite = ({setIsCredit}) => {
           <CrewP4>글 작성하기</CrewP4>
         </RightTop>
 
-        {setIsCredit && setIsCredit(false) && (
+        {isCredit && (
                     <CreditModal />
         )}
 
