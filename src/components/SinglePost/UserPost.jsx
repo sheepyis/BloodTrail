@@ -192,19 +192,54 @@ const ChatButton = styled.div`
   justify-content: center;
 `;
 
-const PostDetailPage = () => {
+const PostDetailPage = ({board,_id}) => {
+
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    const fetchPosts = async () => {
+      try {
+          const accessToken = localStorage.getItem('accessToken');
+          const response = await axios.patch(`https://bloodtrail.site/post/${_id}`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        if (response.data.isSuccess && response.data.code === 2000) { 
+          console.log(response.data);      
+          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");     
+          setPosts(response.data);
+        } else {
+          console.error("Failed to fetch posts: ", response.data.message);
+        }
+       } catch (error) {
+        console.error('게시글을 불러오는 데 실패했습니다.', error);
+      }
+    };
+
+    fetchPosts();
+  }, [board,_id]);
+
   const post = PostDetail[0]; // axios로 받아오기
-  const postData = PostDetail[0];
+  const postss = PostDetail[0];
+
+  if (!postss) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <PageLayout>
       <Header>
         <HeaderText>
-          {post.title}
+          {postss.title}
         </HeaderText>
         <TitleDetail>
           <UserInfo>
-            <div>{post.userId}</div>
+            <div>{postss.id}</div>
           </UserInfo>
           <div>
             <CopyButton onClick={() => {
@@ -226,23 +261,25 @@ const PostDetailPage = () => {
         </TitleDetail>
         <Divider />
         <InteractionBar>
-          <div>조회수 {postData.hit}</div>
-          <div>공감수 {postData.like} </div>
+          <div>조회수 {postss.id}</div>{/*watch_count}</div>*/}
+          <div>공감수 {postss.id} </div>
         </InteractionBar>
       </Header>
 
-      <TagContainer>
-        {postData.tags.map((tag, index) => (
-          <Tag key={index}>
-            <TagCategory>{tag.category}</TagCategory>
-            {tag.text}
-          </Tag>
-        ))}
-      </TagContainer>
+      {board == 'blood' && (
+        <TagContainer>
+          {post.tags && post.tags.map((tag, index) => (
+            <Tag key={index}>
+              <TagCategory>{tag.category}</TagCategory>
+              {tag.text}
+            </Tag>
+          ))}
+        </TagContainer>
+      )}
 
       <ContentArea />
       <Details>
-        {post.body}
+        {postss.body}
       </Details>
       <FooterBar>
         <LeftContainer>
@@ -251,14 +288,16 @@ const PostDetailPage = () => {
             <IconWrapper color="#F3777A" hoverColor="#E95458">
               <HeartIcon /> 
             </IconWrapper>
-            {postData.like}
+            {postss.id}
           </HeartWrapper>
           <IconWrapper color="#464A4D" hoverColor="#464A4D">
             <ShareIcon /> 
           </IconWrapper>
         </InteractionButtons>
         </LeftContainer>
+        {board == 'blood' && (
         <ChatButton>채팅하기</ChatButton>
+        )}
         <RightContainer></RightContainer>
     </FooterBar>
     </PageLayout>

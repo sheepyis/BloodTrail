@@ -388,6 +388,7 @@ const Community = () => {
             {posts.map((post) => (
               <CardTmp
                 board='community'
+                _id={post._id}
                 cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
                 key={post._id}
                 userId={post.writer.nickname}
