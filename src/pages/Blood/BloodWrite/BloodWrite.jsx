@@ -17,7 +17,6 @@ import Breadcrums from "../../../components/Navigation/Breadcrums";
 import axios from 'axios';
 
 
-
 const CrewContainer = styled.div`
   width: 100%;
   display: flex;
@@ -349,10 +348,13 @@ const BloodWrite = ({isCredit}) => {
   const handleBloodTypeChange = (e) => setBloodType(e.target.value);
 
   const handleSubmit = async () => {
+    const title = titleEditableRef.current ? titleEditableRef.current.value : '';
+    const content = contentEditableRef.current ? contentEditableRef.current.innerText : '';
+
     const formData = new FormData();
 
-    formData.append('title', titleEditableRef.current.innerText);
-    formData.append('content', contentEditableRef.current.innerText);
+    formData.append('title', title);
+    formData.append('content', content);
     formData.append('registrationNumber', registrationNumber);
     formData.append('bloodProduct', bloodProduct);
     formData.append('requireDay', requireDay);
@@ -364,19 +366,19 @@ const BloodWrite = ({isCredit}) => {
     }
 
     try {
-        const response = await axios.post("https://bloodtrail.site/blood", formData, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰 추가
-          },
-        });
-
-      if (response.status === 200) {
-        const data = await response.json();
+      const response = await axios.post("https://bloodtrail.site/blood", formData, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰 추가
+        },
+      });
+      console.log(response);
+      if (response.data.isSuccess) {
+        const data = await response;
         console.log('성공:', data);
         alert('글이 성공적으로 등록되었습니다.');
       } else {
-        console.error('서버 에러:', response.statusText);
-        alert('글 등록에 실패했습니다.');
+        console.error('실패:', response.data.message);
+        alert(`${response.data.message}`);
       }
     } catch (error) {
       console.error('네트워크 에러:', error);
@@ -462,7 +464,10 @@ const BloodWrite = ({isCredit}) => {
         />
 
         <TitleContainer>
-          <TitleInput placeholder="제목을 입력하세요."></TitleInput>
+          <TitleInput
+            ref={titleEditableRef}
+            placeholder="제목을 입력하세요."
+          ></TitleInput>
         </TitleContainer>
 
         <InformContainer
