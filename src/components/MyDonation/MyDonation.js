@@ -255,7 +255,6 @@ const MyDonation = () => {
       try {
         const response = await fetch('https://bloodtrail.site/history/image', {
           method: 'POST',
-          body: formData,
           headers: {
             // Authorization 헤더에 액세스 토큰을 추가
             Authorization: `Bearer ${accessToken}`,

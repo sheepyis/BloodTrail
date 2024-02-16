@@ -11,9 +11,8 @@ import arrow_down from '../../assets/images/arrow-down.png';
 import { Link } from 'react-router-dom';
 import CardTmp from '../../components/Card/Card';
 import axios from 'axios';
-import Sidebar from "../../components/Navigation/Sidebar";
-import Breadcrums from "../../components/Navigation/Breadcrums";
-
+import Sidebar from '../../components/Navigation/Sidebar';
+import Breadcrums from '../../components/Navigation/Breadcrums';
 
 const Container = styled.div`
   display: flex;
@@ -105,9 +104,9 @@ const CardContainer = styled.div`
   width: 80%;
   padding-top: 2.6vw;
   padding-left: 1.8vw;
-  display: grid; 
+  display: grid;
   grid-template-columns: repeat(3, minmax(auto, 1fr));
-  align-items: center; 
+  align-items: center;
   justify-content: space-between;
   gap: 1.5vw;
 `;
@@ -296,12 +295,13 @@ const Community = () => {
     const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
 
 
-    const handleSortSelection = (sortType) => {
-      setSelectedSort(sortType);
-      setIsSortBoxVisible(false);
-    };
+  const handleSortSelection = (sortType) => {
+    setSelectedSort(sortType);
+    setIsSortBoxVisible(false);
+  };
 
-     useEffect(() => {
+  useEffect(() => {
+    const fetchPosts = async () => {
       const accessToken = localStorage.getItem('accessToken');
       const config = {
         headers: {
@@ -312,35 +312,25 @@ const Community = () => {
           posttype: 'FREE',
           sorttype: 'created_at',
           page: currentPage,
-        }
+        },
       };
-        const fetchPosts = async () => {
-            try {
-                //const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-                const response = await axios.get(`https://bloodtrail.site/post`,config);
-                if (response.data.isSuccess && response.data.code === 2000) { 
-                  console.log(response.data);           
-                  setPosts(response.data.result[1]);
-                  setCurrentPage(response.data.result.currentPage);
-                  setTotalPages(response.data.result.totalPages);
-              } else {
-                  console.error("Failed to fetch posts: ", response.data.message);
-              }
-            } catch (error) {
-                console.error("게시글을 불러오는 데 실패했습니다.", error);
-            }
-        };
+      try {
+        const response = await axios.get('https://bloodtrail.site/blood',config);
+        setPosts(response.data.result[1]);
+      } catch (error) {
+        console.error('게시글을 불러오는 데 실패했습니다.', error);
+      }
+    };
 
-        fetchPosts();
-        }, [currentPage]);
-    
+    fetchPosts();
+  }, [currentPage]);
 
   return (
     <Container>
-      <Sidebar pageLabel="커뮤니티" currentPage="자유게시판"/>
+      <Sidebar pageLabel="커뮤니티" currentPage="자유게시판" />
 
       <MainConationer>
-        <Breadcrums pageLabel="커뮤니티" currentPage="자유게시판"/>
+        <Breadcrums pageLabel="커뮤니티" currentPage="자유게시판" />
 
         <RightMiddle>
           <CommunityP style={{ fontSize: '1.2vw' }}>자유게시판</CommunityP>
@@ -388,16 +378,15 @@ const Community = () => {
 
         <BoardContainer>
           <CardContainer>
-            {posts.map(post => (
+            {posts.map((post) => (
               <CardTmp
                 board='community'
-
                 cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
                 key={post._id}
                 userId={post.writer.nickname}
                 thumb={post.image && post.image.length > 0 ? post.image : undefined}
                 title={post.title}
-                body={post.title}
+                body={post.body}
               />
             ))}
           </CardContainer>
