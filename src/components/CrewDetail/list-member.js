@@ -38,26 +38,104 @@ const ListMember = ({ id, username }) => {
     const [crewData, setCrewData] = useState([]);
     const [crew, setCrew] = useState(null);
     const [isFull, setIsFull] = useState(false);
+    const [isJoined, setIsJoined] = useState(false);
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchUserId = async () => {
             try {
                 const accessToken = localStorage.getItem('accessToken');
-                const response = await axios.get(`https://bloodtrail.site/crew/detail/${id}`, {
+                const response = await axios.get('https://bloodtrail.site/auth/profile', {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
-                console.log("통신 성공");
-                console.log(response.data);
-                setCrewData(response.data.result.crew_member);
+                console.log(response);
+                const user = response.data.result;
+
+                setUserId(user._id);
             } catch (error) {
                 console.error('Error: ', error);
             }
         };
+
+        fetchUserId();
+    }, []);
+
+
+    const fetchData = async () => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            const response = await axios.get(`https://bloodtrail.site/crew/detail/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            console.log("통신 성공");
+            console.log(response.data);
+            
+            if (response.data.result && response.data.result.crew_member && response.data.result.crew_member.length > 0) {
+                setCrewData(response.data.result.crew_member);
     
+                const userIsMember = response.data.result.crew_member.some(member => member._id === userId);
+                setIsJoined(userIsMember);
+                console.log(userIsMember);
+            } else {
+                window.location.href = '/crew';
+            }
+        } catch (error) {
+            console.error('Error: ', error);
+        }
+    };
+    
+    
+    useEffect(() => {
         fetchData();
-    }, [id]);
+    }, [id, userId]);
+    
+    const handleJoinCrew = async () => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            const response = await axios.post(`https://bloodtrail.site/crew/${id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+    
+            if(response.data.isSuccess == false) {
+                alert("이미 크루에 가입했습니다.");
+            } else {
+                alert("크루에 가입하였습니다.");
+                fetchData();
+                setIsJoined(true);
+            }
+    
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+    
+    const handleLeaveCrew = async () => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            const response = await axios.patch(`https://bloodtrail.site/crew/${id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+    
+            if(response.data.isSuccess == true) {
+                alert("크루를 탈퇴하셨습니다.");
+                fetchData();
+                setIsJoined(false);
+            }
+
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
     return (
         <>
@@ -76,7 +154,11 @@ const ListMember = ({ id, username }) => {
                 
                 <div className="button" style={{width: "100%", display: "flex", justifyContent: "center", gap: "0.65vw", margin: "3vw 0"}}>
                     <DetailButton>채팅하기</DetailButton>
-                    <DetailButton disabled={isFull}>크루 가입하기</DetailButton>
+                    {isJoined ? (
+                    <DetailButton onClick={handleLeaveCrew}>크루 탈퇴하기</DetailButton>
+                ) : (
+                    <DetailButton disabled={isFull} onClick={handleJoinCrew}>크루 가입하기</DetailButton>
+                )}
                 </div>
             </CrewContainer>
         </>
