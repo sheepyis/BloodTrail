@@ -301,23 +301,30 @@ const Community = () => {
   };
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: {
+      pagetype: 'line',
+      posttype: 'FREE',
+      sorttype: 'created_at',
+      page: currentPage,
+    },
+  };
     const fetchPosts = async () => {
-      const accessToken = localStorage.getItem('accessToken');
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        params: {
-          pagetype: 'line',
-          posttype: 'FREE',
-          sorttype: 'created_at',
-          page: currentPage,
-        },
-      };
       try {
-        const response = await axios.get('https://bloodtrail.site/blood',config);
-        setPosts(response.data.result[1]);
-      } catch (error) {
+        const response = await axios.get('https://bloodtrail.site/post',config);
+        if (response.data.isSuccess && response.data.code === 2000) { 
+          console.log(response.data);           
+          setPosts(response.data.result[1]);
+          setCurrentPage(response.data.result.currentPage);
+          setTotalPages(response.data.result.totalPages);
+        } else {
+        console.error("Failed to fetch posts: ", response.data.message);
+        }
+       } catch (error) {
         console.error('게시글을 불러오는 데 실패했습니다.', error);
       }
     };
@@ -386,7 +393,7 @@ const Community = () => {
                 userId={post.writer.nickname}
                 thumb={post.image && post.image.length > 0 ? post.image : undefined}
                 title={post.title}
-                body={post.body}
+                body={post.title}
               />
             ))}
           </CardContainer>
