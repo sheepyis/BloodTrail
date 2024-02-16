@@ -153,12 +153,12 @@ const CardTmp = ({ board, cardType, selectBloodType, title, body, userId, forOth
         
         <CardTitle>
           <CardTitleP>{displayTitle}</CardTitleP>
-          <BloodType>{selectBloodType}</BloodType>
+          {board == 'blood' && <BloodType>{selectBloodType}</BloodType>}
         </CardTitle>
 
         <CardContent>
         <CardP className={cardType}>{displayBody}</CardP>
-        {!forOtherPost && (
+        {!forOtherPost && board == 'blood' && (
             <CardRequestPeriod>
               <Period1>요청기간</Period1>
               <Period2>~2023.12.14</Period2>

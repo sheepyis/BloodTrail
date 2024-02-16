@@ -286,42 +286,54 @@ const DropdownSearch = styled.div`
 `;
 
 const Community = () => {
-  const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
 
-  const [selectedSort, setSelectedSort] = useState('신규순');
-  const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
+    const [selectedSort, setSelectedSort] = useState("신규순");
+    const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
 
-  const handleSortSelection = (sortType) => {
-    setSelectedSort(sortType);
-    setIsSortBoxVisible(false);
-  };
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
-  const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+    const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
 
-  // 현재 페이지에 따라 표시할 게시글을 계산
-  const indexOfLastPost = currentPage * POSTS_PER_PAGE;
-  const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  // 페이지 번호를 설정하는 함수
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const pageCount = Math.ceil(posts.length / POSTS_PER_PAGE);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(
-          'https://jsonplaceholder.typicode.com/posts'
-        );
-        setPosts(response.data);
-      } catch (error) {
-        console.error('게시글을 불러오는 데 실패했습니다.', error);
-      }
+    const handleSortSelection = (sortType) => {
+      setSelectedSort(sortType);
+      setIsSortBoxVisible(false);
     };
 
-    fetchPosts();
-  }, []);
+     useEffect(() => {
+      const accessToken = localStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {
+          pagetype: 'line',
+          posttype: 'FREE',
+          sorttype: 'created_at',
+          page: currentPage,
+        }
+      };
+        const fetchPosts = async () => {
+            try {
+                //const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+                const response = await axios.get(`https://bloodtrail.site/post`,config);
+                if (response.data.isSuccess && response.data.code === 2000) { 
+                  console.log(response.data);           
+                  setPosts(response.data.result[1]);
+                  setCurrentPage(response.data.result.currentPage);
+                  setTotalPages(response.data.result.totalPages);
+              } else {
+                  console.error("Failed to fetch posts: ", response.data.message);
+              }
+            } catch (error) {
+                console.error("게시글을 불러오는 데 실패했습니다.", error);
+            }
+        };
+
+        fetchPosts();
+        }, [currentPage]);
+    
 
   return (
     <Container>
@@ -376,15 +388,16 @@ const Community = () => {
 
         <BoardContainer>
           <CardContainer>
-            {currentPosts.map((post) => (
+            {posts.map(post => (
               <CardTmp
                 board='community'
-                cardType={`type${((post.id / 4) % 2) + 1}`}
-                selectBloodType="B-"
-                key={post.id}
-                userId={post.userId}
+
+                cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
+                key={post._id}
+                userId={post.writer.nickname}
+                thumb={post.image && post.image.length > 0 ? post.image : undefined}
                 title={post.title}
-                body={post.body}
+                body={post.title}
               />
             ))}
           </CardContainer>
