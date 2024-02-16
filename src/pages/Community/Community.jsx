@@ -391,7 +391,7 @@ const Community = () => {
                 cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
                 key={post._id}
                 userId={post.writer.nickname}
-                thumb={post.image && post.image.length > 0 ? post.image : undefined}
+                thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
                 title={post.title}
                 body={post.title}
               />

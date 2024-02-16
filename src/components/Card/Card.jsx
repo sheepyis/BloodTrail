@@ -142,6 +142,7 @@ const CardTmp = ({
   body,
   userId,
   forOtherPost,
+  thumb,
 }) => {
   const displayTitle = forOtherPost ? title.slice(0, 20) : title.slice(0, 32);
   const displayBody =
@@ -157,6 +158,7 @@ const CardTmp = ({
     userId,
     forOtherPost,
   });
+
   return (
     <Link
       to={linkPath}
@@ -166,7 +168,7 @@ const CardTmp = ({
         <CardNameContainer>
           <CardUser>
             <UserImg src={Ellipse8} alt="UserImg" />
-            <UserName>{title.slice(0, 10)}</UserName>
+            <UserName>{userId.slice(0, 10)}</UserName>
           </CardUser>
           <DotImg src={dot} alt="DotImg" />
         </CardNameContainer>
