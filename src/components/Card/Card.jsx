@@ -4,6 +4,8 @@ import Ellipse8 from '../../assets/images/Ellipse8.png';
 import dot from '../../assets/images/dot.png';
 import dot2 from '../../assets/images/dot2.png';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 const Card = styled.div`
   display: flex;
@@ -133,9 +135,9 @@ const CardPhoto = styled.div`
   margin-bottom: 0.7813vw;
 `;
 
-// CardTmp 컴포넌트 정의, selectBloodType을 prop으로 받음
 const CardTmp = ({
   board,
+  _id,
   cardType,
   selectBloodType,
   title,
@@ -147,7 +149,10 @@ const CardTmp = ({
   const displayTitle = forOtherPost ? title.slice(0, 20) : title.slice(0, 32);
   const displayBody =
     cardType === 'type2' ? body.slice(0, 40) : body.slice(0, 70);
-  const linkPath = `../../components/SinglePost/Singlepost?board=${board}`;
+  const linkPath = {
+    pathname: "../../components/SinglePost/SinglePost", // SinglePost 컴포넌트의 라우트
+    search: queryString.stringify({ board, _id }), // board와 _id 값을 쿼리 스트링으로 변환
+  };
 
   console.log({
     board,
@@ -157,6 +162,7 @@ const CardTmp = ({
     body,
     userId,
     forOtherPost,
+    _id,
   });
 
   return (
@@ -168,7 +174,7 @@ const CardTmp = ({
         <CardNameContainer>
           <CardUser>
             <UserImg src={Ellipse8} alt="UserImg" />
-            <UserName>{userId.slice(0, 10)}</UserName>
+            <UserName>{userId}</UserName>
           </CardUser>
           <DotImg src={dot} alt="DotImg" />
         </CardNameContainer>
