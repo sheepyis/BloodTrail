@@ -285,68 +285,52 @@ const DropdownSearch = styled.div`
 `;
 
 const Community = () => {
-  const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
 
-  const [selectedSort, setSelectedSort] = useState('신규순');
-  const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
+    const [selectedSort, setSelectedSort] = useState("신규순");
+    const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+
+    const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
+
 
   const handleSortSelection = (sortType) => {
     setSelectedSort(sortType);
     setIsSortBoxVisible(false);
   };
 
-  const [posts, setPosts] = useState([]); // 게시글 데이터를 저장할 상태
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-  const [postType, setPostType] = useState('FREE'); // 게시판 유형
-  const [sortType, setSortType] = useState('created_at'); // 정렬 유형
-  const [pageType, setPageType] = useState('line'); // 페이지 보기 방식
-
-  // 현재 페이지에 따라 표시할 게시글을 계산
-  const indexOfLastPost = currentPage * POSTS_PER_PAGE;
-  const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
-  // 페이지 번호를 설정하는 함수
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  const pageCount = Math.ceil(posts.length / POSTS_PER_PAGE);
-
   useEffect(() => {
-    const fetchData = async () => {
-      // 액세스 토큰을 localStorage에서 가져옵니다.
-      const accessToken = localStorage.getItem('accessToken');
-
+    const accessToken = localStorage.getItem('accessToken');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: {
+      pagetype: 'line',
+      posttype: 'FREE',
+      sorttype: 'created_at',
+      page: currentPage,
+    },
+  };
+    const fetchPosts = async () => {
       try {
-        const response = await axios.get('https://bloodtrail.site/post', {
-          params: {
-            pagetype: pageType,
-            posttype: postType,
-            sorttype: sortType,
-            page: currentPage,
-          },
-          headers: {
-            // 'Authorization' 헤더에 'Bearer' 토큰을 추가합니다.
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        // 서버 응답 확인
-        console.log(response.data);
-
-        // 예상한 배열 형태가 아닐 경우 조건부 처리
-        if (Array.isArray(response.data)) {
-          setPosts(response.data);
+        const response = await axios.get('https://bloodtrail.site/post',config);
+        if (response.data.isSuccess && response.data.code === 2000) { 
+          console.log(response.data);           
+          setPosts(response.data.result[1]);
+          setCurrentPage(response.data.result.currentPage);
+          setTotalPages(response.data.result.totalPages);
         } else {
-          // response.data가 배열이 아닐 경우 적절한 처리 필요
-          setPosts(response.data.posts || []);
+        console.error("Failed to fetch posts: ", response.data.message);
         }
-      } catch (error) {
-        console.error('데이터를 불러오는 중 오류 발생:', error);
-        setPosts([]); // 오류 시 posts를 빈 배열로 초기화
+       } catch (error) {
+        console.error('게시글을 불러오는 데 실패했습니다.', error);
       }
     };
 
-    fetchData();
-  }, [currentPage, postType, sortType, pageType]);
+    fetchPosts();
+  }, [currentPage]);
 
   return (
     <Container>
@@ -403,14 +387,13 @@ const Community = () => {
           <CardContainer>
             {posts.map((post) => (
               <CardTmp
-                key={post._id} // 고유한 key 값으로 게시글의 _id를 사용
-                userId={post.writer.id}
-                nickname={post.writer.nickname}
+                board='community'
+                cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
+                key={post._id}
+                userId={post.writer.nickname}
+                thumb={post.image && post.image.length > 0 ? post.image : undefined}
                 title={post.title}
-                likes={post.likes}
-                watchCount={post.watch_count}
-                createdAt={post.created_at}
-                // 여기에 CardTmp 컴포넌트에 필요한 다른 props를 추가하세요
+                body={post.title}
               />
             ))}
           </CardContainer>

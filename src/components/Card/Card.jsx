@@ -177,12 +177,12 @@ const CardTmp = ({
 
         <CardTitle>
           <CardTitleP>{displayTitle}</CardTitleP>
-          <BloodType>{selectBloodType}</BloodType>
+          {board == 'blood' && <BloodType>{selectBloodType}</BloodType>}
         </CardTitle>
 
         <CardContent>
-          <CardP className={cardType}>{displayBody}</CardP>
-          {!forOtherPost && (
+        <CardP className={cardType}>{displayBody}</CardP>
+        {!forOtherPost && board == 'blood' && (
             <CardRequestPeriod>
               <Period1>요청기간</Period1>
               <Period2>~2023.12.14</Period2>
