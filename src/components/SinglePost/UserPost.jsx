@@ -193,7 +193,6 @@ const ChatButton = styled.div`
 `;
 
 const PostDetailPage = ({board,_id}) => {
-
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
@@ -206,13 +205,12 @@ const PostDetailPage = ({board,_id}) => {
     const fetchPosts = async () => {
       try {
           const accessToken = localStorage.getItem('accessToken');
-          const response = await axios.patch(`https://bloodtrail.site/post/${_id}`, {
+          const response = await axios.patch(`https://bloodtrail.site/post/${_id}`, {}, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         if (response.data.isSuccess && response.data.code === 2000) { 
           console.log(response.data);      
-          console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");     
-          setPosts(response.data);
+          setPosts(response.data.result);
         } else {
           console.error("Failed to fetch posts: ", response.data.message);
         }
@@ -224,29 +222,29 @@ const PostDetailPage = ({board,_id}) => {
     fetchPosts();
   }, [board,_id]);
 
-  const post = PostDetail[0]; // axios로 받아오기
-  const postss = PostDetail[0];
+  // const post = PostDetail[0]; // axios로 받아오기
+  // const postss = PostDetail[0];
 
-  if (!postss) {
-    return <div>Loading...</div>;
-  }
+  // if (!postss) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <PageLayout>
       <Header>
         <HeaderText>
-          {postss.title}
+          {posts && posts.title}
         </HeaderText>
         <TitleDetail>
           <UserInfo>
-            <div>{postss.id}</div>
+            <div>{posts && posts.writer.nickname}</div>
           </UserInfo>
           <div>
             <CopyButton onClick={() => {
               const pathToCopy = " and other links";
               navigator.clipboard.writeText(window.location.href + pathToCopy)
                 .then(() => {
-                  alert('URL copied to clipboard!');
+                  alert('링크가 복사되었습니다.');
                 })
                 .catch(err => {
                   console.error('Failed to copy: ', err);
@@ -261,14 +259,14 @@ const PostDetailPage = ({board,_id}) => {
         </TitleDetail>
         <Divider />
         <InteractionBar>
-          <div>조회수 {postss.id}</div>{/*watch_count}</div>*/}
-          <div>공감수 {postss.id} </div>
+          <div>조회수 {posts && posts.watch_count}</div>
+          <div>공감수 {posts && posts.likes} </div>
         </InteractionBar>
       </Header>
 
       {board == 'blood' && (
         <TagContainer>
-          {post.tags && post.tags.map((tag, index) => (
+          {posts.tags && posts.tags.map((tag, index) => (
             <Tag key={index}>
               <TagCategory>{tag.category}</TagCategory>
               {tag.text}
@@ -279,7 +277,7 @@ const PostDetailPage = ({board,_id}) => {
 
       <ContentArea />
       <Details>
-        {postss.body}
+        {posts && posts.content}
       </Details>
       <FooterBar>
         <LeftContainer>
@@ -288,7 +286,7 @@ const PostDetailPage = ({board,_id}) => {
             <IconWrapper color="#F3777A" hoverColor="#E95458">
               <HeartIcon /> 
             </IconWrapper>
-            {postss.id}
+            {posts && posts.likes}
           </HeartWrapper>
           <IconWrapper color="#464A4D" hoverColor="#464A4D">
             <ShareIcon /> 
