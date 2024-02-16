@@ -166,6 +166,25 @@ const Dday=()=>{
       window.location.href='/';
     };
 
+    const handleWithdraw = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.patch('https://bloodtrail.site/auth/withdraw', null, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        alert('탈퇴되었습니다.');
+        localStorage.removeItem('accessToken');
+        setIsLoggedIn(false);
+        setUserData(null);
+        console.log(response.data);
+        window.location.href = '/';
+      } catch (error) {
+        console.error('Error: ', error);
+      }
+    };
+
     return (
     <>
     <HomeContainer>
@@ -190,10 +209,8 @@ const Dday=()=>{
             </RecContent>
             {isLoggedIn ? (
             <LoginContainer>
-            <FindP></FindP>
-            <Link to ="/">
-                <FindP onClick={handleLogout}>로그아웃</FindP>
-            </Link>
+              <FindP style={{cursor: "pointer"}} onClick={handleLogout}>로그아웃</FindP>
+              <FindP style={{cursor: "pointer"}} onClick={handleWithdraw}>탈퇴하기</FindP>
             </LoginContainer>
             ) : (
             <LoginContainer>
