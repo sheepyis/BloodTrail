@@ -9,6 +9,8 @@ import CardTmp from '../../components/Card/Card';
 import { Link } from "react-router-dom";
 // import BoardDropdown from "./BoardDropdown/BoardDropdown";
 import axios from "axios";
+import Sidebar from "../../components/Navigation/Sidebar";
+import Breadcrums from "../../components/Navigation/Breadcrums";
 
 const Container = styled.div`
     display: flex;
@@ -23,31 +25,8 @@ const BloodP = styled.p`
     color: ${colors.crewGray};
 `
 
-const BloodP2 = styled.p`
-    font-weight: 600;
-    font-size: 0.75vw;
-    color: ${colors.mainRed};
-    margin-top: 1.5vw;
-    cursor: pointer;
-`
-
-const SideBar = styled.div`
-    width: 17%;
-    padding-left: 2.5%;
-`
 const MainConationer =styled.div`
     width: 67%;
-`
-
-const Breadcrums = styled.div`
-    display: flex;
-    gap: 0.5vw;
-`
-const BreadcrumsP = styled.div`
-    font-weight: 500;
-    font-size: 0.6vw;
-    color: ${colors.crewGray2};
-    cursor: pointer;
 `
 
 const RightMiddle = styled.div`
@@ -355,24 +334,11 @@ const Blood = () => {
     
     return (
       <Container>
-        <SideBar>
-            <BloodP>지정헌혈</BloodP>
-            <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>지정헌혈 요청 글</BloodP>
-            <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>지정헌혈 요청하기</BloodP>
-            <Link to="/blood/bloodpremium" style={{ textDecoration: 'none' }}>
-            <BloodP2>지정헌혈 프리미엄</BloodP2>
-            </Link>
-            <BloodP style={{marginTop: "1.5vw", fontSize: "0.75vw"}}>내가 쓴 글 보기</BloodP>
-        </SideBar>
+        <Sidebar pageLabel="지정헌혈" currentPage="지정헌혈 프리미엄"/>
+
 
         <MainConationer>
-        <Breadcrums>
-            <BreadcrumsP>홈</BreadcrumsP>
-            <BreadcrumsP>{">"}</BreadcrumsP>
-            <BreadcrumsP>지정헌혈</BreadcrumsP>
-            <BreadcrumsP>{">"}</BreadcrumsP>
-            <BreadcrumsP>지정헌혈 요청 글</BreadcrumsP>
-        </Breadcrums>
+        <Breadcrums pageLabel="지정헌혈" currentPage="지정헌혈 프리미엄"/>
 
         <BloodP style={{marginTop: "2vw", fontSize: '1.2vw'}}>지정헌혈 프리미엄</BloodP>
         <RightMiddle>

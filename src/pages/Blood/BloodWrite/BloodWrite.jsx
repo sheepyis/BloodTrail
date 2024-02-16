@@ -11,6 +11,11 @@ import Mark from '../../../assets/images/alert-circle 1.png';
 import Mark2 from '../../../assets/images/check-square 1.png';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import CreditModal from '../../../components/Credit/CreditModal';
+import Sidebar from "../../../components/Navigation/Sidebar";
+import Breadcrums from "../../../components/Navigation/Breadcrums";
+import axios from 'axios';
+
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -23,34 +28,6 @@ const CrewP = styled.p`
   font-weight: 500;
   font-size: 0.9vw;
   color: ${colors.crewGray};
-`;
-
-const CrewP2 = styled.p`
-  font-weight: 600;
-  font-size: 0.75vw;
-  color: ${colors.mainRed};
-  margin-top: 1.5vw;
-  cursor: pointer;
-`;
-
-const CrewP3 = styled.p`
-  font-weight: 600;
-  font-size: 0.75vw;
-  color: ${colors.crewGray2};
-  margin-top: 1.5vw;
-  cursor: pointer;
-`;
-
-const CrewP4 = styled.p`
-  font-weight: 600;
-  font-size: 0.75vw;
-  color: ${colors.crewGray2};
-  cursor: pointer;
-`;
-
-const RightTop = styled.div`
-  display: flex;
-  gap: 0.5vw;
 `;
 
 const RightMiddle = styled.div`
@@ -356,7 +333,7 @@ const RowContainer = styled.div`
   gap: 1vw;
 `;
 
-const BloodWrite = () => {
+const BloodWrite = ({isCredit}) => {
   const [imageFile, setImageFile] = useState(null);
   const [registrationNumber, setRegistrationNumber] = useState('');
   const [bloodProduct, setBloodProduct] = useState('');
@@ -364,20 +341,20 @@ const BloodWrite = () => {
   const [requirePlace, setRequirePlace] = useState('');
   const [bloodType, setBloodType] = useState('');
 
-  const handleRegistrationNumberChange = (e) =>
-    setRegistrationNumber(e.target.value);
+  const handleRegistrationNumberChange = (e) => setRegistrationNumber(e.target.value);
   const handleBloodProductChange = (e) => setBloodProduct(e.target.value);
   const handleRequireDayChange = (e) => setRequireDay(e.target.value);
   const handleRequirePlaceChange = (e) => setRequirePlace(e.target.value);
   const handleBloodTypeChange = (e) => setBloodType(e.target.value);
 
   const handleSubmit = async () => {
+    const title = titleEditableRef.current ? titleEditableRef.current.value : '';
+    const content = contentEditableRef.current ? contentEditableRef.current.innerText : '';
+
     const formData = new FormData();
-    formData.append(
-      'title',
-      document.querySelector('input[type="text"]').value
-    );
-    formData.append('content', contentEditableRef.current.innerText);
+
+    formData.append('title', title);
+    formData.append('content', content);
     formData.append('registrationNumber', registrationNumber);
     formData.append('bloodProduct', bloodProduct);
     formData.append('requireDay', requireDay);
@@ -389,26 +366,21 @@ const BloodWrite = () => {
     }
 
     try {
-      const response = await fetch('여기에_백엔드_API_엔드포인트_입력', {
-        method: 'POST',
-        body: formData,
-        // headers: {
-        //   'Authorization': 'Bearer 여기에_토큰_입력'
-        // },
+      const response = await axios.post("https://bloodtrail.site/blood", formData, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰 추가
+        },
       });
-
-      if (response.ok) {
-        // 요청이 성공적으로 처리됐을 때의 로직
-        const data = await response.json(); // JSON 응답 처리
+      console.log(response);
+      if (response.data.isSuccess) {
+        const data = await response;
         console.log('성공:', data);
         alert('글이 성공적으로 등록되었습니다.');
       } else {
-        // 서버 에러 처리
-        console.error('서버 에러:', response.statusText);
-        alert('글 등록에 실패했습니다.');
+        console.error('실패:', response.data.message);
+        alert(`${response.data.message}`);
       }
     } catch (error) {
-      // 네트워크 에러 처리
       console.error('네트워크 에러:', error);
       alert('글 등록 중 문제가 발생했습니다.');
     }
@@ -439,6 +411,7 @@ const BloodWrite = () => {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
+  const titleEditableRef = useRef(null);
   const contentEditableRef = useRef(null);
 
   const handleImageChange = (event) => {
@@ -467,23 +440,14 @@ const BloodWrite = () => {
 
   return (
     <CrewContainer>
-      <div className="left" style={{ width: '17%', paddingLeft: '2.5%' }}>
-        <CrewP>지정헌혈</CrewP>
-        <CrewP3>지정헌혈 요청 글</CrewP3>
-        <CrewP2>지정헌혈 요청하기</CrewP2>
-        <CrewP3>지정헌혈 프리미엄</CrewP3>
-        <CrewP3>내가 쓴 글 보기</CrewP3>
-      </div>
+      <Sidebar pageLabel="지정헌혈" currentPage="지정헌혈 요청하기"/>
 
       <div className="right" style={{ width: '67%' }}>
-        <RightTop>
-          <CrewP4 to="/">홈</CrewP4>
-          <CrewP4>{'>'}</CrewP4>
-          <CrewP4>지정헌혈</CrewP4>
-          <CrewP4>{'>'}</CrewP4>
-          <CrewP4>글 작성하기</CrewP4>
-        </RightTop>
+      <Breadcrums pageLabel="지정헌혈" currentPage="지정헌혈 요청하기"/>
 
+        {isCredit && (
+                    <CreditModal />
+        )}
         <RightMiddle>
           <CrewP style={{ fontSize: '1.2vw' }}>글 작성하기</CrewP>
         </RightMiddle>
@@ -500,7 +464,10 @@ const BloodWrite = () => {
         />
 
         <TitleContainer>
-          <TitleInput placeholder="제목을 입력하세요."></TitleInput>
+          <TitleInput
+            ref={titleEditableRef}
+            placeholder="제목을 입력하세요."
+          ></TitleInput>
         </TitleContainer>
 
         <InformContainer
@@ -638,7 +605,7 @@ const BloodWrite = () => {
         </BlankBox>
 
         <EnrollContainer>
-          <Enroll>글 등록하기</Enroll>
+          <Enroll onClick={handleSubmit}>글 등록하기</Enroll>
         </EnrollContainer>
       </div>
     </CrewContainer>

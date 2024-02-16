@@ -111,11 +111,16 @@ const CrewDetail = () => {
     const [showReport, setShowReport] = useState(false);
     const [searchInput2, setSearchInput2] = useState('');
     
-
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`);
+                const accessToken = localStorage.getItem('accessToken');
+                const response = await axios.get(`https://bloodtrail.site/crew/detail/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                console.log(response.data);
                 setCrew(response.data);
                 setLoading(false);
             } catch (error) {
@@ -123,13 +128,9 @@ const CrewDetail = () => {
                 setLoading(false);
             }
         };
-
+    
         fetchData();
     }, [id]);
-
-    if (crew === null) {
-        return null;
-    }
 
     const handleCopyUrl = () => {
         const el = document.createElement('textarea');
@@ -162,14 +163,14 @@ const CrewDetail = () => {
                     <CrewP3>{">"}</CrewP3>
                     <CrewP3 to="/crew">헌혈크루</CrewP3>
                     <CrewP3>{">"}</CrewP3>
-                    <CrewP3>{crew && crew.name}</CrewP3>
+                    <CrewP3>{crew && crew.result.crew.crew_name}</CrewP3>
                 </RightTop>
 
                 <div className="rightTop" style={{marginTop: "1vw"}}>
                     <div className="top" style={{display: "flex", justifyContent: "space-between"}}>
                         <div className="name" style={{display: "flex", alignItems: "center", gap: "0.5vw"}}>
-                            <CrewP style={{fontWeight: "700", fontSize: "1.2vw"}}>{crew && crew.name}</CrewP>
-                            <CrewP style={{fontSize: "0.75vw", color: colors.crewGray3}}>{crew && crew.username}</CrewP>
+                            <CrewP style={{fontWeight: "700", fontSize: "1.2vw"}}>{crew && crew.result.crew.crew_name}</CrewP>
+                            <CrewP style={{fontSize: "0.75vw", color: colors.crewGray3}}>{crew && crew.result.crew_member[0].name}</CrewP>
                         </div>
                         <div className="copy" style={{display: "flex", alignItems: "center", gap: "0.5vw"}}>
                             <CopyButton onClick={handleCopyUrl}>URL 복사</CopyButton>
@@ -177,13 +178,13 @@ const CrewDetail = () => {
                             {showReport && <DotDiv>신고하기</DotDiv>}
                         </div>
                     </div>
-                    <CrewP style={{fontSize: "0.75vw", marginTop: "0.2rem"}}>{crew && crew.email}</CrewP>
+                    <CrewP style={{fontSize: "0.75vw", marginTop: "0.2rem"}}>{crew && crew.result.crew.description}</CrewP>
 
                     <DetailBox>
                         <div className="nowPoint" style={{display: "flex", alignItems: "center", gap: "1vw"}}>
                             <CrewP style={{fontSize: "0.9vw", color: colors.black}}>크루 현재 헌혈 포인트</CrewP>
                             <PointDiv>
-                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.id}</CrewP>
+                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.result.crew.now[0]}</CrewP>
                                 <CrewP style={{fontSize: "0.75vw", color: colors.crewGray2}}>Point</CrewP>
                             </PointDiv>
                         </div>
@@ -191,7 +192,7 @@ const CrewDetail = () => {
                         <div className="targetPoint" style={{display: "flex", alignItems: "center", gap: "1vw"}}>
                             <CrewP style={{fontSize: "0.9vw", color: colors.black}}>목표 헌혈 포인트</CrewP>
                             <PointDiv>
-                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.id}</CrewP>
+                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.result.crew.goal[0]}</CrewP>
                                 <CrewP style={{fontSize: "0.75vw", color: colors.crewGray2}}>Point</CrewP>
                             </PointDiv>
                         </div>
@@ -199,7 +200,7 @@ const CrewDetail = () => {
                         <div className="participation" style={{display: "flex", alignItems: "center", gap: "1vw"}}>
                             <CrewP style={{fontSize: "0.9vw", color: colors.black}}>목표 헌혈 참여율</CrewP>
                             <PointDiv style={{width: "4vw"}}>
-                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.id}</CrewP>
+                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.result.crew.goal[1]}</CrewP>
                                 <CrewP style={{fontSize: "0.75vw", color: colors.crewGray2}}>%</CrewP>
                             </PointDiv>
                         </div>
@@ -207,7 +208,7 @@ const CrewDetail = () => {
                 </div>
 
                 <CrewP style={{fontWeight: "700", marginTop: "1.5vw"}}>크루 멤버</CrewP>
-                <ListMember username={crew.username} />
+                {crew && <ListMember username={crew.result.crew_member[0].name} id={id}/>}
 
                 <div className="bar" style={{width: "100%", height: "0.5vw", border: "none", backgroundColor: colors.lightGray, marginBottom: "3vw"}}/>
 

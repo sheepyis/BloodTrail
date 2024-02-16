@@ -34,21 +34,30 @@ const DetailButton = styled.button`
     color: ${colors.mainRed};
 `;
 
-const ListMember = ({ username }) => {
+const ListMember = ({ id, username }) => {
     const [crewData, setCrewData] = useState([]);
+    const [crew, setCrew] = useState(null);
     const [isFull, setIsFull] = useState(false);
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/users')
-            .then(response => {
-                const data = response.data.slice(0, 5);
-                setCrewData(data);
-                setIsFull(data.length >= 5);
-            })
-            .catch(error => {
+        const fetchData = async () => {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+                const response = await axios.get(`https://bloodtrail.site/crew/detail/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                console.log("통신 성공");
+                console.log(response.data);
+                setCrewData(response.data.result.crew_member);
+            } catch (error) {
                 console.error('Error: ', error);
-            });
-    }, []);
+            }
+        };
+    
+        fetchData();
+    }, [id]);
 
     return (
         <>
@@ -56,10 +65,11 @@ const ListMember = ({ username }) => {
                 <StyleGrid>
                     {crewData.map((item, index) => (
                         <ItemMember
-                            key={item.id}
-                            id={item.id}
-                            name={item.username}
+                            key={item._id}
+                            id={item._id}
+                            name={item.name}
                             username={username}
+                            participationRate={item.participationRate}
                         />
                     ))}
                 </StyleGrid>

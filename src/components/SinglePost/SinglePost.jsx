@@ -1,18 +1,22 @@
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 import styled from "styled-components";
 import UserPost from "./UserPost";
 import OtherPost from "./OtherPost";
 import Comment from "./Comment";
+import Sidebar from '../../components/Navigation/Sidebar';
+import Breadcrums from '../../components/Navigation/Breadcrums';
 
-const Tmpblank = styled.div`
-  margin-top: 100px;
-`;
 
 const Homecontainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 65%; /* 통합된 width 속성 */
+  width: 100%; /* 통합된 width 속성 */
   margin: 0 auto; /* 상위 컨테이너를 중앙 정렬 */
+  margin-top: 4vw;
+
 `
 
 const Divider = styled.div`
@@ -21,17 +25,41 @@ const Divider = styled.div`
   margin-bottom: 10px; // 구분선 아래에 여백 추가
 `;
 
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  padding-top: 2vw;
+  margin-bottom: 4vw;
+`;
+
+const MainConationer = styled.div`
+  width: 67%;
+`;
+
+
 const SinglePost = () => {
+    const location = useLocation();
+    const { board, _id } = queryString.parse(location.search);
+
+    const pageLabel = board === 'community' ? '커뮤니티' : '지정헌혈';
+    const currentPage = board === 'community' ? '자유게시판' : '지정헌혈 요청 글';
+
     return (
-        <Tmpblank>
+      <Container>
+        <Sidebar pageLabel={pageLabel} currentPage={currentPage} />
+        <MainConationer>
+          <Breadcrums pageLabel={pageLabel} currentPage={currentPage} />
         <Homecontainer>
-          <UserPost />
+          <UserPost board={board} _id={_id}/>
           <Divider />
-          <Comment />
-          <Divider />
-          <OtherPost />
+          {board === 'community' && <>
+            <Comment board={board} _id={_id}/>
+            <Divider />
+          </>}
+          <OtherPost board={board} _id={_id}/>
         </Homecontainer>
-        </Tmpblank>
+        </MainConationer>
+    </Container>
     )
 }
 export default SinglePost;
