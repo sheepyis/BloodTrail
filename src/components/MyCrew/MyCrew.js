@@ -80,6 +80,10 @@ const MyCrew = () => {
     fetchData();
   }, []);
   
+  const handleCrewDetail = () => {
+    window.location.href = `/crewdetail/${myCrewData._id}`;
+  };
+
 
   return (
     <>
@@ -99,7 +103,7 @@ const MyCrew = () => {
                 width: '85%',
               }}
             >
-              <MyCrewP>{myCrewData.crew_name}</MyCrewP>
+              <MyCrewP onClick={handleCrewDetail} style={{cursor: "pointer"}}>{myCrewData.crew_name}</MyCrewP>
               <MyCrewP2>{myCrewData.description}</MyCrewP2>
             </div>
           </div>
