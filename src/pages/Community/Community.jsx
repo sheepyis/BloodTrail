@@ -11,9 +11,8 @@ import arrow_down from '../../assets/images/arrow-down.png';
 import { Link } from 'react-router-dom';
 import CardTmp from '../../components/Card/Card';
 import axios from 'axios';
-import Sidebar from "../../components/Navigation/Sidebar";
-import Breadcrums from "../../components/Navigation/Breadcrums";
-
+import Sidebar from '../../components/Navigation/Sidebar';
+import Breadcrums from '../../components/Navigation/Breadcrums';
 
 const Container = styled.div`
   display: flex;
@@ -105,9 +104,9 @@ const CardContainer = styled.div`
   width: 80%;
   padding-top: 2.6vw;
   padding-left: 1.8vw;
-  display: grid; 
+  display: grid;
   grid-template-columns: repeat(3, minmax(auto, 1fr));
-  align-items: center; 
+  align-items: center;
   justify-content: space-between;
   gap: 1.5vw;
 `;
@@ -296,8 +295,11 @@ const Community = () => {
     setIsSortBoxVisible(false);
   };
 
-  const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
+  const [posts, setPosts] = useState([]); // 게시글 데이터를 저장할 상태
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+  const [postType, setPostType] = useState('FREE'); // 게시판 유형
+  const [sortType, setSortType] = useState('created_at'); // 정렬 유형
+  const [pageType, setPageType] = useState('line'); // 페이지 보기 방식
 
   // 현재 페이지에 따라 표시할 게시글을 계산
   const indexOfLastPost = currentPage * POSTS_PER_PAGE;
@@ -309,26 +311,49 @@ const Community = () => {
   const pageCount = Math.ceil(posts.length / POSTS_PER_PAGE);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchData = async () => {
+      // 액세스 토큰을 localStorage에서 가져옵니다.
+      const accessToken = localStorage.getItem('accessToken');
+
       try {
-        const response = await axios.get(
-          'https://jsonplaceholder.typicode.com/posts'
-        );
-        setPosts(response.data);
+        const response = await axios.get('https://bloodtrail.site/post', {
+          params: {
+            pagetype: pageType,
+            posttype: postType,
+            sorttype: sortType,
+            page: currentPage,
+          },
+          headers: {
+            // 'Authorization' 헤더에 'Bearer' 토큰을 추가합니다.
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        // 서버 응답 확인
+        console.log(response.data);
+
+        // 예상한 배열 형태가 아닐 경우 조건부 처리
+        if (Array.isArray(response.data)) {
+          setPosts(response.data);
+        } else {
+          // response.data가 배열이 아닐 경우 적절한 처리 필요
+          setPosts(response.data.posts || []);
+        }
       } catch (error) {
-        console.error('게시글을 불러오는 데 실패했습니다.', error);
+        console.error('데이터를 불러오는 중 오류 발생:', error);
+        setPosts([]); // 오류 시 posts를 빈 배열로 초기화
       }
     };
 
-    fetchPosts();
-  }, []);
+    fetchData();
+  }, [currentPage, postType, sortType, pageType]);
 
   return (
     <Container>
-      <Sidebar pageLabel="커뮤니티" currentPage="자유게시판"/>
+      <Sidebar pageLabel="커뮤니티" currentPage="자유게시판" />
 
       <MainConationer>
-        <Breadcrums pageLabel="커뮤니티" currentPage="자유게시판"/>
+        <Breadcrums pageLabel="커뮤니티" currentPage="자유게시판" />
 
         <RightMiddle>
           <CommunityP style={{ fontSize: '1.2vw' }}>자유게시판</CommunityP>
@@ -376,15 +401,16 @@ const Community = () => {
 
         <BoardContainer>
           <CardContainer>
-            {currentPosts.map((post) => (
+            {posts.map((post) => (
               <CardTmp
-                board='community'
-                cardType={`type${((post.id / 4) % 2) + 1}`}
-                selectBloodType="B-"
-                key={post.id}
-                userId={post.userId}
+                key={post._id} // 고유한 key 값으로 게시글의 _id를 사용
+                userId={post.writer.id}
+                nickname={post.writer.nickname}
                 title={post.title}
-                body={post.body}
+                likes={post.likes}
+                watchCount={post.watch_count}
+                createdAt={post.created_at}
+                // 여기에 CardTmp 컴포넌트에 필요한 다른 props를 추가하세요
               />
             ))}
           </CardContainer>
