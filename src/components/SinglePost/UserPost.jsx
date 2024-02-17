@@ -210,7 +210,7 @@ const PostDetailPage = ({board,_id}) => {
           const response = await axios.patch(`https://bloodtrail.site/post/${_id}`, {}, {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        if (response.data.isSuccess && response.data.code === 2000) { 
+        if (response.data.isSuccess) { 
           console.log(response.data);      
           setPosts(response.data.result);
         } else {
@@ -223,7 +223,45 @@ const PostDetailPage = ({board,_id}) => {
 
     fetchPosts();
   }, [board,_id]);
-  
+
+  const toggleLike = async () => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const currentPostResponse = await axios.patch(`https://bloodtrail.site/post/${_id}`, {}, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      const currentLikes = currentPostResponse.data.result.likes;
+      
+      const likeResponse = await axios.patch(`https://bloodtrail.site/post/${_id}/like`, {}, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      
+      if (likeResponse.data.isSuccess){
+          setPosts(currentPost => ({
+            ...currentPost,
+            likes: currentLikes + 1,
+          }));
+          alert(`공감 하였습니다.`);
+        }
+      else if (likeResponse.data.code==="BLOOD4002"){
+        const unlikeResponse = await axios.patch(`https://bloodtrail.site/post/${_id}/unlike`, {}, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        if (unlikeResponse.data.isSuccess)
+          setPosts(currentPost => ({
+            ...currentPost,
+            likes: currentLikes - 1,
+          }));
+          alert(`공감 취소 하였습니다.`);
+        }
+       else {
+        alert(likeResponse.data.message);
+      }
+    } catch (error) {
+      console.error('공감하기 요청 실패', error);
+    }
+  };
+
   return (
     <PageLayout>
       <Header>
@@ -280,7 +318,7 @@ const PostDetailPage = ({board,_id}) => {
       <FooterBar>
         <LeftContainer>
         <InteractionButtons>
-          <HeartWrapper>
+          <HeartWrapper onClick={toggleLike}>
             <IconWrapper color="#F3777A" hoverColor="#E95458">
               <HeartIcon /> 
             </IconWrapper>
