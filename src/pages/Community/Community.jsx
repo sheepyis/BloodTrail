@@ -292,7 +292,9 @@ const Community = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(10);
 
-    const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
+    const [bestPosts,setBestPosts] = useState([]);
+    const [posts, setPosts] = useState([]);
+    
 
 
   const handleSortSelection = (sortType) => {
@@ -318,7 +320,8 @@ const Community = () => {
       try {
         const response = await axios.get('https://bloodtrail.site/post',config);
         if (response.data.isSuccess && response.data.code === 2000) { 
-          console.log(response.data);           
+          console.log(response.data);    
+          setBestPosts(response.data.result[0]);
           setPosts(response.data.result[1]);
           setTotalPages(10);//response.data.result.totalPages);
         } else {
@@ -334,7 +337,6 @@ const Community = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    
   };
   
   return (
@@ -390,19 +392,23 @@ const Community = () => {
         />
 
         <BoardContainer>
-          <CardContainer>
-            {posts.map((post) => (
-              <CardTmp
-                board='community'
-                _id={post._id}
-                cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
-                key={post._id}
-                userId={post.writer.nickname}
-                thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
-                title={post.title}
-                body={post.content}
-              />
-            ))}
+        <CardContainer>
+          {[
+            ...bestPosts.map(post => ({ ...post, best: true })),
+            ...posts
+          ].map((post) => (
+            <CardTmp
+              board='community'
+              _id={post._id}
+              cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
+              key={post._id}
+              userId={post.writer.nickname}
+              thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
+              title={post.title}
+              body={post.content}
+              best={post.best} 
+            />
+          ))}
           </CardContainer>
 
           <WritePostContainer>
