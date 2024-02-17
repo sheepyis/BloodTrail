@@ -100,9 +100,11 @@ const TagCategory = styled.div`
 const ContentArea = styled.div`
   width: 80%;
   background-color: #D9D9D9;
-  min-height: 15vw;
-  padding: 1vw;
   margin-bottom: 2vw;
+  background-image: url(${props => props.image});
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
 `;
 
 const Details = styled.div`
@@ -221,14 +223,7 @@ const PostDetailPage = ({board,_id}) => {
 
     fetchPosts();
   }, [board,_id]);
-
-  // const post = PostDetail[0]; // axios로 받아오기
-  // const postss = PostDetail[0];
-
-  // if (!postss) {
-  //   return <div>Loading...</div>;
-  // }
-
+  
   return (
     <PageLayout>
       <Header>
@@ -274,8 +269,11 @@ const PostDetailPage = ({board,_id}) => {
           ))}
         </TagContainer>
       )}
-
-      <ContentArea />
+      <ContentArea>
+      {posts && posts.image && posts.image.map((image, index) => (
+        <img key={index} src={image} alt={`Post Image ${index + 1}`} style={{ width: '100%'}} />
+      ))}
+      </ContentArea>
       <Details>
         {posts && posts.content}
       </Details>

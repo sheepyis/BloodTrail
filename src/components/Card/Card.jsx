@@ -126,12 +126,12 @@ const Period2 = styled.div``;
 
 const CardPhoto = styled.div`
   width: 100%;
-  height: ${(props) =>
-    props.forOtherPost
-      ? '6.5vw'
-      : '8.5417vw'}; // forOtherPost가 true일 때는 높이를 조금 줄입니다.
+  height: ${(props) => props.forOtherPost? '6.5vw' : '8.5417vw'};
   flex-shrink: 0;
   background: var(--image, #d9d9d9);
+  background: ${(props) => (props.thumb ? `url(${props.thumb})` : 'var(--image, #d9d9d9)')};
+  background-size: cover;
+  background-position: center;
   margin-bottom: 0.7813vw;
 `;
 
@@ -180,7 +180,7 @@ const CardTmp = ({
         </CardNameContainer>
 
         {cardType === 'type2' && (
-          <CardPhoto forOtherPost={forOtherPost}></CardPhoto>
+          <CardPhoto forOtherPost={forOtherPost} thumb={thumb}></CardPhoto>
         )}
 
         <CardTitle>
