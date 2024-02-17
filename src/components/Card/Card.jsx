@@ -151,7 +151,7 @@ const CardTmp = ({
     cardType === 'type2' ? body.slice(0, 40) : body.slice(0, 70);
   const linkPath = {
     pathname: "../../components/SinglePost/SinglePost", // SinglePost 컴포넌트의 라우트
-    search: queryString.stringify({ board, _id }), // board와 _id 값을 쿼리 스트링으로 변환
+    search: queryString.stringify({ board, _id  }), // board와 _id 값을 쿼리 스트링으로 변환
   };
 
   console.log({

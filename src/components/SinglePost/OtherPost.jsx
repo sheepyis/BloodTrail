@@ -143,7 +143,7 @@ const OtherPosts = ({board,_id}) => {
     <OtherPostsSection>
       <HeaderContainer>
         <OtherPostsHeader>다른 글 보기</OtherPostsHeader>
-        <BoardListButton>게시판 목록</BoardListButton>
+        <Link to={"/community"}><BoardListButton>게시판 목록</BoardListButton></Link>
       </HeaderContainer>
 
       <PostsLists>
