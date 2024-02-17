@@ -290,7 +290,7 @@ const Community = () => {
     const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState(10);
 
     const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
 
@@ -298,6 +298,7 @@ const Community = () => {
   const handleSortSelection = (sortType) => {
     setSelectedSort(sortType);
     setIsSortBoxVisible(false);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -319,10 +320,9 @@ const Community = () => {
         if (response.data.isSuccess && response.data.code === 2000) { 
           console.log(response.data);           
           setPosts(response.data.result[1]);
-          setCurrentPage(response.data.result.currentPage);
-          setTotalPages(response.data.result.totalPages);
+          setTotalPages(10);//response.data.result.totalPages);
         } else {
-        console.error("Failed to fetch posts: ", response.data.message);
+          console.error("Failed to fetch posts: ", response.data.message);
         }
        } catch (error) {
         console.error('게시글을 불러오는 데 실패했습니다.', error);
@@ -330,8 +330,13 @@ const Community = () => {
     };
 
     fetchPosts();
-  }, [currentPage]);
+  }, [currentPage, selectedSort]);
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    
+  };
+  
   return (
     <Container>
       <Sidebar pageLabel="커뮤니티" currentPage="자유게시판" />
@@ -341,6 +346,7 @@ const Community = () => {
 
         <RightMiddle>
           <CommunityP style={{ fontSize: '1.2vw' }}>자유게시판</CommunityP>
+
           <SortContainer>
             <img
               src={SortBoxYes}
@@ -421,17 +427,32 @@ const Community = () => {
               <DropdownImg src={arrow_down} alt="arrow_down" />
             </DropdownSearchBox>
           </SearchContainer>
+
           <PagnationContainer>
-            <PagnationImg src={arrow_12px2} alt="arrow2" />
-            <PagnaionNumber>1</PagnaionNumber>
-            <PagnaionNumber>2</PagnaionNumber>
-            <PagnaionNumber>3</PagnaionNumber>
-            <PagnaionNumber>4</PagnaionNumber>
-            <PagnaionNumber>5</PagnaionNumber>
-            <DotImg2 src={dot2} alt="dot2" />
-            <PagnaionNumber2>N</PagnaionNumber2>
-            <PagnationImg2 src={arrow_12px2} alt="arrow2" />
+                {currentPage > 1 && (
+                    <PagnationImg src={arrow_12px2}
+                    alt="Prev Page"
+                    onClick={() => handlePageChange(currentPage - 1)}/>
+                )}
+
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <PagnaionNumber
+                        key={i + 1}
+                        onClick={() => handlePageChange(i + 1)}
+                        style={{ fontWeight: currentPage === i + 1 ? 'bold' : 'normal' }}
+                    >
+                        {i + 1}
+                    </PagnaionNumber>
+                ))}
+                {currentPage < totalPages && (
+                    <PagnationImg2
+                        src={arrow_12px2}
+                        alt="Next Page"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                    />
+                )}
           </PagnationContainer>
+
         </BoardContainer>
       </MainConationer>
     </Container>
