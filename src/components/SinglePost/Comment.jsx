@@ -48,13 +48,13 @@ const Button = styled.button`
 `;
 
 const ConfirmButton = styled(Button)`
-  border-color: #FFB2B5; // 분홍색 테두리
+  border-color: #FFB2B5;
   &:hover {
     background-color: #FFB2B5;
   }
 `;
 
-const CancelButton = styled(Button)` // 취소 버튼에 대한 추가 스타일
+const CancelButton = styled(Button)`
   font-size: 0.6vw;
   border: 0.1vw solid #EEEEEE;
   &:hover {
@@ -75,7 +75,6 @@ const CommentList = styled.div`
 
 const CommentWrapper = styled.div`
   font-size: 0.6vw;
-  
 `;
 
 const CommentHeader = styled.div`
@@ -106,6 +105,8 @@ const DotIcon = styled.img`
 const DropdownMenu = styled.div`
   font-size: 0.6vw;
   position: absolute;
+  right: 0;
+  transform: translateX(-14vw) translateY(1.5vw);
   background-color: #fff;
   border: 0.1vw solid #d1d1d1;
   border-radius: 0.4vw;
@@ -121,16 +122,26 @@ const DropdownItem = styled.div`
   cursor: pointer;
 `;
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = (`0${date.getMonth() + 1}`).slice(-2); // months are 0-based
+  const day = (`0${date.getDate()}`).slice(-2);
+  const hours = (`0${date.getHours()}`).slice(-2);
+  const minutes = (`0${date.getMinutes()}`).slice(-2);
+
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+};
 
 // 댓글을 표시할 컴포넌트
-const Comment = ({username, date, text, commentId}) => {
+const Comment = ({nickname, date, content}) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   return (
     <CommentWrapper>
       <CommentHeader>
-      <CommentWriter>user name</CommentWriter>
-      <CommentDate>작성 날짜</CommentDate>
+      <CommentWriter>{nickname}</CommentWriter>
+      <CommentDate>{formatDate(date)}</CommentDate>
       <DotIcon src={Dot} onClick={() => setIsDropdownVisible(!isDropdownVisible)} />
       {isDropdownVisible && (
           <DropdownMenu isVisible={isDropdownVisible}>
@@ -138,42 +149,88 @@ const Comment = ({username, date, text, commentId}) => {
           </DropdownMenu>
       )}
       </CommentHeader>
-      <CommentContent>{text}</CommentContent>
+      <CommentContent>{content}</CommentContent>
       <Divider />
     </CommentWrapper>
   );
 };
 
 // 댓글 목록과 입력 창을 포함하는 컴포넌트
-const CommentSection = ({board, _id}) => {
+const CommentSection = ({_id}) => {
 
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
 
   // 댓글을 추가하는 함수
-  const handleAddComment = async () => {
-    
-    if (commentInput.trim()) {    
+  const fetchComments = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.post(`https://bloodtrail.site/post/${_id}/comment`,
-        { content: commentInput },
+        const response = await axios.get(
+          `https://bloodtrail.site/post/${_id}/comment`,
         { headers: { Authorization: `Bearer ${accessToken}` }, });
     
         if (response.data.isSuccess) {
-          alert('댓글을 작성하였습니다.');
-          setCommentInput('');
-          window.reload();
+          const fetchedComments = response.data.result.map((comment) => ({
+            id: comment._id,
+            nickname: comment.commenter.nickname,
+            content: comment.comment,
+            created_at: comment.created_at,
+          }));
+          setComments(fetchedComments);
         } else {
           alert(response.data.message);
-          console.error("Failed to enroll comment: ", response);
+          console.error("Failed to fetch comment: ", response);
         }
       } catch (error) {
-        console.error('댓글 등록 중 오류가 발생했습니다.', error);
-        alert('댓글 등록에 실패했습니다.');
+        console.error('댓글 불러오는 중에 오류가 발생했습니다.', error);
+        alert('댓글 불러오기에 실패했습니다.');
       }
     };
-  };
+
+    useEffect(() => {
+      fetchComments();
+    }, []);
+    
+    const handleAddComment = async () => {
+      if (commentInput.trim()) {
+        setComments([...comments, commentInput]);
+        setCommentInput(''); // 입력 창을 비웁니다.
+        const accessToken = localStorage.getItem('accessToken');
+  
+        try {
+          const response = await axios.post(
+            `https://bloodtrail.site/post/${_id}/comment`,
+            { comment: commentInput },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+  
+          // 서버 응답에서 댓글 데이터 추출
+          const { commenter, comment, created_at } = response.data.result;
+  
+          // 새 댓글 객체 생성
+          const newComment = {
+            id: commenter.id, // 댓글 작성자의 ID
+            nickname: commenter.nickname, // 댓글 작성자의 닉네임
+            content: comment, // 댓글 내용
+            date: created_at,
+          };
+  
+          // 새 댓글을 comments 상태에 추가
+          setComments([...comments, newComment]);
+          setCommentInput(''); // 입력 창을 비웁니다.
+  
+          console.log('댓글 등록 성공:', response.data);
+          alert("댓글을 등록했습니다");
+        } catch (error) {
+          console.error('댓글 등록 실패:', error);
+          alert("댓글을 등록하지 못했습니다");
+        }
+      }
+    };
 
   // 댓글 입력 시 상태를 업데이트하는 함수
   const handleInputChange = (e) => {
@@ -191,26 +248,6 @@ const CommentSection = ({board, _id}) => {
   const handleCancel = () => {
     setCommentInput(''); // 입력 창을 비웁니다.
   };
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-          const accessToken = localStorage.getItem('accessToken');
-          const response = await axios.get(`https://bloodtrail.site/post/${_id}/comment`, {}, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        if (response.data.isSuccess) { 
-          setComments(response.data.result);
-        } else {
-          console.error("Failed to fetch comments: ", response.data.message);
-          console.error(response.data);
-        }
-       } catch (error) {
-        console.error('댓글을 불러오는 데 실패했습니다.', error);
-      }
-    };
-    fetchComments();
-  }, [board,_id]);
 
   return (
     <CommentSectionWrapper>
@@ -230,13 +267,13 @@ const CommentSection = ({board, _id}) => {
       </InputWrapper>
       <CommentList>
         <Divider/>
-        {comments.map((comment, indeex) => (
+        {comments.map((comment, index) => (
           <Comment
-            key={comment._id}
-            username={comment.commenter.nickname}
+            key={index}
+            nickname={comment.nickname}
             date={comment.created_at}
             text={comment.content}
-            commentId={comment._id}
+            content={comment.content}
             />
         ))}
       </CommentList>
