@@ -218,7 +218,6 @@ const PostDetailPage = ({board,_id}) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
     const fetchPosts = async () => {
       try {
           const accessToken = localStorage.getItem('accessToken');
