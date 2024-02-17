@@ -113,23 +113,32 @@ const settings = {
 };
 
 
-const OtherPosts = () => {
+const OtherPosts = ({board,_id}) => {
   const [posts, setPosts] = useState([]);
-  
-  useEffect(() => {
-  
-    const fetchPosts = async () => {
+
+    useEffect(() => {
+      const accessToken = localStorage.getItem('accessToken');
+      const fetchPosts = async () => {
         try {
-            const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-            setPosts(response.data.slice(0,9));
-        } catch (error) {
-            console.error("게시글을 불러오는 데 실패했습니다.", error);
+            const response = await axios.get(`https://bloodtrail.site/post/${_id}/recommend`, {}, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+          if (response.data.isSuccess) { 
+            console.log(response.data);      
+            setPosts(response.data.result);
+          } else {
+            console.error("Failed to fetch posts: ", response.data.message);
+            console.error(response.data);
+          }
+         } catch (error) {
+          console.error('게시글을 불러오는 데 실패했습니다.', error);
         }
-    };
-
-    fetchPosts();
-    }, []);
-
+      };
+  
+      fetchPosts();
+    }, [board,_id]);
+    
+    
   return (
     <OtherPostsSection>
       <HeaderContainer>
@@ -142,13 +151,14 @@ const OtherPosts = () => {
           {posts.map((post) => (
           <CardGap>
             <CardTmp
+              board='community'
               forOtherPost={true}
-              cardType = {`type${post.id/4 % 2 + 1}`}
-              selectBloodType="B-"
-              key={post.id}
-              userId = {post.userId}
+              _id={post._id}
+              cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
+              //userId={post.writer.nickname}
+              thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
               title={post.title}
-              body={post.body}
+              body={post.content}
             />
           </CardGap>
           ))}
