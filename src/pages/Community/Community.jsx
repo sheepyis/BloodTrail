@@ -71,6 +71,21 @@ const SortBox = styled.div`
   justify-content: space-between;
 `;
 
+const SortBox2 = styled.div`
+  width: 7.7604vw;
+  min-height: 5.8vw;
+  padding: 0.4vw 0;
+  border: 0.05vw solid ${colors.lightGray};
+  position: absolute; /* 절대 위치 설정 */
+  z-index: 1;
+  background-color: ${colors.white};
+  left: 0;
+  top: 100%;
+  display: ${({ show }) => (show ? 'flex' : 'none')};
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
 const HoverDiv = styled.div`
   width: 100%;
   height: 2.5vw;
@@ -260,7 +275,7 @@ const SearchImg = styled.img`
   height: 1.25vw;
   flex-shrink: 0;
 `;
-const DropdownSearchBox = styled.div`
+const DropdownSearchBox2 = styled.div`
   display: flex;
   flex-direction: row;
   width: 7.7604vw;
@@ -272,6 +287,7 @@ const DropdownSearchBox = styled.div`
   border: 0.0521vw solid var(--Gray-Gray-200, #eee);
   background: var(--black-white-white-1000, #fff);
   margin-left: 0.8333vw;
+  position: relative; /* 여기에 relative 위치 설정 추가 */
 `;
 const DropdownSearch = styled.div`
   width: 4.1667vw;
@@ -285,17 +301,94 @@ const DropdownSearch = styled.div`
 `;
 
 const Community = () => {
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [selectedSort, setSelectedSort] = useState('신규순');
+  const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
 
-    const [selectedSort, setSelectedSort] = useState("신규순");
-    const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(10);
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(10);
+  const [bestPosts, setBestPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-    const [bestPosts,setBestPosts] = useState([]);
-    const [posts, setPosts] = useState([]);
-    
+  const [searchType, setSearchType] = useState('제목'); // 검색 유형 상태 (기본값은 '제목')
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false); // 드롭다운 메뉴 표시 여부
 
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const handleSearchKeywordChange = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSearch = () => {
+    const searchTypeParam = searchType === '제목' ? 'title' : 'writer'; // '제목'이면 제목 기반으로, '작성자'면 작성자 기반으로 필터링
+
+    const filtered = posts.filter((post) => {
+      const targetValue = post[searchTypeParam].toLowerCase(); // 검색 유형에 따라 대상 값 설정
+      return targetValue.includes(searchKeyword.toLowerCase()); // 대상 값이 검색 키워드를 포함하는지 확인
+    });
+
+    setFilteredPosts(filtered); // 필터링된 포스트 상태 업데이트
+  };
+
+  useEffect(() => {
+    const searchTypeParam = searchType === '제목' ? 'title' : 'writer';
+
+    const filtered = posts.filter((post) => {
+      if (searchTypeParam === 'title') {
+        return post.title.toLowerCase().includes(searchKeyword.toLowerCase());
+      } else if (
+        searchTypeParam === 'writer' &&
+        post.writer &&
+        post.writer.nickname
+      ) {
+        return post.writer.nickname
+          .toLowerCase()
+          .includes(searchKeyword.toLowerCase());
+      }
+      return false;
+    });
+
+    setFilteredPosts(filtered);
+  }, [searchKeyword, searchType, posts]);
+
+  // const fetchSearchResults = async () => {
+  //   try {
+  //     const accessToken = localStorage.getItem('accessToken');
+  //     const searchTypeParam = searchType === '제목' ? 'title' : 'writer';
+  //     const url = `https://bloodtrail.site/post/find?type=${searchTypeParam}`;
+
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     };
+
+  //     const requestBody = {
+  //       keyword: searchKeyword,
+  //     };
+
+  //     const response = await axios.get(url, requestBody, config);
+
+  //     if (response.data.isSuccess) {
+  //       console.log('검색 결과:', response.data);
+  //     } else {
+  //       console.error('검색 실패:', response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('검색 중 오류 발생:', error);
+  //   }
+  // };
+
+  const handleDropdownSelection = (type) => {
+    setSearchType(type); // 선택한 검색 유형으로 상태 업데이트
+    setIsDropdownVisible(false); // 드롭다운 메뉴 숨기기
+  };
+
+  // 드롭다운 메뉴 토글 함수
+  const toggleDropdownMenu = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
 
   const handleSortSelection = (sortType) => {
     setSelectedSort(sortType);
@@ -305,29 +398,32 @@ const Community = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    params: {
-      pagetype: 'gallery',
-      posttype: 'FREE',
-      sorttype: 'created_at',
-      page: currentPage,
-    },
-  };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        pagetype: 'gallery',
+        posttype: 'FREE',
+        sorttype: 'created_at',
+        page: currentPage,
+      },
+    };
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('https://bloodtrail.site/post',config);
-        if (response.data.isSuccess && response.data.code === 2000) { 
-          console.log(response.data);    
+        const response = await axios.get(
+          'https://bloodtrail.site/post/',
+          config
+        );
+        if (response.data.isSuccess && response.data.code === 2000) {
+          console.log(response.data);
           setBestPosts(response.data.result[0]);
           setPosts(response.data.result[1]);
-          setTotalPages(10);//response.data.result.totalPages);
+          setTotalPages(10); //response.data.result.totalPages);
         } else {
-          console.error("Failed to fetch posts: ", response.data.message);
+          console.error('Failed to fetch posts: ', response.data.message);
         }
-       } catch (error) {
+      } catch (error) {
         console.error('게시글을 불러오는 데 실패했습니다.', error);
       }
     };
@@ -338,7 +434,7 @@ const Community = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  
+
   return (
     <Container>
       <Sidebar pageLabel="커뮤니티" currentPage="자유게시판" />
@@ -392,22 +488,26 @@ const Community = () => {
         />
 
         <BoardContainer>
-        <CardContainer>
-          {[
-            ...bestPosts.map(post => ({ ...post, best: true })),
-            ...posts
-          ].map((post) => (
-            <CardTmp
-              board='community'
-              _id={post._id}
-              cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
-              userId={post.writer.nickname}
-              thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
-              title={post.title}
-              body={post.content}
-              best={post.best} 
-            />
-          ))}
+          <CardContainer>
+            {filteredPosts.map((post) => (
+              <CardTmp
+                key={post._id}
+                board="community"
+                _id={post._id}
+                cardType={
+                  post.image && post.image.length > 0 ? 'type2' : 'type1'
+                }
+                userId={post.writer.nickname}
+                thumb={
+                  post.image && post.image.length > 0
+                    ? post.image[0]
+                    : undefined
+                }
+                title={post.title}
+                body={post.content}
+                best={post.best}
+              />
+            ))}
           </CardContainer>
 
           <WritePostContainer>
@@ -422,42 +522,61 @@ const Community = () => {
                 <input
                   className="search"
                   type="text"
-                  placeholder="글 제목을 입력하세요"
+                  placeholder={`${searchType}을(를) 입력하세요`}
+                  value={searchKeyword}
+                  onChange={handleSearchKeywordChange} // 검색 키워드 변경 핸들러 연결
                 />
               </SearchBar>
-              <SearchImg src={search1} alt="search1" />
+              <SearchImg
+                src={search1}
+                alt="search1"
+                onClick={handleSearch} // 검색 버튼 클릭 시 검색 요청 함수 호출
+              />
             </SearchBox>
-            <DropdownSearchBox>
-              <DropdownSearch>제목</DropdownSearch>
+            <DropdownSearchBox2 onClick={toggleDropdownMenu}>
+              <DropdownSearch>{searchType}</DropdownSearch>
               <DropdownImg src={arrow_down} alt="arrow_down" />
-            </DropdownSearchBox>
+              {isDropdownVisible && (
+                <SortBox2 show={isDropdownVisible}>
+                  <HoverDiv onClick={() => handleDropdownSelection('제목')}>
+                    제목
+                  </HoverDiv>
+                  <HoverDiv onClick={() => handleDropdownSelection('작성자')}>
+                    작성자
+                  </HoverDiv>
+                </SortBox2>
+              )}
+            </DropdownSearchBox2>
           </SearchContainer>
 
           <PagnationContainer>
-                {currentPage > 1 && (
-                    <PagnationImg src={arrow_12px2}
-                    alt="Prev Page"
-                    onClick={() => handlePageChange(currentPage - 1)}/>
-                )}
+            {currentPage > 1 && (
+              <PagnationImg
+                src={arrow_12px2}
+                alt="Prev Page"
+                onClick={() => handlePageChange(currentPage - 1)}
+              />
+            )}
 
-                {Array.from({ length: totalPages }, (_, i) => (
-                    <PagnaionNumber
-                        key={i + 1}
-                        onClick={() => handlePageChange(i + 1)}
-                        style={{ fontWeight: currentPage === i + 1 ? 'bold' : 'normal' }}
-                    >
-                        {i + 1}
-                    </PagnaionNumber>
-                ))}
-                {currentPage < totalPages && (
-                    <PagnationImg2
-                        src={arrow_12px2}
-                        alt="Next Page"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                    />
-                )}
+            {Array.from({ length: totalPages }, (_, i) => (
+              <PagnaionNumber
+                key={i + 1}
+                onClick={() => handlePageChange(i + 1)}
+                style={{
+                  fontWeight: currentPage === i + 1 ? 'bold' : 'normal',
+                }}
+              >
+                {i + 1}
+              </PagnaionNumber>
+            ))}
+            {currentPage < totalPages && (
+              <PagnationImg2
+                src={arrow_12px2}
+                alt="Next Page"
+                onClick={() => handlePageChange(currentPage + 1)}
+              />
+            )}
           </PagnationContainer>
-
         </BoardContainer>
       </MainConationer>
     </Container>
