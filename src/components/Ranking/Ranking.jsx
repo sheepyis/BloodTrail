@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import CrewRankingData from '../CrewRanking/list-crewRank';
+import CrewRankingData from '../HomeCrewRanking/list-homeCrewRanking';
 import UserRankingData from '../UserRanking/list-userRank';
 
 const RankingContainer = styled.div`

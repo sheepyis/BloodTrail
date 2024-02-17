@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import ItemCrewRank from './item-crewRank';
+import ItemCrewRank from './item-homeCrewRanking';
 import Left from '../../assets/images/arrowLeft.png';
 import { NavLink } from 'react-router-dom';
 
@@ -55,28 +55,15 @@ const ListCrewRank = () => {
       });
   }, [currentPage]);
 
-  const handleArrowClick = (direction) => {
-    if (direction === 'left' && currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    } else if (direction === 'right' && !isLastPage()) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
   
-  const isLastPage = () => {
-    return crewData.length === 0 || crewData.length < 6;
-  };
-
   return (
     <CrewRankContainer>
         <>
-          <CrewRank src={Left} alt="left" onClick={() => handleArrowClick('left')}/>
-
           <StyleGrid>
-            {crewData.map((crew, index) => (
+            {crewData.slice(0, 3).map((crew, index) => (
               <ItemCrewRank
                 key={index}
-                id={index + 1 + (currentPage - 1) * crewData.length} // 순위 계산
+                id={index + 1 + (currentPage - 1) * 3} // 순위 계산
                 name={crew.crew_name}
                 point={crew.now[1]}
                 isFirstPlace={index === 0}
@@ -84,7 +71,6 @@ const ListCrewRank = () => {
             ))}
           </StyleGrid>
 
-          <CrewRank src={Left} alt="right" style={{ transform: 'rotate(180deg)' }} onClick={() => handleArrowClick('right')}/>
         </>
     </CrewRankContainer>
   );
