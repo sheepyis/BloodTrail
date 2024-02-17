@@ -308,7 +308,7 @@ const Community = () => {
       Authorization: `Bearer ${accessToken}`,
     },
     params: {
-      pagetype: 'line',
+      pagetype: 'gallery',
       posttype: 'FREE',
       sorttype: 'created_at',
       page: currentPage,
@@ -400,7 +400,7 @@ const Community = () => {
                 userId={post.writer.nickname}
                 thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
                 title={post.title}
-                body={post.title}
+                body={post.content}
               />
             ))}
           </CardContainer>
