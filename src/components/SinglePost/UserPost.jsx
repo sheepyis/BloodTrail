@@ -224,6 +224,17 @@ const PostDetailPage = ({board,_id}) => {
     fetchPosts();
   }, [board,_id]);
 
+  const copyLink = async () => {
+      const pathToCopy = " and other links";
+      navigator.clipboard.writeText(window.location.href + pathToCopy)
+        .then(() => {
+          alert('링크가 복사되었습니다.');
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err);
+        });
+};
+
   const toggleLike = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -273,16 +284,7 @@ const PostDetailPage = ({board,_id}) => {
             <div>{posts && posts.writer.nickname}</div>
           </UserInfo>
           <div>
-            <CopyButton onClick={() => {
-              const pathToCopy = " and other links";
-              navigator.clipboard.writeText(window.location.href + pathToCopy)
-                .then(() => {
-                  alert('링크가 복사되었습니다.');
-                })
-                .catch(err => {
-                  console.error('Failed to copy: ', err);
-                });
-              }}>
+            <CopyButton onClick={copyLink}>
               URL 복사
             </CopyButton>
             <ReportButton onClick={() => {/* 신고 기능 구현 */}}>
@@ -324,7 +326,7 @@ const PostDetailPage = ({board,_id}) => {
             </IconWrapper>
             {posts && posts.likes}
           </HeartWrapper>
-          <IconWrapper color="#464A4D" hoverColor="#464A4D">
+          <IconWrapper onClick={copyLink} color="#464A4D" hoverColor="#464A4D">
             <ShareIcon /> 
           </IconWrapper>
         </InteractionButtons>
