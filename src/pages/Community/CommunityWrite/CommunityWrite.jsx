@@ -15,6 +15,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import axios from 'axios';
+import Sidebar from '../../../components/Navigation/Sidebar';
+import Breadcrums from '../../../components/Navigation/Breadcrums';
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -37,13 +39,6 @@ const CrewP2 = styled.p`
   cursor: pointer;
 `;
 
-const CrewP3 = styled(NavLink)`
-  font-weight: 500;
-  font-size: 0.6vw;
-  color: ${colors.crewGray2};
-  cursor: pointer;
-`;
-
 const CrewP4 = styled.p`
   color: var(--text-40, rgba(12, 11, 44, 0.4));
   font-family: Pretendard;
@@ -54,10 +49,6 @@ const CrewP4 = styled.p`
   letter-spacing: -0.0225rem;
 `;
 
-const RightTop = styled.div`
-  display: flex;
-  gap: 0.5vw;
-`;
 
 const RightMiddle = styled.div`
   display: flex;
@@ -70,6 +61,23 @@ const SortContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 1vw;
+  select {
+    width: 100%;
+    height: 2.5vw;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.1vw solid #d1d1d1;
+    padding: 0.5vw;
+
+    option {
+      color: #464A4D;
+    }
+
+    &:hover {
+      color: #F3777A;
+    }
+  }
 `;
 
 const SortDiv = styled.div`
@@ -126,9 +134,9 @@ const TitleInput = styled.input`
 const BlankBox = styled.div`
   margin-top: 1vw;
   width: 100%;
-  height: 30.6vw;
+  height: auto;
   fill: var(--black-white-white-1000, #fff);
-  stroke-width: 1px;
+  stroke-width: 0.1vw;
   stroke: var(--Gray-Gray-50, #fafafa);
 `;
 
@@ -211,30 +219,17 @@ const InputContent = styled.div`
   width: 100%;
   height: 78%;
   flex-shrink: 0;
-  color: var(--Gray-Gray-500, #9e9e9e); /* 글씨 색상 */
-  font-family: Pretendard; /* 폰트 패밀리 */
-  font-size: 0.75vw; /* 폰트 크기 */
-  font-style: normal; /* 폰트 스타일 */
-  font-weight: 500; /* 폰트 굵기 */
-  line-height: 20px; /* 라인 높이 */
-  letter-spacing: -0.3px; /* 글자 간격 */
+  min-height: 20vw;
+  flex-grow: 1;
+  color: var(--Gray-Gray-500, #9e9e9e);
+  font-family: Pretendard;
+  font-size: 0.75vw; 
+  font-style: normal;
+  font-weight: 500; 
+  line-height: 1.2vw;
   padding: 1.5vw; /* 내부 패딩 추가 */
-  border: 1px solid #fafafa; /* 테두리 스타일 */
-  background: #fff; /* 배경색 */
+  border: 0.1vw solid #fafafa;
   outline: none; /* 포커스 시 아웃라인 제거 */
-  resize: none; /* 크기 조정 비활성화 */
-
-  &::placeholder {
-    color: var(--Gray-Gray-500, #9e9e9e);
-
-    /* Body/Body/medium */
-    font-family: Pretendard;
-    font-size: 0.75vw;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px; /* 133.333% */
-    letter-spacing: -0.3px;
-  }
 
   ${({ isBold }) =>
     isBold &&
@@ -263,10 +258,11 @@ const EnrollContainer = styled.div`
   justify-content: center;
   text-align: center;
 `;
+
 const Enroll = styled.button`
   width: 18.6vw;
   height: 2.5vw;
-  border-radius: 5px;
+  border-radius: 0.4vw;
   background: var(--Primary-Red-200, #fff6f7);
   color: var(--Primary-Red-900, #e95458);
   text-align: center;
@@ -279,15 +275,14 @@ const Enroll = styled.button`
   font-size: 0.9vw;
   font-style: normal;
   font-weight: 700;
-  line-height: 30px; /* 166.667% */
+  line-height: 3166.667%; /* 166.667% */
 `;
 
 const CommunityWrite = () => {
   const [imageFile, setImageFile] = useState(null);
 
-  const [postType, setPostType] = useState(''); // 게시글 유형 상태 초기화
+  const [postType, setPostType] = useState('');
 
-  // 게시글 유형 변경 핸들러
   const handlePostTypeChange = (event) => {
     setPostType(event.target.value);
   };
@@ -314,7 +309,6 @@ const CommunityWrite = () => {
   };
 
   const handleSubmit = async () => {
-    // localStorage에서 액세스 토큰 가져오기
     const accessToken = localStorage.getItem('accessToken');
 
     const formData = new FormData();
@@ -334,13 +328,15 @@ const CommunityWrite = () => {
 
     try {
       const response = await axios.post(
-        'https://bloodtrail.site/post',
-        formData,
-        config
+        'https://bloodtrail.site/post', formData, config
       );
 
-      if (response.status === 200) {
+      if (response.data.isSuccess) {
         alert('게시글이 성공적으로 등록되었습니다.');
+        window.location.href = "/community";
+      }
+      else {
+        alert(response.data.message);
         console.log(response.data);
       }
     } catch (error) {
@@ -387,23 +383,14 @@ const CommunityWrite = () => {
   };
 
   return (
+  
+      
+      
     <CrewContainer>
-      <div className="left" style={{ width: '17%', paddingLeft: '2.5%' }}>
-        <CrewP>커뮤니티</CrewP>
-        <CrewP2>자유게시판</CrewP2>
-      </div>
-
+    <Sidebar pageLabel="커뮤니티" currentPage="자유게시판" />
       <div className="right" style={{ width: '67%' }}>
-        <RightTop>
-          <CrewP3 to="/">홈</CrewP3>
-          <CrewP3>{'>'}</CrewP3>
-          <CrewP3>커뮤니티</CrewP3>
-          <CrewP3>{'>'}</CrewP3>
-          <CrewP3>자유게시판</CrewP3>
-          <CrewP3>{'>'}</CrewP3>
-          <CrewP3>글 작성하기</CrewP3>
-        </RightTop>
-
+      <Breadcrums pageLabel="커뮤니티" currentPage="자유게시판" />
+      
         <RightMiddle>
           <CrewP style={{ fontSize: '1.2vw' }}>글 작성하기</CrewP>
           <CrewP4>
@@ -434,25 +421,21 @@ const CommunityWrite = () => {
               value={postType}
               onChange={handlePostTypeChange}
               style={{
-                width: '100%',
                 height: '2.5vw',
-                border: '1px solid #d1d1d1',
-                borderRadius: '5px',
+                borderTop: 'none',
+                borderLeft: 'none',
+                borderRight: 'none',
+                borderBottom: '0.1vw solid #d1d1d1',
                 padding: '0.5vw',
               }}
             >
-              <option value="">게시판 선택</option> {/* 초기 선택 안내 옵션 */}
-              <option value="FREE">자유게시판</option> {/* 옵션 예시 */}
-              {/* 필요한 만큼 <option> 태그를 추가하여 다른 게시판 유형 제공 */}
+              <option value="">게시판 선택</option>
+              <option value="FREE">자유게시판</option>
+              <option value="HONOR">명예 헌혈 게시판</option>
+              <option value="SHARE">헌혈 정보 공유 게시판</option>
             </select>
           </SortContainer>
         </TitleContainer>
-
-        {/*  style={{ width: '0.05vw', height: '1.75vw' }} */}
-        {/* style={{ width: '1vw', height: '1.5vw' }}  */}
-        {/* style={{ width: '0.75vw', height: '1.5vw' }}  */}
-        {/* style={{ width: '0.7vw', height: '1.5vw' }} */}
-        {/* style={{ width: '1.1vw', height: '1.5vw' }} */}
 
         <BlankBox>
           <ToolBox>

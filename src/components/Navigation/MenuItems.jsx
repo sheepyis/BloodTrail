@@ -10,7 +10,7 @@ const menuItems = {
     { label: "명예 헌혈 게시판", path: "/community/honorboard" },
     { label: "헌혈 인증 게시판", path: "/community/certification" },
     { label: "헌혈 정보 공유 게시판", path: "/community/info" },
-    { label: "내가 쓴 글 보기", path: "/community/myposts" }
+    { label: "내가 쓴 글 보기", path: "/community/myposts" },
   ],
   "헌혈크루": [
     { label: "헌혈 크루 찾기", path: "/crew" }
