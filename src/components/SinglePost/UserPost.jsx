@@ -199,11 +199,6 @@ const PostDetailPage = ({board,_id}) => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
     const fetchPosts = async () => {
       try {
           const accessToken = localStorage.getItem('accessToken');

@@ -401,7 +401,6 @@ const Community = () => {
               board='community'
               _id={post._id}
               cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
-              key={post._id}
               userId={post.writer.nickname}
               thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
               title={post.title}
