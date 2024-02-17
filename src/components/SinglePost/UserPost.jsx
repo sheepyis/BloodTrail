@@ -49,6 +49,24 @@ const ReportButton = styled.button`
   }
 `;
 
+const DropdownMenu = styled.div`
+  font-size: 0.6vw;
+  position: absolute;
+  background-color: #fff;
+  border: 0.1vw solid #d1d1d1;
+  border-radius: 0.4vw;
+  display: ${props => props.isVisible ? 'block' : 'none'};
+  z-index: 10; 
+`;
+
+const DropdownItem = styled.div`
+  padding: 0.6vw;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+  cursor: pointer;
+`;
+
 const TitleDetail = styled.div`
   width: 100%;
   display: flex;
@@ -194,8 +212,10 @@ const ChatButton = styled.div`
   justify-content: center;
 `;
 
+
 const PostDetailPage = ({board,_id}) => {
   const [posts, setPosts] = useState(null);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -228,7 +248,28 @@ const PostDetailPage = ({board,_id}) => {
         .catch(err => {
           console.error('Failed to copy: ', err);
         });
-};
+      };
+
+  const deletePost = async () => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const response = await axios.delete(`https://bloodtrail.site/post/${_id}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+  
+      if (response.data.isSuccess) {
+        alert('게시글이 삭제되었습니다.');
+        window.location.href = "/community";
+      } else {
+        alert(response.data.message);
+        console.error("Failed to delete post: ", response);
+      }
+    } catch (error) {
+      console.error('게시글 삭제 중 오류가 발생했습니다.', error);
+      alert('게시글 삭제에 실패했습니다.');
+    }
+  };
+
 
   const toggleLike = async () => {
     try {
@@ -282,8 +323,12 @@ const PostDetailPage = ({board,_id}) => {
             <CopyButton onClick={copyLink}>
               URL 복사
             </CopyButton>
-            <ReportButton onClick={() => {/* 신고 기능 구현 */}}>
+            <ReportButton onClick={() => setIsDropdownVisible(!isDropdownVisible)}>
               <DotIcon />
+              <DropdownMenu isVisible={isDropdownVisible}>
+                <DropdownItem onClick={() => {/* Handle report action here */}}>신고하기</DropdownItem>
+                <DropdownItem onClick={deletePost}>삭제하기</DropdownItem>
+              </DropdownMenu>
             </ReportButton>
           </div>
         </TitleDetail>
