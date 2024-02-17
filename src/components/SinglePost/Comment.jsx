@@ -216,7 +216,7 @@ const CommentSection = ({_id}) => {
             id: commenter.id, // 댓글 작성자의 ID
             nickname: commenter.nickname, // 댓글 작성자의 닉네임
             content: comment, // 댓글 내용
-            date: created_at,
+            created_at: created_at,
           };
   
           // 새 댓글을 comments 상태에 추가
