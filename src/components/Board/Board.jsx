@@ -152,9 +152,13 @@ const HotPost = ({ title, content, username, date, _id }) => {
   const formattedDate = formatDateWithDots(date);
 
   const postLink = `/components/SinglePost/SinglePost?board=community&_id=${_id}`;
+  const linkPath = {
+    pathname: "../../components/SinglePost/SinglePost", // SinglePost 컴포넌트의 라우트
+    search: queryString.stringify({ board:"community", _id:_id  }), // board와 _id 값을 쿼리 스트링으로 변환
+  };
 
   return (
-    <Link to={postLink} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link to={linkPath} style={{ textDecoration: 'none', color: 'inherit' }}>
     <PostContainer>
       <PostContentContainer>
       <TitleAndContentContainer>
@@ -210,7 +214,7 @@ const Board = () => {
       <GridContainer>
         {Array.isArray(posts) && posts.map(post => (
           <HotPost
-            key={post._id}
+            _id={post._id}
             title={post.title}
             content={post.content}
             username={post.writer.nickname}
