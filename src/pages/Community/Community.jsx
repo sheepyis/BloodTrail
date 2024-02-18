@@ -417,9 +417,10 @@ const Community = () => {
         );
         if (response.data.isSuccess && response.data.code === 2000) {
           console.log(response.data);
-          setBestPosts(response.data.result[0]);
-          setPosts(response.data.result[1]);
-          setTotalPages(10); //response.data.result.totalPages);
+          setBestPosts(response.data.result.Page[0]);
+          setPosts(response.data.result.Page[1]);
+          setTotalPages(response.data.result.totalPage);
+          console.log(response.data.result.Page[1]);
         } else {
           console.error('Failed to fetch posts: ', response.data.message);
         }
