@@ -146,6 +146,13 @@ const HeartWrapper = styled.div`
   align-items: center;
 `;
 
+const FilledHeartWrapper = styled(HeartWrapper)`
+  svg {
+    fill: ${props => props.filled ? '#E95458' : 'none'};
+    stroke: ${props => props.filled ? '#E95458' : '#F3777A'};
+  }
+`;
+
 const IconWrapper = styled.div`
   display: inline-flex;
   align-items: center;
@@ -158,8 +165,8 @@ const IconWrapper = styled.div`
   svg {
     width: 1vw;
     height: 1vw;
-    fill: none;
-    stroke: ${props => props.color || '#F3777A'};
+    fill: ${props => props.filled ? '#E95458' : 'none'};
+    stroke: ${props => props.filled ? '#E95458' : '#F3777A'};
   }
 
   &:hover {
@@ -275,38 +282,29 @@ const PostDetailPage = ({board,_id}) => {
   const toggleLike = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const currentPostResponse = await axios.patch(`https://bloodtrail.site/post/${_id}`, {}, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      const currentLikes = currentPostResponse.data.result.likes;
+      // userLiked 상태에 따라 공감 또는 공감 취소 API 호출
+      const endpoint = posts.userLiked ? `https://bloodtrail.site/post/${_id}/unlike` : `https://bloodtrail.site/post/${_id}/like`;
       
-      const likeResponse = await axios.patch(`https://bloodtrail.site/post/${_id}/like`, {}, {
+      const response = await axios.patch(endpoint, {}, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       
-      if (likeResponse.data.isSuccess){
-          setPosts(currentPost => ({
-            ...currentPost,
-            likes: currentLikes + 1,
-          }));
-          alert(`공감 하였습니다.`);
-        }
-      else if (likeResponse.data.code==="BLOOD4002"){
-        const unlikeResponse = await axios.patch(`https://bloodtrail.site/post/${_id}/unlike`, {}, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        if (unlikeResponse.data.isSuccess)
-          setPosts(currentPost => ({
-            ...currentPost,
-            likes: currentLikes - 1,
-          }));
-          alert(`공감 취소 하였습니다.`);
-        }
-       else {
-        alert(likeResponse.data.message);
+      if (response.data.isSuccess) {
+        // 공감 또는 공감 취소 후 posts 상태 업데이트
+        alert(`공감 ${posts.userLiked ? '취소' : ''}하였습니다.`);
+        setPosts(currentPost => ({
+          ...currentPost,
+          userLiked: !currentPost.userLiked,
+          post: {
+            ...currentPost.post,
+            likes: currentPost.userLiked ? currentPost.post.likes - 1 : currentPost.post.likes + 1
+          }
+        }));
+      } else {
+        alert(response.data.message);
       }
     } catch (error) {
-      console.error('공감하기 요청 실패', error);
+      console.error('공감 변경 요청 실패', error);
     }
   };
 
@@ -314,11 +312,11 @@ const PostDetailPage = ({board,_id}) => {
     <PageLayout>
       <Header>
         <HeaderText>
-          {posts && posts.title}
+          {posts && posts.post.title}
         </HeaderText>
         <TitleDetail>
           <UserInfo>
-            <div>{posts && posts.writer.nickname}</div>
+            <div>{posts && posts.post.writer.nickname}</div>
           </UserInfo>
           <div>
             <CopyButton onClick={copyLink}>
@@ -335,8 +333,8 @@ const PostDetailPage = ({board,_id}) => {
         </TitleDetail>
         <Divider />
         <InteractionBar>
-          <div>조회수 {posts && posts.watch_count}</div>
-          <div>공감수 {posts && posts.likes} </div>
+          <div>조회수 {posts && posts.post.watch_count}</div>
+          <div>공감수 {posts && posts.post.likes} </div>
         </InteractionBar>
       </Header>
 
@@ -351,21 +349,21 @@ const PostDetailPage = ({board,_id}) => {
         </TagContainer>
       )}
       <ContentArea>
-      {posts && posts.image && posts.image.map((image, index) => (
+      {posts && posts.post.image && posts.post.image.map((image, index) => (
         <img key={index} src={image} alt={`Post Image ${index + 1}`} style={{ width: '100%'}} />
       ))}
       </ContentArea>
       <Details>
-        {posts && posts.content}
+        {posts && posts.post.content}
       </Details>
       <FooterBar>
         <LeftContainer>
         <InteractionButtons>
           <HeartWrapper onClick={toggleLike}>
-            <IconWrapper color="#F3777A" hoverColor="#E95458">
+            <IconWrapper filled={posts?.userLiked} color="#F3777A" hoverColor="#E95458">
               <HeartIcon /> 
             </IconWrapper>
-            {posts && posts.likes}
+            {posts && posts.post.likes}
           </HeartWrapper>
           <IconWrapper onClick={copyLink} color="#464A4D" hoverColor="#464A4D">
             <ShareIcon /> 
