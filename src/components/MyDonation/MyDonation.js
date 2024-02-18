@@ -247,7 +247,7 @@ const MyDonation = () => {
 
     if (file) {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('files', file); // 'files'라는 키로 파일을 추가
 
       // 로컬 스토리지에서 액세스 토큰을 가져옴
       const accessToken = localStorage.getItem('accessToken');
@@ -259,6 +259,7 @@ const MyDonation = () => {
             // Authorization 헤더에 액세스 토큰을 추가
             Authorization: `Bearer ${accessToken}`,
           },
+          body: formData, // FormData 객체를 Request Body로 설정
         });
 
         if (response.ok) {
