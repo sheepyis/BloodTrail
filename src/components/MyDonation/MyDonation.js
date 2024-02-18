@@ -202,6 +202,7 @@ const DefaultValueP = styled.p`
 `;
 
 const MyDonation = () => {
+  const [resultData, setResultData] = useState({ date: '', type: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태
   const fileInputRef = useRef(null);
@@ -262,14 +263,17 @@ const MyDonation = () => {
           body: formData, // FormData 객체를 Request Body로 설정
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
+          // 응답 데이터를 resultData 상태에 저장
           const data = await response.json();
           console.log(data);
-          // 성공적으로 응답을 받았을 때의 처리를 추가합니다.
+          setResultData({
+            date: data.result.date,
+            type: data.result.type,
+          });
         }
       } catch (error) {
-        console.error('스캔 중 오류 발생:', error);
-        alert('스캔 중 문제가 발생했습니다.');
+        // 오류 처리 로직...
       }
     }
   };
@@ -364,20 +368,22 @@ const MyDonation = () => {
               >
                 아래 내용을 확인해주세요.
               </RegistP2>
-              {tableData.map((data, index) => (
-                <GraphContainer key={index}>
-                  <RowContainer>
-                    <GraphP>{data.label}</GraphP>
-                  </RowContainer>
-                  <CellContainer>
-                    {data.label === '헌혈 일자' ? (
-                      <DefaultValueP>{data.value}</DefaultValueP>
-                    ) : (
-                      <ValueP>{data.value}</ValueP>
-                    )}
-                  </CellContainer>
-                </GraphContainer>
-              ))}
+              <GraphContainer>
+                <RowContainer>
+                  <GraphP>헌혈 일자</GraphP>
+                </RowContainer>
+                <CellContainer>
+                  <DefaultValueP>{resultData.date}</DefaultValueP>
+                </CellContainer>
+              </GraphContainer>
+              <GraphContainer>
+                <RowContainer>
+                  <GraphP>헌혈 종류</GraphP>
+                </RowContainer>
+                <CellContainer>
+                  <ValueP>{resultData.type}</ValueP>
+                </CellContainer>
+              </GraphContainer>
             </ScanContainer>
             <ButtonContainer>
               <ScanButton onClick={handleRescan}>다시 스캔하기</ScanButton>
