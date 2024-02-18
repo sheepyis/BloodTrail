@@ -49,24 +49,6 @@ const ReportButton = styled.button`
   }
 `;
 
-const DropdownMenu = styled.div`
-  font-size: 0.6vw;
-  position: absolute;
-  background-color: #fff;
-  border: 0.1vw solid #d1d1d1;
-  border-radius: 0.4vw;
-  display: ${props => props.isVisible ? 'block' : 'none'};
-  z-index: 10; 
-`;
-
-const DropdownItem = styled.div`
-  padding: 0.6vw;
-  &:hover {
-    background-color: #f0f0f0;
-  }
-  cursor: pointer;
-`;
-
 const TitleDetail = styled.div`
   width: 100%;
   display: flex;
@@ -212,12 +194,32 @@ const ChatButton = styled.div`
   justify-content: center;
 `;
 
+const DropdownMenu = styled.div`
+  top-margin : 0.1vew
+  font-size: 0.6vw;
+  position: absolute;
+  background-color: #fff;
+  border: 0.1vw solid #d1d1d1;
+  border-radius: 0.4vw;
+  display: ${props => props.isVisible ? 'block' : 'none'};
+  z-index: 10; 
+`;
+
+const DropdownItem = styled.div`
+  padding: 0.6vw;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+  cursor: pointer;
+`;
+
 
 const PostDetailPage = ({board,_id}) => {
   const [posts, setPosts] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
     const fetchPosts = async () => {
       try {
           const accessToken = localStorage.getItem('accessToken');
