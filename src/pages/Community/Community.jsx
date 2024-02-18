@@ -71,21 +71,6 @@ const SortBox = styled.div`
   justify-content: space-between;
 `;
 
-const SortBox2 = styled.div`
-  width: 7.7604vw;
-  min-height: 5.8vw;
-  padding: 0.4vw 0;
-  border: 0.05vw solid ${colors.lightGray};
-  position: absolute; /* 절대 위치 설정 */
-  z-index: 1;
-  background-color: ${colors.white};
-  left: 0;
-  top: 100%;
-  display: ${({ show }) => (show ? 'flex' : 'none')};
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
 const HoverDiv = styled.div`
   width: 100%;
   height: 2.5vw;
@@ -275,7 +260,7 @@ const SearchImg = styled.img`
   height: 1.25vw;
   flex-shrink: 0;
 `;
-const DropdownSearchBox2 = styled.div`
+const DropdownSearchBox = styled.div`
   display: flex;
   flex-direction: row;
   width: 7.7604vw;
@@ -287,7 +272,6 @@ const DropdownSearchBox2 = styled.div`
   border: 0.0521vw solid var(--Gray-Gray-200, #eee);
   background: var(--black-white-white-1000, #fff);
   margin-left: 0.8333vw;
-  position: relative; /* 여기에 relative 위치 설정 추가 */
 `;
 const DropdownSearch = styled.div`
   width: 4.1667vw;
@@ -332,21 +316,17 @@ const Community = () => {
   };
 
   useEffect(() => {
+    // 검색 유형에 따라 포스트 속성을 결정합니다.
     const searchTypeParam = searchType === '제목' ? 'title' : 'writer';
 
     const filtered = posts.filter((post) => {
-      if (searchTypeParam === 'title') {
-        return post.title.toLowerCase().includes(searchKeyword.toLowerCase());
-      } else if (
-        searchTypeParam === 'writer' &&
-        post.writer &&
-        post.writer.nickname
-      ) {
-        return post.writer.nickname
-          .toLowerCase()
-          .includes(searchKeyword.toLowerCase());
-      }
-      return false;
+      // 포스트의 해당 속성 값을 가져옵니다.
+      const value = post[searchTypeParam];
+
+      // 값이 문자열인지 확인하고, 그렇지 않다면 빈 문자열로 처리합니다.
+      const valueStr = typeof value === 'string' ? value.toLowerCase() : '';
+
+      return valueStr.includes(searchKeyword.toLowerCase());
     });
 
     setFilteredPosts(filtered);
@@ -534,20 +514,20 @@ const Community = () => {
                 onClick={handleSearch} // 검색 버튼 클릭 시 검색 요청 함수 호출
               />
             </SearchBox>
-            <DropdownSearchBox2 onClick={toggleDropdownMenu}>
+            <DropdownSearchBox onClick={toggleDropdownMenu}>
               <DropdownSearch>{searchType}</DropdownSearch>
               <DropdownImg src={arrow_down} alt="arrow_down" />
               {isDropdownVisible && (
-                <SortBox2 show={isDropdownVisible}>
+                <SortBox show={isDropdownVisible}>
                   <HoverDiv onClick={() => handleDropdownSelection('제목')}>
                     제목
                   </HoverDiv>
                   <HoverDiv onClick={() => handleDropdownSelection('작성자')}>
                     작성자
                   </HoverDiv>
-                </SortBox2>
+                </SortBox>
               )}
-            </DropdownSearchBox2>
+            </DropdownSearchBox>
           </SearchContainer>
 
           <PagnationContainer>
