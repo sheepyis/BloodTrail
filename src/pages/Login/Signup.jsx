@@ -7,6 +7,8 @@ import group209 from '../../assets/images/Group 209.png';
 import ArrowDown from '../../assets/images/arrow-down.png';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Breadcrums from '../../components/Navigation/Breadcrums';
+
 
 const Container = styled.div`
   display: flex;
@@ -22,17 +24,12 @@ const MainConationer = styled.div`
   width: 67%;
 `;
 
-const Breadcrums = styled.div`
+const BreadcrumsC = styled.div`
   display: flex;
   gap: 0.5vw;
   padding: 0.9375vw 0vw 0.9375vw 0.2083vw;
 `;
-const BreadcrumsP = styled.div`
-  font-weight: 500;
-  font-size: 0.6vw;
-  color: ${colors.crewGray2};
-  cursor: pointer;
-`;
+
 const Title = styled.div`
   color: var(--Gray-Gray-900, #17191a);
   font-family: Pretendard;
@@ -379,6 +376,8 @@ const Signup = () => {
   const [passwordError, setPasswordError] = useState('');
   const [phoneError, setPhoneError] = useState('');
 
+  const navigate = useNavigate(); // Initialize navigate
+
   const handleEmail = (email) => {
     setInputValue((prevState) => ({
       ...prevState,
@@ -483,9 +482,9 @@ const Signup = () => {
       );
 
       console.log(response.data);
-        
+      console.log(userData.name);
       if (response.data.isSuccess) {
-        window.location.href = "/signupService/signup/finish";
+        navigate(`/signupService/signup/finish?name=${encodeURIComponent(inputValue.userName)}`);
       }
       else {
         switch (response.data.message) {
@@ -548,13 +547,9 @@ const Signup = () => {
     <Container>
       <SideBar />
       <MainConationer>
-        <Breadcrums>
-          <BreadcrumsP>홈</BreadcrumsP>
-          <BreadcrumsP>{'>'}</BreadcrumsP>
-          <BreadcrumsP>로그인</BreadcrumsP>
-          <BreadcrumsP>{'>'}</BreadcrumsP>
-          <BreadcrumsP>회원가입</BreadcrumsP>
-        </Breadcrums>
+      <BreadcrumsC>
+        <Breadcrums pageLabel="로그인" currentPage="회원가입" />
+      </BreadcrumsC>
 
         <Title>회원가입</Title>
         <SubTitile>약관에 동의해주세요.</SubTitile>
