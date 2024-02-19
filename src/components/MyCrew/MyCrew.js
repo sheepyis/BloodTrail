@@ -3,6 +3,7 @@ import colors from '../../styles/color';
 import Profile from '../../assets/images/profile.png';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import ChatModal from '../Chat/ChatModal';
 
 const MyCrewDiv = styled.div`
   width: 31%;
@@ -59,6 +60,7 @@ const ProfileImage = styled.img`
 
 const MyCrew = () => {
   const [myCrewData, setMyCrewData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -84,6 +86,9 @@ const MyCrew = () => {
     window.location.href = `/crewdetail/${myCrewData._id}`;
   };
 
+  const handleChatButtonClick = () => {
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -107,11 +112,13 @@ const MyCrew = () => {
               <MyCrewP2>{myCrewData.description}</MyCrewP2>
             </div>
           </div>
-          <ChatButton>채팅하기</ChatButton>
+          <ChatButton onClick={handleChatButtonClick}>채팅하기</ChatButton>
         </MyCrewDiv>
       ) : (
         <MyCrewP style={{marginTop: "1vw"}}>크루 정보 없음</MyCrewP>
       )}
+
+      {isModalOpen && <ChatModal closeModal={() => setIsModalOpen(false)} />}
     </>
   );
 };
