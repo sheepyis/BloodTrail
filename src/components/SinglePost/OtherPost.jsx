@@ -117,9 +117,9 @@ const OtherPosts = ({board,_id}) => {
   const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-      const accessToken = localStorage.getItem('accessToken');
       const fetchPosts = async () => {
         try {
+            const accessToken = localStorage.getItem('accessToken');
             const response = await axios.get(`https://bloodtrail.site/post/${_id}/recommend`, {}, {
             headers: { Authorization: `Bearer ${accessToken}` },
           });
