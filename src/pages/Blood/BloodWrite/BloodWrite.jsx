@@ -380,10 +380,8 @@ const BloodWrite = ({isCredit}) => {
   const [bloodType, setBloodType] = useState('-');
   const [start_date, setStart_date] = useState('');
   const [end_date, setEnd_date] = useState('');
-  const [requirePlace, setRequirePlace] = useState('');
   const [receiver, setReceiver] = useState('');
-  const [hospital, setHospital] = useState({});
-
+  const [hospital, setHospital] = useState({name:'', number:'010-0001-0002'});
 
   const [showCreditModal, setShowCreditModal] = useState(true);
 
@@ -413,13 +411,6 @@ const BloodWrite = ({isCredit}) => {
       });
   }, []);
 
-  /*
-  const handleRegistrationNumberChange = (e) => setRegistrationNumber(e.target.value);
-  const handleBloodProductChange = (e) => setBloodProduct(e.target.value);
-  const handleRequireDayChange = (e) => setRequireDay(e.target.value);
-  const handleRequirePlaceChange = (e) => setRequirePlace(e.target.value);
-  const handleBloodTypeChange = (e) => setBloodType(e.target.value);
-*/
 
   const handleSubmit = async () => {
     const title = titleEditableRef.current ? titleEditableRef.current.value : '';
@@ -427,26 +418,41 @@ const BloodWrite = ({isCredit}) => {
 
     const formData = new FormData();
 
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('bloodType', bloodType);
-    formData.append('bloodProduct', bloodProduct);
-    formData.append('start_date', start_date);
-    formData.append('end_date', end_date);
-    formData.append('receiver', receiver);
-    formData.append('hospital', hospital);
+    formData.title=title;
+    formData.content=content;
+    formData.blood_type=bloodType;
+    formData.blood_product=bloodProduct;
+    formData.start_date=start_date;
+    formData.end_date=end_date;
+    formData.receiver=registrationNumber;
+    formData.hospital=hospital;
+    formData.files=imageFile;
+
+    console.log(formData.title);
+    console.log(formData.content);
+    console.log(formData.blood_type);
+    console.log(formData.blood_product);
+    console.log(formData.start_date);
+    console.log(formData.end_date);
+    console.log(formData.receiver);
+    console.log(formData.hospital);
+    console.log(formData.files);
+
 
     if (imageFile) {
       formData.append('image', imageFile);
     }
 
     try {
+      console.log(formData);
       const response = await axios.post("https://bloodtrail.site/blood", formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰 추가
         },
       });
+
       console.log(response);
+
       if (response.data.isSuccess) {
         const data = await response;
         console.log('성공:', data);
@@ -462,7 +468,6 @@ const BloodWrite = ({isCredit}) => {
   };
 
   const [inputCompleted, setInputCompleted] = useState({
-    //registrationNumber: false,
     bloodProduct: false,
     requireDay: false,
     requirePlace: false,
@@ -497,10 +502,6 @@ const BloodWrite = ({isCredit}) => {
       img.style.maxWidth = '50%';
       contentEditableRef.current.appendChild(img);
     }
-  };
-
-  const triggerFileInput = () => {
-    fileInputRef.current.click();
   };
 
   const [isBold, setIsBold] = useState(false);
@@ -578,17 +579,17 @@ const BloodWrite = ({isCredit}) => {
     }));
   }, [registrationNumber]);
 
-  const handleRequirePlaceChange = (e) => {
-    setRequirePlace(e.target.value);
-  };
-
-  useEffect(() => {
+  const handleHospitalChange = (e) => {
+    const { value } = e.target;
+    setHospital((prevHospital) => ({
+      ...prevHospital,
+      name: value,
+    }));
     setInputCompleted((prevInputCompleted) => ({
       ...prevInputCompleted,
-      requirePlace: requirePlace !== '',
+      requirePlace: true,
     }));
-  }, [requirePlace]);
-
+  };
 
   return (
     <CrewContainer>
@@ -696,7 +697,7 @@ const BloodWrite = ({isCredit}) => {
                     <ContentsText
                       placeholder="건국대병원"
                       style={{ width: '40%' }}
-                      onChange={handleRequirePlaceChange}
+                      onChange={handleHospitalChange}
                     ></ContentsText>
                   </TextContainer>
                 </InformBlock>
@@ -721,7 +722,7 @@ const BloodWrite = ({isCredit}) => {
 
         <BlankBox>
           <ToolBox>
-            <Imageplus onClick={triggerFileInput}>
+            <Imageplus onClick={() => fileInputRef.current.click()}>
               <img
                 src={Image}
                 alt="사진 추가"
