@@ -25,26 +25,6 @@ const MyPageP = styled.p`
   color: ${colors.crewGray};
 `;
 
-const MyPageP2 = styled.p`
-  font-weight: 600;
-  font-size: 0.75vw;
-  color: ${colors.mainRed};
-  margin-top: 1.5vw;
-  cursor: pointer;
-`;
-
-const MyPageP3 = styled(NavLink)`
-  font-weight: 500;
-  font-size: 0.6vw;
-  color: ${colors.crewGray2};
-  cursor: pointer;
-`;
-
-const RightTop = styled.div`
-  display: flex;
-  gap: 0.5vw;
-`;
-
 const EditButton = styled.button`
   border: none;
   border-radius: 0.25vw;
@@ -53,6 +33,7 @@ const EditButton = styled.button`
   font-size: 0.75vw;
   padding: 0.5vw;
 `;
+
 
 const MyPage = ({ isCredit }) => {
   const [userData, setUserData] = useState(null);
@@ -72,7 +53,6 @@ const MyPage = ({ isCredit }) => {
           console.log(response);
           const user = response.data.result;
 
-          // 날짜 형식 변환
           const formattedBirth = new Date(user.birth)
             .toLocaleDateString('ko-KR', {
               year: 'numeric',
@@ -94,7 +74,7 @@ const MyPage = ({ isCredit }) => {
             plasma: user.id,
             platelet: user.id,
             _id: user._id,
-            premium: user.premium,
+            premium: user.premium.payment,
           });
         }
       })
@@ -105,28 +85,10 @@ const MyPage = ({ isCredit }) => {
 
   return (
     <MyPageContainer>
-      <div className="left" style={{ width: '17%', paddingLeft: '2.5%' }}>
-        <MyPageP>내 정보</MyPageP>
-        <MyPageP2>내 프로필</MyPageP2>
-        <MyPageP style={{ marginTop: '1.5vw', fontSize: '0.75vw' }}>
-          개인정보 처리방침
-        </MyPageP>
-        <MyPageP style={{ marginTop: '1.5vw', fontSize: '0.75vw' }}>
-          서비스 이용약관
-        </MyPageP>
-        <MyPageP style={{ marginTop: '1.5vw', fontSize: '0.75vw' }}>
-          회원탈퇴
-        </MyPageP>
-      </div>
+      <Sidebar pageLabel="내 정보" currentPage="내 프로필" />
 
       <div className="right" style={{ width: '67%' }}>
-        <RightTop>
-          <MyPageP3 to="/">홈</MyPageP3>
-          <MyPageP3>{'>'}</MyPageP3>
-          <MyPageP3>내 정보</MyPageP3>
-          <MyPageP3>{'>'}</MyPageP3>
-          <MyPageP3>내 프로필</MyPageP3>
-        </RightTop>
+        <Breadcrums pageLabel="내 정보" currentPage="내 프로필" />
 
         {userData && !userData.premium && <Credit />}
 

@@ -14,6 +14,12 @@ const menuItems = {
   ],
   "헌혈크루": [
     { label: "헌혈 크루 찾기", path: "/crew" }
+  ],
+  "내 정보": [
+    { label: "내 프로필", path: "/mypage" },
+    { label: "개인정보 처리방침", path: "/mypage" },
+    { label: "서비스 이용약관", path: "/mypage" },
+    { label: "회원탈퇴", path: "/mypage" }
   ]
 };
 

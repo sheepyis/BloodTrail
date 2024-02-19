@@ -81,9 +81,6 @@ const CreditButton = styled.button`
 
 
 const CreditModal = ({onClose}) => {
-    const [isCredit, setIsCredit] = useState(false);
-
-    let imp_uid, merchant_uid;
 
     useEffect(() =>{
         const jquery = document.createElement("script");
@@ -100,11 +97,9 @@ const CreditModal = ({onClose}) => {
 
 
     const handlePayment = async () => {
-        /* 1. 가맹점 식별하기 */
         const { IMP } = window;
         IMP.init('imp68888372');
 
-        /* 2. 결제 데이터 정의하기 */
         const data = {
             pg: 'html5_inicis',                      
             pay_method: 'card',                 
@@ -116,10 +111,9 @@ const CreditModal = ({onClose}) => {
             buyer_email: '',          
         };
 
-        /* 4. 결제 창 호출하기 */
         IMP.request_pay(data, async (response) => {
           if (response.success) {
-              alert('결제 성공');
+            alert('결제를 성공하였습니다.');
               const accessToken = localStorage.getItem('accessToken');
               const { imp_uid, merchant_uid } = response;
 
@@ -128,15 +122,13 @@ const CreditModal = ({onClose}) => {
                       'https://bloodtrail.site/auth/premium',
                       { imp_uid, merchant_uid },
                       {
-                          headers: {
-                              'Authorization': `Bearer ${accessToken}`
-                          }
+                        headers: {'Authorization': `Bearer ${accessToken}`}
                       }
                   );
 
                   if (paymentResponse.data.isSuccess) {
-                      setIsCredit(true);
-                      alert('결제 정보가 성공적으로 등록되었습니다.');
+                      alert('프리미엄 구독을 완료하였습니다.');
+                      window.location.reload();
                   } else {
                       alert(paymentResponse.data.message);
                   }
