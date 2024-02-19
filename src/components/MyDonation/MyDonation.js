@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import colors from '../../styles/color';
 import Plus from '../../assets/images/plus.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import close from '../../assets/images/close_24px.png';
 import { useRef } from 'react';
+import moment from 'moment';
 
 const DonationContainer = styled.div`
   width: 100%;
@@ -202,72 +203,38 @@ const DefaultValueP = styled.p`
 `;
 
 const MyDonation = () => {
-  const [resultData, setResultData] = useState({ date: '', type: '' });
+  const [resultData, setResultData] = useState({ date: '', type: '', name: '', birth: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null); // 선택된 이미지 상태
   const fileInputRef = useRef(null);
+  const [selectedValue, setSelectedValue] = useState(null);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
-    }
-  };
 
-  const handleRescan = () => {
-    setSelectedImage(null);
-    fileInputRef.current.value = null;
-  };
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleFileInputClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const tableData = [
-    { label: '헌혈 종류', value: '헌혈' },
-    { label: '헌혈 일자', value: '0000년00월 00일' },
-  ];
-
-  const handleUploadAndScan = async () => {
-    if (!selectedImage) {
-      alert('먼저 이미지를 선택해주세요.');
-      return;
-    }
-
-    // fileInputRef.current.files[0]을 사용하여 선택된 파일에 접근
-    const file = fileInputRef.current.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setSelectedImage(imageUrl);
 
     if (file) {
       const formData = new FormData();
-      formData.append('files', file); // 'files'라는 키로 파일을 추가
+      formData.append('files', file);
 
-      // 로컬 스토리지에서 액세스 토큰을 가져옴
       const accessToken = localStorage.getItem('accessToken');
 
       try {
         const response = await fetch('https://bloodtrail.site/history/image', {
           method: 'POST',
           headers: {
-            // Authorization 헤더에 액세스 토큰을 추가
             Authorization: `Bearer ${accessToken}`,
           },
-          body: formData, // FormData 객체를 Request Body로 설정
+          body: formData,
         });
 
         if (response.status === 200) {
-          // 응답 데이터를 resultData 상태에 저장
           const data = await response.json();
-          console.log(data);
           setResultData({
+            name: data.result.name,
+            birth: data.result.birth,
             date: data.result.date,
             type: data.result.type,
           });
@@ -277,6 +244,70 @@ const MyDonation = () => {
       }
     }
   };
+
+  useEffect(() => {
+    console.log(resultData);
+  }, [resultData]);
+
+  const handleRescan = () => {
+  setSelectedImage(null);
+  fileInputRef.current.value = null;
+  setResultData({ date: '', type: '', name: '', birth: '' });
+};
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    window.location.reload();
+  };
+
+  const handleFileInputClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleUploadAndScan = async () => {
+    if (!selectedImage) {
+      alert('먼저 이미지를 선택해주세요.');
+      return;
+    }
+  
+    const accessToken = localStorage.getItem('accessToken');
+  
+    const userInfo = {
+      type: selectedValue,
+      name: resultData.name,
+      birth: resultData.birth, 
+      date: moment(resultData.date, 'YYYY.MM.DD').toISOString(),
+    };
+  
+    try {
+      const response = await fetch('https://bloodtrail.site/history', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(userInfo)
+      });
+      console.log(userInfo);
+      alert('헌혈 증서가 성공적으로 등록되었습니다.');
+      closeModal();
+    } catch (error) {
+      console.error('Error: ', error);
+    }
+  };
+  
+
+  const handleButtonClick = (value) => {
+    setSelectedValue(value);
+  };
+
+  useEffect(() => {
+    console.log(selectedValue);
+  }, [selectedValue]); 
 
   return (
     <>
@@ -370,6 +401,17 @@ const MyDonation = () => {
               </RegistP2>
               <GraphContainer>
                 <RowContainer>
+                  <GraphP>헌혈 종류</GraphP>
+                </RowContainer>
+                <CellContainer style={{gap: "0.3vw"}}>
+                  <ValueP style={{ background: selectedValue === 'WB' ? '#FFB2B5' : '#FFE7E7', cursor: 'pointer', color: selectedValue === 'WB' ? '#17191A' : ''}} onClick={() => handleButtonClick('WB')}>전헐</ValueP>
+                  <ValueP style={{ background: selectedValue === 'PB' ? '#FFB2B5' : '#FFE7E7', cursor: 'pointer', color: selectedValue === 'PB' ? '#17191A' : ''}} onClick={() => handleButtonClick('PB')}>혈소판</ValueP>
+                  <ValueP style={{ background: selectedValue === 'PLB' ? '#FFB2B5' : '#FFE7E7', cursor: 'pointer', color: selectedValue === 'PLB' ? '#17191A' : ''}} onClick={() => handleButtonClick('PLB')}>혈장</ValueP>
+                  <DefaultValueP style={{ right: "0" }}>* 종류 하나를 선택해주세요.</DefaultValueP>
+                </CellContainer>
+              </GraphContainer>
+              <GraphContainer>
+                <RowContainer>
                   <GraphP>헌혈 일자</GraphP>
                 </RowContainer>
                 <CellContainer>
@@ -378,7 +420,7 @@ const MyDonation = () => {
               </GraphContainer>
               <GraphContainer>
                 <RowContainer>
-                  <GraphP>헌혈 종류</GraphP>
+                  <GraphP>혈액 종류</GraphP>
                 </RowContainer>
                 <CellContainer>
                   <ValueP>{resultData.type}</ValueP>
