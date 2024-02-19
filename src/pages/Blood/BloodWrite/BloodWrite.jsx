@@ -376,12 +376,11 @@ const DateInput = styled.input`
 const BloodWrite = ({isCredit}) => {
   const [imageFile, setImageFile] = useState(null);
   const [registrationNumber, setRegistrationNumber] = useState('');
-  const [bloodProduct, setBloodProduct] = useState('');
-  const [requireDay, setRequireDay] = useState('');
-  const [requirePlace, setRequirePlace] = useState('');
-  const [bloodType, setBloodType] = useState('');
+  const [bloodProduct, setBloodProduct] = useState('-');
+  const [bloodType, setBloodType] = useState('-');
   const [start_date, setStart_date] = useState('');
   const [end_date, setEnd_date] = useState('');
+  const [requirePlace, setRequirePlace] = useState('');
   const [receiver, setReceiver] = useState('');
   const [hospital, setHospital] = useState({});
 
@@ -391,7 +390,6 @@ const BloodWrite = ({isCredit}) => {
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
-      // Handle case where there is no access token
       return;
     }
 
@@ -415,11 +413,13 @@ const BloodWrite = ({isCredit}) => {
       });
   }, []);
 
+  /*
   const handleRegistrationNumberChange = (e) => setRegistrationNumber(e.target.value);
   const handleBloodProductChange = (e) => setBloodProduct(e.target.value);
   const handleRequireDayChange = (e) => setRequireDay(e.target.value);
   const handleRequirePlaceChange = (e) => setRequirePlace(e.target.value);
   const handleBloodTypeChange = (e) => setBloodType(e.target.value);
+*/
 
   const handleSubmit = async () => {
     const title = titleEditableRef.current ? titleEditableRef.current.value : '';
@@ -518,13 +518,77 @@ const BloodWrite = ({isCredit}) => {
   const bloodProductOptions = ["-", "WB", "RBC", "F-RBC", "W-RBC", "WBC", "PLT", "A-PLT", "W-PLT", "FFP", "FP", "CRYO", "CR-P"];
   const requirePlaceOptions = ["-", "건국대병원", "서울대병원", "연세대 세브란스병원", "가톨릭대학교 서울성모병원"];
   
-  const [selectedOption, setSelectedOption] = useState("-");
-  const [imageSrc, setImageSrc] = useState(Mark); // 기본 이미지는 Mark로 설정
+  const [bloodProductImage, setBloodProductImage] = useState(Mark);
+  const [bloodTypeImage, setBloodTypeImage] = useState(Mark);
+  const [dateImage, setDateImage] = useState(Mark);
 
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
-    setImageSrc(e.target.value !== "-" ? Mark2 : Mark);
+  useEffect(() => {
+    setInputCompleted(prevState => ({
+      ...prevState,
+      bloodProduct: bloodProduct !== "-",
+    }));
+  }, [bloodProduct]);
+  
+  useEffect(() => {
+    setInputCompleted(prevState => ({
+      ...prevState,
+      bloodType: bloodType !== "-",
+    }));
+  }, [bloodType]);
+
+  const handleBloodProductChange = (e) => {
+    setBloodProduct(e.target.value);
+    setBloodProductImage(e.target.value !== "-" ? Mark2 : Mark);
   };
+  
+  const handleBloodTypeChange = (e) => {
+    setBloodType(e.target.value);
+    setBloodTypeImage(e.target.value !== "-" ? Mark2 : Mark);
+  };
+
+  // 날짜 입력 핸들러
+  const handleStart_dateChange = (e) => {
+    setStart_date(e.target.value);
+  };
+  
+  const handleEnd_dateChange = (e) => {
+    setEnd_date(e.target.value);
+  };
+
+  useEffect(() => {
+    // 두 날짜가 모두 입력되었는지 확인
+    console.log(start_date);
+    console.log(end_date);
+      const isDateCompleted = start_date !== '' && end_date !== '';
+      setDateImage(Mark2);
+      setInputCompleted((prevInputCompleted) => ({
+        ...prevInputCompleted,
+        requireDay: isDateCompleted,
+      }));
+  }, [start_date, end_date]); 
+  
+  const handleRegistrationNumberChange = (e) => {
+    setRegistrationNumber(e.target.value);
+  };
+  
+  useEffect(() => {
+    setInputCompleted((prevInputCompleted) => ({
+      ...prevInputCompleted,
+      registrationNumber: registrationNumber !== '',
+    }));
+  }, [registrationNumber]);
+
+  const handleRequirePlaceChange = (e) => {
+    setRequirePlace(e.target.value);
+  };
+
+  useEffect(() => {
+    setInputCompleted((prevInputCompleted) => ({
+      ...prevInputCompleted,
+      requirePlace: requirePlace !== '',
+    }));
+  }, [requirePlace]);
+
 
   return (
     <CrewContainer>
@@ -581,16 +645,14 @@ const BloodWrite = ({isCredit}) => {
                     <ContentsText
                       placeholder="231117-3117"
                       style={{ width: '40%', marginLeft: '0.8vw' }}
-                      onKeyDown={(event) =>
-                        changeImageOnEnter('registrationNumber', event)
-                      }
+                      onChange={handleRegistrationNumberChange}
                     ></ContentsText>
                   </TextContainer>
                 </InformBlock>
                 <InformBlock width="12.15vw">
                   <TextContainer>
                     <img
-                      src={inputCompleted.bloodProduct ? Mark2 : Mark}
+                      src={inputCompleted.bloodProduct? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>필요 혈액제제</InforText>
@@ -612,13 +674,13 @@ const BloodWrite = ({isCredit}) => {
                     <DateInput
                       type="date"
                       value={start_date}
-                      onChange={(e) => setStart_date(e.target.value)}
+                      onChange={handleStart_dateChange}
                     />
                     ~
                     <DateInput
                       type="date"
                       value={end_date}
-                      onChange={(e) => setEnd_date(e.target.value)}
+                      onChange={handleEnd_dateChange}
                     />
                   </TextContainer>
                 </InformBlock>
@@ -634,9 +696,7 @@ const BloodWrite = ({isCredit}) => {
                     <ContentsText
                       placeholder="건국대병원"
                       style={{ width: '40%' }}
-                      onKeyDown={(event) =>
-                        changeImageOnEnter('requirePlace', event)
-                      }
+                      onChange={handleRequirePlaceChange}
                     ></ContentsText>
                   </TextContainer>
                 </InformBlock>
