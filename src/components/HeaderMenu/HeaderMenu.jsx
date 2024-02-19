@@ -6,30 +6,30 @@ import { Link } from "react-router-dom";
 
 const HeaderMenuContainer = styled.div`
     position: absolute;
-    background-color: ${colors.footerGray};
+    top: 6.3%;
+    background-color: ${colors.white};
+    backdrop-filter: blur(10.100000381469727px);
     width: 100vw;
     z-index:1;
 `
 
 const HeaderBox = styled.div`
-    height: 16.5625vw;
+    height: 252px;
     width: 100vw;
     padding-top: 1vw;
     padding-left: 14.5vw;
-    align-items: center;
-    justify-content: space-evenly;
 
     &.Blood{
         position: relative;
-        left: 0;
+        left: 3.6vw;
     }
     &.Community{
         position: relative;
-        left: 5vw;
+        left: 9.3vw;
     }
     &.Crew{
         position: relative;
-        left: 9.5vw;
+        left: 15vw;
     }
     &.Live{
         position: relative;
@@ -38,10 +38,12 @@ const HeaderBox = styled.div`
 `
 
 const HeaderP = styled.p`
+    width: 10vw;
     font-weight: 600;
     font-size: 0.8333vw;
     margin: 1.5vw;
-    flex-direction: column;
+    padding: 0px 10px;
+    gap: 10px;
 
     &:hover {
         color: ${colors.logoRed};
@@ -63,7 +65,7 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave,handleTouchEnd,handleTouc
                     <li>
                         <Link to="/blood" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 요청 글</HeaderP></Link>
                         <Link to="/blood/bloodwrite/bloodwrite" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 요청하기</HeaderP></Link>
-                        <Link to="/blood/bloodpremium" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 프리미엄</HeaderP></Link>
+                        {/* <Link to="/blood/bloodpremium" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 프리미엄</HeaderP></Link> */}
                         <Link to="/myposts" style={{ textDecoration: 'none' }}><HeaderP>내가 쓴 글 보기</HeaderP></Link>
                       </li>
                 </ul>
@@ -98,27 +100,21 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave,handleTouchEnd,handleTouc
                 onTouchEnd={handleTouchEnd}>
                 <ul>
                     <li>
-                        <Link to="/crew"><HeaderP>헌혈 크루 가입하기</HeaderP></Link>
-                        <Link to="/crew"><HeaderP>내 헌혈 크루 가기</HeaderP></Link>
+                        <Link to="/crew"><HeaderP>헌혈 크루 찾기</HeaderP></Link>
                     </li>
                 </ul>
             </HeaderBox>
             )}
 
-            {hoveredComponent ==='live' && (
+            {/* {hoveredComponent ==='live' && (
             <HeaderBox 
                 className="Live"
                 onMouseEnter={()=>{ onHover(hoveredComponent)}}
                 onMouseLeave={() => onLeave()}
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}>
-                <ul>
-                    <li>
-                        <Link to="/live"><HeaderP>Live</HeaderP></Link>
-                    </li>
-                </ul>
             </HeaderBox>
-            )}
+            )} */}
 
         </HeaderMenuContainer>
     )
