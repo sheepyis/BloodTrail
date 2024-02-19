@@ -12,8 +12,8 @@ import Mark2 from '../../../assets/images/check-square 1.png';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import CreditModal from '../../../components/Credit/CreditModal';
-import Sidebar from "../../../components/Navigation/Sidebar";
-import Breadcrums from "../../../components/Navigation/Breadcrums";
+import Sidebar from '../../../components/Navigation/Sidebar';
+import Breadcrums from '../../../components/Navigation/Breadcrums';
 import axios from 'axios';
 
 const CreditModalContainer = styled.div`
@@ -21,7 +21,7 @@ const CreditModalContainer = styled.div`
   left: 50%;
   z-index: 10;
   background-color: ${colors.white};
-  border: 0.05vw solid #F2F2F2;
+  border: 0.05vw solid #f2f2f2;
   border-radius: 0.25vw;
   display: flex;
   flex-direction: column;
@@ -355,7 +355,7 @@ const SelectInput = styled.select`
   font-weight: 500;
   line-height: 1vw;
   letter-spacing: -0.3px;
-  margin-left: 0.5vw; 
+  margin-left: 0.5vw;
   -webkit-appearance: none;
 `;
 
@@ -372,8 +372,7 @@ const DateInput = styled.input`
   -webkit-appearance: none;
 `;
 
-
-const BloodWrite = ({isCredit}) => {
+const BloodWrite = ({ isCredit }) => {
   const [imageFile, setImageFile] = useState(null);
   const [registrationNumber, setRegistrationNumber] = useState('');
   const [bloodProduct, setBloodProduct] = useState('-');
@@ -381,7 +380,10 @@ const BloodWrite = ({isCredit}) => {
   const [start_date, setStart_date] = useState('');
   const [end_date, setEnd_date] = useState('');
   const [receiver, setReceiver] = useState('');
-  const [hospital, setHospital] = useState({name:'', number:'010-0001-0002'});
+  const [hospital, setHospital] = useState({
+    name: '',
+    number: '010-0001-0002',
+  });
 
   const [showCreditModal, setShowCreditModal] = useState(true);
 
@@ -397,12 +399,13 @@ const BloodWrite = ({isCredit}) => {
       },
     };
 
-    axios.get('https://bloodtrail.site/auth/profile', config)
+    axios
+      .get('https://bloodtrail.site/auth/profile', config)
       .then((response) => {
         if (response.data) {
           const user = response.data.result;
           if (user.premium.payment) {
-            setShowCreditModal(false); 
+            setShowCreditModal(false);
           }
         }
       })
@@ -411,51 +414,45 @@ const BloodWrite = ({isCredit}) => {
       });
   }, []);
 
-
   const handleSubmit = async () => {
-    const title = titleEditableRef.current ? titleEditableRef.current.value : '';
-    const content = contentEditableRef.current ? contentEditableRef.current.innerText : '';
+    const title = titleEditableRef.current
+      ? titleEditableRef.current.value
+      : '';
+    const content = contentEditableRef.current
+      ? contentEditableRef.current.innerText
+      : '';
 
     const formData = new FormData();
 
-    formData.title=title;
-    formData.content=content;
-    formData.blood_type=bloodType;
-    formData.blood_product=bloodProduct;
-    formData.start_date=start_date;
-    formData.end_date=end_date;
-    formData.receiver=registrationNumber;
-    formData.hospital=hospital;
-    formData.files=imageFile;
-
-    console.log(formData.title);
-    console.log(formData.content);
-    console.log(formData.blood_type);
-    console.log(formData.blood_product);
-    console.log(formData.start_date);
-    console.log(formData.end_date);
-    console.log(formData.receiver);
-    console.log(formData.hospital);
-    console.log(formData.files);
-
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('blood_type', bloodType);
+    formData.append('blood_product', bloodProduct);
+    formData.append('start_date', start_date);
+    formData.append('end_date', end_date);
+    formData.append('receiver', registrationNumber);
+    formData.append('hospital', JSON.stringify(hospital));
 
     if (imageFile) {
-      formData.append('image', imageFile);
+      formData.append('files', imageFile);
     }
 
     try {
       console.log(formData);
-      const response = await axios.post("https://bloodtrail.site/blood", formData, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰 추가
-        },
-      });
+      const response = await axios.post(
+        'https://bloodtrail.site/blood',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰 추가
+          },
+        }
+      );
 
       console.log(response);
 
       if (response.data.isSuccess) {
-        const data = await response;
-        console.log('성공:', data);
+        console.log('성공:', response.data);
         alert('글이 성공적으로 등록되었습니다.');
       } else {
         console.error('실패:', response.data.message);
@@ -483,7 +480,6 @@ const BloodWrite = ({isCredit}) => {
     setAllFieldsCompleted(allCompleted);
   }, [inputCompleted]);
 
-
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
   const titleEditableRef = useRef(null);
@@ -493,7 +489,7 @@ const BloodWrite = ({isCredit}) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
       setImageFile(file);
-  
+
       const img = document.createElement('img');
       img.src = URL.createObjectURL(file);
       img.style.maxWidth = '50%';
@@ -511,61 +507,90 @@ const BloodWrite = ({isCredit}) => {
   const toggleUnderline = () => setIsUnderline(!isUnderline);
   const toggleStrikethrough = () => setIsStrikethrough(!isStrikethrough);
 
+  const bloodTypeOptions = [
+    '-',
+    'A+',
+    'A-',
+    'B+',
+    'B-',
+    'AB+',
+    'AB-',
+    'O+',
+    'O-',
+  ];
+  const bloodProductOptions = [
+    '-',
+    'WB',
+    'RBC',
+    'F-RBC',
+    'W-RBC',
+    'WBC',
+    'PLT',
+    'A-PLT',
+    'W-PLT',
+    'FFP',
+    'FP',
+    'CRYO',
+    'CR-P',
+  ];
+  const requirePlaceOptions = [
+    '-',
+    '건국대병원',
+    '서울대병원',
+    '연세대 세브란스병원',
+    '가톨릭대학교 서울성모병원',
+  ];
 
-  const bloodTypeOptions = ["-", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-  const bloodProductOptions = ["-", "WB", "RBC", "F-RBC", "W-RBC", "WBC", "PLT", "A-PLT", "W-PLT", "FFP", "FP", "CRYO", "CR-P"];
-  const requirePlaceOptions = ["-", "건국대병원", "서울대병원", "연세대 세브란스병원", "가톨릭대학교 서울성모병원"];
-  
   const [bloodProductImage, setBloodProductImage] = useState(Mark);
   const [bloodTypeImage, setBloodTypeImage] = useState(Mark);
   const [dateImage, setDateImage] = useState(Mark);
 
   useEffect(() => {
-    setInputCompleted(prevState => ({
+    setInputCompleted((prevState) => ({
       ...prevState,
-      bloodProduct: bloodProduct !== "-",
+      bloodProduct: bloodProduct !== '-',
     }));
   }, [bloodProduct]);
-  
+
   useEffect(() => {
-    setInputCompleted(prevState => ({
+    setInputCompleted((prevState) => ({
       ...prevState,
-      bloodType: bloodType !== "-",
+      bloodType: bloodType !== '-',
     }));
   }, [bloodType]);
 
   const handleBloodProductChange = (e) => {
     setBloodProduct(e.target.value);
-    setBloodProductImage(e.target.value !== "-" ? Mark2 : Mark);
+    setBloodProductImage(e.target.value !== '-' ? Mark2 : Mark);
   };
-  
+
   const handleBloodTypeChange = (e) => {
     setBloodType(e.target.value);
-    setBloodTypeImage(e.target.value !== "-" ? Mark2 : Mark);
+    setBloodTypeImage(e.target.value !== '-' ? Mark2 : Mark);
   };
 
   // 날짜 입력 핸들러
   const handleStart_dateChange = (e) => {
     setStart_date(e.target.value);
   };
-  
+
   const handleEnd_dateChange = (e) => {
     setEnd_date(e.target.value);
   };
 
   useEffect(() => {
-      const isDateCompleted = start_date !== '' && end_date !== '';
-      setDateImage(Mark2);
-      setInputCompleted((prevInputCompleted) => ({
-        ...prevInputCompleted,
-        requireDay: isDateCompleted,
-      }));
-  }, [start_date, end_date]); 
-  
+    const isDateCompleted = start_date !== '' && end_date !== '';
+    setDateImage(Mark2);
+    setInputCompleted((prevInputCompleted) => ({
+      ...prevInputCompleted,
+      requireDay: isDateCompleted,
+    }));
+  }, [start_date, end_date]);
+
   const handleRegistrationNumberChange = (e) => {
     setRegistrationNumber(e.target.value);
   };
-  
+
   useEffect(() => {
     setInputCompleted((prevInputCompleted) => ({
       ...prevInputCompleted,
@@ -587,18 +612,18 @@ const BloodWrite = ({isCredit}) => {
 
   return (
     <CrewContainer>
-      <Sidebar pageLabel="지정헌혈" currentPage="지정헌혈 요청하기"/>
+      <Sidebar pageLabel="지정헌혈" currentPage="지정헌혈 요청하기" />
 
       <div className="right" style={{ width: '67%' }}>
-      <Breadcrums pageLabel="지정헌혈" currentPage="지정헌혈 요청하기"/>
+        <Breadcrums pageLabel="지정헌혈" currentPage="지정헌혈 요청하기" />
         <RightMiddle>
           <CrewP style={{ fontSize: '1.2vw' }}>글 작성하기</CrewP>
         </RightMiddle>
-        {showCreditModal &&
-        <CreditModalContainer>
-          <CreditModal onClose={() => setShowCreditModal(false)} />
+        {showCreditModal && (
+          <CreditModalContainer>
+            <CreditModal onClose={() => setShowCreditModal(false)} />
           </CreditModalContainer>
-        }
+        )}
 
         <div
           className="crewBar"
@@ -636,7 +661,7 @@ const BloodWrite = ({isCredit}) => {
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>수혈자 등록번호</InforText>
-                    
+
                     <ContentsText
                       placeholder="231117-3117"
                       style={{ width: '40%', marginLeft: '0.8vw' }}
@@ -647,14 +672,19 @@ const BloodWrite = ({isCredit}) => {
                 <InformBlock width="12.15vw">
                   <TextContainer>
                     <img
-                      src={inputCompleted.bloodProduct? Mark2 : Mark}
+                      src={inputCompleted.bloodProduct ? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>필요 혈액제제</InforText>
-                    <SelectInput value={bloodProduct} onChange={handleBloodProductChange}>
-                    {bloodProductOptions.map(option => (
-                      <option key={option} value={option}>{option}</option>
-                    ))}
+                    <SelectInput
+                      value={bloodProduct}
+                      onChange={handleBloodProductChange}
+                    >
+                      {bloodProductOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
                     </SelectInput>
                   </TextContainer>
                 </InformBlock>
@@ -702,9 +732,14 @@ const BloodWrite = ({isCredit}) => {
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>혈액형 정보</InforText>
-                    <SelectInput value={bloodType} onChange={handleBloodTypeChange}>
-                      {bloodTypeOptions.map(option => (
-                        <option key={option} value={option}>{option}</option>
+                    <SelectInput
+                      value={bloodType}
+                      onChange={handleBloodTypeChange}
+                    >
+                      {bloodTypeOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
                       ))}
                     </SelectInput>
                   </TextContainer>
