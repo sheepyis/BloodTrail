@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from "styled-components";
 import colors from "../../styles/color";
-import {Link} from "react-router-dom";
 import group208 from "../../assets/images/Group 208.png"
+import Breadcrums from '../../components/Navigation/Breadcrums';
+import { useLocation, Link } from 'react-router-dom';
+
 
 const Container = styled.div`
     display: flex;
@@ -18,17 +20,12 @@ const MainConationer =styled.div`
     width: 67%;
 `
 
-const Breadcrums = styled.div`
+const BreadcrumsC = styled.div`
     display: flex;
     gap: 0.5vw;
     padding: 0.9375vw 0.0000vw 0.9375vw 0.2083vw;
 `
-const BreadcrumsP = styled.div`
-    font-weight: 500;
-    font-size: 0.6vw;
-    color: ${colors.crewGray2};
-    cursor: pointer;
-`
+
 const Title = styled.div`
     color: var(--Gray-Gray-900, #17191A);
     font-family: Pretendard;
@@ -125,19 +122,22 @@ const NextButton = styled.div`
 `
 
 const SignupFinish = () => {
+  const location = useLocation();
+
+  const useQuery = () => {
+    return new URLSearchParams(location.search);
+  }
+
+  const query = useQuery();
+  const name = query.get('name'); // Retrieve the name passed in URL
 
     return(
         <Container>
             <SideBar/>
             <MainConationer>
-                <Breadcrums>
-                    <BreadcrumsP>홈</BreadcrumsP>
-                    <BreadcrumsP>{">"}</BreadcrumsP>
-                    <BreadcrumsP>로그인</BreadcrumsP>
-                    <BreadcrumsP>{">"}</BreadcrumsP>
-                    <BreadcrumsP>회원가입</BreadcrumsP>
-                </Breadcrums>
-
+              <BreadcrumsC>
+              <Breadcrums pageLabel="로그인" currentPage="회원가입" />
+              </BreadcrumsC>
                 <Title>회원가입</Title>
 
                 <LineContainer>
@@ -149,7 +149,7 @@ const SignupFinish = () => {
                 </LineContainer>
 
                 <JoinBox>
-                    <BoxP>축하합니다! user name님의 회원가입이 완료되었습니다.</BoxP>
+                    <BoxP>축하합니다! {name}님의 회원가입이 완료되었습니다.</BoxP>
                     <BoxP2>가입한 계정으로 회원가입을 진행해보세요.</BoxP2>
                     <NextButton>
                     <Link to="/">
@@ -161,5 +161,6 @@ const SignupFinish = () => {
         </Container>
     )
 }
+
 
 export default  SignupFinish;
