@@ -49,9 +49,10 @@ const Arrow = styled.img`
 const ListBlood = () => {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const accessToken = localStorage.getItem('accessToken');
+
+    const itemsPerPage = 10;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -64,12 +65,9 @@ const ListBlood = () => {
                 });
     
                 if (response.data.isSuccess && response.data.result) {
-                    const { historyList, totalPage } = response.data.result;
+                    const { historyList } = response.data.result;
                     setData(historyList);
-                    setTotalPages(totalPage);
                 }
-    
-                console.log(response.data);
             } catch (error) {
                 console.error("Error:", error);
             } finally {
@@ -79,8 +77,6 @@ const ListBlood = () => {
     
         fetchData();
     }, [accessToken, currentPage]);
-    
-    
 
     const nextPage = () => {
         setCurrentPage(prevPage => prevPage + 1);
@@ -116,23 +112,15 @@ const ListBlood = () => {
                     style={{ transform: 'rotate(180deg)' }}
                     disabled={currentPage === 1}
                 />
-                {[...Array(totalPages).keys()].map((number) => (
-                    <PageNumber
-                        key={number + 1}
-                        active={number + 1 === currentPage}
-                        onClick={() => setCurrentPage(number + 1)}
-                    >
-                        {number + 1}
-                    </PageNumber>
-                ))}
+                <PageNumber>
+                    {currentPage}
+                </PageNumber>
                 <Arrow
                     src={Right}
                     alt="right"
                     onClick={nextPage}
-                    disabled={currentPage === totalPages}
                 />
             </PaginationContainer>
-
         </>
     );
 };
