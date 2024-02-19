@@ -295,8 +295,8 @@ const InformBlock = styled.div`
   height: 2.7vw;
   padding: 0.75vw 0.3vw;
   align-items: center;
-  gap: 15px;
-  border-radius: 100px;
+  gap: 1vw;
+  border-radius: 5vw;
   background: var(--black-white-white-1000, #fff);
 `;
 
@@ -344,6 +344,35 @@ const RowContainer = styled.div`
   gap: 1vw;
 `;
 
+const SelectInput = styled.select`
+  height: 2.5vw;
+  background: var(--black-white-white-1000, #fff);
+  color: var(--Gray-Gray-500, #9e9e9e);
+  font-family: Pretendard;
+  font-size: 0.75vw;
+  padding-left: 0.75vw;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1vw;
+  letter-spacing: -0.3px;
+  margin-left: 0.5vw; 
+  -webkit-appearance: none;
+`;
+
+const DateInput = styled.input`
+  font-family: Pretendard;
+  font-size: 0.9vw;
+  font-style: normal;
+  font-weight: 500;
+  height: 1.5vw;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.6;
+  color: #495057;
+  background-color: #fff;
+  -webkit-appearance: none;
+`;
+
+
 const BloodWrite = ({isCredit}) => {
   const [imageFile, setImageFile] = useState(null);
   const [registrationNumber, setRegistrationNumber] = useState('');
@@ -351,6 +380,11 @@ const BloodWrite = ({isCredit}) => {
   const [requireDay, setRequireDay] = useState('');
   const [requirePlace, setRequirePlace] = useState('');
   const [bloodType, setBloodType] = useState('');
+  const [start_date, setStart_date] = useState('');
+  const [end_date, setEnd_date] = useState('');
+  const [receiver, setReceiver] = useState('');
+  const [hospital, setHospital] = useState({});
+
 
   const [showCreditModal, setShowCreditModal] = useState(true);
 
@@ -395,11 +429,12 @@ const BloodWrite = ({isCredit}) => {
 
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('registrationNumber', registrationNumber);
-    formData.append('bloodProduct', bloodProduct);
-    formData.append('requireDay', requireDay);
-    formData.append('requirePlace', requirePlace);
     formData.append('bloodType', bloodType);
+    formData.append('bloodProduct', bloodProduct);
+    formData.append('start_date', start_date);
+    formData.append('end_date', end_date);
+    formData.append('receiver', receiver);
+    formData.append('hospital', hospital);
 
     if (imageFile) {
       formData.append('image', imageFile);
@@ -427,7 +462,7 @@ const BloodWrite = ({isCredit}) => {
   };
 
   const [inputCompleted, setInputCompleted] = useState({
-    registrationNumber: false,
+    //registrationNumber: false,
     bloodProduct: false,
     requireDay: false,
     requirePlace: false,
@@ -478,6 +513,19 @@ const BloodWrite = ({isCredit}) => {
   const toggleUnderline = () => setIsUnderline(!isUnderline);
   const toggleStrikethrough = () => setIsStrikethrough(!isStrikethrough);
 
+
+  const bloodTypeOptions = ["-", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+  const bloodProductOptions = ["-", "WB", "RBC", "F-RBC", "W-RBC", "WBC", "PLT", "A-PLT", "W-PLT", "FFP", "FP", "CRYO", "CR-P"];
+  const requirePlaceOptions = ["-", "건국대병원", "서울대병원", "연세대 세브란스병원", "가톨릭대학교 서울성모병원"];
+  
+  const [selectedOption, setSelectedOption] = useState("-");
+  const [imageSrc, setImageSrc] = useState(Mark); // 기본 이미지는 Mark로 설정
+
+  const handleOptionChange = (e) => {
+    setSelectedOption(e.target.value);
+    setImageSrc(e.target.value !== "-" ? Mark2 : Mark);
+  };
+
   return (
     <CrewContainer>
       <Sidebar pageLabel="지정헌혈" currentPage="지정헌혈 요청하기"/>
@@ -522,13 +570,14 @@ const BloodWrite = ({isCredit}) => {
             <PatientP>환자 정보</PatientP>
             <BlockContainer>
               <InformBlocks>
-                <InformBlock width="13.4vw">
+                <InformBlock width="14.4vw">
                   <TextContainer>
                     <img
                       src={inputCompleted.registrationNumber ? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>수혈자 등록번호</InforText>
+                    
                     <ContentsText
                       placeholder="231117-3117"
                       style={{ width: '40%', marginLeft: '0.8vw' }}
@@ -538,42 +587,44 @@ const BloodWrite = ({isCredit}) => {
                     ></ContentsText>
                   </TextContainer>
                 </InformBlock>
-                <InformBlock width="11.15vw">
+                <InformBlock width="12.15vw">
                   <TextContainer>
                     <img
                       src={inputCompleted.bloodProduct ? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>필요 혈액제제</InforText>
-                    <ContentsText
-                      placeholder="RBC"
-                      style={{ width: '40%', marginLeft: '0.8vw' }}
-                      onKeyDown={(event) =>
-                        changeImageOnEnter('bloodProduct', event)
-                      }
-                    ></ContentsText>
+                    <SelectInput value={bloodProduct} onChange={handleBloodProductChange}>
+                    {bloodProductOptions.map(option => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                    </SelectInput>
                   </TextContainer>
                 </InformBlock>
 
-                <InformBlock width="15vw">
+                <InformBlock width="24vw">
                   <TextContainer>
                     <img
                       src={inputCompleted.requireDay ? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>요청기간</InforText>
-                    <ContentsText
-                      placeholder="2024/02/21~2024/03/21"
-                      style={{ width: '100%', marginLeft: '0.2vw' }}
-                      onKeyDown={(event) =>
-                        changeImageOnEnter('requireDay', event)
-                      }
-                    ></ContentsText>
+                    <DateInput
+                      type="date"
+                      value={start_date}
+                      onChange={(e) => setStart_date(e.target.value)}
+                    />
+                    ~
+                    <DateInput
+                      type="date"
+                      value={end_date}
+                      onChange={(e) => setEnd_date(e.target.value)}
+                    />
                   </TextContainer>
                 </InformBlock>
               </InformBlocks>
               <RowContainer>
-                <InformBlock width="11.15vw">
+                <InformBlock width="auto">
                   <TextContainer>
                     <img
                       src={inputCompleted.requirePlace ? Mark2 : Mark}
@@ -589,20 +640,18 @@ const BloodWrite = ({isCredit}) => {
                     ></ContentsText>
                   </TextContainer>
                 </InformBlock>
-                <InformBlock width="10.5vw">
+                <InformBlock width="10vw">
                   <TextContainer>
                     <img
                       src={inputCompleted.bloodType ? Mark2 : Mark}
                       style={{ width: '1.2vw', height: '1.2vw' }}
                     />
                     <InforText>혈액형 정보</InforText>
-                    <ContentsText
-                      placeholder="RH+ A형"
-                      style={{ width: '40%' }}
-                      onKeyDown={(event) =>
-                        changeImageOnEnter('bloodType', event)
-                      }
-                    ></ContentsText>
+                    <SelectInput value={bloodType} onChange={handleBloodTypeChange}>
+                      {bloodTypeOptions.map(option => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </SelectInput>
                   </TextContainer>
                 </InformBlock>
               </RowContainer>
