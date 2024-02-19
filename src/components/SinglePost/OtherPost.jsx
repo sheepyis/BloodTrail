@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
 import styled from 'styled-components';
-
 import { OtherPostDetail } from "./PostData"; 
 import CardTmp from '../Card/Card';
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import leftArrow from './Icons/LeftArrow.svg'; 
 import rightArrow from './Icons/RightArrow.svg'; 
-
 
 const OtherPostsSection = styled.section`
   margin: 4vw 0 10vw;
@@ -28,7 +24,6 @@ const OtherPostsSection = styled.section`
         width: 0.8vw;
         height: 0.8vw;
         padding: 0;
-        
         border: none;
         border-radius: 100%;
         background-color: #EEEEEE;
@@ -112,31 +107,29 @@ const settings = {
   prevArrow: <PrevArrow />,
 };
 
-
-const OtherPosts = ({board,_id}) => {
+const OtherPosts = ({board, _id}) => {
   const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
-      const fetchPosts = async () => {
-        try {
-            const accessToken = localStorage.getItem('accessToken');
-            const response = await axios.get(`https://bloodtrail.site/post/${_id}/recommend`, {}, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          });
-          if (response.data.isSuccess) { 
-            console.log(response.data);      
-            setPosts(response.data.result);
-          } else {
-            console.error("Failed to fetch posts: ", response.data.message);
-            console.error(response.data);
-          }
-         } catch (error) {
-          console.error('게시글을 불러오는 데 실패했습니다.', error);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get(`https://bloodtrail.site/post/${_id}/recommend`, {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        if (response.data.isSuccess) { 
+          console.log(response.data);      
+          setPosts(response.data.result);
+        } else {
+          console.error("Failed to fetch posts: ", response.data.message);
+          console.error(response.data);
         }
-      };
-  
-      fetchPosts();
-    }, [board,_id]);
+      } catch (error) {
+        console.error('게시글을 불러오는 데 실패했습니다.', error);
+      }
+    };
+    fetchPosts();
+  }, [board, _id]);
     
     
   return (
@@ -145,22 +138,21 @@ const OtherPosts = ({board,_id}) => {
         <OtherPostsHeader>다른 글 보기</OtherPostsHeader>
         <Link to={"/community"}><BoardListButton>게시판 목록</BoardListButton></Link>
       </HeaderContainer>
-
       <PostsLists>
         <Slider {...settings}>
           {posts.map((post) => (
-          <CardGap>
-            <CardTmp
-              board='community'
-              forOtherPost={true}
-              _id={post._id}
-              cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
-              //userId={post.writer.nickname}
-              thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
-              title={post.title}
-              body={post.content}
-            />
-          </CardGap>
+            <CardGap key={post._id}>
+              <CardTmp
+                board='community'
+                forOtherPost={true}
+                _id={post._id}
+                cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
+                //userId={post.writer.nickname}
+                thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
+                title={post.title}
+                body={post.content}
+              />
+            </CardGap>
           ))}
         </Slider>
       </PostsLists>
