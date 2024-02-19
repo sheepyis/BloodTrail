@@ -16,6 +16,17 @@ import Sidebar from "../../../components/Navigation/Sidebar";
 import Breadcrums from "../../../components/Navigation/Breadcrums";
 import axios from 'axios';
 
+const CreditModalContainer = styled.div`
+  position: fixed;
+  left: 50%;
+  z-index: 10;
+  background-color: ${colors.white};
+  border: 0.05vw solid #F2F2F2;
+  border-radius: 0.25vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -341,6 +352,35 @@ const BloodWrite = ({isCredit}) => {
   const [requirePlace, setRequirePlace] = useState('');
   const [bloodType, setBloodType] = useState('');
 
+  const [showCreditModal, setShowCreditModal] = useState(true);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      // Handle case where there is no access token
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    axios.get('https://bloodtrail.site/auth/profile', config)
+      .then((response) => {
+        if (response.data) {
+          const user = response.data.result;
+          if (user.premium.payment) {
+            setShowCreditModal(false); 
+          }
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []);
+
   const handleRegistrationNumberChange = (e) => setRegistrationNumber(e.target.value);
   const handleBloodProductChange = (e) => setBloodProduct(e.target.value);
   const handleRequireDayChange = (e) => setRequireDay(e.target.value);
@@ -444,13 +484,14 @@ const BloodWrite = ({isCredit}) => {
 
       <div className="right" style={{ width: '67%' }}>
       <Breadcrums pageLabel="지정헌혈" currentPage="지정헌혈 요청하기"/>
-
-        {isCredit && (
-                    <CreditModal />
-        )}
         <RightMiddle>
           <CrewP style={{ fontSize: '1.2vw' }}>글 작성하기</CrewP>
         </RightMiddle>
+        {showCreditModal &&
+        <CreditModalContainer>
+          <CreditModal onClose={() => setShowCreditModal(false)} />
+          </CreditModalContainer>
+        }
 
         <div
           className="crewBar"
