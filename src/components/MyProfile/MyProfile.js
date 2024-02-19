@@ -59,54 +59,19 @@ const PointBox = styled.div`
   color: ${colors.black};
 `;
 
-const MyProfile = () => {
-  const [userData, setUserData] = useState(null);
+const PremiumBadge = styled.span`
+  background-color: #FFE7E7;
+  color: black;
+  font-size: 0.6vw;
+  padding: 0.2vw 0.4vw;
+  border-radius: 0.5vw;
+  margin-left: 0.5vw;
+  justify-content: center;
+  font-weight: bold;
+`;
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-
-    axios
-      .get('https://bloodtrail.site/auth/profile', config)
-      .then((response) => {
-        if (response.data) {
-          console.log(response);
-          const user = response.data.result;
-
-          // 날짜 형식 변환
-          const formattedBirth = new Date(user.birth)
-            .toLocaleDateString('ko-KR', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-            })
-            .replace(/\./g, '')
-            .split(' ')
-            .join('.');
-
-          setUserData({
-            name: user.nickname,
-            username: user.name,
-            birth: formattedBirth,
-            email: user.email,
-            phone: user.phone,
-            point: user.point,
-            whole: user.id,
-            plasma: user.id,
-            platelet: user.id,
-            _id: user._id,
-          });
-        }
-      })
-      .catch((error) => {
-        console.error('Error: ', error);
-      });
-  }, []);
-
+const MyProfile = ({userData}) => {
+  
   return (
     <MyProfileContainer>
       <div className="left" style={{ width: '50%' }}>
@@ -139,6 +104,7 @@ const MyProfile = () => {
               >
                 <MyProfileP>
                   {userData ? userData.name : 'Loading...'}
+                  {userData && userData.premium && <PremiumBadge>Premium</PremiumBadge>}
                 </MyProfileP>
                 <div
                   style={{

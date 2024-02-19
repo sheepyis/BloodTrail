@@ -7,6 +7,10 @@ import MyCrew from '../../components/MyCrew/MyCrew';
 import Credit from '../../components/Credit/Credit';
 import MyUpload from '../../components/MyUpload/MyUpload';
 import ListMyUpload from '../../components/MyUpload/list-myupload';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../../components/Navigation/Sidebar';
+import Breadcrums from '../../components/Navigation/Breadcrums';
 
 const MyPageContainer = styled.div`
   width: 100%;
@@ -51,6 +55,54 @@ const EditButton = styled.button`
 `;
 
 const MyPage = ({ isCredit }) => {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    axios
+      .get('https://bloodtrail.site/auth/profile', config)
+      .then((response) => {
+        if (response.data) {
+          console.log(response);
+          const user = response.data.result;
+
+          // 날짜 형식 변환
+          const formattedBirth = new Date(user.birth)
+            .toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })
+            .replace(/\./g, '')
+            .split(' ')
+            .join('.');
+
+          setUserData({
+            name: user.nickname,
+            username: user.name,
+            birth: formattedBirth,
+            email: user.email,
+            phone: user.phone,
+            point: user.point,
+            whole: user.id,
+            plasma: user.id,
+            platelet: user.id,
+            _id: user._id,
+            premium: user.premium,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('Error: ', error);
+      });
+  }, []);
+
   return (
     <MyPageContainer>
       <div className="left" style={{ width: '17%', paddingLeft: '2.5%' }}>
@@ -76,7 +128,7 @@ const MyPage = ({ isCredit }) => {
           <MyPageP3>내 프로필</MyPageP3>
         </RightTop>
 
-        <Credit />
+        {userData && !userData.premium && <Credit />}
 
         <div
           className="profile"
@@ -93,7 +145,7 @@ const MyPage = ({ isCredit }) => {
           </MyPageP>
           <EditButton>정보 수정하기</EditButton>
         </div>
-        <MyProfile />
+        <MyProfile userData={userData}/>
 
         <div className="blood" style={{ width: '100%', marginTop: '2vw' }}>
           <MyPageP
