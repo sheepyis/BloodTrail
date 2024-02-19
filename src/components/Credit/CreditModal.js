@@ -78,29 +78,9 @@ const CreditButton = styled.button`
     cursor: pointer;
     margin-top: 2.5vw;
 `
-/* 3. 콜백 함수 정의하기 */
-const callback=(response)=> {
-   
-    if (response.success) {
-        alert('결제 성공');
-        console.log("결제 성공");
 
-        const { imp_uid, merchant_uid } = response; 
-
-        console.log("imp_uid:",imp_uid);
-        console.log("merchant_uid:", merchant_uid);
-
-        
-    } else {
-        alert(`결제 실패: ${response.error_msg}`);
-        console.log("결제 실패");
-    }
-}
 
 const CreditModal = ({onClose}) => {
-
-    const [accessToken, setAccessToken] = useState("");
-    const [refreshToken, setRefreshToken]= useState("");
     const [isCredit, setIsCredit] = useState(false);
 
     let imp_uid, merchant_uid;
@@ -118,54 +98,57 @@ const CreditModal = ({onClose}) => {
         }
     },[]);
 
-    
 
     const handlePayment = async () => {
+        /* 1. 가맹점 식별하기 */
+        const { IMP } = window;
+        IMP.init('imp68888372');
 
-        try{
-            // access token 가져오기
-            const accessToken =  localStorage.getItem('accessToken');
-            const refreshToken = localStorage.getItem('refreshToken');
-            setAccessToken(accessToken);
-            setRefreshToken(refreshToken);
+        /* 2. 결제 데이터 정의하기 */
+        const data = {
+            pg: 'html5_inicis',                      
+            pay_method: 'card',                 
+            merchant_uid: `mid_${new Date().getTime()}`,
+            amount: 100,                               
+            name: 'Blood trail 프리미엄 결제',            
+            buyer_name: '',                       
+            buyer_tel: '',               
+            buyer_email: '',          
+        };
 
-             /* 1. 가맹점 식별하기 */
-            const { IMP } = window;
-            IMP.init('imp68888372');
+        /* 4. 결제 창 호출하기 */
+        IMP.request_pay(data, async (response) => {
+          if (response.success) {
+              alert('결제 성공');
+              const accessToken = localStorage.getItem('accessToken');
+              const { imp_uid, merchant_uid } = response;
 
-             /* 2. 결제 데이터 정의하기 */
-            const data = {
-            pg: 'html5_inicis',                           // PG사
-            pay_method: 'card',                           // 결제수단
-            merchant_uid: `mid_${new Date().getTime()}`,   // 주문번호
-            amount: 100,                                 // 결제금액
-            name: 'Blood trail 프리미엄 결제',                  // 주문명
-            buyer_name: '',                           // 구매자 이름
-            buyer_tel: '',                     // 구매자 전화번호
-            buyer_email: '',               // 구매자 이메일
-            };
+              try {
+                  const paymentResponse = await axios.post(
+                      'https://bloodtrail.site/auth/premium',
+                      { imp_uid, merchant_uid },
+                      {
+                          headers: {
+                              'Authorization': `Bearer ${accessToken}`
+                          }
+                      }
+                  );
 
-            /* 4. 결제 창 호출하기 */
-            IMP.request_pay(data, callback);
-
-            const response = await axios.post(
-                'https://bloodtrail.site/auth/premium',
-                {imp_uid, merchant_uid},
-                {
-                    headers: {
-                      'Authorization': `Bearer ${accessToken}`
-                    }
-                }
-            )
-            setIsCredit(true);
-
-        }
-        catch(error){
-            console.error('에러: ',error);
-            setIsCredit(false);
-        }
-    }
-    
+                  if (paymentResponse.data.isSuccess) {
+                      setIsCredit(true);
+                      alert('결제 정보가 성공적으로 등록되었습니다.');
+                  } else {
+                      alert(paymentResponse.data.message);
+                  }
+              } catch (error) {
+                  alert('결제 정보 등록 중 오류가 발생했습니다.');
+                  console.error('서버 결제 정보 등록 중 에러 발생:', error);
+              }
+          } else {
+              alert(`결제 실패: ${response.error_msg}`);
+          }
+      });
+  };
 
     return (
         <CreditModalContainer>

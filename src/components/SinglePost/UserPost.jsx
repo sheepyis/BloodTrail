@@ -237,6 +237,7 @@ const PostDetailPage = ({board,_id}) => {
           console.log(response.data);      
           setPosts(response.data.result);
         } else {
+          console.log(response.data);
           console.error("Failed to fetch posts: ", response.data.message);
         }
        } catch (error) {
