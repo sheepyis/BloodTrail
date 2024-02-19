@@ -220,36 +220,35 @@ const DropdownItem = styled.div`
   cursor: pointer;
 `;
 
-const PostDetailPage = ({ board, _id }) => {
+const BloodDetailPage = ({ board, _id }) => {
   const [posts, setPosts] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    const fetchPosts = async () => {
+    const fetchPost = async () => {
       try {
-        const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.patch(
-          `https://bloodtrail.site/post/${_id}`,
-          {},
+        const accessToken = localStorage.getItem('accessToken'); // 로컬 스토리지에서 액세스 토큰 가져오기
+        const response = await axios.get(
+          `https://bloodtrail.site/blood/${_id}`,
           {
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
           }
         );
-        if (response.data.isSuccess) {
-          console.log(response.data);
-          setPosts(response.data.result);
+
+        if (response.status === 200) {
+          setPosts(response.data.result); // 상태 업데이트로 게시글 데이터 저장
         } else {
-          console.log(response.data);
-          console.error('Failed to fetch posts: ', response.data.message);
+          console.error('게시글을 불러오는데 실패했습니다.', response);
         }
       } catch (error) {
-        console.error('게시글을 불러오는 데 실패했습니다.', error);
+        console.error('게시글을 불러오는 중 오류가 발생했습니다.', error);
       }
     };
 
-    fetchPosts();
-  }, [board, _id]);
+    fetchPost();
+  }, [_id]);
 
   const copyLink = async () => {
     const pathToCopy = ' and other links';
@@ -357,15 +356,14 @@ const PostDetailPage = ({ board, _id }) => {
         </InteractionBar>
       </Header>
 
-      {board == 'blood' && (
+      {board == 'blood' && posts && (
         <TagContainer>
-          {posts.tags &&
-            posts.tags.map((tag, index) => (
-              <Tag key={index}>
-                <TagCategory>{tag.category}</TagCategory>
-                {tag.text}
-              </Tag>
-            ))}
+          {posts.tags.map((tag, index) => (
+            <Tag key={index}>
+              <TagCategory>{tag.category}</TagCategory>
+              {tag.text}
+            </Tag>
+          ))}
         </TagContainer>
       )}
       <ContentArea>
@@ -410,4 +408,4 @@ const PostDetailPage = ({ board, _id }) => {
   );
 };
 
-export default PostDetailPage;
+export default BloodDetailPage;

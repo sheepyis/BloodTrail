@@ -454,6 +454,7 @@ const BloodWrite = ({ isCredit }) => {
       if (response.data.isSuccess) {
         console.log('성공:', response.data);
         alert('글이 성공적으로 등록되었습니다.');
+        const _id = response.data.result._id;
       } else {
         console.error('실패:', response.data.message);
         alert(`${response.data.message}`);
