@@ -224,7 +224,6 @@ const CommentSection = ({_id}) => {
           setCommentInput(''); // 입력 창을 비웁니다.
   
           console.log('댓글 등록 성공:', response.data);
-          alert("댓글을 등록했습니다");
         } catch (error) {
           console.error('댓글 등록 실패:', error);
           alert("댓글을 등록하지 못했습니다");
