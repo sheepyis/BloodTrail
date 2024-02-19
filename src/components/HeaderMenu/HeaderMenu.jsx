@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const HeaderMenuContainer = styled.div`
     position: absolute;
-    top: 6.3%;
+    top: 6%;
     background-color: ${colors.white};
     backdrop-filter: blur(10.100000381469727px);
     width: 100vw;
@@ -25,16 +25,16 @@ const HeaderBox = styled.div`
     }
     &.Community{
         position: relative;
-        left: 9.3vw;
+        left: 8.39vw;
     }
     &.Crew{
         position: relative;
-        left: 15vw;
+        left: 13.04vw;
     }
-    &.Live{
-        position: relative;
-        left: 14.5vw;
-    }
+    // &.Live{
+    //     position: relative;
+    //     left: 14.5vw;
+    // }
 `
 
 const HeaderP = styled.p`
@@ -44,6 +44,7 @@ const HeaderP = styled.p`
     margin: 1.5vw;
     padding: 0px 10px;
     gap: 10px;
+    background: green;
 
     &:hover {
         color: ${colors.logoRed};
