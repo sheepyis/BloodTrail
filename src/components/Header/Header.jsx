@@ -18,6 +18,7 @@ const HeaderContainer = styled.div`
     display: flex;
     align-items: center;
     background-color: ${colors.white};
+    z-index:2;
 `
 const MainHeader = styled.div`
     margin-left: 48px;
@@ -28,17 +29,16 @@ const HeaderMenu = styled.div`
     position: relative;
     display:flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1vw;
     white-space: nowrap;
 `
 
 const HeaderP2 = styled(NavLink)`
     font-weight: 400;
     font-size: 0.9375vw;  
-    padding: 1.20vw 0.52vw;
-    margin-right: 0.42vw; 
+    padding: 1.20vw 0.52vw 1.20vw 0.52vw;
+    margin-right: 0.44vw; 
     cursor: pointer;
+   
     &:hover {
         font-weight: 700;
     }
