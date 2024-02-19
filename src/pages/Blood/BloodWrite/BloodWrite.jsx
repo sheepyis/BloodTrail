@@ -483,11 +483,6 @@ const BloodWrite = ({isCredit}) => {
     setAllFieldsCompleted(allCompleted);
   }, [inputCompleted]);
 
-  const changeImageOnEnter = (field, event) => {
-    if (event.key === 'Enter') {
-      setInputCompleted({ ...inputCompleted, [field]: true });
-    }
-  };
 
   const [selectedImage, setSelectedImage] = useState(null);
   const fileInputRef = useRef(null);
@@ -496,7 +491,9 @@ const BloodWrite = ({isCredit}) => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    if (file && file.type.substr(0, 5) === 'image') {
+    if (file && file.type.startsWith('image/')) {
+      setImageFile(file);
+  
       const img = document.createElement('img');
       img.src = URL.createObjectURL(file);
       img.style.maxWidth = '50%';
@@ -557,9 +554,6 @@ const BloodWrite = ({isCredit}) => {
   };
 
   useEffect(() => {
-    // 두 날짜가 모두 입력되었는지 확인
-    console.log(start_date);
-    console.log(end_date);
       const isDateCompleted = start_date !== '' && end_date !== '';
       setDateImage(Mark2);
       setInputCompleted((prevInputCompleted) => ({
