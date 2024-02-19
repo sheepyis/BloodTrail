@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 import colors from '../../styles/color';
-import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import MyProfile from '../../components/MyProfile/MyProfile';
 import MyDonation from '../../components/MyDonation/MyDonation';
 import MyCrew from '../../components/MyCrew/MyCrew';
 import Credit from '../../components/Credit/Credit';
 import MyUpload from '../../components/MyUpload/MyUpload';
 import ListMyUpload from '../../components/MyUpload/list-myupload';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/Navigation/Sidebar';
 import Breadcrums from '../../components/Navigation/Breadcrums';
 
@@ -25,18 +24,12 @@ const MyPageP = styled.p`
   color: ${colors.crewGray};
 `;
 
-const EditButton = styled.button`
-  border: none;
-  border-radius: 0.25vw;
-  background-color: #fffafa;
-  color: ${colors.mainRed};
-  font-size: 0.75vw;
-  padding: 0.5vw;
-`;
-
-
 const MyPage = ({ isCredit }) => {
   const [userData, setUserData] = useState(null);
+  const [userHistory, setUserHistory] = useState([]);
+  const [wbCount, setWbCount] = useState(0);
+  const [pbCount, setPbCount] = useState(0);
+  const [plbCount, setPlbCount] = useState(0);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -50,7 +43,6 @@ const MyPage = ({ isCredit }) => {
       .get('https://bloodtrail.site/auth/profile', config)
       .then((response) => {
         if (response.data) {
-          console.log(response);
           const user = response.data.result;
 
           const formattedBirth = new Date(user.birth)
@@ -70,18 +62,70 @@ const MyPage = ({ isCredit }) => {
             email: user.email,
             phone: user.phone,
             point: user.point,
-            whole: user.id,
-            plasma: user.id,
-            platelet: user.id,
             _id: user._id,
             premium: user.premium.payment,
           });
         }
       })
       .catch((error) => {
-        console.error('Error: ', error);
+        console.error('Error fetching profile:', error);
       });
   }, []);
+
+  useEffect(() => {
+    if (userData && userData._id) {
+      const accessToken = localStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
+      axios
+        .get('https://bloodtrail.site/history', config)
+        .then((response) => {
+          if (response.data.isSuccess) {
+            setUserHistory(response.data.result.historyList);
+
+            let wb = 0;
+            let pb = 0;
+            let plb = 0;
+
+            response.data.result.historyList.forEach((record) => {
+              if (record.user._id === userData._id) {
+                switch (record.type) {
+                  case 'WB':
+                    wb++;
+                    break;
+                  case 'PB':
+                    pb++;
+                    break;
+                  case 'PLB':
+                    plb++;
+                    break;
+                  default:
+                    break;
+                }
+              }
+            });
+
+            setWbCount(wb);
+            setPbCount(pb);
+            setPlbCount(plb);
+
+            setUserHistory({
+              ...userHistory,
+              whole: wbCount,
+              plasma: pbCount,
+              platelet: plbCount,
+            });
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  }, [userData, userHistory]);
 
   return (
     <MyPageContainer>
@@ -106,7 +150,7 @@ const MyPage = ({ isCredit }) => {
             내 프로필
           </MyPageP>
         </div>
-        <MyProfile userData={userData}/>
+        <MyProfile userData={userData} userHistory={userHistory} />
 
         <div className="blood" style={{ width: '100%', marginTop: '2vw' }}>
           <MyPageP

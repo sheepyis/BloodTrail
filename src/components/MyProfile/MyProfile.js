@@ -70,7 +70,7 @@ const PremiumBadge = styled.span`
   font-weight: bold;
 `;
 
-const MyProfile = ({userData}) => {
+const MyProfile = ({userData, userHistory}) => {
   
   return (
     <MyProfileContainer>
@@ -204,17 +204,17 @@ const MyProfile = ({userData}) => {
             >
               <BloodBox>
                 <MyProfileP style={{ fontSize: '0.75vw' }}>
-                  전혈 {userData ? userData.whole : '0'} 회
+                  전혈 {userHistory ? userHistory.whole : '0'} 회
                 </MyProfileP>
               </BloodBox>
               <BloodBox>
                 <MyProfileP style={{ fontSize: '0.75vw' }}>
-                  혈장 {userData ? userData.plasma : '0'} 회
+                  혈장 {userHistory ? userHistory.plasma : '0'} 회
                 </MyProfileP>
               </BloodBox>
               <BloodBox>
                 <MyProfileP style={{ fontSize: '0.75vw' }}>
-                  혈소판 {userData ? userData.platelet : '0'} 회
+                  혈소판 {userHistory ? userHistory.platelet : '0'} 회
                 </MyProfileP>
               </BloodBox>
             </div>
