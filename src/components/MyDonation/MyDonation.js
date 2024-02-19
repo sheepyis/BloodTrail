@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import close from '../../assets/images/close_24px.png';
 import { useRef } from 'react';
 import moment from 'moment';
+import ListBlood from './list-blood';
 
 const DonationContainer = styled.div`
   width: 100%;
@@ -436,6 +437,7 @@ const MyDonation = () => {
           </ModalContent>
         </ModalBackground>
       )}
+      <ListBlood/>
     </>
   );
 };
