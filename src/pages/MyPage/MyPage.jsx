@@ -105,7 +105,6 @@ const MyPage = ({ isCredit }) => {
           <MyPageP style={{ fontSize: '1.2vw', fontWeight: 'bold' }}>
             내 프로필
           </MyPageP>
-          <EditButton>정보 수정하기</EditButton>
         </div>
         <MyProfile userData={userData}/>
 
@@ -157,7 +156,6 @@ const MyPage = ({ isCredit }) => {
           >
             나의 헌혈 크루
           </MyPageP>
-          <EditButton>크루 관리하기</EditButton>
         </div>
         <MyCrew />
       </div>
