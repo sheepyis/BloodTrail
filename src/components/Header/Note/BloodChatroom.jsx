@@ -6,7 +6,8 @@ import image from '../../../assets/images/image 1.png';
 import BloodChat from './BloodChat';
 import colors from '../../../styles/color';
 import CrewChat from './CrewChat';
-import axios from "axios";
+import axios from 'axios';
+
 
 const Container = styled.div`
     width: 100%;
@@ -184,12 +185,14 @@ const InputText = styled.div`
     border: 0.1042vw solid var(--Primary-Red-500, #FFB2B5);
   }
 }
-`
-const BloodChatroom=({handleBloodChat,handleCrewChat, chatRoomId})=>{
-    const [back, setBack] = useState(false);
-    const [crewChat, setCrewChat] = useState(false);
-    const [bloodChat, setBloodChat] = useState(false);
-    const [chats, setChats] = useState([]);
+
+`;
+const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
+  const [back, setBack] = useState(false);
+  const [crewChat, setCrewChat] = useState(false);
+  const [bloodChat, setBloodChat] = useState(false);
+  const [chats, setChats] = useState([]);
+
 
     //console.log(chatRoomId);
 
@@ -211,6 +214,78 @@ const BloodChatroom=({handleBloodChat,handleCrewChat, chatRoomId})=>{
 
         fetchChats();
     }, [chatRoomId]);
+
+
+  const handleBack = () => {
+    setBack(true);
+  };
+  return (
+    <Container>
+      {!back && (
+        <>
+          <NoteTitle2>
+            <NoteElement className="crew" onClick={handleCrewChat}>
+              크루
+            </NoteElement>
+            <NoteElement className="blood">지정헌혈 요청글</NoteElement>
+          </NoteTitle2>
+          <ChatContainer>
+            <Header>
+              <BackIcon src={arrow} alt="back_arrow" onClick={handleBack} />
+              <HeaderLine />
+            </Header>
+            <HeaderP>
+              채팅방이 개설되었습니다
+              <HeaderP2>
+                지정헌혈에 대한 정보와 가능 날짜를 공유해주세요.
+                <br />
+                금전적인 보상을 요구하거나, 취하는 것은 혈액관리법 제3조에 따라
+                <br />
+                처벌 받을 수 있습니다. 관련 사항은 신고를 부탁드리며, 영구히
+                서비스 사용이
+                <br />
+                제한될 수 있습니다.
+              </HeaderP2>
+            </HeaderP>
+
+            <ChatBox>
+              <OtherUserInfo>
+                <img
+                  src={profile2}
+                  alt="profile"
+                  style={{ width: '2.0793vw', height: '2.0833vw' }}
+                />
+                <OtherUserName>other user name</OtherUserName>
+              </OtherUserInfo>
+              <OtherUserText>지정헌혈 요청글 채팅방입니다.</OtherUserText>
+            </ChatBox>
+          </ChatContainer>
+          <Rectangle>
+            <ImageContainer>
+              <ImageIcon src={image} alt="사진 추가" />
+            </ImageContainer>
+            <InputText>
+              <div className="inputText">
+                <input
+                  className="inputChat"
+                  type="text"
+                  placeholder="채팅을 입력해보세요. 텍스트박스  283px"
+                />
+                <button className="sendButton">전송</button>
+              </div>
+            </InputText>
+          </Rectangle>
+        </>
+      )}
+      {back && (
+        <BloodChat
+          handleCrewChat={handleCrewChat}
+          handleBloodChat={handleBloodChat}
+        />
+      )}
+    </Container>
+  );
+};
 
     const handleBack =()=>{
         setBack(true);
@@ -262,4 +337,5 @@ const BloodChatroom=({handleBloodChat,handleCrewChat, chatRoomId})=>{
         </Container>
     )
 }
+
 export default BloodChatroom;
