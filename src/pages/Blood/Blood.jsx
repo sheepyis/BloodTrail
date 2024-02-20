@@ -286,23 +286,44 @@ const PagnationImg2 = styled.img`
 
 const Blood = () => {
 
-    const POSTS_PER_PAGE = 9; // 한 페이지에 표시할 게시글 수
+    const [selectBloodType,setBloodType] =useState('');
 
-    const [selectBloodType,setBloodType] =useState("A+");
-
-    const [selectBloodSort, setSelectedBloodSort] = useState("WB");
+    const [selectBloodSort, setSelectedBloodSort] = useState('필요혈액제제');
     const [isSortBloodVisible, setIsSortBloodVisible]= useState(false);
 
+    const bloodTypeMapping = {
+      "A+": "0",
+      "AB+": "1",
+      "B+": "2",
+      "O+": "3",
+      "A-": "4",
+      "AB-": "5",
+      "B-": "6",
+      "O-": "7",
+    };
+    const bloodTypeInverseMapping = {
+      "0": "A+",
+      "1": "AB+",
+      "2": "B+",
+      "3": "O+",
+      "4": "A-",
+      "5": "AB-",
+      "6": "B-",
+      "7": "O-",
+    };
+
+    const [selectFilter, setFilter] = useState('latest');
     const [selectedSort, setSelectedSort] = useState("신규순");
     const [isSortBoxVisible, setIsSortBoxVisible] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState();
+    const [totalPages, setTotalPages] = useState(10);
 
-    const [posts, setPosts] = useState([]); // 게시글 목록을 저장할 상태
+    const [posts, setPosts] = useState([]);
 
+    
     const handleBlood = (bloodType) =>{
-        setBloodType(bloodType); // bloodtype 선택하면 게시물, 타이틀 바뀌도록
+        setBloodType(bloodTypeMapping[bloodType]);
     }
 
     const handleSortBlood=(SortBloodType) =>{
@@ -312,43 +333,66 @@ const Blood = () => {
 
     const handleSortSelection = (sortType) => {
       setSelectedSort(sortType);
+      let filterValue;
+      switch (sortType) {
+          case "신규순":
+              setFilter('latest');
+              break;
+          case "공감순":
+              setFilter('likes');
+              break;
+          case "마감기간순":
+              setFilter('deadline');
+              break;
+          default:
+              setFilter('latest');
+      }
+      setFilter(filterValue);
       setIsSortBoxVisible(false);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  useEffect(() => {
+    console.log(selectBloodType);
+    console.log(selectBloodSort);
+    console.log(selectFilter);
+    console.log(currentPage);
+
+    const accessToken = localStorage.getItem('accessToken');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        type : selectBloodType,
+        product : selectBloodSort === "필요혈액제제" ? '' : selectBloodSort,
+        filter : selectFilter,
+        page: currentPage,
+      },
     };
 
-   
-    // 현재 페이지에 따라 표시할 게시글을 계산
-    const indexOfLastPost = currentPage * POSTS_PER_PAGE;
-    const indexOfFirstPost = indexOfLastPost - POSTS_PER_PAGE;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get(`https://bloodtrail.site/blood/${currentPage}/all`,config);
+            if (response.data.isSuccess && response.data.code === 2000) { 
+              console.log(response.data);           
+              setPosts(response.data.result.bloodList);
+              setCurrentPage(response.data.result.currentPage);
+              setTotalPages(response.data.result.totalPages);
+          } else {
+              console.error("Failed to fetch posts: ", response.data.message);
+          }
+        } catch (error) {
+            console.error("게시글을 불러오는 데 실패했습니다.", error);
+        }
+    };
 
+    fetchPosts();
+    }, [selectBloodType, selectBloodSort, selectFilter, currentPage]);
 
-    useEffect(() => {
-      const accessToken = localStorage.getItem('accessToken');
-      const config = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
-        const fetchPosts = async () => {
-            try {
-                //const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-                const response = await axios.get(`https://bloodtrail.site/blood/${currentPage}/all`,config);
-                if (response.data.isSuccess && response.data.code === 2000) { 
-                  console.log(response.data);           
-                  setPosts(response.data.result.bloodList);
-                  setCurrentPage(response.data.result.currentPage);
-                  setTotalPages(response.data.result.totalPages);
-              } else {
-                  console.error("Failed to fetch posts: ", response.data.message);
-              }
-            } catch (error) {
-                console.error("게시글을 불러오는 데 실패했습니다.", error);
-            }
-        };
-
-        fetchPosts();
-        }, []);
-    
     return (
       <Container>
         <Sidebar pageLabel="지정헌혈" currentPage="지정헌혈 요청 글"/>
@@ -358,7 +402,7 @@ const Blood = () => {
 
         <BloodP style={{marginTop: "2vw", fontSize: '1.2vw'}}>지정헌혈 요청글</BloodP>
         <RightMiddle>
-            <BloodP style={{ color: colors.crewGray3, marginTop: "0.3vw" }}>{selectBloodType} 요청 글</BloodP>
+            <BloodP style={{ color: colors.crewGray3, marginTop: "0.3vw" }}>{bloodTypeInverseMapping[selectBloodType]} 요청 글</BloodP>
             <SortContainer>
                 <SortDiv onClick={() => setIsSortBloodVisible(!isSortBloodVisible)}>
                     <BloodP style={{ fontSize: '0.75vw', color: colors.crewGray2 }}>{selectBloodSort}</BloodP> 
@@ -372,6 +416,7 @@ const Blood = () => {
             </SortContainer>
              {selectBloodSort && (
                 <BloodSortBox show={isSortBloodVisible}>
+                    <HoverDiv1 onClick={() => handleSortBlood("필요혈액제제")}>필요혈액제제</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("RBC")}>RBC</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("F-RBC")}>F-RBC</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("W-RBC")}>W-RBC</HoverDiv1>
@@ -402,7 +447,7 @@ const Blood = () => {
             </BloodContainer>
 
             <CardContainer>
-              {currentPosts.map((post) => (
+              {posts.map((post) => (
                   <CardTmp
                     board='blood'
 
@@ -431,18 +476,33 @@ const Blood = () => {
             </WritePostContainer>
 
             <PagnationContainer>
-                <Pagnation>
-                    <PagnationImg src={arrow_12px2} alt="arrow2"/>
-                    <PagnaionNumber>1</PagnaionNumber>
-                    <PagnaionNumber>2</PagnaionNumber> 
-                    <PagnaionNumber>3</PagnaionNumber>
-                    <PagnaionNumber>4</PagnaionNumber>
-                    <PagnaionNumber>5</PagnaionNumber>
-                    <DotImg2 src={dot2} alt="dot2"/>
-                    <PagnaionNumber2>N</PagnaionNumber2>
-                    <PagnationImg2 src={arrow_12px2} alt="arrow2" />
-                </Pagnation>
-            </PagnationContainer>
+            {currentPage > 1 && (
+              <PagnationImg
+                src={arrow_12px2}
+                alt="Prev Page"
+                onClick={() => handlePageChange(currentPage - 1)}
+              />
+            )}
+
+            {Array.from({ length: totalPages }, (_, i) => (
+              <PagnaionNumber
+                key={i + 1}
+                onClick={() => handlePageChange(i + 1)}
+                style={{
+                  fontWeight: currentPage === i + 1 ? 'bold' : 'normal',
+                }}
+              >
+                {i + 1}
+              </PagnaionNumber>
+            ))}
+            {currentPage < totalPages && (
+              <PagnationImg2
+                src={arrow_12px2}
+                alt="Next Page"
+                onClick={() => handlePageChange(currentPage + 1)}
+              />
+            )}
+          </PagnationContainer>
         </BoardContainer>
         </MainConationer>
 

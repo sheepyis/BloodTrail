@@ -168,17 +168,6 @@ const CardTmp = ({
     search: queryString.stringify({ board, _id  }), // board와 _id 값을 쿼리 스트링으로 변환
   };
 
-  console.log({
-    board,
-    cardType,
-    selectBloodType,
-    title,
-    body,
-    userId,
-    forOtherPost,
-    _id,
-  });
-
   return (
     <Link
       to={linkPath}
