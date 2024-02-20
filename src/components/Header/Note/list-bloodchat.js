@@ -40,7 +40,7 @@ const ListBlood = ({handleChatroom}) => {
                         id={item.chatRoom._id}
                         name={item.chatRoom.title}
                         recentChat={item.recentChat}
-                        onClick={handleChatroom}
+                        onClick={() => handleChatroom(item.chatRoom._id)}
                     />
                 ))}
         </CrewContainer>

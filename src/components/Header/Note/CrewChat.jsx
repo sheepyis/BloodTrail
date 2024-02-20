@@ -42,8 +42,9 @@ const CrewChat =({handleBloodChat,handleCrewChat})=>{
     const [bloodChat,setBloodChat] = useState(false);    
     const [crewChat, setCrewChat] = useState(false);
 
-    const handleChatroom =()=>{
+    const handleChatroom =(chatRoomId)=>{
         setIsChatroom(true);
+        setCrewChat(chatRoomId);
     }
 
     return(
@@ -59,7 +60,7 @@ const CrewChat =({handleBloodChat,handleCrewChat})=>{
             </>
             )}
             {isChatroom && <CrewChatroom handleCrewChat={handleCrewChat}
-                                handleBloodChat={handleBloodChat}/>}
+                                handleBloodChat={handleBloodChat} chatRoomId={crewChat}/>}
         </ChatContainer>
         
     )
