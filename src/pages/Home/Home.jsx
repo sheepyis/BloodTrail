@@ -77,7 +77,7 @@ const HomeBoxAndSidebar = styled.div`
 `;
 
 const SidebarContainer = styled.div`
-  width:100%;
+  width:20%;
   padding: 1vw;
 `;
 
