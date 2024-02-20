@@ -288,7 +288,7 @@ const Blood = () => {
 
     const [selectBloodType,setBloodType] =useState('');
 
-    const [selectBloodSort, setSelectedBloodSort] = useState('');
+    const [selectBloodSort, setSelectedBloodSort] = useState('필요혈액제제');
     const [isSortBloodVisible, setIsSortBloodVisible]= useState(false);
 
     const bloodTypeMapping = {
@@ -300,6 +300,16 @@ const Blood = () => {
       "AB-": "5",
       "B-": "6",
       "O-": "7",
+    };
+    const bloodTypeInverseMapping = {
+      "0": "A+",
+      "1": "AB+",
+      "2": "B+",
+      "3": "O+",
+      "4": "A-",
+      "5": "AB-",
+      "6": "B-",
+      "7": "O-",
     };
 
     const [selectFilter, setFilter] = useState('latest');
@@ -358,7 +368,7 @@ const Blood = () => {
       },
       params: {
         type : selectBloodType,
-        product : selectBloodSort,
+        product : selectBloodSort === "필요혈액제제" ? '' : selectBloodSort,
         filter : selectFilter,
         page: currentPage,
       },
@@ -392,7 +402,7 @@ const Blood = () => {
 
         <BloodP style={{marginTop: "2vw", fontSize: '1.2vw'}}>지정헌혈 요청글</BloodP>
         <RightMiddle>
-            <BloodP style={{ color: colors.crewGray3, marginTop: "0.3vw" }}>{selectBloodType} 요청 글</BloodP>
+            <BloodP style={{ color: colors.crewGray3, marginTop: "0.3vw" }}>{bloodTypeInverseMapping[selectBloodType]} 요청 글</BloodP>
             <SortContainer>
                 <SortDiv onClick={() => setIsSortBloodVisible(!isSortBloodVisible)}>
                     <BloodP style={{ fontSize: '0.75vw', color: colors.crewGray2 }}>{selectBloodSort}</BloodP> 
@@ -406,6 +416,7 @@ const Blood = () => {
             </SortContainer>
              {selectBloodSort && (
                 <BloodSortBox show={isSortBloodVisible}>
+                    <HoverDiv1 onClick={() => handleSortBlood("필요혈액제제")}>필요혈액제제</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("RBC")}>RBC</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("F-RBC")}>F-RBC</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("W-RBC")}>W-RBC</HoverDiv1>
