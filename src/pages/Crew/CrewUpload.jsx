@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import InputCrewUpload from '../../components/Input/input-crewupload';
 import InputCrewUpload2 from '../../components/Input/input-crewupload2';
 import axios from 'axios';
+import io from 'socket.io-client'; 
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -93,11 +94,10 @@ const CrewUpload = () => {
         }
     );
   
-    console.log("refresh complete!!!!!!!!!!!!!!!!!!!!");
     console.log(response.data);
     
     } catch (error) {
-    console.error('Error refreshing access token: ', error); // 에러 처리
+    console.error('Error: ', error); // 에러 처리
     }
   };
 
@@ -114,7 +114,7 @@ const CrewUpload = () => {
   const [goal_rate, setTargetPoints] = useState('');
   const [description, setDescription] = useState('');
   const [isNameAvailable, setIsNameAvailable] = useState(false);
-
+  const [chat, setChat] = useState(''); 
   const [accessToken, setAccessToken] = useState('');
 
   useEffect(() => {
@@ -143,36 +143,48 @@ const CrewUpload = () => {
     setDescription(value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = {
       name,
       goal_point,
       goal_rate,
       description,
     };
-
+  
     const config = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     };
+  
+    try {
+      const response = await axios.post('https://bloodtrail.site/crew', formData, config);
+  
+      if (response.data.isSuccess === false) {
+        alert("이미 크루에 가입했습니다.");
+      } else {
+        console.log(response.data);
+        console.log('Success', formData);
+  
+        const chatRoomResponse = await axios.post(`https://bloodtrail.site/chatRoom`,
+        { type: "crew", title: name }, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        
+        setChat(chatRoomResponse.data.result);
 
-    axios
-      .post('https://bloodtrail.site/crew', formData, config)
-      .then((response) => {
-        if(response.data.isSuccess == false) {
-          alert("이미 크루에 가입했습니다.");
-        } else {
-          console.log(response.data);
-          console.log('Success', formData);
-          window.location.href = '/crew';
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        const socket = io("https://bloodtrail.site");
+        socket.emit("newRoom", { chatRoomId: chatRoomResponse.data.result.chatRoomId });
+
+        window.location.href="/crew";
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
-
+  
   return (
     <CrewContainer>
       <div className="left" style={{ width: '17%', paddingLeft: '2.5%' }}>
