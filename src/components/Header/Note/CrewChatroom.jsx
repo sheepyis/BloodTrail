@@ -222,6 +222,9 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
   const [notify2, setNotify2] = useState(false);
   const notifyMenuRef = useRef(null);
   const [chatInput, setChatInput] = useState('');
+
+  const [chatRoom, setChatRoom] = useState(null);
+
   //console.log(chatRoomId);
   const handleInputChange = (e) => {
     setChatInput(e.target.value);
@@ -253,7 +256,9 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
 
       if (response.status === 200) {
         const newChat = { message: chatInput };
-        setChats((prevChats) => [...prevChats, newChat]);
+        setChats((prevChats) =>
+          Array.isArray(prevChats) ? [...prevChats, newChat] : [newChat]
+        );
         console.log(response.data);
 
         socket.emit('chat', {
@@ -272,7 +277,7 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
     const fetchChats = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.post(
+        const response = await axios.get(
           `https://bloodtrail.site/chatRoom/${chatRoomId}`,
           {
             headers: {
@@ -280,8 +285,9 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
             },
           }
         );
-        setChats(response.result);
-        console.log(chats);
+        setChatRoom(response.data);
+        setChats(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -358,10 +364,11 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
                   alt="profile"
                   style={{ width: '2.0793vw', height: '2.0833vw' }}
                 />
-                <OtherUserName>ㅇㅇ</OtherUserName>
+                <OtherUserName>{chats.writer}</OtherUserName>
                 <ChatNotify src={dot} alert="신고하기" onClick={handleNotify} />
               </OtherUserInfo>
               <OtherUserText>지정헌혈 요청글 채팅방입니다.</OtherUserText>
+              <div></div>
             </ChatBox>
           </ChatContainer>
           <Rectangle>
