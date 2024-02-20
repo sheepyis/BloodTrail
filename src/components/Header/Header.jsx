@@ -4,12 +4,15 @@ import { Link, NavLink } from "react-router-dom";
 import chat_message from "../../assets/images/message-circle 1.png";
 import notification1 from "../../assets/images/notification1.png";
 import person from "../../assets/images/person.png";
-// import logo from "../../assets/images/logo.png";
 import React, { useState, useEffect, useRef } from "react";
 import Notifications from "./Notifications/Notifications";
 import Note from "./Note/Note";
 import {useMediaQuery} from 'react-responsive';
+import orlogo from "../../assets/images/logo.png";
 import logo from "../../assets/images/bloodtrail_logo_red 1.png";
+import axios from 'axios';
+
+
 
 const HeaderContainer = styled.div`
     position: relative;
@@ -50,7 +53,7 @@ const HeaderP2 = styled(NavLink)`
 `
 
 const IconContainer = styled.div`
-margin-left: auto;
+    margin-left: auto;
     margin-right: 1.56vw;
     display: flex;
     align-items: center;
@@ -119,6 +122,28 @@ const Header = ({onHover,closeMenu,setMenuVisible}) => {
         setMenuVisible(false);
     }
 
+    const [isPremium, setisPremium] = useState(false);
+
+    useEffect(() => {
+      const accessToken = localStorage.getItem('accessToken');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+  
+      axios
+        .get('https://bloodtrail.site/auth/profile', config)
+        .then((response) => {
+          if (response.data) {
+            const user = response.data.result;
+            setisPremium(user.premium);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching profile:', error);
+        });
+    }, []);
 
     return (
         <div className="Header" style={{
@@ -127,12 +152,11 @@ const Header = ({onHover,closeMenu,setMenuVisible}) => {
             justifyContent: "center",
             
         }}
-            
         >
             <HeaderContainer ref={modalRef} onClick={handleModalOutsideClick}>
                 <MainHeader>
                     <Link to="/">
-                        <LogoImage src={logo} alt="logo" />
+                      <LogoImage src={isPremium ? logo : orlogo} alt="logo" />
                     </Link>
                 </MainHeader>
                 
