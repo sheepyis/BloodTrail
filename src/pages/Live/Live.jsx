@@ -168,8 +168,8 @@ const ChatApp = () => {
     {name : "헌혈 이야기 공유 라이브", id : "65bfc7543498e7225dead3a4"},
   ])
   const [currentChatRoomId, setCurrentChatRoomId] = useState("65bfc7053498e7225dead3a0"); // 현재 선택된 채팅방 ID
-  const [currentUserNickname, setCurrentUserNickname] = useState("현재로그인한사용자ID"); // 현재 로그인한 사용자의 ID
-
+  const [currentUserNickname, setCurrentUserNickname] = useState("익명"); // 현재 로그인한 사용자의 ID
+  const currentChatRoom = chatroomId.find(room => room.id === currentChatRoomId);
   
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -228,6 +228,10 @@ const ChatApp = () => {
     setIsDropDownOpen(!isDropDownOpen);
   };
 
+  const handleChatRoomChange = (chatRoomId) => {
+    setCurrentChatRoomId(chatRoomId); // 선택된 채팅방 ID로 상태 업데이트
+    setIsDropDownOpen(false); // 드롭다운 메뉴 닫기
+  };
 
   const fetchChatRoomDetails = async (chatRoomId) => {
     try {
@@ -266,11 +270,14 @@ const ChatApp = () => {
         <ChatContainer>
 
           <DropDownContainer>
-            <DropDownButton onClick={toggleDropDown}>자유라이브</DropDownButton>
-              <DropDownContent isOpen={isDropDownOpen}>
-                <DropDownItem href="#">나 지금 헌혈 중 라이브</DropDownItem>
-                <DropDownItem href="#">헌혈 이야기 공유 라이브</DropDownItem>
-              </DropDownContent>
+            <DropDownButton onClick={toggleDropDown}>{currentChatRoom ? currentChatRoom.name : "Select a chat room"}</DropDownButton>
+            <DropDownContent isOpen={isDropDownOpen}>
+              {chatroomId.map((room) => (
+                <DropDownItem key={room.id} onClick={() => handleChatRoomChange(room.id)}>
+                  {room.name}
+                </DropDownItem>
+              ))}
+</DropDownContent>
           </DropDownContainer>
 
           <MessageList>
