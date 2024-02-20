@@ -204,7 +204,7 @@ const Note= () => {
             </ChatContainer>
             </>
             )}
-            {newChat && <ChatModal/>}
+            {newChat && <ChatModal closeModal={() => setNewChat(false)}/>}
             {crewChat && <CrewChat  handleCrewChat={handleCrewChat}
                                     handleBloodChat={handleBloodChat}/>}
             {bloodChat && <BloodChat handleCrewChat={handleCrewChat}

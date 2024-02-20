@@ -21,7 +21,7 @@ const ChatModalContainer = styled.div`
 `;
 
 
-const ChatButton = styled.button`
+const ChatModalButton = styled.button`
   width: 50%;
   background-color: ${colors.lightGray};
   border: none;
@@ -32,14 +32,14 @@ const ChatButton = styled.button`
   cursor: pointer;
 `;
 
-const ChatP = styled.p`
+const ChatModalP = styled.p`
     font-weight: 500;
     font-size: 0.9vw;
     color: ${colors.black};
     margin-top: 2vw;
 `
 
-const ChatInput = styled.input`
+const ChatModalInput = styled.input`
     width: 20vw;
     height: 2.6vw;
     border: 0.05vw solid #F2F2F2;
@@ -60,7 +60,7 @@ const ChatInput = styled.input`
     }
 `
 
-const ChatButton2 = styled.button`
+const ChatModalButton2 = styled.button`
     width: 4.6vw;
     height: 2.5vw;
     border: 0.1vw solid ${colors.lightGray};
@@ -77,7 +77,7 @@ const ChatModal = ({ closeModal }) => {
     const [type, setType] = useState("crew");
     const [title, setTitle] = useState("");
     const [chat, setChat] = useState(null);
-  
+
     const handleButtonClick = (value) => {
       setType(value);
       console.log("Button value:", value);
@@ -117,20 +117,21 @@ const ChatModal = ({ closeModal }) => {
     return (
         <ChatModalContainer>
             <div className="ButtonContainer" style={{ display: "flex", width: "100%" }}>
-                <ChatButton style={{background: type === "blood" ? "#FFE7E7" : "", color: type === "blood" ? colors.crewGray : ''}} onClick={() => handleButtonClick("blood")}>
+                <ChatModalButton style={{background: type === "blood" ? "#FFE7E7" : "", color: type === "blood" ? colors.crewGray : ''}} onClick={() => handleButtonClick("blood")}>
                 지정헌혈 신청
-                </ChatButton>
-                <ChatButton style={{background: type === "crew" ? "#FFE7E7" : "", color: type === "crew" ? colors.crewGray : ''}} onClick={() => handleButtonClick("crew")}>
+                </ChatModalButton>
+                <ChatModalButton style={{background: type === "crew" ? "#FFE7E7" : "", color: type === "crew" ? colors.crewGray : ''}} onClick={() => handleButtonClick("crew")}>
                 헌혈 크루
-                </ChatButton>
+                </ChatModalButton>
             </div>
 
-            <ChatP>생성할 채팅창 이름을 입력해주세요.</ChatP>
-            <ChatInput placeholder="채팅창 이름을 입력하세요." value={title} onChange={handleTitleChange} />
+            <ChatModalP>생성할 채팅창 이름을 입력해주세요.</ChatModalP>
+            <ChatModalInput placeholder="채팅창 이름을 입력하세요." value={title} onChange={handleTitleChange} />
 
-            <div className="ButtonContainer2" style={{display: "flex", gap: "2vw"}}>
-                <ChatButton2 onClick={closeModal} >취소</ChatButton2>
-                <ChatButton2 style={{border: "0.1vw solid #FFB2B5"}} onClick={handleConfirm}>확인</ChatButton2>
+            <div className="ButtonContainer2" style={{display: "flex", gap: "2vw", justifyContent: "space-between"}}>
+                
+                <ChatModalButton2 onClick={closeModal} >취소</ChatModalButton2>
+                <ChatModalButton2 style={{border: "0.1vw solid #FFB2B5"}} onClick={handleConfirm}>확인</ChatModalButton2>
             </div>
         </ChatModalContainer>
     );
