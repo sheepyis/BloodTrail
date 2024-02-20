@@ -220,12 +220,80 @@ const DropdownItem = styled.div`
   cursor: pointer;
 `;
 
+const InformBlock = styled.div`
+  display: flex;
+  width: ${(props) => props.width};
+  height: 2.7vw;
+  padding: 0.75vw 0.3vw;
+  align-items: center;
+  gap: 1vw;
+  border-radius: 5vw;
+  background: var(--Primary-Red-50, #fffafa);
+`;
+
+const InformBlocks = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.25vw;
+`;
+
+const TextContainer = styled.div`
+  margin-left: 0.5vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  gap: 0.2vw;
+`;
+
+const InforText = styled.p`
+  margin-left: 0.2vw;
+  color: var(--Gray-Gray-900, #17191a);
+  /* Body/Body/Semi */
+  font-family: Pretendard;
+  font-size: 0.75vw;
+  font-style: normal;
+  font-weight: 600;
+  white-space: nowrap;
+`;
+
+const ContentsText = styled.input`
+  margin-left: ${(props) => props.marginLeft};
+  color: var(--Gray-Gray-700, #464a4d);
+  width: ${(props) => props.width};
+  /* Body/Body/medium */
+  font-family: Pretendard;
+  font-size: 0.75vw;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+`;
+
+const InformRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+`;
+
 const PostDetailPage = ({ board, _id }) => {
   const [posts, setPosts] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const boardLink = board === 'blood' ? 'blood' : 'post';
   const boardId = board === 'blood' ? 'bloodId' : '_id';
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' }; // 원하는 날짜 형식 지정
+    return new Date(dateString).toLocaleDateString('ko-KR', options);
+  };
+
+  // posts 상태에서 start_date와 end_date를 추출
+  const startDate = formatDate(posts?.blood?.start_date);
+  const endDate = formatDate(posts?.blood?.end_date);
+
+  const dateRange = `${startDate} ~ ${endDate}`;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -234,13 +302,20 @@ const PostDetailPage = ({ board, _id }) => {
         const accessToken = localStorage.getItem('accessToken');
         if (board === 'blood') {
           // board가 'blood'인 경우 GET 요청
-          response = await axios.get(`https://bloodtrail.site/${boardLink}/${_id}`, {  headers: { Authorization: `Bearer ${accessToken}` } });
+          response = await axios.get(
+            `https://bloodtrail.site/${boardLink}/${_id}`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+          );
         } else if (board === 'community') {
           // board가 'community'인 경우 PATCH 요청
-          response = await axios.patch(`https://bloodtrail.site/${boardLink}/${_id}`, {}, {  headers: { Authorization: `Bearer ${accessToken}` } });
+          response = await axios.patch(
+            `https://bloodtrail.site/${boardLink}/${_id}`,
+            {},
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+          );
         }
-        if (response.data.isSuccess) { 
-          console.log(response.data);      
+        if (response.data.isSuccess) {
+          console.log(response.data);
           setPosts(response.data.result);
         } else {
           console.log(response.data);
@@ -269,13 +344,16 @@ const PostDetailPage = ({ board, _id }) => {
   const deletePost = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.delete(`https://bloodtrail.site/${boardLink}/${_id}`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-  
+      const response = await axios.delete(
+        `https://bloodtrail.site/${boardLink}/${_id}`,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+
       if (response.data.isSuccess) {
         alert('게시글이 삭제되었습니다.');
-        window.location.href = "/${boardLink}";
+        window.location.href = '/${boardLink}';
       } else {
         alert(response.data.message);
         console.error('Failed to delete post: ', response);
@@ -292,52 +370,69 @@ const PostDetailPage = ({ board, _id }) => {
       let response;
 
       if (boardLink === 'blood') {
-          const endpoint = `https://bloodtrail.site/${boardLink}/${_id}/like`
+        const endpoint = `https://bloodtrail.site/${boardLink}/${_id}/like`;
 
-            if (posts.isLiked) {
-              response = await axios.patch(endpoint, {}, {
-                headers: { Authorization: `Bearer ${accessToken}` },
-              });
-            } else {
-              response = await axios.post(endpoint, {}, {
-                headers: { Authorization: `Bearer ${accessToken}` },
-              });
+        if (posts.isLiked) {
+          response = await axios.patch(
+            endpoint,
+            {},
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
             }
+          );
+        } else {
+          response = await axios.post(
+            endpoint,
+            {},
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          );
+        }
 
-            if (response.data.isSuccess) {
-              // 공감 또는 공감 취소 후 posts 상태 업데이트
-              alert(`공감 ${posts.isLiked ? '취소' : ''}하였습니다.`);
-              setPosts(currentPost => ({
-                ...currentPost,
-                isLiked: !currentPost.isLiked,
-                blood: {
-                  ...currentPost.blood,
-                  likeCount: currentPost.isLiked ? currentPost.blood.likeCount - 1 : currentPost.blood.likeCount + 1
-                }
-              }));
-            } else {
-              alert(response.data.message);
-          }
-        
+        if (response.data.isSuccess) {
+          // 공감 또는 공감 취소 후 posts 상태 업데이트
+          alert(`공감 ${posts.isLiked ? '취소' : ''}하였습니다.`);
+          setPosts((currentPost) => ({
+            ...currentPost,
+            isLiked: !currentPost.isLiked,
+            blood: {
+              ...currentPost.blood,
+              likeCount: currentPost.isLiked
+                ? currentPost.blood.likeCount - 1
+                : currentPost.blood.likeCount + 1,
+            },
+          }));
+        } else {
+          alert(response.data.message);
+        }
       } else {
-          const endpoint = posts.userLiked ? `https://bloodtrail.site/${boardLink}/${_id}/unlike` : `https://bloodtrail.site/post/${_id}/like`;
-        
-          const response = await axios.patch(endpoint, {}, {
+        const endpoint = posts.userLiked
+          ? `https://bloodtrail.site/${boardLink}/${_id}/unlike`
+          : `https://bloodtrail.site/post/${_id}/like`;
+
+        const response = await axios.patch(
+          endpoint,
+          {},
+          {
             headers: { Authorization: `Bearer ${accessToken}` },
-          });
-          
-          if (response.data.isSuccess) {
-            alert(`공감 ${posts.userLiked ? '취소' : ''}하였습니다.`);
-            setPosts(currentPost => ({
-              ...currentPost,
-              userLiked: !currentPost.userLiked,
-              post: {
-                ...currentPost.post,
-                likes: currentPost.userLiked ? currentPost.post.likes - 1 : currentPost.post.likes + 1
-              }
-            }));
-          } else {
-            alert(response.data.message);
+          }
+        );
+
+        if (response.data.isSuccess) {
+          alert(`공감 ${posts.userLiked ? '취소' : ''}하였습니다.`);
+          setPosts((currentPost) => ({
+            ...currentPost,
+            userLiked: !currentPost.userLiked,
+            post: {
+              ...currentPost.post,
+              likes: currentPost.userLiked
+                ? currentPost.post.likes - 1
+                : currentPost.post.likes + 1,
+            },
+          }));
+        } else {
+          alert(response.data.message);
         }
       }
     } catch (error) {
@@ -349,10 +444,15 @@ const PostDetailPage = ({ board, _id }) => {
     <PageLayout>
       <Header>
         <HeaderText>
-          {board === 'blood' ? posts?.blood?.title : posts?.post?.title}        </HeaderText>
+          {board === 'blood' ? posts?.blood?.title : posts?.post?.title}{' '}
+        </HeaderText>
         <TitleDetail>
           <UserInfo>
-            <div>{board === 'blood' ? posts?.blood?.writer?.nickname : posts?.post?.writer?.nickname}</div>
+            <div>
+              {board === 'blood'
+                ? posts?.blood?.writer?.nickname
+                : posts?.post?.writer?.nickname}
+            </div>
           </UserInfo>
           <div>
             <CopyButton onClick={copyLink}>URL 복사</CopyButton>
@@ -375,48 +475,136 @@ const PostDetailPage = ({ board, _id }) => {
         </TitleDetail>
         <Divider />
         <InteractionBar>
-        <div>조회수 {board === 'blood' ? posts?.blood?.views : posts?.post?.watch_count}</div>
-        <div>공감수 {boardLink === 'blood' ? posts?.blood?.likeCount : posts?.post?.likes} </div>
+          <div>
+            조회수{' '}
+            {board === 'blood' ? posts?.blood?.views : posts?.post?.watch_count}
+          </div>
+          <div>
+            공감수{' '}
+            {boardLink === 'blood'
+              ? posts?.blood?.likeCount
+              : posts?.post?.likes}{' '}
+          </div>
         </InteractionBar>
       </Header>
 
-      {board == 'bloodtmp' && (
-        <TagContainer>
-          {posts.tags &&
-            posts.tags.map((tag, index) => (
-              <Tag key={index}>
-                <TagCategory>{tag.category}</TagCategory>
-                {tag.text}
-              </Tag>
-            ))}
-        </TagContainer>
+      {board == 'blood' && (
+        // <TagContainer>
+        //   <TagBox></TagBox>
+        //   {/* {posts.tags &&
+        //     posts.tags.map((tag, index) => (
+        //       <Tag key={index}>
+        //         <TagCategory>{tag.category}</TagCategory>
+        //         {tag.text}
+        //       </Tag>
+        //     ))} */}
+        // </TagContainer>
+
+        <InformBlocks>
+          <InformRow>
+            <InformBlock width="13.4vw">
+              <TextContainer>
+                <InforText>수혈자 등록번호</InforText>
+
+                <ContentsText
+                  value={posts?.blood?.receiver}
+                  style={{
+                    width: '40%',
+                    marginLeft: '0.8vw',
+                    textAlign: 'center',
+                  }}
+                ></ContentsText>
+              </TextContainer>
+            </InformBlock>
+            <InformBlock width="8.9vw">
+              <TextContainer>
+                <InforText>필요 혈액제제</InforText>
+                <ContentsText
+                  value={posts?.blood?.blood_product}
+                  style={{ width: '40%', textAlign: 'center' }}
+                ></ContentsText>
+              </TextContainer>
+            </InformBlock>
+
+            <InformBlock width="14.45vw">
+              <TextContainer>
+                <InforText>요청기간</InforText>
+                <ContentsText width="14.45vw" value={dateRange} />
+              </TextContainer>
+            </InformBlock>
+
+            <InformBlock width="15.05vw">
+              <TextContainer>
+                <InforText>요청 의료기관</InforText>
+                <ContentsText
+                  value={posts?.blood?.hospital.name}
+                  style={{ width: '40%', marginLeft: '2vw' }}
+                ></ContentsText>
+              </TextContainer>
+            </InformBlock>
+          </InformRow>
+
+          <InformBlock width="11.5vw">
+            <TextContainer>
+              <InforText>혈액형 정보</InforText>
+              <ContentsText
+                value={posts?.blood?.blood_type}
+                style={{ width: '40%', marginLeft: '2vw' }}
+              ></ContentsText>
+            </TextContainer>
+          </InformBlock>
+        </InformBlocks>
       )}
       <ContentArea>
-        {board === 'blood' ? posts?.blood?.image?.map((image, index) => (
-        <img key={index} src={image} alt={`Post Image ${index + 1}`} style={{ width: '100%' }} />
-      )) : posts?.post?.image?.map((image, index) => (
-        <img key={index} src={image} alt={`Post Image ${index + 1}`} style={{ width: '100%' }} />
-      ))}
+        {board === 'blood'
+          ? posts?.blood?.image?.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Post Image ${index + 1}`}
+                style={{ width: '100%' }}
+              />
+            ))
+          : posts?.post?.image?.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Post Image ${index + 1}`}
+                style={{ width: '100%' }}
+              />
+            ))}
       </ContentArea>
       <Details>
-        {board === 'blood' ? posts?.blood?.content : posts?.post?.content}      
+        {board === 'blood' ? posts?.blood?.content : posts?.post?.content}
       </Details>
       <FooterBar>
         <LeftContainer>
-        <InteractionButtons>
-          <HeartWrapper onClick={toggleLike}>
-          <IconWrapper
-              filled={boardLink === 'blood' ? posts?.isLiked : posts?.userLiked}
-              color="#F3777A"
-              hoverColor="#E95458"
->              <HeartIcon /> 
+          <InteractionButtons>
+            <HeartWrapper onClick={toggleLike}>
+              <IconWrapper
+                filled={
+                  boardLink === 'blood' ? posts?.isLiked : posts?.userLiked
+                }
+                color="#F3777A"
+                hoverColor="#E95458"
+              >
+                {' '}
+                <HeartIcon />
+              </IconWrapper>
+              <div>
+                {board === 'blood'
+                  ? posts?.blood?.likeCount
+                  : posts?.post?.likes}{' '}
+              </div>
+            </HeartWrapper>
+            <IconWrapper
+              onClick={copyLink}
+              color="#464A4D"
+              hoverColor="#464A4D"
+            >
+              <ShareIcon />
             </IconWrapper>
-            <div>{board === 'blood' ? posts?.blood?.likeCount : posts?.post?.likes} </div>
-          </HeartWrapper>
-          <IconWrapper onClick={copyLink} color="#464A4D" hoverColor="#464A4D">
-            <ShareIcon /> 
-          </IconWrapper>
-        </InteractionButtons>
+          </InteractionButtons>
         </LeftContainer>
         {board == 'blood' && <ChatButton>채팅하기</ChatButton>}
         <RightContainer></RightContainer>
