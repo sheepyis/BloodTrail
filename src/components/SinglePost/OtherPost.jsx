@@ -131,19 +131,19 @@ const OtherPosts = ({board, _id}) => {
     fetchPosts();
   }, [board, _id]);
     
-    
+  const boardLink = board === 'blood' ? '/blood' : '/community';
   return (
     <OtherPostsSection>
       <HeaderContainer>
         <OtherPostsHeader>다른 글 보기</OtherPostsHeader>
-        <Link to={"/community"}><BoardListButton>게시판 목록</BoardListButton></Link>
+        <Link to={boardLink}><BoardListButton>게시판 목록</BoardListButton></Link>
       </HeaderContainer>
       <PostsLists>
         <Slider {...settings}>
           {posts.map((post) => (
             <CardGap key={post._id}>
               <CardTmp
-                board='community'
+                board={board}
                 forOtherPost={true}
                 _id={post._id}
                 cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}

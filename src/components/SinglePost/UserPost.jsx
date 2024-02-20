@@ -224,15 +224,22 @@ const DropdownItem = styled.div`
 const PostDetailPage = ({board,_id}) => {
   const [posts, setPosts] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const boardLink = board === 'blood' ? 'blood' : 'post';
+  const boardId = board === 'blood' ? 'bloodId' : '_id';
+
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
     const fetchPosts = async () => {
       try {
-          const accessToken = localStorage.getItem('accessToken');
-          const response = await axios.patch(`https://bloodtrail.site/post/${_id}`, {}, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
+        let response;
+        const accessToken = localStorage.getItem('accessToken');
+        if (board === 'blood') {
+          // board가 'blood'인 경우 GET 요청
+          response = await axios.get(`https://bloodtrail.site/${boardLink}/${_id}`, {  headers: { Authorization: `Bearer ${accessToken}` } });
+        } else if (board === 'community') {
+          // board가 'community'인 경우 PATCH 요청
+          response = await axios.patch(`https://bloodtrail.site/${boardLink}/${_id}`, {}, {  headers: { Authorization: `Bearer ${accessToken}` } });
+        }
         if (response.data.isSuccess) { 
           console.log(response.data);      
           setPosts(response.data.result);
@@ -262,13 +269,13 @@ const PostDetailPage = ({board,_id}) => {
   const deletePost = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.delete(`https://bloodtrail.site/post/${_id}`, {
+      const response = await axios.delete(`https://bloodtrail.site/${boardLink}/${_id}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
   
       if (response.data.isSuccess) {
         alert('게시글이 삭제되었습니다.');
-        window.location.href = "/community";
+        window.location.href = "/${boardLink}";
       } else {
         alert(response.data.message);
         console.error("Failed to delete post: ", response);
@@ -283,26 +290,33 @@ const PostDetailPage = ({board,_id}) => {
   const toggleLike = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      // userLiked 상태에 따라 공감 또는 공감 취소 API 호출
-      const endpoint = posts.userLiked ? `https://bloodtrail.site/post/${_id}/unlike` : `https://bloodtrail.site/post/${_id}/like`;
-      
-      const response = await axios.patch(endpoint, {}, {
+      if (boardLink === 'blood') {
+      const endpoint = `https://bloodtrail.site/${boardLink}/${_id}/like`
+      const response = await axios.post(endpoint, {}, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      
-      if (response.data.isSuccess) {
-        // 공감 또는 공감 취소 후 posts 상태 업데이트
-        alert(`공감 ${posts.userLiked ? '취소' : ''}하였습니다.`);
-        setPosts(currentPost => ({
-          ...currentPost,
-          userLiked: !currentPost.userLiked,
-          post: {
-            ...currentPost.post,
-            likes: currentPost.userLiked ? currentPost.post.likes - 1 : currentPost.post.likes + 1
-          }
-        }));
+    
       } else {
-        alert(response.data.message);
+          const endpoint = posts.userLiked ? `https://bloodtrail.site/${boardLink}/${_id}/unlike` : `https://bloodtrail.site/post/${_id}/like`;
+        
+          const response = await axios.patch(endpoint, {}, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          });
+          
+          if (response.data.isSuccess) {
+            // 공감 또는 공감 취소 후 posts 상태 업데이트
+            alert(`공감 ${posts.userLiked ? '취소' : ''}하였습니다.`);
+            setPosts(currentPost => ({
+              ...currentPost,
+              userLiked: !currentPost.userLiked,
+              post: {
+                ...currentPost.post,
+                likes: currentPost.userLiked ? currentPost.post.likes - 1 : currentPost.post.likes + 1
+              }
+            }));
+          } else {
+            alert(response.data.message);
+        }
       }
     } catch (error) {
       console.error('공감 변경 요청 실패', error);
@@ -313,11 +327,10 @@ const PostDetailPage = ({board,_id}) => {
     <PageLayout>
       <Header>
         <HeaderText>
-          {posts && posts.post.title}
-        </HeaderText>
+          {board === 'blood' ? posts?.blood?.title : posts?.post?.title}        </HeaderText>
         <TitleDetail>
           <UserInfo>
-            <div>{posts && posts.post.writer.nickname}</div>
+            <div>{board === 'blood' ? posts?.blood?.writer?.nickname : posts?.post?.writer?.nickname}</div>
           </UserInfo>
           <div>
             <CopyButton onClick={copyLink}>
@@ -334,12 +347,12 @@ const PostDetailPage = ({board,_id}) => {
         </TitleDetail>
         <Divider />
         <InteractionBar>
-          <div>조회수 {posts && posts.post.watch_count}</div>
-          <div>공감수 {posts && posts.post.likes} </div>
+        <div>조회수 {board === 'blood' ? posts?.blood?.watch_count : posts?.post?.watch_count}</div>
+      <div>공감수 {board === 'blood' ? posts?.blood?.likes : posts?.post?.likes} </div>
         </InteractionBar>
       </Header>
 
-      {board == 'blood' && (
+      {board == 'bloodtmp' && (
         <TagContainer>
           {posts.tags && posts.tags.map((tag, index) => (
             <Tag key={index}>
@@ -350,12 +363,14 @@ const PostDetailPage = ({board,_id}) => {
         </TagContainer>
       )}
       <ContentArea>
-      {posts && posts.post.image && posts.post.image.map((image, index) => (
-        <img key={index} src={image} alt={`Post Image ${index + 1}`} style={{ width: '100%'}} />
+        {board === 'blood' ? posts?.blood?.image?.map((image, index) => (
+        <img key={index} src={image} alt={`Post Image ${index + 1}`} style={{ width: '100%' }} />
+      )) : posts?.post?.image?.map((image, index) => (
+        <img key={index} src={image} alt={`Post Image ${index + 1}`} style={{ width: '100%' }} />
       ))}
       </ContentArea>
       <Details>
-        {posts && posts.post.content}
+        {board === 'blood' ? posts?.blood?.content : posts?.post?.content}      
       </Details>
       <FooterBar>
         <LeftContainer>
@@ -364,7 +379,7 @@ const PostDetailPage = ({board,_id}) => {
             <IconWrapper filled={posts?.userLiked} color="#F3777A" hoverColor="#E95458">
               <HeartIcon /> 
             </IconWrapper>
-            {posts && posts.post.likes}
+            {board === 'blood' ? posts?.blood?.likes : posts?.post?.likes}
           </HeartWrapper>
           <IconWrapper onClick={copyLink} color="#464A4D" hoverColor="#464A4D">
             <ShareIcon /> 

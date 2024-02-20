@@ -55,8 +55,8 @@ const SinglePost = () => {
           {board === 'community' && <>
             <Comment board={board} _id={_id}/>
             <Divider />
-          </>}
           <OtherPost board={board} _id={_id}/>
+          </>}
         </Homecontainer>
         </MainConationer>
     </Container>

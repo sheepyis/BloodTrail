@@ -409,7 +409,7 @@ const Blood = () => {
                     cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
                     selectBloodType={post.blood_type}
 
-                    key={post._id}
+                    _id={post._id}
 
                     userId = {post.writer.nickname}
                     userImg = {post.writer.profile_image}
