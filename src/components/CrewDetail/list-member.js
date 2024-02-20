@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import colors from "../../styles/color";
 import ItemMember from './item-member';
-import ChatModal from '../Chat/ChatModal';
+import CrewChat from '../Header/Note/CrewChat';
 
 const CrewContainer = styled.div`
     width: 100%;
@@ -43,6 +43,7 @@ const ListMember = ({ id, username }) => {
     const [userId, setUserId] = useState(null); 
     const [chatRoomId, setChatRoomId] = useState(null);
     const [isLeader, setIsLeader] = useState(null);
+    
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -194,7 +195,6 @@ const ListMember = ({ id, username }) => {
                 </StyleGrid>
                 
                 <div className="button" style={{width: "100%", display: "flex", justifyContent: "center", gap: "0.65vw", margin: "3vw 0"}}>
-                    <DetailButton>채팅하기</DetailButton>
                     {isJoined ? (
                     <DetailButton onClick={handleLeaveCrew}>크루 탈퇴하기</DetailButton>
                 ) : (

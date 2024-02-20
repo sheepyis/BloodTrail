@@ -3,7 +3,6 @@ import colors from '../../styles/color';
 import Profile from '../../assets/images/profile.png';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import ChatModal from '../Chat/ChatModal';
 
 const MyCrewDiv = styled.div`
   width: 31%;
@@ -60,7 +59,7 @@ const ProfileImage = styled.img`
 
 const MyCrew = () => {
   const [myCrewData, setMyCrewData] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [member, setMember] = useState([]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -74,6 +73,9 @@ const MyCrew = () => {
       try {
         const response = await axios.get('https://bloodtrail.site/crew/mycrew', config);
         setMyCrewData(response.data.result);
+        console.log(response.data.result);
+        setMember(response.data.result.crew_member);
+        console.log(member);
       } catch (error) {
         console.error('Error: ', error);
       }
@@ -84,10 +86,6 @@ const MyCrew = () => {
   
   const handleCrewDetail = () => {
     window.location.href = `/crewdetail/${myCrewData._id}`;
-  };
-
-  const handleChatButtonClick = () => {
-    setIsModalOpen(true);
   };
 
   return (
@@ -108,17 +106,16 @@ const MyCrew = () => {
                 width: '85%',
               }}
             >
-              <MyCrewP onClick={handleCrewDetail} style={{cursor: "pointer"}}>{myCrewData.crew_name}</MyCrewP>
+              <MyCrewP style={{cursor: "pointer"}}>{myCrewData.crew_name}</MyCrewP>
               <MyCrewP2>{myCrewData.description}</MyCrewP2>
             </div>
           </div>
-          <ChatButton onClick={handleChatButtonClick}>채팅하기</ChatButton>
+          <ChatButton onClick={handleCrewDetail}>크루 보기</ChatButton>
         </MyCrewDiv>
       ) : (
         <MyCrewP style={{marginTop: "1vw"}}>크루 정보 없음</MyCrewP>
       )}
 
-      {isModalOpen && <ChatModal closeModal={() => setIsModalOpen(false)} initialType="crew"/>}
     </>
   );
 };

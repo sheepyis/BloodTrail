@@ -104,7 +104,7 @@ const ChatModal = ({ closeModal, initialType }) => {
         setChat(response.data.result);
         console.log(response.data);
 
-        const socket = io("https://bloodtrail.site");
+        const socket = io("http://localhost:3000");
         socket.emit("newRoom", { chatRoomId: response.data.result.chatRoomId });
 
         closeModal();
