@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import ProfileImage from '../../assets/images/profile.png'
+import axios from 'axios';
+
 
 
 const LiveContainer = styled.div`
@@ -157,18 +159,66 @@ const DropDownItem = styled.a`
 `;
 
 const ChatApp = () => {
-  const [messages, setMessages] = useState([
-    { sender: "Alice", text: "Hi there!" },
-    { sender: "Bob", text: "Hello!" },
-    // ... additional messages
-  ]);
+  const [chatRoomInfo, setChatRoomInfo] = useState(''); // 채팅방 정보
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const messageEndRef = useRef(null);
+  const [chatroomId, setChatroomId] = useState([
+    {name : "자유 라이브", id : "65bfc7053498e7225dead3a0"},
+    {name : "나 지금 헌혈 중 라이브", id : "65bfc72d3498e7225dead3a2"},
+    {name : "헌혈 이야기 공유 라이브", id : "65bfc7543498e7225dead3a4"},
+  ])
+  const [currentChatRoomId, setCurrentChatRoomId] = useState("65bfc7053498e7225dead3a0"); // 현재 선택된 채팅방 ID
+  const [currentUserNickname, setCurrentUserNickname] = useState("현재로그인한사용자ID"); // 현재 로그인한 사용자의 ID
 
-  const handleSend = () => {
+  
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    axios
+      .get('https://bloodtrail.site/auth/profile', config)
+      .then((response) => {
+        if (response.data) {
+          const user = response.data.result;
+          setCurrentUserNickname(user.nickname);
+          console.log(user.nickname);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching profile:', error);
+      });
+  }, []);
+
+
+  const handleSend = async () => {
     if (newMessage.trim()) {
-      setMessages([...messages, { sender: "You", text: newMessage }]);
-      setNewMessage('');
+      try {
+        // 서버에 채팅 메시지를 보내는 API 호출
+        const response = await axios.post(
+          `https://bloodtrail.site/chatRoom/${currentChatRoomId}/chat`, // 채팅방 ID를 URL에 포함
+          {
+            message: newMessage,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰
+            },
+          }
+        );
+  
+        if (response.data) {
+          setMessages([...messages, { sender: currentUserNickname, text: newMessage }]);
+          setNewMessage('');
+  
+          fetchChatRoomDetails(currentChatRoomId);
+        }
+      } catch (error) {
+        console.error("메시지 전송 실패:", error);
+      }
     }
   };
 
@@ -177,6 +227,38 @@ const ChatApp = () => {
   const toggleDropDown = () => {
     setIsDropDownOpen(!isDropDownOpen);
   };
+
+
+  const fetchChatRoomDetails = async (chatRoomId) => {
+    try {
+      const response = await axios.get(`https://bloodtrail.site/chatRoom/${chatRoomId}`,{
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+      
+      if (response.data && response.data.result) {
+        setChatRoomInfo(response.data.result.chatRoom);
+        const formattedMessages = response.data.result.chats.map(chat => ({
+          sender: chat.writer.nickname, // 채팅 작성자의 닉네임을 sender로 사용
+          text: chat.message, // 채팅 메시지 내용
+          id: chat._id, // 채팅 메시지의 고유 ID
+          chatRoom: chat.chatRoom, // 채팅방 ID
+          createdAt: chat.created_at, // 메시지 생성 시간
+        }));
+        setMessages(formattedMessages);
+        console.log(response);
+      }
+    } catch (error) {
+      console.error("채팅방 정보를 불러오는 데 실패했습니다.", error);
+    }
+  };
+  
+  useEffect(() => {
+    if (currentChatRoomId) {
+      fetchChatRoomDetails(currentChatRoomId);
+    }
+  }, [currentChatRoomId]);
 
   return (
     <LiveContainer>
@@ -193,15 +275,14 @@ const ChatApp = () => {
 
           <MessageList>
             {messages.map((message, index) => (
-              <MessageContainer key={index} isSender={message.sender === "You"}>
+              <MessageContainer key={index} isSender={message.sender === currentUserNickname}>
                   <UserMessageInfo>
                     <ProfilePic src={ProfileImage} alt="Profile" />
                     <UserName>{message.sender}</UserName>
                   </UserMessageInfo>
-                <Message isSender={message.sender === "You"}>{message.text}</Message>
+                <Message isSender={message.sender === currentUserNickname}>{message.text}</Message>
               </MessageContainer>
             ))}
-            <div ref={messageEndRef} />
           </MessageList>
 
           <InputArea>
