@@ -243,7 +243,7 @@ const SearchBar = styled.div`
   align-items: center;
   color: var(--Gray-Gray-500, #9e9e9e);
   font-family: Pretendard;
-  font-size: 15px;
+  font-size: 0.75vw;
   font-style: normal;
   font-weight: 600;
   line-height: 1.0417vw;
@@ -528,7 +528,8 @@ const Community = () => {
                   type="text"
                   placeholder={`${searchType}을(를) 입력하세요`}
                   value={searchKeyword}
-                  onChange={handleSearchKeywordChange} // 검색 키워드 변경 핸들러 연결
+                  onChange={handleSearchKeywordChange} 
+                  style={{fontSize: "0.75vw", fontWeight: "600", color: "#9E9E9E"}}// 검색 키워드 변경 핸들러 연결
                 />
               </SearchBar>
               <SearchImg

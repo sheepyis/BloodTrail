@@ -46,7 +46,7 @@ const CrewP4 = styled.p`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
-  letter-spacing: -0.0225rem;
+  letter-spacing: -0.01vw;
 `;
 
 
@@ -69,7 +69,8 @@ const SortContainer = styled.div`
     border-right: none;
     border-bottom: 0.1vw solid #d1d1d1;
     padding: 0.5vw;
-
+    font-weight: 500;
+    font-size: 0.75vw;
     option {
       color: #464A4D;
     }
@@ -104,7 +105,7 @@ const TitleInput = styled.input`
   flex-grow: 1;
   height: 2.5vw;
   flex-shrink: 0;
-  border-bottom: 1px solid var(--Gray-Gray-300, #d1d1d1);
+  border-bottom: 0.15vw solid var(--Gray-Gray-300, #d1d1d1);
   background: var(--black-white-white-1000, #fff);
   color: var(--Gray-Gray-500, #9e9e9e);
   /* Body/Body/medium */
@@ -113,8 +114,8 @@ const TitleInput = styled.input`
   padding-left: 0.75vw;
   font-style: normal;
   font-weight: 500;
-  line-height: 20px; /* 133.333% */
-  letter-spacing: -0.3px;
+  line-height: 1vw; /* 133.333% */
+  letter-spacing: -0.15vw;
   padding-bottom: 0.75vw;
 
   &::placeholder {
@@ -126,8 +127,8 @@ const TitleInput = styled.input`
     padding-left: 0.75vw;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px; /* 133.333% */
-    letter-spacing: -0.3px;
+    line-height: 1vw; /* 133.333% */
+    letter-spacing: -0.15vw;
   }
 `;
 
@@ -167,7 +168,7 @@ const ImageP = styled.p`
   font-style: normal;
   font-weight: 500;
   line-height: 150%; /* 18px */
-  letter-spacing: -0.36px;
+  letter-spacing: -0.018vw;
 `;
 
 const ImageContainer = styled.div`
@@ -183,7 +184,7 @@ const BoldText = styled.p`
   font-size: 0.9vw;
   font-style: normal;
   font-weight: 700;
-  line-height: 30px; /* 166.667% */
+  line-height: 1.5vw; /* 166.667% */
 `;
 
 const ItalicText = styled.p`
@@ -269,6 +270,7 @@ const Enroll = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 2vw;
 
   /* Body/SubTitle/Bold */
   font-family: Pretendard;
