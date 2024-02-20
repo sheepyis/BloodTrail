@@ -461,7 +461,6 @@ const BloodWrite = ({ isCredit }) => {
       ? contentEditableRef.current.innerText
       : '';
 
-
     const formData = new FormData();
 
     formData.append('title', title);
@@ -476,6 +475,37 @@ const BloodWrite = ({ isCredit }) => {
     if (imageFile) {
       formData.append('files', imageFile);
     }
+
+
+
+    try {
+      const chatRoomTitle = title; // 적절한 채팅방 이름을 설정하세요
+      const chatRoomType = "blood"; // 채팅방 유형 설정 (예: "blood")
+      const chatResponse = await axios.post(
+          'https://bloodtrail.site/chatRoom', // 채팅방 생성 엔드포인트
+          {
+              title: chatRoomTitle, // 채팅방 이름
+              type: chatRoomType, // 채팅방 유형
+          },
+          {
+              headers: {
+                  Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰
+              },
+          }
+      );
+
+      if (chatResponse.data.isSuccess) {
+          console.log('채팅방 생성 성공:', chatResponse.data);
+          // 채팅방 생성 성공 후의 로직 (예: 사용자를 채팅방으로 리디렉션)
+      } else {
+          console.error('채팅방 생성 실패:', chatResponse.data.message);
+          alert(`채팅방 생성 실패: ${chatResponse.data.message}`);
+      }
+  } catch (error) {
+      console.error('채팅방 생성 중 에러 발생:', error);
+      alert('채팅방 생성 중 문제가 발생했습니다.');
+  }
+
 
     try {
       console.log(formData);
@@ -505,6 +535,7 @@ const BloodWrite = ({ isCredit }) => {
       alert('글 등록 중 문제가 발생했습니다.');
     }
   };
+
 
   const [inputCompleted, setInputCompleted] = useState({
     bloodProduct: false,
