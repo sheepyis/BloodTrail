@@ -236,12 +236,15 @@ const BloodDetailPage = ({ board, bloodId }) => {
             },
           }
         );
-
+            
         if (response.status === 200) {
-          setPosts(response.data.result); // 상태 업데이트로 게시글 데이터 저장
+          setPosts(response.data.result);
         } else {
           console.error('게시글을 불러오는데 실패했습니다.', response);
         }
+        
+        console.log("like!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        console.log(posts.isliked);
       } catch (error) {
         console.error('게시글을 불러오는 중 오류가 발생했습니다.', error);
       }
@@ -288,12 +291,9 @@ const BloodDetailPage = ({ board, bloodId }) => {
   const toggleLike = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      // userLiked 상태에 따라 공감 또는 공감 취소 API 호출
-      const endpoint = posts.userLiked
-        ? `https://bloodtrail.site/post/${bloodId}/unlike`
-        : `https://bloodtrail.site/post/${bloodId}/like`;
-
-      const response = await axios.patch(
+      const endpoint = `https://bloodtrail.site/post/${bloodId}/like`;
+      const method = posts.isLiked ? 'post' : 'patch';
+      const response = await axios[method](
         endpoint,
         {},
         {
@@ -302,18 +302,19 @@ const BloodDetailPage = ({ board, bloodId }) => {
       );
 
       if (response.data.isSuccess) {
-        // 공감 또는 공감 취소 후 posts 상태 업데이트
-        alert(`공감 ${posts.userLiked ? '취소' : ''}하였습니다.`);
+        alert(`공감 ${posts.isLiked ? '취소' : ''}하였습니다.`);
         setPosts((currentPost) => ({
           ...currentPost,
-          userLiked: !currentPost.userLiked,
+          isLiked: !currentPost.isLiked,
           post: {
             ...currentPost.post,
-            likes: currentPost.userLiked
+            likes: currentPost.isLiked
               ? currentPost.post.likes - 1
               : currentPost.post.likes + 1,
           },
         }));
+        
+        
       } else {
         alert(response.data.message);
       }
@@ -384,7 +385,7 @@ const BloodDetailPage = ({ board, bloodId }) => {
           <InteractionButtons>
             <HeartWrapper onClick={toggleLike}>
               <IconWrapper
-                filled={posts?.userLiked}
+                filled={posts?.isLiked}
                 color="#F3777A"
                 hoverColor="#E95458"
               >
