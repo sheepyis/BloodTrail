@@ -137,7 +137,7 @@ const Header = ({onHover,closeMenu,setMenuVisible}) => {
         .then((response) => {
           if (response.data) {
             const user = response.data.result;
-            setisPremium(user.premium);
+            setisPremium(user.premium.payment);
           }
         })
         .catch((error) => {
