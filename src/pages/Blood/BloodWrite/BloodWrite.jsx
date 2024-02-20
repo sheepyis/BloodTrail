@@ -461,6 +461,7 @@ const BloodWrite = ({ isCredit }) => {
       ? contentEditableRef.current.innerText
       : '';
 
+
     const formData = new FormData();
 
     formData.append('title', title);
@@ -494,6 +495,7 @@ const BloodWrite = ({ isCredit }) => {
         console.log('성공:', response.data);
         alert('글이 성공적으로 등록되었습니다.');
         const _id = response.data.result._id;
+        window.location.href = "/blood";
       } else {
         console.error('실패:', response.data.message);
         alert(`${response.data.message}`);

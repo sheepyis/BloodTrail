@@ -159,6 +159,7 @@ const CardTmp = ({
   forOtherPost,
   thumb,
   best,
+  end_date
 }) => {
   const displayTitle = forOtherPost ? title.slice(0, 20) : title.slice(0, 32);
   const displayBody =
@@ -166,6 +167,10 @@ const CardTmp = ({
   const linkPath = {
     pathname: "../../components/SinglePost/SinglePost", // SinglePost 컴포넌트의 라우트
     search: queryString.stringify({ board, _id  }), // board와 _id 값을 쿼리 스트링으로 변환
+  };
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' }; // 원하는 날짜 형식 지정
+    return new Date(dateString).toLocaleDateString('ko-KR', options);
   };
 
   return (
@@ -197,7 +202,7 @@ const CardTmp = ({
         {!forOtherPost && board == 'blood' && (
             <CardRequestPeriod>
               <Period1>요청기간</Period1>
-              <Period2>~2023.12.14</Period2>
+              <Period2>~ {formatDate(end_date)}</Period2>
             </CardRequestPeriod>
           )}
         </CardContent>
