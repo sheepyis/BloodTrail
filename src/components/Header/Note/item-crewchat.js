@@ -6,7 +6,7 @@ const ChatBox =styled.div`
     height: 5.4688vw;
     padding: 1.0417vw 1.0417vw 1.0417vw 1.0417vw;
     display: flex;
-    flex-direction: row:
+    flex-direction: row;
 `
 const ChatPerson= styled.img`
     width: 3.3789vw;
@@ -42,6 +42,7 @@ const ChatP =styled.div`
 const ItemChat = ({ id, name, recentChat, onClick }) => {
     const handleClick = () => {
         onClick(id);
+        console.log(id);
     };
     
     return (
