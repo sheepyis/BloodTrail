@@ -33,10 +33,9 @@ const BreadcrumsP = styled.div`
 const Title = styled.div`
     color: var(--Gray-Gray-900, #17191A);
     font-family: Pretendard;
-    font-size: 1.2500vw;
+    font-size: 1.2vw;
     font-style: normal;
     font-weight: 500;
-    line-height: 2.1875vw; /* 175% */
 `
 const LoginContainer = styled.div`
     display: flex;
@@ -58,13 +57,16 @@ const InputBox = styled.div`
     .id{
         display: flex;
         width: 21.3542vw;
-        margin-top: 4.8438vw;
+        margin-top: 4vw;
         padding: 0.5208vw;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
         gap: 0.5208vw;
         border-bottom: 0.0521vw solid var(--Gray-Gray-500, #9E9E9E);
+        font-weight: 500;
+        font-size: 0.75vw;
+        color: #9E9E9E;
     }
     .password{
         display: flex;
@@ -76,14 +78,17 @@ const InputBox = styled.div`
         align-items: flex-start;
         gap: 0.5208vw;
         border-bottom: 0.0521vw solid var(--Gray-Gray-500, #9E9E9E);
+        font-weight: 500;
+        font-size: 0.75vw;
+        color: #9E9E9E;
     }
 `
 const Alert = styled.div`
     display: inline-flex;
     position: absolute;
-    top:38%;
+    margin-top: 10vw;
     left: 39.8%;
-    padding: 0.5208vw;
+    padding: 0.5vw;
     justify-content: center;
     align-items: center;
     gap: 0.5208vw;
@@ -95,11 +100,9 @@ const AlertP = styled.div`
 
     /* Body/Body/medium */
     font-family: Pretendard;
-    font-size: 0.7813vw;
+    font-size: 0.7vw;
     font-style: normal;
     font-weight: 500;
-    line-height: 1.0417vw; /* 133.333% */
-    letter-spacing: -0.0156vw;
     padding-left: 0.5208vw;
 `
 const LoginButton =styled.button`
@@ -109,13 +112,17 @@ const LoginButton =styled.button`
     background: var(--Primary-Red-900, #E95458);
     text-align: center;
     font-family: Pretendard;
-    font-size: 0.9375vw;
+    font-size: 0.9vw;
     font-style: normal;
     font-weight: 600;
-    line-height: 1vw;
     margin-top:1.75vw;
     .login{
         color: var(--black-white-white-1000, #FFF);
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 0.9vw;
+        font-style: normal;
+        font-weight: 600;
     }
 `
 
@@ -129,7 +136,7 @@ const FindContainer = styled.div`
 const FindP= styled.p`
     color: var(--Gray-Gray-700, #464A4D);
     font-family: Pretendard;
-    font-size: 0.7813vw;
+    font-size: 0.7vw;
     font-style: normal;
     font-weight: 500;
     line-height: 150%; 
