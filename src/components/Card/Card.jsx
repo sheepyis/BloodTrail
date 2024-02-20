@@ -135,6 +135,19 @@ const CardPhoto = styled.div`
   margin-bottom: 0.7813vw;
 `;
 
+const HotLabel = styled.span`
+  padding: 0.2vw 0.5vw;
+  background-color: #FFF6F7;
+  color: #E95458;
+  font-size: 0.8vw;
+  font-weight: 700;
+  border-radius: 100px;
+  margin-left: 0.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const CardTmp = ({
   board,
   _id,
@@ -145,6 +158,7 @@ const CardTmp = ({
   userId,
   forOtherPost,
   thumb,
+  best,
 }) => {
   const displayTitle = forOtherPost ? title.slice(0, 20) : title.slice(0, 32);
   const displayBody =
@@ -153,17 +167,6 @@ const CardTmp = ({
     pathname: "../../components/SinglePost/SinglePost", // SinglePost 컴포넌트의 라우트
     search: queryString.stringify({ board, _id  }), // board와 _id 값을 쿼리 스트링으로 변환
   };
-
-  console.log({
-    board,
-    cardType,
-    selectBloodType,
-    title,
-    body,
-    userId,
-    forOtherPost,
-    _id,
-  });
 
   return (
     <Link
@@ -186,6 +189,7 @@ const CardTmp = ({
         <CardTitle>
           <CardTitleP>{displayTitle}</CardTitleP>
           {board == 'blood' && <BloodType>{selectBloodType}</BloodType>}
+          {best && <HotLabel>HOT</HotLabel>}
         </CardTitle>
 
         <CardContent>
