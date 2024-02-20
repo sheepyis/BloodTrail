@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import styled from 'styled-components';
 import arrow from '../../../assets/images/arrow_12px2.png';
 import profile2 from '../../../assets/images/profile2.png';
@@ -6,6 +6,7 @@ import image from '../../../assets/images/image 1.png';
 import BloodChat from './BloodChat';
 import colors from '../../../styles/color';
 import CrewChat from './CrewChat';
+import axios from "axios";
 
 const Container = styled.div`
     width: 100%;
@@ -184,12 +185,33 @@ const InputText = styled.div`
   }
 }
 `
-const BloodChatroom=({handleBloodChat,handleCrewChat})=>{
+const BloodChatroom=({handleBloodChat,handleCrewChat, chatRoomId})=>{
     const [back, setBack] = useState(false);
     const [crewChat, setCrewChat] = useState(false);
     const [bloodChat, setBloodChat] = useState(false);
+    const [chats, setChats] = useState([]);
 
-  
+    //console.log(chatRoomId);
+
+    useEffect(() => {
+        const fetchChats = async () => {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+                const response = await axios.get(`https://bloodtrail.site/chatRoom/${chatRoomId}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+                setChats(response.result);
+                console.log(chats);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchChats();
+    }, [chatRoomId]);
+
     const handleBack =()=>{
         setBack(true);
     }

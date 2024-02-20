@@ -6,6 +6,7 @@ import image from '../../../assets/images/image 1.png';
 import CrewChat from './CrewChat';
 import dot from "../../../assets/images/dot.png";
 import colors from '../../../styles/color';
+import axios from "axios";
 
 const Container = styled.div`
     width: 100%;
@@ -213,14 +214,33 @@ const InputText = styled.div`
   }
 }
 `
-const BloodChatroom=({handleBloodChat, handleCrewChat})=>{
+const BloodChatroom=({handleBloodChat, handleCrewChat, chatRoomId})=>{
     const [back, setBack] = useState(false);
-    const [bloodChat,setBloodChat] = useState(false);    
-    const [crewChat, setCrewChat] = useState(false);
+    const [chats, setChats] = useState([]);
     const [notify,setNotify] = useState(false);
     const [notify2,setNotify2] = useState(false);
     const notifyMenuRef = useRef(null); 
 
+    //console.log(chatRoomId);
+
+    useEffect(() => {
+        const fetchChats = async () => {
+            try {
+                const accessToken = localStorage.getItem('accessToken');
+                const response = await axios.get(`https://bloodtrail.site/chatRoom/${chatRoomId}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                });
+                setChats(response.result);
+                console.log(chats);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchChats();
+    }, [chatRoomId]);
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
@@ -282,7 +302,7 @@ const BloodChatroom=({handleBloodChat, handleCrewChat})=>{
                 <ChatBox ref={notifyMenuRef} onClick={handleClickOutside}>
                     <OtherUserInfo>
                         <img src= {profile2} alt="profile" style ={{width: '2.0793vw', height: '2.0833vw'}}/>
-                        <OtherUserName>other user name</OtherUserName>
+                        <OtherUserName>ㅇㅇ</OtherUserName>
                         <ChatNotify src ={dot} alert="신고하기" onClick={handleNotify}/>
                     </OtherUserInfo>
                     <OtherUserText>지정헌혈 요청글 채팅방입니다.</OtherUserText>

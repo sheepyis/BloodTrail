@@ -148,60 +148,6 @@ const Note= () => {
                 <NoteElement onClick={handleBloodChat}>지정헌혈 요청글</NoteElement>
             </NoteTitle2>
        
-            <ChatContainer>
-                <div className="etc">
-                <ChatBox>
-                    <ChatPerson src={Ellipse22} alt="chat_person" />
-                    <ChatBoxP>
-                        <ChatName>채팅방 이름</ChatName>
-                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                    </ChatBoxP>
-                </ChatBox>
-                <ChatBox>
-                    <ChatPerson src={Ellipse22} alt="chat_person" />
-                    <ChatBoxP>
-                        <ChatName>채팅방 이름</ChatName>
-                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                    </ChatBoxP>
-                </ChatBox>
-                <ChatBox>
-                    <ChatPerson src={Ellipse22} alt="chat_person" />
-                    <ChatBoxP>
-                        <ChatName>채팅방 이름</ChatName>
-                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                    </ChatBoxP>
-                </ChatBox>
-                </div>
-                <Rectangle />
-
-                <div className="crew" onClick={handleCrewChat}>
-                <ChatBox>
-                    <ChatPerson src={Ellipse22} alt="chat_person" />
-                    <ChatBoxP>
-                        <ChatName>채팅방 이름</ChatName>
-                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                    </ChatBoxP>
-                </ChatBox>
-                <ChatBox>
-                    <ChatPerson src={Ellipse22} alt="chat_person" />
-                    <ChatBoxP>
-                        <ChatName>채팅방 이름</ChatName>
-                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                    </ChatBoxP>
-                </ChatBox>
-                </div>
-                <Rectangle />
-
-                <div className="blood" onClick={handleBloodChat}>
-                <ChatBox>
-                    <ChatPerson src={Ellipse22} alt="chat_person" />
-                    <ChatBoxP>
-                        <ChatName>채팅방 이름</ChatName>
-                        <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                    </ChatBoxP>
-                </ChatBox>
-                </div>
-            </ChatContainer>
             </>
             )}
             {newChat && <ChatModal closeModal={() => setNewChat(false)}/>}
