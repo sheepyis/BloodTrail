@@ -192,7 +192,7 @@ const CrewDetail = () => {
                         <div className="targetPoint" style={{display: "flex", alignItems: "center", gap: "1vw"}}>
                             <CrewP style={{fontSize: "0.9vw", color: colors.black}}>목표 헌혈 포인트</CrewP>
                             <PointDiv>
-                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.result.crew.goal[0]}</CrewP>
+                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.result.crew.goal[1]}</CrewP>
                                 <CrewP style={{fontSize: "0.75vw", color: colors.crewGray2}}>Point</CrewP>
                             </PointDiv>
                         </div>
@@ -200,7 +200,7 @@ const CrewDetail = () => {
                         <div className="participation" style={{display: "flex", alignItems: "center", gap: "1vw"}}>
                             <CrewP style={{fontSize: "0.9vw", color: colors.black}}>목표 헌혈 참여율</CrewP>
                             <PointDiv style={{width: "4vw"}}>
-                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.result.crew.goal[1]}</CrewP>
+                                <CrewP style={{fontWeight: "600", fontSize: "0.75vw"}}>{crew && crew.result.crew.goal[0]}</CrewP>
                                 <CrewP style={{fontSize: "0.75vw", color: colors.crewGray2}}>%</CrewP>
                             </PointDiv>
                         </div>

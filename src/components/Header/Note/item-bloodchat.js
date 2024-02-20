@@ -42,7 +42,7 @@ const ChatP =styled.div`
 const ItemBlood = ({ id, name, recentChat, onClick }) => {
     const handleClick = () => {
         onClick(id);
-        console.log(id);
+        //console.log(id);
     };
     
     return (
