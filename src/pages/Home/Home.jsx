@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import Banner from '../../assets/images/bloodtrailbanner1.jpeg';
+import Banner from '../../assets/images/KakaoTalk_Photo_2024-02-20-20-26-53 001.png';
 import ArrowLeft from '../../assets/images/arrow=active.png';
 import { useState } from 'react';
-import Banner2 from '../../assets/images/bloodtrailbanner2.jpeg';
-import Banner3 from '../../assets/images/bloodtrailbanner3.jpeg';
+import Banner2 from '../../assets/images/KakaoTalk_Photo_2024-02-20-20-26-54 002.png';
+import Banner3 from '../../assets/images/KakaoTalk_Photo_2024-02-20-20-26-54 003.png';
 import ArrowRight from '../../assets/images/arrow=right.png';
 import { useEffect } from 'react';
 import Dday from '../../components/Dday/Dday';
@@ -155,13 +155,13 @@ const Home = () => {
           onClick={handleRightArrowClick}
         />
         <DotsContainer>
-          {/* {bannerImages.map((_, index) => (
+          {bannerImages.map((_, index) => (
             <Dot
               key={index}
               className={currentImageIndex === index ? 'active' : ''}
               onClick={() => setCurrentImageIndex(index)}
             />
-          ))} */}
+          ))}
         </DotsContainer>
       </BannerContainer>
       <HomeBoxAndSidebar>
