@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import colors from "../../../styles/color";
 import Ellipse22 from "../../../assets/images/Ellipse22.png";
 import BloodChatroom from './BloodChatroom';
+import ListBlood from './list-bloodchat';
 
 const ChatContainer =styled.div`
     display: flex;
@@ -94,32 +95,7 @@ const BloodChat =({handleCrewChat, handleBloodChat})=>{
                 <NoteElement className="blood" onClick={handleBloodChat}>지정헌혈 요청글</NoteElement>
             </NoteTitle2>
         
-                    <ChatBox onClick={handleChatroom}>
-                        <ChatPerson src={Ellipse22} alt="chat_person" />
-                        <ChatBoxP>
-                            <ChatName>채팅방 이름</ChatName>
-                            <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                        </ChatBoxP>
-                    </ChatBox>
-                    <Rectangle />
-                    
-                    <ChatBox onClick={handleChatroom}>
-                        <ChatPerson src={Ellipse22} alt="chat_person" />
-                        <ChatBoxP>
-                            <ChatName>채팅방 이름</ChatName>
-                            <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                        </ChatBoxP>
-                    </ChatBox>
-                    <Rectangle />
-
-                    <ChatBox onClick={handleChatroom}>
-                        <ChatPerson src={Ellipse22} alt="chat_person" />
-                        <ChatBoxP>
-                            <ChatName>채팅방 이름</ChatName>
-                            <ChatP>채팅 내용입니다. 최대 1줄 텍스트박스 길이 400px</ChatP>
-                        </ChatBoxP>
-                    </ChatBox>
-                    <Rectangle />
+            <ListBlood handleChatroom={handleChatroom}/>
                 </>
             )}
             {isChatroom && <BloodChatroom 

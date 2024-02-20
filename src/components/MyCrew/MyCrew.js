@@ -118,7 +118,7 @@ const MyCrew = () => {
         <MyCrewP style={{marginTop: "1vw"}}>크루 정보 없음</MyCrewP>
       )}
 
-      {isModalOpen && <ChatModal closeModal={() => setIsModalOpen(false)} />}
+      {isModalOpen && <ChatModal closeModal={() => setIsModalOpen(false)} initialType="crew"/>}
     </>
   );
 };
