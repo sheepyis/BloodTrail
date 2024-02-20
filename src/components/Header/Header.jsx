@@ -24,8 +24,8 @@ const HeaderContainer = styled.div`
     z-index:2;
 `
 const MainHeader = styled.div`
-    margin-left: 2.5vw;
-    margin-right : 7.86vw;
+    margin-left: 2vw;
+    margin-right : 6vw;
     align-items: center;
 `
 const HeaderMenu = styled.div`
@@ -36,14 +36,16 @@ const HeaderMenu = styled.div`
 `
 
 const HeaderP2 = styled(NavLink)`
-    font-weight: 400;
-    font-size: 0.9375vw;  
     padding: 1.20vw 0.52vw 1.20vw 0.52vw;
     margin-right: 0.44vw; 
     cursor: pointer;
+    font-weight: 700;
+    font-size: 0.75vw;
    
     &:hover {
         font-weight: 700;
+        font-size: 0.75vw;
+        color: #464A4D;
     }
 
     &.active {
