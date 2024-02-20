@@ -47,12 +47,12 @@ const CloseImage = styled.img`
 const MarkerDiv = styled.div`
     display: ${props => props.show ? 'block' : 'none'};
     width: 20vw;
-    height: 25vw;
+    height: 25.5vw;
     position: absolute;
     z-index: 4;
     background-color: ${colors.markerDiv};
     right: 0;
-    margin-right: 17.5vw;
+    margin-right: 22vw;
 `
 
 const PlaceImage = styled.img`
@@ -116,7 +116,7 @@ const Kakao = () => {
 
             const options = {
                 center: new kakao.maps.LatLng(latitude, longitude),
-                level: 4,
+                level: 7,
             };
             const map = new window.kakao.maps.Map(container, options);
 

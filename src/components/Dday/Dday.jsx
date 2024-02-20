@@ -14,8 +14,8 @@ const HomeContainer = styled.div`
 const Rectangle = styled.div`
   width: 16.1vw;
   height: 16.1vw;
-  border-radius: 5px;
-  border: 1px solid var(--Gray-Gray-200, #EEE);
+  border-radius: 0.25vw;
+  border: 0.05vw solid var(--Gray-Gray-200, #EEE);
   background: var(--black-white-white-1000, #FFF);
   box-sizing: border-box; 
   display:flex;
@@ -34,14 +34,14 @@ const RecContent= styled.div`
 const Recborder = styled.div`
   width: 15.96vw;
   height: 2.85vw;
-  border-radius: 5px 5px 0 0; 
+  border-radius: 0.25vw 0.25vw 0 0; 
   background: var(--Gray-Gray-100, #F2F2F2);
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
   position: relative; 
-  top: -1px; 
+  top: -0.05vw; 
 `
 
 const Nextday = styled.p`
@@ -52,7 +52,7 @@ const Nextday = styled.p`
   font-style: normal;
   font-weight: 500;
   line-height: 150%; 
-  letter-spacing: -0.36px;
+  letter-spacing: -0.018vw;
 `
 
 const Dquestion = styled.p`
@@ -72,7 +72,7 @@ const Checkdate = styled.p`
   font-style: normal;
   font-weight: 500;
   line-height: 1vw; 
-  letter-spacing: -0.45px;
+  letter-spacing: -0.027vw;
   margin: 0.5vw 0 1.75vw;
 `
 
@@ -106,7 +106,7 @@ const FindP= styled.p`
   font-style: normal;
   font-weight: 500;
   line-height: 150%; 
-  letter-spacing: -0.36px;
+  letter-spacing: -0.018vw;
 `
 
 const Dday=()=>{

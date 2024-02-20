@@ -29,7 +29,7 @@ const BoardText = styled.div`
 `;
 
 const MoreText = styled.div`
-  font-size: 1;
+  font-size: 1vw;
   color: #9E9E9E;
   cursor: pointer;
 `;
