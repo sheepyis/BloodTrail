@@ -76,10 +76,10 @@ const ListCrewRank = () => {
             {crewData.map((crew, index) => (
               <ItemCrewRank
                 key={index}
-                id={index + 1 + (currentPage - 1) * crewData.length} // 순위 계산
+                id={index + 1 + (currentPage - 1) * 6} // 순위 계산
                 name={crew.crew_name}
                 point={crew.now[1]}
-                isFirstPlace={index === 0}
+                isFirstPlace={index === 0 && currentPage === 1}
               />
             ))}
           </StyleGrid>
