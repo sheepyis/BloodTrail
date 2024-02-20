@@ -42,6 +42,7 @@ const ListMember = ({ id, username }) => {
     const [isJoined, setIsJoined] = useState(false);
     const [userId, setUserId] = useState(null); 
     const [chatRoomId, setChatRoomId] = useState(null);
+    const [isLeader, setIsLeader] = useState(null);
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -76,6 +77,8 @@ const ListMember = ({ id, username }) => {
                 const chatRoomId = response.data.result.crew.chat.split("/")[2];
                 setChatRoomId(chatRoomId);
                 console.log(chatRoomId);
+                setIsLeader(response.data.result.crew.crew_leader);
+                //console.log("리더: ", isLeader);
             }
             
             if (response.data.result && response.data.result.crew_member && response.data.result.crew_member.length > 0) {
@@ -137,7 +140,7 @@ const ListMember = ({ id, username }) => {
         }
     };
     
-    const handleLeaveCrew = async () => {
+    const handleLeaveCrew = async (chatRoomId) => {
         try {
             const accessToken = localStorage.getItem('accessToken');
             const response = await axios.patch(`https://bloodtrail.site/crew/${id}`, null, {
@@ -148,11 +151,28 @@ const ListMember = ({ id, username }) => {
     
             if(response.data.isSuccess == true) {
                 alert("크루를 탈퇴하셨습니다.");
+
+                if (userId == isLeader) {
+                    await axios.delete(`https://bloodtrail.site/chatRoom/${chatRoomId}`, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    console.log("리더 채팅방 삭제: ", response.data);
+                } else {
+                    await axios.get(`https://bloodtrail.site/chatRoom/${chatRoomId}`, null, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    });
+                    console.log("크루 채팅방 퇴장: ", response.data);
+                }
+
                 fetchData();
                 setIsJoined(false);
             }
 
-            //console.log(response.data);
+        //console.log(response.data);
         } catch (error) {
             console.error('Error:', error);
         }
