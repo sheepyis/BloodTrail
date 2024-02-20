@@ -78,9 +78,9 @@ const TagContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin: 10px;
-  margin-bottom: 25px;
+  gap: 0.5vw;
+  margin: 0.5vw;
+  margin-bottom: 1.25vw;
 `;
 
 const Tag = styled.div`
@@ -120,7 +120,7 @@ const Details = styled.div`
 const InteractionBar = styled.div`
   width: 100%;
   display: flex;
-  gap: 10px;
+  gap: 0.5vw;
   justify-content: flex-end;
   align-items: center;
   color: #9e9e9e;
@@ -271,7 +271,7 @@ const ContentsText = styled.input`
   font-size: 0.75vw;
   font-style: normal;
   font-weight: 500;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.015vw;
 `;
 
 const InformRow = styled.div`

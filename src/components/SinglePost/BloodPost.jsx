@@ -76,9 +76,9 @@ const TagContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin: 10px;
-  margin-bottom: 25px;
+  gap: 0.5vw;
+  margin: 0.5vw;
+  margin-bottom: 1.25vw;
 `;
 
 const Tag = styled.div`

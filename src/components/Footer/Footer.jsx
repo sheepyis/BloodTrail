@@ -32,7 +32,7 @@ const FooterText2 = styled.p`
   font-style: normal;
   font-weight: 500;
   line-height: 1vw;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.015vw;
 `;
 
 const FooterText3 = styled.p`
@@ -42,7 +42,7 @@ const FooterText3 = styled.p`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
-  letter-spacing: -0.36px;
+  letter-spacing: -0.018vw;
 `;
 
 const FooterCon = styled.div`
