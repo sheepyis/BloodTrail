@@ -18,6 +18,12 @@ const BreadcrumbLink = styled(Link)`
   cursor: pointer;
 `;
 
+const NavP = styled.p`
+  font-weight: 500;
+  font-size: 0.6vw;
+  color: ${colors.crewGray2};
+`
+
 const Breadcrumbs = ({ pageLabel, currentPage }) => {
   const currentPagePath = menuItems[pageLabel]?.find(item => item.label === currentPage)?.path || "/";
 
@@ -26,11 +32,11 @@ const Breadcrumbs = ({ pageLabel, currentPage }) => {
     <BreadcrumbLink>
     <Link to={"/"} style={{ textDecoration: 'none' }}>홈</Link>
     </BreadcrumbLink>
-    {">"}
+    <NavP>{">"}</NavP>
     <BreadcrumbLink>
     <Link to={menuItems[pageLabel]?.[0]?.path} style={{ textDecoration: 'none' }}>{pageLabel}</Link>
     </BreadcrumbLink>
-    {">"}
+    <NavP>{">"}</NavP>
     <BreadcrumbLink>
     <Link to={currentPagePath} style={{ textDecoration: 'none' }}>{currentPage}</Link>
     </BreadcrumbLink>
