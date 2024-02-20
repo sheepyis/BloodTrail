@@ -35,43 +35,34 @@ const ListCrewRank = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    // accessToken을 localStorage에서 가져옵니다.
-    const accessToken = localStorage.getItem('accessToken');
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-
     axios
-      .get(`https://bloodtrail.site/crew/rank?page=${currentPage}`, config)
+      .get(`https://bloodtrail.site/crew/rank?page=${currentPage}`)
       .then((response) => {
-        setCrewData(response.data.result.crewList);
-        console.log(response.data.result.crewList);
+        // 내림차순으로 정렬
+        const sortedCrewData = response.data.result.crewList.sort((a, b) => b.now[0] - a.now[0]);
+        setCrewData(sortedCrewData);
+        console.log(sortedCrewData);
       })
       .catch((error) => {
         console.error('Error: ', error);
       });
   }, [currentPage]);
 
-  
   return (
     <CrewRankContainer>
-        <>
-          <StyleGrid>
-            {crewData.slice(0, 3).map((crew, index) => (
-              <ItemCrewRank
-                key={index}
-                id={index + 1 + (currentPage - 1) * 3} // 순위 계산
-                name={crew.crew_name}
-                point={crew.now[1]}
-                isFirstPlace={index === 0}
-              />
-            ))}
-          </StyleGrid>
-
-        </>
+      <>
+        <StyleGrid>
+          {crewData.slice(0, 3).map((crew, index) => (
+            <ItemCrewRank
+              key={index}
+              id={index + 1 + (currentPage - 1) * 3} // 순위 계산
+              name={crew.crew_name}
+              point={crew.now[0]}
+              isFirstPlace={index === 0}
+            />
+          ))}
+        </StyleGrid>
+      </>
     </CrewRankContainer>
   );
 };

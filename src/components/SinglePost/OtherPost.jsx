@@ -114,12 +114,20 @@ const OtherPosts = ({board, _id}) => {
     const fetchPosts = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.get(`https://bloodtrail.site/post/${_id}/recommend`, {
+        let endpoint = '';
+        if (board === 'blood') {
+          endpoint = `https://bloodtrail.site/blood/1/all`;
+        } else {
+          endpoint = `https://bloodtrail.site/post/${_id}/recommend`;
+        }
+
+        const response = await axios.get(endpoint, {
           headers: { Authorization: `Bearer ${accessToken}` }
         });
+
         if (response.data.isSuccess) { 
           console.log(response.data);      
-          setPosts(response.data.result);
+          setPosts(board === 'blood' ? response.data.result.bloodList : response.data.result);
         } else {
           console.error("Failed to fetch posts: ", response.data.message);
           console.error(response.data);
@@ -147,10 +155,11 @@ const OtherPosts = ({board, _id}) => {
                 forOtherPost={true}
                 _id={post._id}
                 cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
-                //userId={post.writer.nickname}
+                userId="user name"//{post.writer.nickname}
                 thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
                 title={post.title}
                 body={post.content}
+                selectBloodType={post.blood_type}
               />
             </CardGap>
           ))}
