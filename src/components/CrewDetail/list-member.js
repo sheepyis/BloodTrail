@@ -40,7 +40,8 @@ const ListMember = ({ id, username }) => {
     const [crew, setCrew] = useState(null);
     const [isFull, setIsFull] = useState(false);
     const [isJoined, setIsJoined] = useState(false);
-    const [userId, setUserId] = useState(null);  
+    const [userId, setUserId] = useState(null); 
+    const [chatRoomId, setChatRoomId] = useState(null);
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -51,7 +52,6 @@ const ListMember = ({ id, username }) => {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
-                console.log(response);
                 const user = response.data.result;
 
                 setUserId(user._id);
@@ -63,7 +63,6 @@ const ListMember = ({ id, username }) => {
         fetchUserId();
     }, []);
 
-
     const fetchData = async () => {
         try {
             const accessToken = localStorage.getItem('accessToken');
@@ -72,15 +71,19 @@ const ListMember = ({ id, username }) => {
                     Authorization: `Bearer ${accessToken}`,
                 },
             });
-            console.log("통신 성공");
-            console.log(response.data);
+
+            if (response.data.result && response.data.result.crew && response.data.result.crew.chat) {
+                const chatRoomId = response.data.result.crew.chat.split("/")[2];
+                setChatRoomId(chatRoomId);
+                console.log(chatRoomId);
+            }
             
             if (response.data.result && response.data.result.crew_member && response.data.result.crew_member.length > 0) {
                 setCrewData(response.data.result.crew_member);
     
                 const userIsMember = response.data.result.crew_member.some(member => member._id === userId);
                 setIsJoined(userIsMember);
-                console.log(userIsMember);
+                //console.log(userIsMember);
             } else {
                 window.location.href = '/crew';
             }
@@ -89,12 +92,26 @@ const ListMember = ({ id, username }) => {
         }
     };
     
-    
     useEffect(() => {
         fetchData();
     }, [id, userId]);
 
+    const joinChatRoom = async (chatRoomId) => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            const response = await axios.get(`https://bloodtrail.site/chatRoom/${chatRoomId}`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
     
+            console.log("채팅방 참여: ", response.data);
+        } catch (error) {
+            console.error('채팅방 참여 중 에러 발생:', error);
+        }
+    };
+    
+
     const handleJoinCrew = async () => {
         try {
             const accessToken = localStorage.getItem('accessToken');
@@ -110,9 +127,11 @@ const ListMember = ({ id, username }) => {
                 alert("크루에 가입하였습니다.");
                 fetchData();
                 setIsJoined(true);
+
+                joinChatRoom(chatRoomId);
             }
     
-            console.log(response.data);
+            //console.log(response.data);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -133,7 +152,7 @@ const ListMember = ({ id, username }) => {
                 setIsJoined(false);
             }
 
-            console.log(response.data);
+            //console.log(response.data);
         } catch (error) {
             console.error('Error:', error);
         }
