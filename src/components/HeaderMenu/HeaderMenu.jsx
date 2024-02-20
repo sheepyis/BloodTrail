@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const HeaderMenuContainer = styled.div`
     position: absolute;
-    top: 6%;
+    top: 5.8%;
     background-color: ${colors.white};
     backdrop-filter: blur(10.100000381469727px);
     width: 100vw;
