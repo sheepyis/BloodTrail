@@ -48,13 +48,19 @@ const SinglePost = () => {
       <MainConationer>
         <Breadcrums pageLabel={pageLabel} currentPage={currentPage} />
         <Homecontainer>
-          <UserPost board={board} _id={_id}/>
+          <UserPost board={board} _id={_id} />
           <Divider />
-          {board === 'community' && <>
-            <Comment board={board} _id={_id}/>
-            <Divider />
-          <OtherPost board={board} _id={_id}/>
-          </>}
+          {board === 'community' ? (
+            <>
+              <Comment board={board} _id={_id} />
+              <Divider />
+              <OtherPost board={board} _id={_id} />
+            </>
+          ) : (
+            <>
+              <OtherPost board={board} _id={_id} />
+            </>
+          )}
         </Homecontainer>
       </MainConationer>
     </Container>

@@ -1,16 +1,15 @@
 import styled from 'styled-components';
-import Banner from '../../assets/images/Banner.png';
+import Banner from '../../assets/images/bloodtrailbanner1.jpeg';
 import ArrowLeft from '../../assets/images/arrow=active.png';
 import { useState } from 'react';
-import Banner2 from '../../assets/images/image 23.jpg';
-import Banner3 from '../../assets/images/image 48.png';
+import Banner2 from '../../assets/images/bloodtrailbanner2.jpeg';
+import Banner3 from '../../assets/images/bloodtrailbanner3.jpeg';
 import ArrowRight from '../../assets/images/arrow=right.png';
 import { useEffect } from 'react';
 import Dday from '../../components/Dday/Dday';
 import Kakao from '../../api/Kakao';
 import Ranking from '../../components/Ranking/Ranking';
 import Board from '../../components/Board/Board';
-
 
 const HomeContainer = styled.div`
   width: 100%;
@@ -77,19 +76,17 @@ const HomeBoxAndSidebar = styled.div`
 `;
 
 const SidebarContainer = styled.div`
-  width:20%;
+  width: 20%;
   padding: 1vw;
 `;
 
 const Divider = styled.div`
   width: 100%; // 구분선의 길이를 Header와 동일하게 설정
-  border-bottom: 1px solid #EEEEEE; // 구분선의 스타일 설정
+  border-bottom: 1px solid #eeeeee; // 구분선의 스타일 설정
   margin-bottom: 10%; // 구분선 아래에 여백 추가
 `;
 
-
 const Home = () => {
-
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -158,29 +155,28 @@ const Home = () => {
           onClick={handleRightArrowClick}
         />
         <DotsContainer>
-          {bannerImages.map((_, index) => (
+          {/* {bannerImages.map((_, index) => (
             <Dot
               key={index}
               className={currentImageIndex === index ? 'active' : ''}
               onClick={() => setCurrentImageIndex(index)}
             />
-          ))}
+          ))} */}
         </DotsContainer>
       </BannerContainer>
       <HomeBoxAndSidebar>
-      <SidebarContainer>
-      </SidebarContainer>
+        <SidebarContainer></SidebarContainer>
 
-      <HomeBox>
-        <Ranking home={'home'} />
-        <Board home={'home'} />
-        <Divider/>
-        <Kakao />
-      </HomeBox>
+        <HomeBox>
+          <Ranking home={'home'} />
+          <Board home={'home'} />
+          <Divider />
+          <Kakao />
+        </HomeBox>
 
-      <SidebarContainer>
+        <SidebarContainer>
           <Dday />
-      </SidebarContainer>
+        </SidebarContainer>
       </HomeBoxAndSidebar>
     </HomeContainer>
   );

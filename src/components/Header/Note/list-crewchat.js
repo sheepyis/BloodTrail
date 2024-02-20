@@ -20,8 +20,10 @@ const ListChat = ({handleChatroom}) => {
                     }
                 });
                 console.log(response.data);
-                const crewChatRooms = response.data.result.chatRoomsWithChat.filter(item => item.chatRoom.type === "crew");
+                const crewChatRooms = response.data.result ? 
+                                        response.data.result.chatRoomsWithChat.filter(item => item.chatRoom.type === "crew") :[];
                 setCrewData(crewChatRooms);
+                console.log(crewChatRooms);
             } catch (error) {
                 console.error('Error:', error);
             }

@@ -8,6 +8,7 @@ import plus from "../../../assets/images/plus.png";
 import Chat from "./CrewChat";
 import CrewChat from "./CrewChat";
 import BloodChat from "./BloodChat";
+import ChatModal from "../../Chat/ChatModal";
 
 const NoteContainer =styled.div`
     width: 27.0833vw;
@@ -109,9 +110,9 @@ const Rectangle = styled.div`
 
 const Note= () => {
 
-
     const [crewChat, setCrewChat] = useState(false);
     const [bloodChat, setBloodChat] = useState(false);
+    const [newChat, setNewChat] = useState(false);
 
     const handleCrewChat =()=>{
         setCrewChat(true);
@@ -123,17 +124,20 @@ const Note= () => {
         setCrewChat(false);
     };
 
+    const handleNewChat = () =>{
+        setNewChat(true);
+    }
+
     const handleModalInnerClick = (event) => {
         event.stopPropagation();
     };
-    
 
     return(
         <NoteContainer onClick={handleModalInnerClick}>
             <TitleBox>
                 <NoteTitle1>쪽지</NoteTitle1>
                 <Icon>
-                    <img src={plus} alt="plus" style={{width: '1.25vw', height: '1.25vw', margin: '0.00vw 0.36vw 0.00vw 0.00vw'}}/>
+                    <img src={plus} alt="plus" onClick={handleNewChat} style={{width: '1.25vw', height: '1.25vw', margin: '0.00vw 0.36vw 0.00vw 0.00vw'}}/>
                     <img src={setting} slt ="setting" style={{width: '1.25vw', height: '1.25vw', margin: '0.00vw 1.04vw 0.00vw 0.00vw'}}/>
                 </Icon>
             </TitleBox>
@@ -200,6 +204,7 @@ const Note= () => {
             </ChatContainer>
             </>
             )}
+            {newChat && <ChatModal/>}
             {crewChat && <CrewChat  handleCrewChat={handleCrewChat}
                                     handleBloodChat={handleBloodChat}/>}
             {bloodChat && <BloodChat handleCrewChat={handleCrewChat}
