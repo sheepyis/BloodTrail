@@ -279,6 +279,45 @@ const Enroll = styled.button`
 `;
 
 const CommunityWrite = () => {
+  const refreshAccessToken = async () => {
+    try {
+      const accessToken = localStorage.getItem('accessToken'); 
+      const refreshToken = localStorage.getItem('refreshToken');
+  
+    if (!refreshToken) {
+      console.log("no refresh!!!");
+      return;
+    }
+  
+    console.log(accessToken);
+    console.log(refreshToken);
+  
+    const response = await axios.post(
+        'https://bloodtrail.site/auth/regenerate-token',
+        {}, // POST 요청 본문이 필요하지 않은 경우 빈 객체 전달
+        {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'refresh': `Bearer ${refreshToken}`
+          }
+        }
+    );
+  
+    console.log("refresh complete!!!!!!!!!!!!!!!!!!!!");
+    console.log(response.data);
+    
+    } catch (error) {
+    console.error('Error refreshing access token: ', error); // 에러 처리
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      await refreshAccessToken();
+    };
+    init();
+  },[]);
+  
   const [imageFile, setImageFile] = useState(null);
 
   const [postType, setPostType] = useState('');
