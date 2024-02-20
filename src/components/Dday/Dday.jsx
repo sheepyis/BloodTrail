@@ -112,6 +112,7 @@ const FindP= styled.p`
 const Dday=()=>{
   const [userData, setUserData] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [day, setDay] = useState(null);
   
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -159,6 +160,25 @@ const Dday=()=>{
       });
   }, []);
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://bloodtrail.site/history/date`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        setDay(response.data.result);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
     const handleLogout = () => {
       localStorage.removeItem('accessToken');
       setIsLoggedIn(false);
@@ -195,7 +215,7 @@ const Dday=()=>{
             </Recborder>
             <RecContent>
             <Dquestion>
-            {isLoggedIn ? (`D-${365}`) : ('D-?')}</Dquestion>
+            {isLoggedIn ? (`D-${day}`) : ('D-?')}</Dquestion>
             <Checkdate>{userData ? `${userData.username}님 (${userData.birth})` : '나의 전혈 가능 날짜를 확인하세요'}</Checkdate>
             {isLoggedIn ? (
               <Link to="/mypage" style={{ textDecoration: 'none' }}>

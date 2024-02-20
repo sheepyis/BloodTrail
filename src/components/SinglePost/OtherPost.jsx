@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { OtherPostDetail } from "./PostData"; 
+import { OtherPostDetail } from './PostData';
 import CardTmp from '../Card/Card';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import leftArrow from './Icons/LeftArrow.svg'; 
-import rightArrow from './Icons/RightArrow.svg'; 
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import leftArrow from './Icons/LeftArrow.svg';
+import rightArrow from './Icons/RightArrow.svg';
 
 const OtherPostsSection = styled.section`
   margin: 4vw 0 10vw;
@@ -51,15 +51,15 @@ const HeaderContainer = styled.div`
 const OtherPostsHeader = styled.h2`
   font-size: 1.3vw;
   font-weight: 500;
-  color: #17191A;
+  color: #17191a;
   margin-bottom: 1vw;
 `;
 
 const BoardListButton = styled.button`
   height: 2vw;
   font-size: 0.6vw;
-  border: 0.1vw solid #D1D1D1;
-  color: #464A4D;
+  border: 0.1vw solid #d1d1d1;
+  color: #464a4d;
   cursor: pointer;
   padding: 0.6vw;
   border-radius: 0.4vw;
@@ -71,21 +71,22 @@ const ArrowButton = styled.button`
   cursor: pointer;
   z-index: 10;
   background-color: transparent;
-  background-image: url(${({ type }) => type === 'next' ? rightArrow : leftArrow});
+  background-image: url(${({ type }) =>
+    type === 'next' ? rightArrow : leftArrow});
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-size:1.5vw;
-  ${({ type }) => type === 'next' ? `right: -6.5vw;` : `left: -6.5vw;`}
+  background-size: 1.5vw;
+  ${({ type }) => (type === 'next' ? `right: -6.5vw;` : `left: -6.5vw;`)}
 `;
 
 const CardGap = styled.div`
   width: 100%;
   padding: 0 0.5vw;
   box-sizing: border-box;
-`
+`;
 
 const NextArrow = (props) => {
   const { onClick } = props;
@@ -107,21 +108,24 @@ const settings = {
   prevArrow: <PrevArrow />,
 };
 
-const OtherPosts = ({board, _id}) => {
+const OtherPosts = ({ board, _id }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.get(`https://bloodtrail.site/post/${_id}/recommend`, {
-          headers: { Authorization: `Bearer ${accessToken}` }
-        });
-        if (response.data.isSuccess) { 
-          console.log(response.data);      
+        const response = await axios.get(
+          `https://bloodtrail.site/post/${_id}/recommend`,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        if (response.data.isSuccess) {
+          console.log(response.data);
           setPosts(response.data.result);
         } else {
-          console.error("Failed to fetch posts: ", response.data.message);
+          console.error('Failed to fetch posts: ', response.data.message);
           console.error(response.data);
         }
       } catch (error) {
@@ -132,11 +136,15 @@ const OtherPosts = ({board, _id}) => {
   }, [board, _id]);
     
   const boardLink = board === 'blood' ? '/blood' : '/community';
+
   return (
     <OtherPostsSection>
       <HeaderContainer>
         <OtherPostsHeader>다른 글 보기</OtherPostsHeader>
         <Link to={boardLink}><BoardListButton>게시판 목록</BoardListButton></Link>
+        <Link to={'/community'}>
+          <BoardListButton>게시판 목록</BoardListButton>
+        </Link>
       </HeaderContainer>
       <PostsLists>
         <Slider {...settings}>
@@ -144,11 +152,18 @@ const OtherPosts = ({board, _id}) => {
             <CardGap key={post._id}>
               <CardTmp
                 board={board}
+                board="community"
                 forOtherPost={true}
                 _id={post._id}
-                cardType={post.image && post.image.length > 0 ? 'type2' : 'type1'}
+                cardType={
+                  post.image && post.image.length > 0 ? 'type2' : 'type1'
+                }
                 //userId={post.writer.nickname}
-                thumb={post.image && post.image.length > 0 ? post.image[0] : undefined}
+                thumb={
+                  post.image && post.image.length > 0
+                    ? post.image[0]
+                    : undefined
+                }
                 title={post.title}
                 body={post.content}
               />

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
 import { Link, NavLink } from "react-router-dom";
-import add_comment from "../../assets/images/add_comment.png";
-import notification1 from "../../assets/images/notification1.png"
+import chat_message from "../../assets/images/message-circle 1.png";
+import notification1 from "../../assets/images/notification1.png";
 import person from "../../assets/images/person.png";
 // import logo from "../../assets/images/logo.png";
 import React, { useState, useEffect, useRef } from "react";
@@ -14,43 +14,44 @@ import logo from "../../assets/images/bloodtrail_logo_red 1.png";
 const HeaderContainer = styled.div`
     position: relative;
     width: 100%;
-    height: 3.4375vw;
+    height: 3.44vw;
     display: flex;
     align-items: center;
+    background-color: ${colors.white};
+    z-index:2;
 `
 const MainHeader = styled.div`
-    padding-left: 1.8229vw;
+    margin-left: 48px;
+    margin-right : 7.86vw;
     align-items: center;
-    width: 17%;
 `
 const HeaderMenu = styled.div`
     position: relative;
-    padding-right:57vw;
     display:flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 1vw;
     white-space: nowrap;
 `
 
 const HeaderP2 = styled(NavLink)`
     font-weight: 400;
-    font-size: 0.9375vw;    
+    font-size: 0.9375vw;  
+    padding: 1.20vw 0.52vw 1.20vw 0.52vw;
+    margin-right: 0.44vw; 
+    cursor: pointer;
+   
     &:hover {
         font-weight: 700;
     }
 
     &.active {
         font-weight: 700;
-        text-decoration: underline;
-        text-decoration-color: ${colors.mainRed};
-        text-decoration-thickness: 0.1vw;
-        text-underline-offset: 0.4vw;
+        border-bottom: 3px solid var(--Primary-Red-700, #F3777A);
     }
 `
 
 const IconContainer = styled.div`
-    padding-right: 2.5521vw;
+margin-left: auto;
+    margin-right: 1.56vw;
     display: flex;
     align-items: center;
     justify-content:space-between;
@@ -58,10 +59,12 @@ const IconContainer = styled.div`
 
 const IconImage = styled.img`
     cursor: pointer;
+    margin: 0vw 1vw 0vw 0.21vw;
+    object-fit: cover;
 `
 
 const LogoImage = styled.img`
-    width: 9.1vw;
+    width: 8.39vw;
     cursor: pointer;
 `
 
@@ -160,21 +163,21 @@ const Header = ({onHover,closeMenu,setMenuVisible}) => {
                     </HeaderP2>
                 </HeaderMenu>
                 <IconContainer>
-                    <IconImage src={add_comment} alt="comment" style={{ width: "1.5625vw", height: "1.5625vw" }}
+                    <IconImage src={chat_message} alt="chat" style={{ width: "1.6vw", height: "1.6vw"}}
                         onClick={handleNoteToggle} />
                         {noteModal && (
                         <div className="modalOutside" onClick={handleNoteToggle}>
                             <Note />
                         </div>)}
 
-                    <IconImage src={notification1} alt="notifications" style={{ width: "1.8229vw", height: "1.8229vw", marginLeft: "0.3vw" }}
+                    <IconImage src={notification1} alt="notifications" style={{ width: "1.8229vw", height: "1.8229vw" }}
                         onClick={handleNotificationToggle} />
                     {notificationsModal && (
                         <div className="modalOutside" onClick={handleNotificationToggle}>
                             <Notifications />
                         </div>)}
 
-                    <IconImage src={person} alt="person" style={{ width: "2.0833vw", height: "2.0833vw", marginTop: "-0.5vw" }} onClick={handlePersonClick} />
+                    <IconImage src={person} alt="person" style={{ width: "2.0833vw", height: "2.0833vw", marginTop: "-0.4vw" , marginLeft: "-0.1vw"}} onClick={handlePersonClick} />
                 </IconContainer>
             </HeaderContainer>
         </div>
