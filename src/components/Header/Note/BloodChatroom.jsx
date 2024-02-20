@@ -7,7 +7,6 @@ import BloodChat from './BloodChat';
 import colors from '../../../styles/color';
 import CrewChat from './CrewChat';
 import axios from 'axios';
-import io from 'socket.io-client';
 
 const Container = styled.div`
   width: 100%;
@@ -190,7 +189,6 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
   const [crewChat, setCrewChat] = useState(false);
   const [bloodChat, setBloodChat] = useState(false);
   const [chats, setChats] = useState([]);
-  const [chatInput, setChatInput] = useState('');
 
   //console.log(chatRoomId);
 
@@ -219,31 +217,6 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
   const handleBack = () => {
     setBack(true);
   };
-
-  const handleSendChat = async () => {
-    if (!chatInput.trim()) return;
-
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const response = await axios.post(
-        `https://bloodtrail.site/chatRoom/${chatRoomId}/chat`,
-        { message: chatInput },
-        { headers: { Authorization: `Bearer ${accessToken}` } }
-      );
-
-      if (response.status === 200) {
-        socket.emit('chat', {
-          chatRoomId,
-          message: chatInput,
-        });
-
-        setChatInput('');
-      }
-    } catch (error) {
-      console.error('메시지 전송 중 오류 발생:', error);
-    }
-  };
-
   return (
     <Container>
       {!back && (
@@ -295,12 +268,8 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
                   className="inputChat"
                   type="text"
                   placeholder="채팅을 입력해보세요. 텍스트박스  283px"
-                  value={chatInput}
-                  onChange={handleInputChange}
                 />
-                <button className="sendButton" onClick={handleSendChat}>
-                  전송
-                </button>
+                <button className="sendButton">전송</button>
               </div>
             </InputText>
           </Rectangle>
