@@ -5,6 +5,7 @@ import { ReactComponent as DotIcon } from './Icons/Dot.svg';
 import { ReactComponent as HeartIcon } from './Icons/Heart.svg';
 import { ReactComponent as ShareIcon } from './Icons/Share.svg';
 import axios from 'axios';
+import OtherPosts from './OtherPost';
 
 const HeaderText = styled.div`
   font-size: 1.3vw;
