@@ -281,6 +281,7 @@ const InformRow = styled.div`
 `;
 
 const PostDetailPage = ({ board, _id }) => {
+
   const [posts, setPosts] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const boardLink = board === 'blood' ? 'blood' : 'post';
@@ -296,11 +297,11 @@ const PostDetailPage = ({ board, _id }) => {
     return new Date(dateString).toLocaleDateString('ko-KR', options);
   };
 
-  // posts 상태에서 start_date와 end_date를 추출
   const startDate = formatDate(posts?.blood?.start_date);
   const endDate = formatDate(posts?.blood?.end_date);
 
   const dateRange = `${startDate} ~ ${endDate}`;
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -322,8 +323,10 @@ const PostDetailPage = ({ board, _id }) => {
           );
         }
         if (response.data.isSuccess) {
-          console.log(response.data);
+          console.log("dataaaaaaaaaaaaaaaaa");
+          console.log(response.data.result);
           setPosts(response.data.result);
+          console.log(response.data.result.isLiked)
         } else {
           console.log(response.data);
           console.error('Failed to fetch posts: ', response.data.message);
@@ -409,57 +412,39 @@ const PostDetailPage = ({ board, _id }) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       let response;
-
+  
       if (boardLink === 'blood') {
         const endpoint = `https://bloodtrail.site/${boardLink}/${_id}/like`;
+        const method = posts.isLiked ? 'patch' : 'post'; 
 
-        if (posts.isLiked) {
-          response = await axios.patch(
-            endpoint,
-            {},
-            {
-              headers: { Authorization: `Bearer ${accessToken}` },
-            }
-          );
-        } else {
-          response = await axios.post(
-            endpoint,
-            {},
-            {
-              headers: { Authorization: `Bearer ${accessToken}` },
-            }
-          );
-        }
-
+        const response = await axios[method](
+          endpoint,{},{headers: { Authorization: `Bearer ${accessToken}` },});
+  
         if (response.data.isSuccess) {
-          // 공감 또는 공감 취소 후 posts 상태 업데이트
           alert(`공감 ${posts.isLiked ? '취소' : ''}하였습니다.`);
           setPosts((currentPost) => ({
             ...currentPost,
             isLiked: !currentPost.isLiked,
             blood: {
               ...currentPost.blood,
-              likeCount: currentPost.isLiked
-                ? currentPost.blood.likeCount - 1
-                : currentPost.blood.likeCount + 1,
+              likeCount: !currentPost.isLiked ? currentPost.blood.likeCount - 1 : currentPost.blood.likeCount + 1,
             },
           }));
         } else {
           alert(response.data.message);
         }
+
+
       } else {
+        // 'post' 일 때의 처리
         const endpoint = posts.userLiked
           ? `https://bloodtrail.site/${boardLink}/${_id}/unlike`
           : `https://bloodtrail.site/post/${_id}/like`;
-
-        const response = await axios.patch(
-          endpoint,
-          {},
-          {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          }
+  
+        response = await axios.patch(
+          endpoint,{},{headers: { Authorization: `Bearer ${accessToken}` },}
         );
-
+  
         if (response.data.isSuccess) {
           alert(`공감 ${posts.userLiked ? '취소' : ''}하였습니다.`);
           setPosts((currentPost) => ({
@@ -467,9 +452,7 @@ const PostDetailPage = ({ board, _id }) => {
             userLiked: !currentPost.userLiked,
             post: {
               ...currentPost.post,
-              likes: currentPost.userLiked
-                ? currentPost.post.likes - 1
-                : currentPost.post.likes + 1,
+              likes: currentPost.userLiked ? currentPost.post.likes - 1 : currentPost.post.likes + 1,
             },
           }));
         } else {
@@ -526,17 +509,6 @@ const PostDetailPage = ({ board, _id }) => {
       </Header>
 
       {board == 'blood' && (
-        // <TagContainer>
-        //   <TagBox></TagBox>
-        //   {/* {posts.tags &&
-        //     posts.tags.map((tag, index) => (
-        //       <Tag key={index}>
-        //         <TagCategory>{tag.category}</TagCategory>
-        //         {tag.text}
-        //       </Tag>
-        //     ))} */}
-        // </TagContainer>
-
         <InformBlocks>
           <InformRow>
             <InformBlock width="13.4vw">

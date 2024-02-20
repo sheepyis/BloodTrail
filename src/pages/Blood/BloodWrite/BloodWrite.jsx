@@ -484,7 +484,7 @@ const BloodWrite = ({ isCredit }) => {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // 인증 토큰 추가
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
         }
       );
