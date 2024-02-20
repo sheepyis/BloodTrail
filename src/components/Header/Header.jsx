@@ -24,7 +24,7 @@ const HeaderContainer = styled.div`
     z-index:2;
 `
 const MainHeader = styled.div`
-    margin-left: 48px;
+    margin-left: 2.5vw;
     margin-right : 7.86vw;
     align-items: center;
 `
@@ -48,7 +48,7 @@ const HeaderP2 = styled(NavLink)`
 
     &.active {
         font-weight: 700;
-        border-bottom: 3px solid var(--Primary-Red-700, #F3777A);
+        border-bottom: 0.16vw solid var(--Primary-Red-700, #F3777A);
     }
 `
 
