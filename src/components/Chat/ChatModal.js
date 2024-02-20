@@ -73,8 +73,8 @@ const ChatModalButton2 = styled.button`
     cursor: pointer;
 `
 
-const ChatModal = ({ closeModal }) => {
-    const [type, setType] = useState("crew");
+const ChatModal = ({ closeModal, initialType }) => {
+    const [type, setType] = useState(initialType); 
     const [title, setTitle] = useState("");
     const [chat, setChat] = useState(null);
 
@@ -126,7 +126,7 @@ const ChatModal = ({ closeModal }) => {
             </div>
 
             <ChatModalP>생성할 채팅창 이름을 입력해주세요.</ChatModalP>
-            <ChatModalInput placeholder="채팅창 이름을 입력하세요." value={title} onChange={handleTitleChange} />
+            <ChatModalInput placeholder="채팅창 이름을 입력하세요." value={title} onChange={handleTitleChange} initialType="blood"/>
 
             <div className="ButtonContainer2" style={{display: "flex", gap: "2vw", justifyContent: "space-between"}}>
                 

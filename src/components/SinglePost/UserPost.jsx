@@ -6,6 +6,7 @@ import { ReactComponent as HeartIcon } from './Icons/Heart.svg';
 import { ReactComponent as ShareIcon } from './Icons/Share.svg';
 import axios from 'axios';
 import OtherPosts from './OtherPost';
+import ChatModal from '../Chat/ChatModal';
 
 const HeaderText = styled.div`
   font-size: 1.3vw;
@@ -284,6 +285,11 @@ const PostDetailPage = ({ board, _id }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const boardLink = board === 'blood' ? 'blood' : 'post';
   const boardId = board === 'blood' ? 'bloodId' : '_id';
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleChatButtonClick = () => {
+    setIsModalOpen(true);
+  };
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' }; // 원하는 날짜 형식 지정
@@ -607,7 +613,8 @@ const PostDetailPage = ({ board, _id }) => {
             </IconWrapper>
           </InteractionButtons>
         </LeftContainer>
-        {board == 'blood' && <ChatButton>채팅하기</ChatButton>}
+        {board == 'blood' && <ChatButton onClick={handleChatButtonClick} >채팅하기</ChatButton>}
+        {isModalOpen && <ChatModal closeModal={() => setIsModalOpen(false)} initialType="blood"/>}
         <RightContainer></RightContainer>
       </FooterBar>
     </PageLayout>
