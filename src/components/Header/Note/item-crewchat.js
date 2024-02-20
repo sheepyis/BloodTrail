@@ -26,21 +26,20 @@ const ChatName =styled.div`
     display: flex;
     color: var(--Gray-Gray-700, #464A4D);
     width: 18.5938vw;
-    height: 1.5104vw;
     font-family: Pretendard;
-    font-size: 0.6250vw;
+    font-size: 0.6vw;
     font-style: normal;
     font-weight: 500;
-    line-height: 0.9375vw;
-    letter-spacing: -0.0187vw;
     align-items: center;
 `
 
 const ChatP =styled.div`
     display: flex;
     width: 20.8333vw;
-    height: 1.5104vw;
     align-items: center;
+    font-weight: 500;
+    font-size: 0.75vw;
+    color: #17191A;
 `
 
 const ChatDeleteContainer = styled.div`
@@ -66,6 +65,11 @@ const DeleteMenu = styled.div`
     border: 0.05vw solid var(--Gray-Gray-100, #F2F2F2);
     background: var(--black-white-white-1000, #FFF);
     z-index:3;
+    font-weight: 500;
+    font-size: 0.75vw;
+    color: #17191A;
+    position: absolute;
+    right: 2vw;
 `
 
 const ItemChat = ({ id, name, recentChat, onClick, chatRoomId }) => {
