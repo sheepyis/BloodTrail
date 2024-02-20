@@ -220,16 +220,16 @@ const DropdownItem = styled.div`
   cursor: pointer;
 `;
 
-const BloodDetailPage = ({ board, _id }) => {
+const BloodDetailPage = ({ board, bloodId }) => {
   const [posts, setPosts] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
+  console.log(bloodId);
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken'); // 로컬 스토리지에서 액세스 토큰 가져오기
         const response = await axios.get(
-          `https://bloodtrail.site/blood/${_id}`,
+          `https://bloodtrail.site/blood/${bloodId}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -248,7 +248,7 @@ const BloodDetailPage = ({ board, _id }) => {
     };
 
     fetchPost();
-  }, [_id]);
+  }, [bloodId]);
 
   const copyLink = async () => {
     const pathToCopy = ' and other links';
@@ -266,7 +266,7 @@ const BloodDetailPage = ({ board, _id }) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       const response = await axios.delete(
-        `https://bloodtrail.site/post/${_id}`,
+        `https://bloodtrail.site/post/${bloodId}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
@@ -290,8 +290,8 @@ const BloodDetailPage = ({ board, _id }) => {
       const accessToken = localStorage.getItem('accessToken');
       // userLiked 상태에 따라 공감 또는 공감 취소 API 호출
       const endpoint = posts.userLiked
-        ? `https://bloodtrail.site/post/${_id}/unlike`
-        : `https://bloodtrail.site/post/${_id}/like`;
+        ? `https://bloodtrail.site/post/${bloodId}/unlike`
+        : `https://bloodtrail.site/post/${bloodId}/like`;
 
       const response = await axios.patch(
         endpoint,

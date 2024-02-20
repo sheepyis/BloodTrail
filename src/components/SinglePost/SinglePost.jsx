@@ -49,7 +49,7 @@ const SinglePost = () => {
         <Breadcrums pageLabel={pageLabel} currentPage={currentPage} />
         <Homecontainer>
           {board === 'blood' ? (
-            <BloodDetailPage board={board} _id={_id} />
+            <BloodDetailPage board={board} bloodId={_id} />
           ) : (
             <>
               <UserPost board={board} _id={_id} />
