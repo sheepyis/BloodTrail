@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import colors from "../../styles/color";
 import ItemMember from './item-member';
+import ChatModal from '../Chat/ChatModal';
 
 const CrewContainer = styled.div`
     width: 100%;
@@ -39,7 +40,8 @@ const ListMember = ({ id, username }) => {
     const [crew, setCrew] = useState(null);
     const [isFull, setIsFull] = useState(false);
     const [isJoined, setIsJoined] = useState(false);
-    const [userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState(null);  
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchUserId = async () => {
@@ -92,6 +94,11 @@ const ListMember = ({ id, username }) => {
     useEffect(() => {
         fetchData();
     }, [id, userId]);
+
+    const handleChatButtonClick = () => {
+        setIsModalOpen(true);
+      };
+    
     
     const handleJoinCrew = async () => {
         try {
@@ -153,13 +160,15 @@ const ListMember = ({ id, username }) => {
                 </StyleGrid>
                 
                 <div className="button" style={{width: "100%", display: "flex", justifyContent: "center", gap: "0.65vw", margin: "3vw 0"}}>
-                    <DetailButton>채팅하기</DetailButton>
+                    <DetailButton onClick={handleChatButtonClick}>채팅하기</DetailButton>
                     {isJoined ? (
                     <DetailButton onClick={handleLeaveCrew}>크루 탈퇴하기</DetailButton>
                 ) : (
                     <DetailButton disabled={isFull} onClick={handleJoinCrew}>크루 가입하기</DetailButton>
                 )}
                 </div>
+
+                {isModalOpen && <ChatModal closeModal={() => setIsModalOpen(false)} initialType="crew"/>}
             </CrewContainer>
         </>
     );
