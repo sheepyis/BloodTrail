@@ -162,8 +162,8 @@ const ListCrew = ({ excludeButton, searchInput2 }) => {
               id={item._id}
               name={item.crew_name}
               introduce={item.description}
-              points={item.now[1]}
-              participationRate={item.now[0]}
+              points={item.now[0]}
+              participationRate={item.now[1]}
               memberCount={item.crew_count}
               onClick={handleCrewClick}
             />
