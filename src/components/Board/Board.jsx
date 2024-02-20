@@ -97,7 +97,10 @@ const Placeholder = styled.div`
   width: 6.2vw;
   height: 6.2vw;
   background-color: #F0F0F0;
-  border-radius: 5px;
+  background-image: url(${(props) => props.image});
+  background-size: cover;
+  background-position: center;
+  border-radius: 0.5vw;
   margin-left: auto;
 `;
 
@@ -138,7 +141,7 @@ const PostDate = styled.div`
   text-align: right;
 `;
 
-const HotPost = ({ title, content, username, date, _id }) => {
+const HotPost = ({ title, content, username, date, _id, thumb }) => {
 
   const formatDateWithDots = (dateString) => {
     const dateObj = new Date(dateString);
@@ -173,7 +176,7 @@ const HotPost = ({ title, content, username, date, _id }) => {
         <PostDate>{formattedDate}</PostDate>
       </PostMeta>
       </PostContentContainer>
-      <Placeholder />
+      <Placeholder image={thumb}/>
     </PostContainer>
     </Link>
   );
