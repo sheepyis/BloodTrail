@@ -378,6 +378,7 @@ const Community = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
+    const sortType = selectedSort === '신규순' ? 'created_at' : 'likes';
     const config = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -385,7 +386,7 @@ const Community = () => {
       params: {
         pagetype: 'gallery',
         posttype: 'FREE',
-        sorttype: 'created_at',
+        sorttype: sortType,
         page: currentPage,
       },
     };
