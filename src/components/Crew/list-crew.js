@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import colors from '../../styles/color';
 import ItemCrew from './item-crew';
 import InputCrew from '../Input/input-crew';
-import Right from '../../assets/images/arrowRight.png';
 import { NavLink } from 'react-router-dom';
+import Right from "../../assets/images/arrowRight.png";
 
 const CrewContainer = styled.div`
   width: 100%;
@@ -72,35 +72,10 @@ const Arrow = styled.img`
   margin: 0 0.2vw;
 `;
 
-const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
-  const ITEMS_PER_PAGE = itemsPerPage || 9;
-  const PAGES_PER_VIEW = 10;
-
+const ListCrew = ({ excludeButton, searchInput2 }) => {
   const [crewData, setCrewData] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-/*   const [searchedCrewData, setSearchedCrewData] = useState([]); */
-
-/*   const handleSearch = async () => {
-    const accessToken = localStorage.getItem('accessToken');
-    const config = {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    };
-
-    try {
-      const response = await axios.get(
-        `https://bloodtrail.site/crew?page=${currentPage}`,
-        config
-      );
-      setSearchedCrewData(response.data.result.crewList);
-      console.log(response.data.result.crewList);
-    } catch (error) {
-      console.error('Error:', error);
-      setSearchedCrewData([]);
-    }
-  }; */
 
   useEffect(() => {
     const fetchCrewData = async () => {
@@ -127,12 +102,6 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
           console.error('배열을 예상했지만 받은 것:', response.data);
           setCrewData([]); // 응답이 예상과 다르면 빈 배열로 설정
         }
-
-        if (
-          response.data.result.currentPage &&
-          response.data.result.totalPage
-        ) {
-        }
       } catch (error) {
         console.error('오류:', error);
         setCrewData([]);
@@ -141,8 +110,6 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
 
     fetchCrewData();
   }, [currentPage]);
-  
-  /* const displayData = searchedCrewData.length > 0 ? searchedCrewData : crewData; */
 
   const handleInputChange = (e) => {
     const input = e.target.value.toLowerCase();
@@ -165,54 +132,6 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
       return true;
     }
   });
-  
-  
-  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
-  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = filteredCrewData.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  const handlePageClick = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const totalPages = Math.ceil(filteredCrewData.length / ITEMS_PER_PAGE);
-  const totalPageViews = Math.ceil(totalPages / PAGES_PER_VIEW);
-  const currentPageView = Math.ceil(currentPage / PAGES_PER_VIEW);
-
-  const renderPageNumbers = () => {
-    const startPage = (currentPageView - 1) * PAGES_PER_VIEW + 1;
-    const endPage = Math.min(startPage + PAGES_PER_VIEW - 1, totalPages);
-    const pageNumbers = [];
-
-    for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(
-        <PageNumber
-          key={i}
-          active={currentPage === i}
-          onClick={() => handlePageClick(i)}
-        >
-          {i}
-        </PageNumber>
-      );
-    }
-
-    return pageNumbers;
-  };
-
-  const goToNextPageView = () => {
-    if (currentPageView < totalPageViews) {
-      setCurrentPage(currentPageView * PAGES_PER_VIEW + 1);
-    }
-  };
-
-  const goToPrevPageView = () => {
-    if (currentPageView > 1) {
-      setCurrentPage((currentPageView - 2) * PAGES_PER_VIEW + 1);
-    }
-  };
 
   const handleUpload = () => {
     window.location.href = '/crewupload';
@@ -223,11 +142,21 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
     window.location.href = `/crewdetail/${crewId}`;
   };
 
+  const goToNextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const goToPrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <>
       <CrewContainer>
         <StyleGrid>
-          {currentItems.map((item, index) => (
+          {filteredCrewData.map((item, index) => (
             <ItemCrew
               key={index}
               id={item._id}
@@ -268,14 +197,17 @@ const ListCrew = ({ excludeButton, searchInput2, itemsPerPage }) => {
       )}
 
       <PaginationContainer>
-        <Arrow
-          src={Right}
-          alt="left"
-          onClick={goToPrevPageView}
-          style={{ transform: 'rotate(180deg)' }}
-        />
-        {renderPageNumbers()}
-        <Arrow src={Right} alt="right" onClick={goToNextPageView} />
+        <Arrow src={Right} alt="left" onClick={goToPrevPage} style={{rotate: "-180deg"}}/>
+        {[...Array(10)].map((_, index) => (
+          <PageNumber
+            key={index}
+            active={currentPage === index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </PageNumber>
+        ))}
+        <Arrow src={Right} alt="right" onClick={goToNextPage} />
       </PaginationContainer>
     </>
   );
