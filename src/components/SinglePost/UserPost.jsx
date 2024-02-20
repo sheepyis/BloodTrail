@@ -348,6 +348,40 @@ const PostDetailPage = ({ board, _id }) => {
       });
   };
 
+  const reportPost = async (reason) => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const targetType = board === 'blood' ? 'POST' : board.toUpperCase(); // 'blood', 'community' 등 board 값에 따라 신고 대상 유형 설정
+      const targetId = _id; // 신고 대상 ID
+
+      const reportUrl = `https://bloodtrail.site/report?targetType=${encodeURIComponent(
+        targetType
+      )}&reason=${encodeURIComponent(reason)}&targetId=${encodeURIComponent(
+        targetId
+      )}`;
+
+      await axios.post(reportUrl, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      alert('신고가 접수되었습니다.');
+    } catch (error) {
+      console.error('신고 접수 중 오류가 발생했습니다.', error);
+      alert('신고 접수에 실패했습니다.');
+    }
+  };
+
+  const handleReport = () => {
+    const reason = prompt(
+      '신고 이유를 선택하세요. (UNHEALTHY, FINANCE, FRAUD, ABUSE, ETC 중 하나)'
+    );
+    if (reason) {
+      reportPost(reason);
+    } else {
+      alert('신고 이유를 입력해주세요.');
+    }
+  };
+
   const deletePost = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -468,11 +502,7 @@ const PostDetailPage = ({ board, _id }) => {
             >
               <DotIcon />
               <DropdownMenu isVisible={isDropdownVisible}>
-                <DropdownItem
-                  onClick={() => {
-                    /* Handle report action here */
-                  }}
-                >
+                <DropdownItem onClick={() => handleReport()}>
                   신고하기
                 </DropdownItem>
                 <DropdownItem onClick={deletePost}>삭제하기</DropdownItem>
@@ -613,8 +643,15 @@ const PostDetailPage = ({ board, _id }) => {
             </IconWrapper>
           </InteractionButtons>
         </LeftContainer>
-        {board == 'blood' && <ChatButton onClick={handleChatButtonClick} >채팅하기</ChatButton>}
-        {isModalOpen && <ChatModal closeModal={() => setIsModalOpen(false)} initialType="blood"/>}
+        {board == 'blood' && (
+          <ChatButton onClick={handleChatButtonClick}>채팅하기</ChatButton>
+        )}
+        {isModalOpen && (
+          <ChatModal
+            closeModal={() => setIsModalOpen(false)}
+            initialType="blood"
+          />
+        )}
         <RightContainer></RightContainer>
       </FooterBar>
     </PageLayout>
