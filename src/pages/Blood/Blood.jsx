@@ -148,17 +148,9 @@ const BloodTap = styled.div`
     font-weight: 500;
     line-height: 2.1875vw; /* 175% */
     cursor: pointer;
-
-    &:active{
-        border-radius: 0.2604vw 0.2604vw 0.0000vw 0.0000vw;
-        border-bottom: 0.1042vw solid var(--Gray-Gray-700, #464A4D);
-        color: var(--Gray-Gray-900, #17191A);
-        font-family: Pretendard;
-        font-size: 1.2500vw;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 2.1875vw; /* 175% */
-    }
+    border-bottom: ${({ isSelected }) => isSelected ? '0.1042vw solid var(--Gray-Gray-700, #464A4D)' : 'none'};
+    color: ${({ isSelected }) => isSelected ? 'var(--Gray-Gray-900, #17191A)' : 'inherit'};
+    font-weight: ${({ isSelected }) => isSelected ? '700' : '500'};
     
 `
 
@@ -323,7 +315,11 @@ const Blood = () => {
 
     
     const handleBlood = (bloodType) =>{
+      if (selectBloodType === bloodTypeMapping[bloodType]) {
+        setBloodType('');
+    } else {
         setBloodType(bloodTypeMapping[bloodType]);
+    }
     }
 
     const handleSortBlood=(SortBloodType) =>{
@@ -435,16 +431,16 @@ const Blood = () => {
         <div className="crewBar" style={{ width: '100%', height: '0.1vw', border: 'none', backgroundColor: colors.crewGray}}/>
 
         <BoardContainer>
-            <BloodContainer>
-                <BloodTap onClick={() => handleBlood("A+")}>A+</BloodTap>
-                <BloodTap onClick={() => handleBlood("B+")}>B+</BloodTap>
-                <BloodTap onClick={() => handleBlood("O+")} >O+</BloodTap>
-                <BloodTap onClick={() => handleBlood("AB+")} >AB+</BloodTap>
-                <BloodTap onClick={() => handleBlood("A-")} >A-</BloodTap>
-                <BloodTap onClick={() => handleBlood("B-")} >B-</BloodTap>
-                <BloodTap onClick={() => handleBlood("O-")} >O-</BloodTap>
-                <BloodTap onClick={() => handleBlood("AB-")} >AB-</BloodTap>
-            </BloodContainer>
+          <BloodContainer>
+              <BloodTap onClick={() => handleBlood("A+")} isSelected={selectBloodType === bloodTypeMapping["A+"]}>A+</BloodTap>
+              <BloodTap onClick={() => handleBlood("B+")} isSelected={selectBloodType === bloodTypeMapping["B+"]}>B+</BloodTap>
+              <BloodTap onClick={() => handleBlood("O+")} isSelected={selectBloodType === bloodTypeMapping["O+"]}>O+</BloodTap>
+              <BloodTap onClick={() => handleBlood("AB+")} isSelected={selectBloodType === bloodTypeMapping["AB+"]}>AB+</BloodTap>
+              <BloodTap onClick={() => handleBlood("A-")} isSelected={selectBloodType === bloodTypeMapping["A-"]}>A-</BloodTap>
+              <BloodTap onClick={() => handleBlood("B-")} isSelected={selectBloodType === bloodTypeMapping["B-"]}>B-</BloodTap>
+              <BloodTap onClick={() => handleBlood("O-")} isSelected={selectBloodType === bloodTypeMapping["O-"]}>O-</BloodTap>
+              <BloodTap onClick={() => handleBlood("AB-")} isSelected={selectBloodType === bloodTypeMapping["AB-"]}>AB-</BloodTap>
+          </BloodContainer>
 
             <CardContainer>
               {posts.map((post) => (
