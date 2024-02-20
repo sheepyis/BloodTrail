@@ -227,7 +227,7 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
     setChatInput(e.target.value);
   };
 
-  const socket = io('https://bloodtrail.site');
+  const socket = io('http://localhost:3000');
 
   useEffect(() => {
     socket.on('chat', (newChat) => {
