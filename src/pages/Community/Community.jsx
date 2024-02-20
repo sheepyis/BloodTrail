@@ -401,7 +401,8 @@ const Community = () => {
           setBestPosts(response.data.result.Page[0]);
           setPosts(response.data.result.Page[1]);
           setTotalPages(response.data.result.totalPage);
-          console.log(response.data.result.Page[1]);
+          //console.log("!!!!!!!!!!!!!!!!!!!!!!!");
+          //console.log(response.data.result.Page[0]);
         } else {
           console.error('Failed to fetch posts: ', response.data.message);
         }
@@ -471,6 +472,27 @@ const Community = () => {
 
         <BoardContainer>
           <CardContainer>
+
+          {bestPosts.map((post) => (
+              <CardTmp
+                key={post._id}
+                board="community"
+                _id={post._id}
+                cardType={
+                  post.image && post.image.length > 0 ? 'type2' : 'type1'
+                }
+                userId={post.writer.nickname}
+                thumb={
+                  post.image && post.image.length > 0
+                    ? post.image[0]
+                    : undefined
+                }
+                title={post.title}
+                body={post.content}
+                best={true}
+              />
+            ))}
+
             {filteredPosts.map((post) => (
               <CardTmp
                 key={post._id}
@@ -487,7 +509,7 @@ const Community = () => {
                 }
                 title={post.title}
                 body={post.content}
-                best={post.best}
+                best={false}
               />
             ))}
           </CardContainer>
