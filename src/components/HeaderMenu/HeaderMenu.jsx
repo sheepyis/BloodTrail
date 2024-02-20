@@ -44,7 +44,6 @@ const HeaderP = styled.p`
     margin: 1.5vw;
     padding: 0px 10px;
     gap: 10px;
-    background: green;
 
     &:hover {
         color: ${colors.logoRed};
