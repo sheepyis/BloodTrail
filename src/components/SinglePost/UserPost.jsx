@@ -289,12 +289,36 @@ const PostDetailPage = ({ board, _id }) => {
   const toggleLike = async () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
+      let response;
+
       if (boardLink === 'blood') {
-      const endpoint = `https://bloodtrail.site/${boardLink}/${_id}/like`
-      const response = await axios.post(endpoint, {}, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-    
+          const endpoint = `https://bloodtrail.site/${boardLink}/${_id}/like`
+
+            if (posts.isLiked) {
+              response = await axios.patch(endpoint, {}, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+              });
+            } else {
+              response = await axios.post(endpoint, {}, {
+                headers: { Authorization: `Bearer ${accessToken}` },
+              });
+            }
+
+            if (response.data.isSuccess) {
+              // 공감 또는 공감 취소 후 posts 상태 업데이트
+              alert(`공감 ${posts.isLiked ? '취소' : ''}하였습니다.`);
+              setPosts(currentPost => ({
+                ...currentPost,
+                isLiked: !currentPost.isLiked,
+                blood: {
+                  ...currentPost.blood,
+                  likeCount: currentPost.isLiked ? currentPost.blood.likeCount - 1 : currentPost.blood.likeCount + 1
+                }
+              }));
+            } else {
+              alert(response.data.message);
+          }
+        
       } else {
           const endpoint = posts.userLiked ? `https://bloodtrail.site/${boardLink}/${_id}/unlike` : `https://bloodtrail.site/post/${_id}/like`;
         
@@ -303,7 +327,6 @@ const PostDetailPage = ({ board, _id }) => {
           });
           
           if (response.data.isSuccess) {
-            // 공감 또는 공감 취소 후 posts 상태 업데이트
             alert(`공감 ${posts.userLiked ? '취소' : ''}하였습니다.`);
             setPosts(currentPost => ({
               ...currentPost,
@@ -352,8 +375,8 @@ const PostDetailPage = ({ board, _id }) => {
         </TitleDetail>
         <Divider />
         <InteractionBar>
-        <div>조회수 {board === 'blood' ? posts?.blood?.watch_count : posts?.post?.watch_count}</div>
-      <div>공감수 {board === 'blood' ? posts?.blood?.likes : posts?.post?.likes} </div>
+        <div>조회수 {board === 'blood' ? posts?.blood?.views : posts?.post?.watch_count}</div>
+        <div>공감수 {boardLink === 'blood' ? posts?.blood?.likeCount : posts?.post?.likes} </div>
         </InteractionBar>
       </Header>
 
@@ -382,10 +405,13 @@ const PostDetailPage = ({ board, _id }) => {
         <LeftContainer>
         <InteractionButtons>
           <HeartWrapper onClick={toggleLike}>
-            <IconWrapper filled={posts?.userLiked} color="#F3777A" hoverColor="#E95458">
-              <HeartIcon /> 
+          <IconWrapper
+              filled={boardLink === 'blood' ? posts?.isLiked : posts?.userLiked}
+              color="#F3777A"
+              hoverColor="#E95458"
+>              <HeartIcon /> 
             </IconWrapper>
-            {board === 'blood' ? posts?.blood?.likes : posts?.post?.likes}
+            <div>{board === 'blood' ? posts?.blood?.likeCount : posts?.post?.likes} </div>
           </HeartWrapper>
           <IconWrapper onClick={copyLink} color="#464A4D" hoverColor="#464A4D">
             <ShareIcon /> 
