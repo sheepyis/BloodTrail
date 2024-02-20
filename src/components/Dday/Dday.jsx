@@ -112,7 +112,7 @@ const FindP= styled.p`
 const Dday=()=>{
   const [userData, setUserData] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [day, setDay] = useState(null);
+  const [day, setDay] = useState('day');
   
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -170,7 +170,7 @@ const Dday=()=>{
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        setDay(response.data.result);
+        setDay(response.data.result || 'day');
       } catch (error) {
         console.error('Error:', error);
       }
