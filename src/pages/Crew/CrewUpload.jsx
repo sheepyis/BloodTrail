@@ -166,18 +166,6 @@ const CrewUpload = () => {
         console.log(response.data);
         console.log('Success', formData);
   
-        const chatRoomResponse = await axios.post(`https://bloodtrail.site/chatRoom`,
-        { type: "crew", title: name }, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        
-        setChat(chatRoomResponse.data.result);
-
-        const socket = io("https://bloodtrail.site");
-        socket.emit("newRoom", { chatRoomId: chatRoomResponse.data.result.chatRoomId });
-
         window.location.href="/crew";
       }
     } catch (error) {
