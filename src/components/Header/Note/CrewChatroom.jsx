@@ -152,6 +152,9 @@ const Rectangle = styled.div`
   background: var(--black-white-white-1000, #fff);
 `;
 const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2.7031vw;
   height: 2.7083vw;
   margin-left: 0.7813vw;
@@ -162,9 +165,9 @@ const ImageContainer = styled.div`
 `;
 const ImageIcon = styled.img`
   display: flex;
-  padding: 0.5vw;
   position: absolute;
-  left: 2.8%;
+  width: 1.2vw;
+  height: 1.2vw;
 `;
 const InputText = styled.div`
     margin-left: 0.83vw;
@@ -174,6 +177,7 @@ const InputText = styled.div`
     border-radius: 3.1250vw;
     border: 0.0521vw solid var(--Gray-Gray-100, #F2F2F2);
     background: var(--black-white-white-1000, #FFF);
+
 .inputText{
     display: flex;
     position: relative;
@@ -212,6 +216,9 @@ const InputText = styled.div`
     gap: 0.5208vw;
     border-radius: 5.2083vw;
     border: 0.1042vw solid var(--Primary-Red-500, #FFB2B5);
+    font-weight: 500;
+    font-size: 0.75vw;
+    color: #17191A;
   }
 }
 `;
@@ -380,7 +387,7 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
                 <input
                   className="inputChat"
                   type="text"
-                  placeholder="채팅을 입력해보세요. 텍스트박스  283px"
+                  placeholder="채팅을 입력해보세요."
                   value={chatInput}
                   onChange={handleInputChange}
                 />
