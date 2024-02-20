@@ -293,7 +293,7 @@ const PostDetailPage = ({ board, _id }) => {
   };
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' }; // 원하는 날짜 형식 지정
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString('ko-KR', options);
   };
 
@@ -382,7 +382,9 @@ const PostDetailPage = ({ board, _id }) => {
       if (boardLink === 'blood') {
         const endpoint = `https://bloodtrail.site/${boardLink}/${_id}/like`;
         const method = posts.isLiked ? 'patch' : 'post'; 
-
+        console.log("toggleeeeee");
+        console.log(method);
+        console.log(posts.isLiked);
         const response = await axios[method](
           endpoint,{},{headers: { Authorization: `Bearer ${accessToken}` },});
   
@@ -393,7 +395,7 @@ const PostDetailPage = ({ board, _id }) => {
             isLiked: !currentPost.isLiked,
             blood: {
               ...currentPost.blood,
-              likeCount: !currentPost.isLiked ? currentPost.blood.likeCount - 1 : currentPost.blood.likeCount + 1,
+              likeCount: currentPost.isLiked ? currentPost.blood.likeCount - 1 : currentPost.blood.likeCount + 1,
             },
           }));
         } else {
