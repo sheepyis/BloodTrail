@@ -413,10 +413,18 @@ const Blood = () => {
              {selectBloodSort && (
                 <BloodSortBox show={isSortBloodVisible}>
                     <HoverDiv1 onClick={() => handleSortBlood("필요혈액제제")}>필요혈액제제</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("WB")}>WB</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("RBC")}>RBC</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("F-RBC")}>F-RBC</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("W-RBC")}>W-RBC</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("RBC")}>WBC</HoverDiv1>
                     <HoverDiv1 onClick={() => handleSortBlood("PLT")}>PLT</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("A-PLT")}>A-PLT</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("W-PLT")}>W-PLT</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("FFP")}>FFP</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("FP")}>FP</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("CRYO")}>CRYO</HoverDiv1>
+                    <HoverDiv1 onClick={() => handleSortBlood("CRYO")}>CRYO</HoverDiv1>
                 </BloodSortBox>
             )}
             {selectedSort && (
