@@ -237,10 +237,12 @@ const Verification = styled.div`
   .register {
     display: flex;
     position: relative;
+    width: 
+    background: pink;
   }
   .verificationCode {
     display: flex;
-    width: 28.8021vw;
+    width: 61.4583vw;
     height: 3.125vw;
     padding: 0.5208vw 0.5208vw 0.5208vw 0.7813vw;
     margin-top: 0.5208vw;
@@ -591,7 +593,7 @@ const Signup = () => {
             <input
               className="birth"
               type="text"
-              placeholder="0000 년 00 월 00 일"
+              placeholder="0000-00-00"
               birth="userBirth"
               value={inputValue.userBirth}
               onChange={handleInputChange3}
@@ -606,7 +608,7 @@ const Signup = () => {
             <input
               className="password"
               type="password"
-              placeholder="비밀번호를 선택해주세요"
+              placeholder="대소문자, 특수문자 포함"
               password="userPassword"
               value={inputValue.userPassword}
               onChange={handleInputChange4}
@@ -618,7 +620,7 @@ const Signup = () => {
             <input
               className="phoneNumber"
               type="text"
-              placeholder="전화번호를 입력해주세요"
+              placeholder="010-0000-0000"
               phoneNumber="userPhoneNumber"
               value={inputValue.userPhoneNumber}
               onChange={handleInputChange5}
@@ -633,7 +635,7 @@ const Signup = () => {
                 <input
                   className="verificationCode"
                   type="text"
-                  placeholder="텍스트를 입력해주세요"
+                  placeholder="이메일을 입력해주세요(ex. zz@naver.com)"
                   email="userEmail"
                   value={inputValue.userEmail}
                   onChange={handleInputChange6}
@@ -642,32 +644,6 @@ const Signup = () => {
                   인증하기
                 </button>
               </div>
-              <Email onClick={() => setIsVisible(!isVisible)}>
-                <EmailP style={{ fontSize: '0.7813vw' }}>
-                  {selectedEmail}
-                </EmailP>
-                <img
-                  src={ArrowDown}
-                  alt="arrow-down"
-                  style={{ width: '1.2vw', height: '1.2vw' }}
-                />
-              </Email>
-              {selectedEmail && (
-                <EmailBox show={isVisible}>
-                  <HoverDiv onClick={() => handleEmail('@gmail.com')}>
-                    @gmail.com
-                  </HoverDiv>
-                  <HoverDiv onClick={() => handleEmail('@naver.com')}>
-                    @naver.com
-                  </HoverDiv>
-                  <HoverDiv onClick={() => handleEmail('@email.com')}>
-                    @email.com
-                  </HoverDiv>
-                  <HoverDiv onClick={() => handleEmail('@email.com')}>
-                    @email.com
-                  </HoverDiv>
-                </EmailBox>
-              )}{' '}
             </Verification>
             <ErrorMessage>{emailMessage}</ErrorMessage>
           </VerificationBox>

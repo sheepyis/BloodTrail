@@ -3,6 +3,7 @@ import styled from "styled-components";
 import colors from "../../styles/color";
 import axios from "axios";
 import ItemMyUpload from "./item-myupload";
+import MyUploadData from "./MyUploadData";
 
 const StyleItem = styled.div`
     width: 100%;
@@ -18,13 +19,7 @@ const ListMyUpload = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get("https://jsonplaceholder.typicode.com/users")
-            .then(response => {
-                setData(response.data);
-            })
-            .catch(error => {
-                console.error("Error: ", error);
-            });
+        setData(MyUploadData);
     }, []);
 
     return (
@@ -36,11 +31,11 @@ const ListMyUpload = () => {
                     <ItemMyUpload
                         key={index}
                         id={item.id}
-                        title={item.email}
+                        title={item.title}
                         name={item.name}
-                        postday={item.address.suite}
-                        view={item.id}
-                        like={item.id}
+                        postday={item.postday}
+                        view={item.view}
+                        like={item.like}
                     />
                 ))
             )}
