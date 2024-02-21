@@ -237,10 +237,12 @@ const Verification = styled.div`
   .register {
     display: flex;
     position: relative;
+    width: 
+    background: pink;
   }
   .verificationCode {
     display: flex;
-    width: 28.8021vw;
+    width: 61.4583vw;
     height: 3.125vw;
     padding: 0.5208vw 0.5208vw 0.5208vw 0.7813vw;
     margin-top: 0.5208vw;
@@ -642,32 +644,6 @@ const Signup = () => {
                   인증하기
                 </button>
               </div>
-              <Email onClick={() => setIsVisible(!isVisible)}>
-                <EmailP style={{ fontSize: '0.7813vw' }}>
-                  {selectedEmail}
-                </EmailP>
-                <img
-                  src={ArrowDown}
-                  alt="arrow-down"
-                  style={{ width: '1.2vw', height: '1.2vw' }}
-                />
-              </Email>
-              {selectedEmail && (
-                <EmailBox show={isVisible}>
-                  <HoverDiv onClick={() => handleEmail('@gmail.com')}>
-                    @gmail.com
-                  </HoverDiv>
-                  <HoverDiv onClick={() => handleEmail('@naver.com')}>
-                    @naver.com
-                  </HoverDiv>
-                  <HoverDiv onClick={() => handleEmail('@email.com')}>
-                    @email.com
-                  </HoverDiv>
-                  <HoverDiv onClick={() => handleEmail('@email.com')}>
-                    @email.com
-                  </HoverDiv>
-                </EmailBox>
-              )}{' '}
             </Verification>
             <ErrorMessage>{emailMessage}</ErrorMessage>
           </VerificationBox>
