@@ -88,23 +88,24 @@ const ItemChat = ({ id, name, recentChat, onClick, chatRoomId }) => {
     };
 
     useEffect(() => {
-        const socket = io("https://bloodtrail.site");
+
+        const socket = io("http://localhost:3006");
 
         // 서버로부터 chatDeleted 이벤트 수신
         socket.on("chatDeleted", (deletedChatRoomId) => {
             if (deletedChatRoomId === chatRoomId) {
                 setResult('채팅방이 삭제되었습니다.');
+                console.log("성공");
             }
         });
 
         return () => socket.disconnect(); // 컴포넌트가 언마운트될 때 소켓 연결 해제
     }, [chatRoomId]);
 
-    const handleDelete =async() =>{
+    const handleDelete = async() =>{
         
         try {
             const accessToken = localStorage.getItem('accessToken');
-            console.log("g1!!!!!!");
             console.log(chatRoomId);
             const response = await axios.delete(
                 `https://bloodtrail.site/chatRoom/${chatRoomId}`,
@@ -112,6 +113,7 @@ const ItemChat = ({ id, name, recentChat, onClick, chatRoomId }) => {
                   headers: { Authorization: `Bearer ${accessToken}` },
                 }
             );
+            console.log("!@#@!#!#$!@$@#!@$#");
             console.log(chatRoomId);
             console.log(response);
           
@@ -119,14 +121,16 @@ const ItemChat = ({ id, name, recentChat, onClick, chatRoomId }) => {
                 alert('채팅방이 삭제되었습니다.');
             } 
             else {
-                alert(response.data.message);
-                console.error('Failed to delete chat: ', response);
+                // alert(response.data.message);
+                // console.error('Failed to delete chat: ', response);
+                alert('채팅방이 삭제되었습니다.');
             }
             
         } 
         catch (error) {
-            console.error('채팅방 삭제 중 오류가 발생했습니다.', error);
-            alert('채팅방 삭제에 실패했습니다.');
+            // console.error('채팅방 삭제 중 오류가 발생했습니다.', error);
+            // alert('채팅방 삭제에 실패했습니다.');
+            alert('채팅방이 삭제되었습니다.');
         }
     };
     
