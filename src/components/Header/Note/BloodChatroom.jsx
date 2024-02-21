@@ -7,6 +7,8 @@ import BloodChat from './BloodChat';
 import colors from '../../../styles/color';
 import CrewChat from './CrewChat';
 import axios from 'axios';
+import io from 'socket.io-client';
+
 
 const Container = styled.div`
   width: 100%;
@@ -185,13 +187,17 @@ const InputText = styled.div`
 
 
 `;
+
 const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
   const [back, setBack] = useState(false);
   const [crewChat, setCrewChat] = useState(false);
   const [bloodChat, setBloodChat] = useState(false);
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [chatRoomInfo, setChatRoomInfo] = useState(null);
   const [chats, setChats] = useState([]);
+  const socket = io("http://localhost:3000");
 
-  //console.log(chatRoomId);
+  console.log(chatRoomId);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -205,8 +211,10 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
             },
           }
         );
+        setChatRoomInfo(response.data.chatRoom); // Set chat room info
         setChats(response.result);
         console.log(chats);
+        console.log(response);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -218,6 +226,63 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
   const handleBack = () => {
     setBack(true);
   };
+
+  useEffect(() => {
+
+    socket.on("chat", (message) => {
+      setChats((prevChats) => [...prevChats, message]);
+    });
+
+    return () => {
+      socket.off("chat");
+    };
+  }, [chatRoomId]);
+
+  const handleSendMessage = () => {
+    if (currentMessage.trim()) {
+      const messageData = {
+        chatRoomId: chatRoomId,
+        message: currentMessage,
+      };
+
+      socket.emit("chat", messageData);
+      console.log("Message sent:", messageData); // Log sent message
+      setCurrentMessage("");
+    }
+  };
+
+  const handleChange = (event) => {
+    setCurrentMessage(event.target.value);
+  };
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get(
+          `https://bloodtrail.site/chatRoom/${chatRoomId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setChats(response.data);
+      } catch (error) {
+        console.error('Error fetching chats:', error);
+      }
+    };
+  
+    fetchChats();
+  }, [chatRoomId]);
+  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
     <Container>
       {!back && (
@@ -268,9 +333,12 @@ const BloodChatroom = ({ handleBloodChat, handleCrewChat, chatRoomId }) => {
                 <input
                   className="inputChat"
                   type="text"
-                  placeholder="채팅을 입력해보세요. 텍스트박스  283px"
+                  placeholder="채팅을 입력해보세요."
+                  value={currentMessage}
+                  onChange={handleChange}
+                  onKeyDown={handleKeyPress}
                 />
-                <button className="sendButton">전송</button>
+                <button className="sendButton" onClick={handleSendMessage}>전송</button>
               </div>
             </InputText>
           </Rectangle>

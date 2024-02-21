@@ -103,13 +103,16 @@ const ChatModal = ({ closeModal, initialType, writerNickname }) => {
 
         setChat(response.data.result);
         console.log(response.data);
+        console.log("IDIDIDIDDIDIDIDIIDIDI");
+        const resultPath = response.data.result; // Assuming result is something like "/chatRoom/65d57daa2ed72333b320a147"
+        const chatRoomId = resultPath.split("/").pop(); // This will get you "65d57daa2ed72333b320a147"
+        console.log(chatRoomId);
 
         const socket = io("http://localhost:3000");
-        socket.emit("newRoom", { chatRoomId: response.data.result.chatRoomId });
-
+        socket.emit("newRoom", { chatRoomId: response.data.result });
         socket.emit("join", {
-          //nickname: {writerNickname},
-          chatRoomId: response.data.result.chatRoomId
+          nickname: {writerNickname},
+          chatRoomId: chatRoomId,
         });
 
         closeModal();
