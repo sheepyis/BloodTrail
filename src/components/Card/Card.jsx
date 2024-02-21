@@ -136,6 +136,7 @@ const CardPhoto = styled.div`
 `;
 
 const HotLabel = styled.span`
+  height : 1.5vw;
   padding: 0.2vw 0.5vw;
   background-color: #FFF6F7;
   color: #E95458;
