@@ -465,6 +465,7 @@ const PostDetailPage = ({ board, _id }) => {
       console.error('공감 변경 요청 실패', error);
     }
   };
+  const writerNickname = posts?.blood?.writer?.nickname ?? 'Default Nickname';
 
   return (
     <PageLayout>
@@ -624,6 +625,7 @@ const PostDetailPage = ({ board, _id }) => {
           <ChatModal
             closeModal={() => setIsModalOpen(false)}
             initialType="blood"
+            writerNickname={posts.blood.writer.nickname}
           />
         )}
         <RightContainer></RightContainer>

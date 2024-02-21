@@ -73,7 +73,7 @@ const ChatModalButton2 = styled.button`
     cursor: pointer;
 `
 
-const ChatModal = ({ closeModal, initialType }) => {
+const ChatModal = ({ closeModal, initialType, writerNickname }) => {
     const [type, setType] = useState(initialType); 
     const [title, setTitle] = useState("");
     const [chat, setChat] = useState(null);
@@ -106,6 +106,11 @@ const ChatModal = ({ closeModal, initialType }) => {
 
         const socket = io("http://localhost:3000");
         socket.emit("newRoom", { chatRoomId: response.data.result.chatRoomId });
+
+        socket.emit("join", {
+          //nickname: {writerNickname},
+          chatRoomId: response.data.result.chatRoomId
+        });
 
         closeModal();
 
