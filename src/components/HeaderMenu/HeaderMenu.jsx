@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const HeaderMenuContainer = styled.div`
     position: absolute;
-    top: 5.8%;
     background-color: ${colors.white};
     backdrop-filter: blur(10.100000381469727px);
     width: 100vw;
@@ -14,10 +13,9 @@ const HeaderMenuContainer = styled.div`
 `
 
 const HeaderBox = styled.div`
-    height: 252px;
+    height: 12.6vw;
     width: 100vw;
-    padding-top: 1vw;
-    padding-left: 14.5vw;
+    padding-left: 11.5vw;
 
     &.Blood{
         position: relative;
@@ -25,11 +23,11 @@ const HeaderBox = styled.div`
     }
     &.Community{
         position: relative;
-        left: 8.39vw;
+        left: 7vw;
     }
     &.Crew{
         position: relative;
-        left: 13.04vw;
+        left: 11.5vw;
     }
     // &.Live{
     //     position: relative;
@@ -42,8 +40,8 @@ const HeaderP = styled.p`
     font-weight: 600;
     font-size: 0.8333vw;
     margin: 1.5vw;
-    padding: 0px 10px;
-    gap: 10px;
+    padding: 0 0.5vw;
+    gap: 0.5vw;
 
     &:hover {
         color: ${colors.logoRed};
@@ -66,7 +64,7 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave,handleTouchEnd,handleTouc
                         <Link to="/blood" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 요청 글</HeaderP></Link>
                         <Link to="/blood/bloodwrite/bloodwrite" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 요청하기</HeaderP></Link>
                         {/* <Link to="/blood/bloodpremium" style={{ textDecoration: 'none' }}><HeaderP>지정헌혈 프리미엄</HeaderP></Link> */}
-                        <Link to="/myposts" style={{ textDecoration: 'none' }}><HeaderP>내가 쓴 글 보기</HeaderP></Link>
+                        {/*<Link to="/myposts" style={{ textDecoration: 'none' }}><HeaderP>내가 쓴 글 보기</HeaderP></Link>*/}
                       </li>
                 </ul>
             </HeaderBox>
@@ -82,10 +80,10 @@ const HeaderMenu = ({hoveredComponent, onHover,onLeave,handleTouchEnd,handleTouc
                 <ul>
                   <li>
                         <Link to="/community"><HeaderP>자유게시판</HeaderP></Link>
-                        <Link to="/community/honor"><HeaderP>명예 헌혈 게시판</HeaderP></Link>
-                        <Link to="/community/certification"><HeaderP>헌혈 인증 게시판</HeaderP></Link>
-                        <Link to="/community/info"><HeaderP>헌혈 정보 공유 게시판</HeaderP></Link>
-                        <Link to="/myposts/community"><HeaderP>내가 쓴 글 보기</HeaderP></Link>
+                        {/*<Link to="/community/honor"><HeaderP>명예 헌혈 게시판</HeaderP></Link>*/}
+                        {/*<Link to="/community/certification"><HeaderP>헌혈 인증 게시판</HeaderP></Link>*/}
+                        {/*<Link to="/community/info"><HeaderP>헌혈 정보 공유 게시판</HeaderP></Link>*/}
+                        {/*<Link to="/myposts/community"><HeaderP>내가 쓴 글 보기</HeaderP></Link>*/}
                   </li>
                 </ul>
             </HeaderBox>

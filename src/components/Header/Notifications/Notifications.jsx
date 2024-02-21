@@ -26,19 +26,19 @@ const TitleP = styled.div`
     display: flex;
     color: var(--Gray-Gray-700, #464A4D);
     font-family: Pretendard;
-    font-size: 18px;
+    font-size: 0.9vw;
     font-style: normal;
     font-weight: 700;
-    line-height: 30px; /* 166.667% */
-    padding: 19px 0px;
+    line-height: 1.5vw; /* 166.667% */
+    padding: 0.95vw 0;
 `
 const SettingImg = styled.img`
-    width: 24px;
-    height: 24px;
+    width: 1.2vw;
+    height: 1.2vw;
     position: absolute;
     top: 3.8%;
     right: 0%;
-    margin-right: 25px;
+    margin-right: 1.25vw;
 `
 
 const NotificationBox = styled.div`
@@ -48,7 +48,7 @@ const NotificationBox = styled.div`
 `
 
 const NotificationP =styled.div`
-    height: 60px;
+    height: 3vw;
     color: var(--text, #0C0B2C);
     font-family: Pretendard;
     font-size: 0.9375vw;

@@ -36,8 +36,7 @@ const Title = styled.div`
   font-size: 1.25vw;
   font-style: normal;
   font-weight: 500;
-  line-height: 2.1875vw; /* 175% */
-  padding-left: 0.5208vw;
+  line-height: 2vw; /* 175% */
 `;
 const SubTitile = styled.div`
   color: var(--Gray-Gray-500, #9e9e9e);
@@ -192,14 +191,14 @@ const PasswordTitle = styled.div`
   align-items: center;
 `;
 const PasswordInfo = styled.div`
-  margin: 6px 10px 6px 10px;
+  margin: 0.3vw 0.5vw;
   color: var(--Gray-Gray-500, #9e9e9e);
   font-family: Pretendard;
-  font-size: 12px;
+  font-size: 0.6vw;
   font-style: normal;
   font-weight: 700;
   line-height: 150%; /* 18px */
-  letter-spacing: -0.36px;
+  letter-spacing: -0.018vw;
 `;
 const PhoneNumber = styled.div`
   padding-bottom: 1.6667vw;

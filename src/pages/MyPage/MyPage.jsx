@@ -206,7 +206,7 @@ const MyPage = ({ isCredit }) => {
           <MyDonation />
         </div>
 
-        <div className="upload" style={{ width: '100%', marginTop: '2vw' }}>
+        {/* <div className="upload" style={{ width: '100%', marginTop: '2vw' }}>
           <MyPageP
             style={{
               fontSize: '0.8vw',
@@ -219,7 +219,7 @@ const MyPage = ({ isCredit }) => {
           </MyPageP>
           <MyUpload />
           <ListMyUpload />
-        </div>
+        </div> */}
 
         <div
           className="mycrew"

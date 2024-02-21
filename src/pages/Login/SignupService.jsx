@@ -30,24 +30,19 @@ const BreadcrumsC = styled.div`
 `
 
 const Title = styled.div`
-    color: var(--Gray-Gray-900, #17191A);
+    color: #17191A;
     font-family: Pretendard;
-    font-size: 1.2500vw;
+    font-size: 1.2vw;
     font-style: normal;
     font-weight: 500;
-    line-height: 2.1875vw; /* 175% */
-    padding-left:0.5208vw;
+    padding-left:0.2vw;
 `
 const SubTitile = styled.div`
-    color: var(--Gray-Gray-500, #9E9E9E);
-
-    /* Body/Body_small/medium */
+    color: #9E9E9E;
     font-family: Pretendard;
-    font-size: 0.6250vw;
+    font-size: 0.6vw;
     font-style: normal;
     font-weight: 500;
-    line-height: 150%; /* 0.9375vw */
-    letter-spacing: -0.0187vw;
 `
 
 const LineContainer = styled.div`
@@ -79,46 +74,46 @@ const ServiceContainer = styled.div`
 
 `
 const ServiceTitle =styled.div`
-    color: var(--Gray-Gray-900, #17191A);
+    color:  #17191A;
     font-family: Pretendard;
-    font-size: 18px;
+    font-size: 0.9vw;
     font-style: normal;
     font-weight: 700;
-    line-height: 1.5625vw; /* 166.667% */
 `
 
 const ServiceBox = styled.div`
     display: inline-flex;
-    height: 264px;
-    padding: 20px;
-    margin: 15px 0px;
+    width: 100%;
+    height: 13.2vw;
+    padding: 1vw;
+    margin: 0.75vw 0;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5208vw;
+    gap: 0.5vw;
     overflow-y: scroll;
     white-space: pre-wrap;
-    border-radius: 5px;
-    border: 1px solid var(--Gray-Gray-200, #EEE);
+    border-radius: 0.25vw;
+    border: 0.05vw solid var(--Gray-Gray-200, #EEE);
     background: var(--black-white-white-1000, #FFF);
 
     color: var(--Gray-Gray-700, #464A4D);
     font-family: Pretendard;
-    font-size: 15px;
+    font-size: 0.75vw;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px; /* 133.333% */
-    letter-spacing: -0.3px;
+    line-height: 1vw; /* 133.333% */
+    letter-spacing: -0.015vw;
 `
 const CheckboxContainer = styled.div`
 display: flex;
 flex-direction: row;
 align-items: center;
-padding-bottom: 42px;
+padding-bottom: 2.1vw;
 `
 const CheckboxInput = styled.input`
 appearance: none;
-width: 20px;
-height: 20px;
+width: 1vw;
+height: 1vw;
 flex-shrink: 0;
 background-image: url(${check_gray});
 
@@ -132,33 +127,33 @@ background-image: url(${check_gray});
 const CheckboxLabel= styled.div`
     color: var(--Gray-Gray-900, #17191A);
     font-family: Pretendard;
-    font-size: 15px;
+    font-size: 0.75vw;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px; /* 133.333% */
-    letter-spacing: -0.3px;
+    line-height: 1vw; /* 133.333% */
+    letter-spacing: -0.015vw;
     cursor: pointer;
-    padding-left: 4px;
+    padding-left: 0.2vw;
 `
 const NextButton = styled.div`
     display: flex;
     justify-content: center;
-    padding-top: 30px;
+    padding-top: 1.5vw;
 
 .nextButton{
-    width: 17.7083vw;
-    height: 2.0833vw;
+    width: 17vw;
+    height: 2vw;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
     color: var(--Primary-Red-900, #E95458);
     text-align: center;
     font-family: Pretendard;
-    font-size: 0.7813vw;
+    font-size: 0.7vw;
     font-style: normal;
     font-weight: 600;
-    line-height: 1.0417vw; /* 133.333% */
-    border-radius: 0.2604vw;
+    line-height: 1vw; /* 133.333% */
+    border-radius: 0.2vw;
     background: var(--Primary-Red-200, #FFF6F7);
     }
 `
